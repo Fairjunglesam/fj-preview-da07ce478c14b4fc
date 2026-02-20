@@ -766,6 +766,37 @@ function updateTrainPhaseUI() {
 }
 
 // ===== V0.1: RECO INLINE DETAIL =====
+
+// Collapse any open reco detail and scroll back to reco cards
+function collapseRecoDetail() {
+  if (!expandedRecoId) return;
+  const detailEl = document.getElementById('reco-detail-' + expandedRecoId);
+  const card = document.querySelector('.d-reco-card[data-id="' + expandedRecoId + '"]');
+  const ctaBar = document.getElementById('reco-cta-bar');
+  const grid = document.querySelector('.d-reco-grid');
+  if (detailEl) { detailEl.style.display = 'none'; detailEl.innerHTML = ''; }
+  if (card) card.classList.remove('expanded');
+  expandedRecoId = null;
+  if (grid) grid.classList.remove('compact');
+  if (ctaBar) ctaBar.classList.remove('visible');
+  // Scroll back to show reco cards
+  const recoZone = document.getElementById('d-reco-zone');
+  if (recoZone) {
+    const zoneTop = recoZone.getBoundingClientRect().top + window.scrollY;
+    window.scrollTo({ top: Math.max(0, zoneTop - 80), behavior: 'smooth' });
+  }
+}
+
+// Click outside reco zone → collapse
+document.addEventListener('click', function(e) {
+  if (!expandedRecoId || currentTransportView !== 'recos') return;
+  const recoZone = document.getElementById('d-reco-zone');
+  const ctaBar = document.getElementById('reco-cta-bar');
+  if (recoZone && recoZone.contains(e.target)) return;
+  if (ctaBar && ctaBar.contains(e.target)) return;
+  collapseRecoDetail();
+});
+
 function toggleRecoDetail(id) {
   const detailEl = document.getElementById('reco-detail-' + id);
   const card = document.querySelector('.d-reco-card[data-id="' + id + '"]');
@@ -774,15 +805,8 @@ function toggleRecoDetail(id) {
   if (!detailEl) return;
 
   if (expandedRecoId === id) {
-    // Collapse current
-    detailEl.style.display = 'none';
-    detailEl.innerHTML = '';
-    if (card) card.classList.remove('expanded');
-    expandedRecoId = null;
-    // Remove compact mode
-    if (grid) grid.classList.remove('compact');
-    // Hide CTA bar
-    if (ctaBar) ctaBar.classList.remove('visible');
+    collapseRecoDetail();
+    return;
   } else {
     // Collapse previous if any
     if (expandedRecoId) {
