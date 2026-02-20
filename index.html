@@ -291,7 +291,7 @@
       <!-- VIEW 2: ALL TRAINS (master-detail, hidden)   -->
       <!-- ============================================ -->
       <div id="view-all-trains" style="display:none">
-        <div class="md-back-link"><a href="#" onclick="showRecoView(); return false">← Retour aux recommandations</a></div>
+        <div class="md-nav-bar"><a href="#" onclick="showRecoView(); return false">← Retour aux recommandations</a><a href="#" class="md-cross-link" onclick="showAllView('flights'); return false">✈️ Voir les vols</a></div>
         <div class="md-search-adjust">
           <div class="d-context-chips" id="md-context-trains-out">
             <span class="d-ctx-chip">Paris Gare de Lyon <span class="d-ctx-chevron">›</span></span>
@@ -454,7 +454,7 @@
       <!-- VIEW 3: ALL FLIGHTS (master-detail, hidden)  -->
       <!-- ============================================ -->
       <div id="view-all-flights" style="display:none">
-        <div class="md-back-link"><a href="#" onclick="showRecoView(); return false">← Retour aux recommandations</a></div>
+        <div class="md-nav-bar"><a href="#" onclick="showRecoView(); return false">← Retour aux recommandations</a><a href="#" class="md-cross-link" onclick="showAllView('trains'); return false">🚄 Voir les trains</a></div>
         <div class="md-search-adjust">
           <div class="d-context-chips">
             <span class="d-ctx-chip">PAR · Tous aéroports <span class="d-ctx-chevron">›</span></span>

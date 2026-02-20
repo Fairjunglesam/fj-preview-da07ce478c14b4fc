@@ -81,6 +81,7 @@
 | Clic "Modifier l'aller" | return | outbound | `resetMdTrainOutbound()`, reset complet |
 | Clic footer "Continuer →" | complete | Hotel step | `selectItem()`, `goToStep('hotel')` |
 | Clic "← Retour aux recommandations" | n'importe | Recos | `showRecoView()`, reset train state, **restaure CTA bar si reco expanded** |
+| Clic "✈️ Voir les vols" | n'importe | All Flights | `showAllView('flights')`, reset train state, flights detail vide |
 
 **Invariants :**
 - Selection footer visible ⟺ `trainPhase === 'complete'`
@@ -96,23 +97,35 @@
 | Clic card vol dans liste | `selectMdItem()`, highlight + injecte detail |
 | Clic "Sélectionner et continuer" dans detail | `selectItem()` → Hotel step |
 | Clic "← Retour aux recommandations" | `showRecoView()`, **restaure CTA bar si reco expanded** |
+| Clic "🚄 Voir les trains" | `showAllView('trains')`, trains detail vide, phase outbound |
 
 ---
 
 ## Transitions entre vues
 
 ```
-showAllView('trains')          showAllView('flights')
-Recos ──────────────────▶ All Trains    Recos ──────────────────▶ All Flights
-      ◀────────────────── showRecoView()       ◀────────────────── showRecoView()
+                    showAllView('trains')
+              Recos ─────────────────────▶ All Trains
+                ▲ ◀──── showRecoView() ──────┘  │
+                │                                │ showAllView('flights')
+                │   showAllView('flights')       ▼
+                └──── showRecoView() ───── All Flights
+              Recos ─────────────────────▶ All Flights
+                                  showAllView('trains')
+              All Flights ────────────────▶ All Trains
+              All Trains  ────────────────▶ All Flights
 ```
 
-### `showAllView(mode)` — Recos → All Trains/Flights
+Navigation directe entre All Trains ↔ All Flights via les liens cross-navigation ("✈️ Voir les vols" / "🚄 Voir les trains"). Passe par `showAllView()` qui reset l'état de la vue quittée.
+
+### `showAllView(mode)` — vers All Trains ou All Flights
+
+**Appelable depuis :** Recos (boutons "Voir tous"), All Trains (cross-link), All Flights (cross-link)
 
 **Doit faire :**
-- Masquer `#view-recos`, afficher `#view-all-trains` ou `#view-all-flights`
-- Reset `trainPhase` → `outbound` (trains only)
-- Vider detail droite + retirer highlights
+- Masquer `#view-recos`, afficher uniquement la vue cible
+- Reset `trainPhase` → `outbound` + selections (pour les DEUX modes — couvre le cas All Trains → All Flights)
+- Vider detail droite + retirer highlights de la vue cible
 - **Masquer le reco CTA bar** (ne PAS reset `expandedRecoId` — on conserve la sélection)
 - Masquer selection-footer
 - Scroll top
@@ -183,12 +196,17 @@ Recos ──────────────────▶ All Trains    Re
 - **Attendu** : Retour sur la vue transport dans l'état où elle a été quittée
 - **Piège** : `goToStep('transport')` ne reset rien — c'est voulu. L'état des sous-vues est conservé.
 
-### 5. Double navigation All Trains → All Flights
-- **Scénario** : "Voir tous les trains" → partial selection → "← Retour" → "Voir tous les vols"
-- **Attendu** : All Flights repart de zéro (pas de state train qui leak)
-- **Piège** : `showAllView('flights')` doit aussi reset le train state.
+### 5. Cross-navigation All Trains → All Flights (directe)
+- **Scénario** : All Trains → sélection aller en cours → clic "✈️ Voir les vols"
+- **Attendu** : All Flights s'ouvre vierge, train state reset, selection-footer masqué
+- **Piège** : `showAllView('flights')` doit reset `trainPhase`, `trainOutboundSelection`, `trainReturnSelection`. Sinon le state train leak.
 
-### 6. Train phase et CTA overlap
+### 6. Cross-navigation All Flights → All Trains
+- **Scénario** : All Flights → clic "🚄 Voir les trains"
+- **Attendu** : All Trains s'ouvre en mode outbound, detail vide, aucun highlight
+- **Piège** : `showAllView('trains')` reset déjà tout — OK. Vérifier que le flight detail/highlights sont aussi nettoyés (ils le sont car la vue est simplement masquée).
+
+### 7. Train phase et CTA overlap
 - **Scénario** : All Trains, phase `complete` → selection-footer visible → "← Retour aux recos"
 - **Attendu** : Selection-footer masqué, pas de double CTA
 - **Piège** : `showRecoView()` doit masquer selection-footer ET potentiellement afficher reco CTA bar. Ne jamais avoir les deux visibles simultanément.

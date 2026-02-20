@@ -894,10 +894,12 @@ body { font-family:var(--font); background:var(--bg-page); color:var(--text-prim
 .md-list .list-card { margin:0; }
 .md-list .list-card.selected-card { border-color:var(--text-tag-info); background:#f7fbff; }
 
-/* Back link */
-.md-back-link { margin-bottom:12px; }
-.md-back-link a { font-size:13px; font-weight:600; color:var(--text-tag-info); text-decoration:none; display:inline-flex; align-items:center; gap:4px; }
-.md-back-link a:hover { text-decoration:underline; }
+/* Nav bar (back link + cross-link) */
+.md-nav-bar { display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; }
+.md-nav-bar a { font-size:13px; font-weight:600; color:var(--text-tag-info); text-decoration:none; display:inline-flex; align-items:center; gap:4px; }
+.md-nav-bar a:hover { text-decoration:underline; }
+.md-cross-link { font-weight:500 !important; color:var(--text-subtitle) !important; }
+.md-cross-link:hover { color:var(--text-tag-info) !important; }
 
 /* Search adjustment bar */
 .md-search-adjust { margin-bottom:10px; }

@@ -947,6 +947,10 @@ function showAllView(mode) {
     document.querySelectorAll('#md-train-list .list-card').forEach(c => c.classList.remove('selected-card'));
   }
   if (mode === 'flights') {
+    // Reset train state if coming from All Trains
+    trainPhase = 'outbound';
+    trainOutboundSelection = null;
+    trainReturnSelection = null;
     // Clear right panel
     document.getElementById('md-flight-detail').innerHTML = '<div class="md-detail-placeholder">Sélectionnez un vol pour voir les détails</div>';
     document.querySelectorAll('#md-flight-list .list-card').forEach(c => c.classList.remove('selected-card'));
