@@ -870,8 +870,6 @@ body { font-family:var(--font); background:var(--bg-page); color:var(--text-prim
 .d-reco-grid.compact .rc-price { font-size:15px; }
 .d-reco-grid.compact .rc-price-pax { display:none; }
 .d-reco-grid.compact .rc-tag { font-size:9px; padding:1px 6px; }
-.d-reco-zone-hint { transition:max-height 0.25s var(--ease-smooth), opacity 0.2s var(--ease-smooth), margin 0.25s var(--ease-smooth), padding 0.25s var(--ease-smooth); max-height:80px; overflow:hidden; }
-.d-reco-zone.has-expanded .d-reco-zone-hint { max-height:0; opacity:0; margin-bottom:0; padding:0 14px; }
 .d-reco-zone.has-expanded .d-reco-zone-header { margin-bottom:4px; padding-bottom:6px; }
 
 /* ===== V0.1: "VOIR TOUS" BUTTONS ===== */
