@@ -11,6 +11,7 @@ let trainReturnSelection = null; // { id, name, price, times }
 // V0.1: Transport view state
 let currentTransportView = 'recos'; // 'recos' | 'all-trains' | 'all-flights'
 let expandedRecoId = null; // track which reco inline detail is open
+let flightSortBy = 'relevance'; // 'relevance' | 'departure' | 'arrival' | 'price'
 
 // ===== DETAIL PANELS DATA =====
 const panels = {
@@ -1000,6 +1001,12 @@ function showAllView(mode) {
     // Clear right panel
     document.getElementById('md-flight-detail').innerHTML = '<div class="md-detail-placeholder">Sélectionnez un vol pour voir les détails</div>';
     document.querySelectorAll('#md-flight-list .list-card').forEach(c => c.classList.remove('selected-card'));
+    // Reset sort to relevance
+    flightSortBy = 'relevance';
+    flightOriginalOrder = null;
+    document.querySelectorAll('#md-flight-sort-bar .md-sort-btn').forEach(btn => {
+      btn.classList.toggle('active', btn.dataset.sort === 'relevance');
+    });
   }
   // Hide selection footer + reco CTA bar
   document.getElementById('selection-footer').classList.remove('visible');
@@ -1036,6 +1043,51 @@ function showRecoView() {
   if (msLabel) msLabel.textContent = 'Étape 2/5 · Transport';
 
   window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// ===== V0.1: FLIGHT SORTING =====
+// Sort data for flight cards (extracted from HTML for re-ordering)
+const flightSortData = {
+  flight1: { departure: '07:00', arrival: '08:10', price: 126 },
+  flight2: { departure: '06:30', arrival: '07:45', price: 104 },
+  flight3: { departure: '12:00', arrival: '13:10', price: 151 }
+};
+// Original DOM order (= relevance = API order)
+let flightOriginalOrder = null;
+
+function sortFlights(sortBy) {
+  flightSortBy = sortBy;
+  // Update active button
+  document.querySelectorAll('#md-flight-sort-bar .md-sort-btn').forEach(btn => {
+    btn.classList.toggle('active', btn.dataset.sort === sortBy);
+  });
+  // Get flight list container
+  const list = document.getElementById('md-flight-list');
+  if (!list) return;
+  const cards = Array.from(list.querySelectorAll('.list-card'));
+  if (!cards.length) return;
+  // Save original order on first call
+  if (!flightOriginalOrder) {
+    flightOriginalOrder = cards.map(c => c.dataset.id);
+  }
+  // Sort cards
+  if (sortBy === 'relevance') {
+    // Restore original order
+    const order = flightOriginalOrder;
+    cards.sort((a, b) => order.indexOf(a.dataset.id) - order.indexOf(b.dataset.id));
+  } else {
+    cards.sort((a, b) => {
+      const da = flightSortData[a.dataset.id];
+      const db = flightSortData[b.dataset.id];
+      if (!da || !db) return 0;
+      if (sortBy === 'price') return da.price - db.price;
+      if (sortBy === 'departure') return da.departure.localeCompare(db.departure);
+      if (sortBy === 'arrival') return da.arrival.localeCompare(db.arrival);
+      return 0;
+    });
+  }
+  // Re-append in sorted order
+  cards.forEach(c => list.appendChild(c));
 }
 
 // ===== V0.1: MASTER-DETAIL ITEM SELECTION =====
