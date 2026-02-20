@@ -648,17 +648,6 @@ body { font-family:var(--font); background:var(--bg-page); color:var(--text-prim
 }
 
 /* ===== VARIANT SWITCHER ===== */
-/* Debug showcase switcher (bottom-left, discreet) */
-.variant-switcher { position:fixed; bottom:12px; left:12px; display:flex; flex-direction:column; gap:4px; background:rgba(255,255,255,0.85); backdrop-filter:blur(8px); border:1px solid rgba(0,0,0,0.08); border-radius:8px; padding:6px; box-shadow:0 2px 8px rgba(0,0,0,0.06); z-index:200; font-size:11px; opacity:0.5; transition:opacity 0.2s; }
-.variant-switcher:hover { opacity:1; }
-.variant-switcher-label { font-size:9px; font-weight:700; text-transform:uppercase; letter-spacing:0.5px; color:var(--text-muted); padding:0 4px; }
-.variant-switcher-row { display:flex; gap:3px; }
-.variant-btn { padding:4px 10px; border-radius:5px; font-size:10px; font-weight:600; color:var(--text-muted); text-decoration:none; transition:all 0.15s; white-space:nowrap; }
-.variant-btn:hover { background:rgba(0,0,0,0.05); color:var(--text-primary); }
-.variant-btn.active { background:var(--text-primary); color:white; }
-.variant-toggle { display:flex; align-items:center; gap:6px; padding:2px 4px; cursor:pointer; }
-.variant-toggle input { accent-color:var(--text-tag-info); width:12px; height:12px; }
-.variant-toggle span { font-size:10px; color:var(--text-subtitle); font-weight:500; }
 
 /* ===== VARIATION D: TRANSPORT PAGE IMPROVEMENTS ===== */
 
@@ -849,11 +838,41 @@ body { font-family:var(--font); background:var(--bg-page); color:var(--text-prim
 
 /* ===== V0.1: INLINE RECO DETAIL ===== */
 .d-reco-detail-zone { margin-top:14px; }
-.d-reco-inline-detail { border:1.5px solid var(--text-tag-info); border-radius:14px; background:white; overflow:hidden; animation:ridSlideDown 250ms var(--ease-decel); }
-.d-reco-inline-detail .d-rid-content { padding:20px 24px; max-height:500px; overflow-y:auto; }
-.d-reco-inline-detail .d-rid-cta { padding:12px 24px; background:white; border-top:1px solid var(--border-light); text-align:right; }
+.d-reco-inline-detail { border:1.5px solid var(--text-tag-info); border-radius:14px; background:white; animation:ridSlideDown 250ms var(--ease-decel); }
+.d-reco-inline-detail .d-rid-content { padding:20px 24px; }
+.d-reco-inline-detail .d-rid-cta { display:none; /* CTA moved to fixed bar */ }
+
+/* Fixed CTA bar when reco detail is open */
+.d-reco-cta-bar { position:fixed; bottom:0; left:0; right:0; z-index:100; background:white; border-top:1px solid var(--border-light); box-shadow:0 -4px 20px rgba(0,0,0,0.08); padding:12px 24px; display:none; align-items:center; justify-content:space-between; }
+.d-reco-cta-bar.visible { display:flex; animation:ridSlideUp 200ms var(--ease-decel); }
+.d-reco-cta-bar .rcb-summary { font-size:13px; color:var(--text-subtitle); }
+.d-reco-cta-bar .rcb-summary strong { color:var(--text-primary); font-size:15px; }
+@keyframes ridSlideUp { from { opacity:0; transform:translateY(12px); } to { opacity:1; transform:translateY(0); } }
 .d-reco-card.expanded { border-color:var(--text-tag-info); background:white; box-shadow:0 0 0 2px rgba(0,68,101,0.12); }
 @keyframes ridSlideDown { from { opacity:0; transform:translateY(-8px); } to { opacity:1; transform:translateY(0); } }
+
+/* ===== V0.1: COMPACT RECO MODE (when detail is open) ===== */
+/* Summary line: hidden by default, shown only in compact mode */
+.rc-summary { display:none; padding:0 12px 8px; font-size:11px; color:var(--text-subtitle); line-height:1.5; }
+.rc-sum-line { display:flex; align-items:center; gap:4px; }
+.rc-sum-label { font-weight:600; color:var(--text-primary); font-size:11px; }
+.rc-sum-dir { font-size:9px; font-weight:700; color:var(--text-muted); text-transform:uppercase; width:12px; flex-shrink:0; }
+.rc-sum-dur { color:var(--text-muted); font-size:10px; margin-left:auto; }
+
+.d-reco-grid.compact { gap:8px; transition:gap 0.2s var(--ease-smooth); }
+.d-reco-grid.compact .d-reco-card { border-radius:10px; }
+.d-reco-grid.compact .rc-content,
+.d-reco-grid.compact .rc-footer { display:none; }
+.d-reco-grid.compact .rc-summary { display:block; }
+.d-reco-grid.compact .rc-header { padding:8px 12px 4px; }
+.d-reco-grid.compact .rc-header-left { gap:8px; }
+.d-reco-grid.compact .rc-icon { width:24px; height:24px; font-size:12px; border-radius:6px; }
+.d-reco-grid.compact .rc-price { font-size:15px; }
+.d-reco-grid.compact .rc-price-pax { display:none; }
+.d-reco-grid.compact .rc-tag { font-size:9px; padding:1px 6px; }
+.d-reco-zone-hint { transition:max-height 0.25s var(--ease-smooth), opacity 0.2s var(--ease-smooth), margin 0.25s var(--ease-smooth), padding 0.25s var(--ease-smooth); max-height:80px; overflow:hidden; }
+.d-reco-zone.has-expanded .d-reco-zone-hint { max-height:0; opacity:0; margin-bottom:0; padding:0 14px; }
+.d-reco-zone.has-expanded .d-reco-zone-header { margin-bottom:4px; padding-bottom:6px; }
 
 /* ===== V0.1: "VOIR TOUS" BUTTONS ===== */
 .d-reco-see-all { display:flex; gap:8px; margin-top:0; padding-top:0; border-top:none; }

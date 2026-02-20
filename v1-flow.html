@@ -103,6 +103,11 @@
               </div>
               <span class="rc-tag rc-tag-info">Recommandé</span>
             </div>
+            <div class="rc-summary">
+              <div class="rc-sum-line"><span class="rc-sum-label">TGV INOUI · 2nde</span></div>
+              <div class="rc-sum-line"><span class="rc-sum-dir">A</span> 07:13 → 09:13 <span class="rc-sum-dur">2h</span></div>
+              <div class="rc-sum-line"><span class="rc-sum-dir">R</span> 18:00 → 20:00 <span class="rc-sum-dur">2h</span></div>
+            </div>
             <div class="rc-content">
               <!-- Leg 1: Aller -->
               <div class="rc-leg">
@@ -158,6 +163,11 @@
                 </div>
               </div>
               <span class="rc-tag rc-tag-fast">Plus rapide</span>
+            </div>
+            <div class="rc-summary">
+              <div class="rc-sum-line"><span class="rc-sum-label">Air France · Economy Light</span></div>
+              <div class="rc-sum-line"><span class="rc-sum-dir">A</span> 07:00 → 08:10 <span class="rc-sum-dur">1h10</span></div>
+              <div class="rc-sum-line"><span class="rc-sum-dir">R</span> 20:30 → 21:40 <span class="rc-sum-dur">1h10</span></div>
             </div>
             <div class="rc-content">
               <!-- Leg 1: Aller -->
@@ -215,6 +225,11 @@
                 </div>
               </div>
               <span class="rc-tag rc-tag-success">Moins cher</span>
+            </div>
+            <div class="rc-summary">
+              <div class="rc-sum-line"><span class="rc-sum-label">OuiGo · Standard</span></div>
+              <div class="rc-sum-line"><span class="rc-sum-dir">A</span> 09:00 → 11:30 <span class="rc-sum-dur">2h30</span></div>
+              <div class="rc-sum-line"><span class="rc-sum-dir">R</span> 19:30 → 22:00 <span class="rc-sum-dur">2h30</span></div>
             </div>
             <div class="rc-content">
               <!-- Leg 1: Aller -->
@@ -942,6 +957,12 @@
   </div>
 </div>
 
+<!-- RECO CTA BAR (fixed bottom, shown when reco detail is open) -->
+<div class="d-reco-cta-bar" id="reco-cta-bar">
+  <div class="rcb-summary" id="rcb-summary"></div>
+  <button class="btn-primary" id="rcb-btn" onclick="selectRecoFromBar()">Sélectionner ce transport →</button>
+</div>
+
 <!-- SELECTION FOOTER -->
 <div class="selection-footer" id="selection-footer">
   <div class="sf-selection">
@@ -957,15 +978,6 @@
   </div>
 </div>
 
-<!-- DEBUG SHOWCASE SWITCHER -->
-<div class="variant-switcher">
-  <div class="variant-switcher-label">Showcase</div>
-  <div class="variant-switcher-row">
-    <a href="v1-flow.html" class="variant-btn active">Paris–Lyon</a>
-    <a href="v1-flow-flights-only.html" class="variant-btn">Paris–NYC</a>
-  </div>
-  <label class="variant-toggle"><input type="checkbox" id="toggle-no-fare" onchange="toggleNoFareMode(this.checked)"><span>Sans sélection tarif</span></label>
-</div>
 
 <script src="v1-app.js"></script>
 </body>

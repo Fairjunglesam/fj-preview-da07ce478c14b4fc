@@ -2,7 +2,6 @@
 let currentStep = 'transport';
 let currentSelection = { id: null, name: '', price: '', step: '' };
 let paginationState = { trains: 4, flights: 3, hotels: 5 }; // initial visible count (0-indexed last)
-let noFareMode = false; // Showcase: tariff selection deferred to Review
 
 // Train leg-by-leg state (multimodal only)
 let trainPhase = 'outbound'; // 'outbound' | 'return' | 'complete'
@@ -688,7 +687,6 @@ function openDrawer(id) {
       budgetHtml = `<div class="budget-info-line">${panel.budgetLine}</div>`;
     }
     let finalHtml = panel.html;
-    if (panel.type === 'transport') finalHtml = applyNoFareMode(finalHtml);
     body.innerHTML = budgetHtml + finalHtml;
   }, 300);
 
@@ -773,6 +771,9 @@ function updateTrainPhaseUI() {
 function toggleRecoDetail(id) {
   const detailEl = document.getElementById('reco-detail-' + id);
   const card = document.querySelector('.d-reco-card[data-id="' + id + '"]');
+  const ctaBar = document.getElementById('reco-cta-bar');
+  const grid = document.querySelector('.d-reco-grid');
+  const zone = document.getElementById('d-reco-zone');
   if (!detailEl) return;
 
   if (expandedRecoId === id) {
@@ -780,6 +781,11 @@ function toggleRecoDetail(id) {
     detailEl.style.display = 'none';
     if (card) card.classList.remove('expanded');
     expandedRecoId = null;
+    // Remove compact mode
+    if (grid) grid.classList.remove('compact');
+    if (zone) zone.classList.remove('has-expanded');
+    // Hide CTA bar
+    if (ctaBar) ctaBar.classList.remove('visible');
   } else {
     // Collapse previous if any
     if (expandedRecoId) {
@@ -792,15 +798,50 @@ function toggleRecoDetail(id) {
     detailEl.style.display = '';
     if (card) card.classList.add('expanded');
     expandedRecoId = id;
-    // Smooth scroll to reveal the detail below the cards
+    // Enter compact mode — collapse cards, hide hint
+    if (grid) grid.classList.add('compact');
+    if (zone) zone.classList.add('has-expanded');
+
+    // Update CTA bar
+    const recoData = _getRecoData(id);
+    if (ctaBar && recoData) {
+      document.getElementById('rcb-summary').innerHTML = recoData.icon + ' <strong>' + recoData.name + '</strong> · ' + recoData.price;
+      ctaBar.dataset.id = id;
+      ctaBar.dataset.name = recoData.selectName;
+      ctaBar.dataset.price = recoData.price;
+      ctaBar.classList.add('visible');
+    }
+
+    // Smooth scroll: position the detail zone just below the compact cards
     setTimeout(() => {
-      const detailRect = detailEl.getBoundingClientRect();
-      const viewportH = window.innerHeight;
-      // Scroll so the top of the detail is ~60% up the viewport (shows cards above + detail + CTA hint)
-      const targetTop = window.scrollY + detailRect.top - (viewportH * 0.3);
-      window.scrollTo({ top: Math.max(0, targetTop), behavior: 'smooth' });
-    }, 80);
+      const detailZone = document.getElementById('reco-detail-zone');
+      if (detailZone) {
+        const zoneRect = detailZone.getBoundingClientRect();
+        const targetTop = window.scrollY + zoneRect.top - 80;
+        window.scrollTo({ top: Math.max(0, targetTop), behavior: 'smooth' });
+      }
+    }, 120);
   }
+}
+
+// Helper: get reco data for CTA bar display
+function _getRecoData(id) {
+  const map = {
+    train1: { icon: '🚄', name: 'TGV INOUI · 2nde', price: '290 €', selectName: 'TGV INOUI 7835 · 2nde' },
+    flight1: { icon: '✈️', name: 'Air France · Economy', price: '378 €', selectName: 'Air France AF7524 · Economy' },
+    train2: { icon: '🚄', name: 'OuiGo · Standard', price: '196 €', selectName: 'OuiGo 7901 · Standard' }
+  };
+  return map[id] || null;
+}
+
+function selectRecoFromBar() {
+  const ctaBar = document.getElementById('reco-cta-bar');
+  if (!ctaBar) return;
+  const id = ctaBar.dataset.id;
+  const name = ctaBar.dataset.name;
+  const price = ctaBar.dataset.price;
+  ctaBar.classList.remove('visible');
+  selectRecoTransport(id, name, price);
 }
 
 function selectRecoTransport(id, name, price) {
@@ -893,7 +934,6 @@ function selectMdItem(mode, panelId) {
     detailContainer.innerHTML = '<div class="drawer-skeleton"><div class="skeleton-block skeleton-header"></div><div class="skeleton-block skeleton-body"></div><div class="skeleton-block skeleton-tariffs"></div></div>';
     setTimeout(() => {
       let html = panel.html;
-      if (panel.type === 'transport') html = applyNoFareMode(html);
       detailContainer.innerHTML = html;
     }, 200);
   } else {
@@ -1022,45 +1062,6 @@ function skipHotel() {
 function unskipHotel() {
   hotelSkipped = false;
   goToStep('hotel');
-}
-
-// ===== SHOWCASE: NO-FARE MODE =====
-function toggleNoFareMode(enabled) {
-  noFareMode = enabled;
-}
-
-function applyNoFareMode(html) {
-  if (!noFareMode) return html;
-  // Replace tariff sections (both "Tarifs" and "Tarif sélectionné") with info card
-  // Match from section start to the last closing </div></div> before an accordion or drawer-cta
-  html = html.replace(
-    /<div class="dp-section"><div class="dp-section-title">Tarif[^<]*<\/div>[\s\S]*?<\/div><\/div>\s*(?=<div class="accordion|<\/div>\s*<div class="drawer-cta")/g,
-    buildNoFareSection
-  );
-  return html;
-}
-
-function buildNoFareSection(match) {
-  // Extract the selected tariff name, conditions and baggage from the original HTML
-  const nameMatch = match.match(/tariff-card selected[\s\S]*?tf-name">(.*?)<\/div>/);
-  const condMatch = match.match(/tariff-card selected[\s\S]*?tf-conditions">([\s\S]*?)<\/div>/);
-  const bagMatch = match.match(/tariff-card selected[\s\S]*?tf-baggage">(.*?)<\/div>/);
-  // Extract detail panel content for the selected card
-  const detailMatch = match.match(/tariff-card selected[\s\S]*?<\/div>\s*<div class="tf-detail-panel">([\s\S]*?)<\/div>\s*(?:<div class="tariff-card"|$)/);
-
-  const tariffName = nameMatch ? nameMatch[1] : 'Tarif de base';
-  const conditions = condMatch ? condMatch[1] : '';
-  const baggage = bagMatch ? bagMatch[1] : '';
-  const detailHtml = detailMatch ? detailMatch[1] : '';
-
-  return `<div class="dp-section"><div class="dp-section-title">Tarif</div>
-    <div class="tariff-card selected" style="cursor:default;border-radius:12px 12px 0 0;border-bottom-color:transparent"><div class="tf-left"><div class="tf-name">${tariffName}</div><div class="tf-conditions">${conditions}</div>${baggage ? '<div class="tf-baggage">' + baggage + '</div>' : ''}</div></div>
-    <div class="tf-detail-panel" style="display:block;border-color:#c8e1f8;background:#f7fbff;margin-bottom:10px">${detailHtml}</div>
-    <div class="no-fare-info-card">
-      <svg width="16" height="16" viewBox="0 0 16 16" fill="none" style="flex-shrink:0"><circle cx="8" cy="8" r="7" stroke="#3b82f6" stroke-width="1.5"/><path d="M8 7v4M8 5v.5" stroke="#3b82f6" stroke-width="1.5" stroke-linecap="round"/></svg>
-      <span>Vous pourrez <strong>choisir un autre tarif</strong> et ajouter des extras à l'étape <strong>Review & Options</strong>.</span>
-    </div>
-  </div>`;
 }
 
 function updateSelectionFooter() {
