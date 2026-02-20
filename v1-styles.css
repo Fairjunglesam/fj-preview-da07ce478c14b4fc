@@ -799,12 +799,14 @@ body { font-family:var(--font); background:var(--bg-page); color:var(--text-prim
 .md-phase-leg { display:inline-flex; align-items:center; gap:6px; font-size:12px; font-weight:500; color:var(--text-subtitle); }
 .md-phase-edit { padding:0; border:none; background:none; font-size:11px; font-weight:600; color:var(--text-tag-info); text-decoration:underline; text-underline-offset:2px; cursor:pointer; font-family:var(--font); margin-left:4px; }
 
-/* Sort bar (flights) */
-.md-sort-bar { display:flex; align-items:center; gap:6px; margin-bottom:8px; flex-wrap:wrap; }
-.md-sort-label { font-size:12px; font-weight:600; color:var(--text-muted); margin-right:2px; white-space:nowrap; }
-.md-sort-btn { padding:6px 14px; border-radius:var(--radius-pill); font-size:12px; font-weight:600; cursor:pointer; border:1.5px solid var(--border-light); background:white; color:var(--text-subtitle); font-family:var(--font); transition:all 0.15s; white-space:nowrap; }
-.md-sort-btn:hover { background:var(--bg-page); border-color:#c0c2c6; }
-.md-sort-btn.active { background:var(--text-primary); color:white; border-color:var(--text-primary); }
+/* Sort chip dropdown (flights) */
+.sort-chip { position:relative; gap:6px !important; }
+.sort-chip svg { color:var(--text-muted); }
+.sort-dropdown { display:none; position:absolute; top:calc(100% + 4px); left:0; background:white; border:1px solid var(--border-light); border-radius:10px; box-shadow:0 4px 16px rgba(0,0,0,0.1); z-index:20; min-width:180px; padding:4px; }
+.sort-dropdown.open { display:block; }
+.sort-option { padding:8px 12px; font-size:12px; font-weight:500; color:var(--text-subtitle); border-radius:6px; cursor:pointer; transition:background 0.1s; }
+.sort-option:hover { background:var(--bg-page); }
+.sort-option.active { font-weight:600; color:var(--text-tag-info); background:#f0f8ff; }
 
 /* List gap */
 .d-list-gap { display:flex; flex-direction:column; gap:8px; }

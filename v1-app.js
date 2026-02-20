@@ -1004,8 +1004,10 @@ function showAllView(mode) {
     // Reset sort to relevance
     flightSortBy = 'relevance';
     flightOriginalOrder = null;
-    document.querySelectorAll('#md-flight-sort-bar .md-sort-btn').forEach(btn => {
-      btn.classList.toggle('active', btn.dataset.sort === 'relevance');
+    const sortLabel = document.getElementById('flight-sort-label');
+    if (sortLabel) sortLabel.textContent = 'Pertinence';
+    document.querySelectorAll('#sort-dropdown .sort-option').forEach(opt => {
+      opt.classList.toggle('active', opt.dataset.sort === 'relevance');
     });
   }
   // Hide selection footer + reco CTA bar
@@ -1055,12 +1057,34 @@ const flightSortData = {
 // Original DOM order (= relevance = API order)
 let flightOriginalOrder = null;
 
+function toggleSortDropdown() {
+  const dd = document.getElementById('sort-dropdown');
+  if (dd) dd.classList.toggle('open');
+}
+
+// Close sort dropdown when clicking outside
+document.addEventListener('click', function(e) {
+  const chip = document.getElementById('flight-sort-chip');
+  const dd = document.getElementById('sort-dropdown');
+  if (dd && chip && !chip.contains(e.target)) {
+    dd.classList.remove('open');
+  }
+});
+
+const sortLabels = { relevance: 'Pertinence', departure: 'Heure de départ', arrival: "Heure d'arrivée", price: 'Prix' };
+
 function sortFlights(sortBy) {
   flightSortBy = sortBy;
-  // Update active button
-  document.querySelectorAll('#md-flight-sort-bar .md-sort-btn').forEach(btn => {
-    btn.classList.toggle('active', btn.dataset.sort === sortBy);
+  // Update chip label
+  const label = document.getElementById('flight-sort-label');
+  if (label) label.textContent = sortLabels[sortBy] || sortBy;
+  // Update active option
+  document.querySelectorAll('#sort-dropdown .sort-option').forEach(opt => {
+    opt.classList.toggle('active', opt.dataset.sort === sortBy);
   });
+  // Close dropdown
+  const dd = document.getElementById('sort-dropdown');
+  if (dd) dd.classList.remove('open');
   // Get flight list container
   const list = document.getElementById('md-flight-list');
   if (!list) return;
@@ -1072,7 +1096,6 @@ function sortFlights(sortBy) {
   }
   // Sort cards
   if (sortBy === 'relevance') {
-    // Restore original order
     const order = flightOriginalOrder;
     cards.sort((a, b) => order.indexOf(a.dataset.id) - order.indexOf(b.dataset.id));
   } else {
