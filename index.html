@@ -85,11 +85,6 @@
           </div>
         </div>
         <div class="d-reco-zone-hint">Sélectionnées selon votre <strong>politique entreprise</strong>, vos <strong>préférences</strong> et votre <strong>historique</strong> de réservation.</div>
-        <div class="d-reco-see-all">
-          <button class="d-see-all-btn" onclick="showAllView('trains')">Tous les trains <span class="d-see-all-count">(24)</span></button>
-          <button class="d-see-all-btn" onclick="showAllView('flights')">Tous les vols <span class="d-see-all-count">(18)</span></button>
-        </div>
-
         <div class="d-reco-grid">
           <!-- Reco 1: TGV INOUI -->
           <div class="d-reco-card" data-id="train1" onclick="toggleRecoDetail('train1')">
@@ -276,6 +271,12 @@
             </div>
           </div>
         </div><!-- /d-reco-grid -->
+
+        <div class="d-reco-see-all">
+          <span class="d-see-all-prompt">Vous ne trouvez pas votre bonheur ?</span>
+          <button class="d-see-all-btn" onclick="showAllView('trains')">Tous les trains <span class="d-see-all-count">(24)</span></button>
+          <button class="d-see-all-btn" onclick="showAllView('flights')">Tous les vols <span class="d-see-all-count">(18)</span></button>
+        </div>
 
         <!-- Detail zone: always below all 3 cards — content injected by toggleRecoDetail() -->
         <div class="d-reco-detail-zone" id="reco-detail-zone">
