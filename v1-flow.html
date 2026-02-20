@@ -79,99 +79,185 @@
       <div id="view-recos">
       <div class="d-reco-zone" id="d-reco-zone">
         <div class="d-reco-zone-header">
-          <div><div class="d-reco-zone-title">Nos recommandations</div></div>
-          <div><div class="d-reco-zone-budget">Budget max : 160 €/pers</div></div>
+          <div>
+            <div class="d-reco-zone-title">Votre transport</div>
+            <div class="d-reco-zone-budget">Budget max : 160 €/pers</div>
+          </div>
+          <div class="d-reco-see-all">
+            <button class="d-see-all-btn" onclick="showAllView('trains')">🚄 Voir tous les trains <span class="d-see-all-count">(24)</span></button>
+            <button class="d-see-all-btn" onclick="showAllView('flights')">✈️ Voir tous les vols <span class="d-see-all-count">(18)</span></button>
+          </div>
         </div>
         <div class="d-reco-zone-hint">Sélectionnées selon votre <strong>politique entreprise</strong>, vos <strong>préférences</strong> et votre <strong>historique</strong> de réservation.</div>
 
         <div class="d-reco-grid">
           <!-- Reco 1: TGV INOUI -->
           <div class="d-reco-card" data-id="train1" onclick="toggleRecoDetail('train1')">
-            <div class="d-reco-card-tag"><span class="tag tag-info">Recommandé</span></div>
-            <div class="d-reco-card-head">
-              <div class="d-reco-card-operator">
-                <div class="d-reco-card-icon train">🚄</div>
-                <div><div class="d-reco-card-name">TGV INOUI</div><div class="d-reco-card-route">2nde Classe · Paris → Lyon</div></div>
+            <div class="rc-header">
+              <div class="rc-header-left">
+                <div class="rc-icon train">🚄</div>
+                <div class="rc-price-block">
+                  <div class="rc-price">290 €</div>
+                  <div class="rc-price-pax">97 € par passager</div>
+                </div>
               </div>
-              <div class="d-reco-card-price-block"><div class="d-reco-card-price">290 €</div><div class="d-reco-card-pax">97 €/pers</div></div>
+              <span class="rc-tag rc-tag-info">Recommandé</span>
             </div>
-            <div class="d-reco-legs">
-              <div class="d-reco-leg">
-                <span class="d-reco-leg-dir">Aller</span>
-                <span class="d-reco-leg-date">Ven. 16 jan.</span>
-                <span class="d-reco-leg-times">07:13 <span class="d-reco-leg-arrow">→</span> 09:13</span>
-                <span class="d-reco-leg-duration">2h · direct</span>
+            <div class="rc-content">
+              <!-- Leg 1: Aller -->
+              <div class="rc-leg">
+                <div class="rc-leg-meta">
+                  <span class="rc-class">2nde</span>
+                  <span class="rc-operator"><span class="rc-op-dot" style="background:#e3f2fd">🚄</span> TGV INOUI</span>
+                  <span class="rc-duration">2h · direct</span>
+                </div>
+                <div class="rc-route">
+                  <div class="rc-time">07:13</div>
+                  <div class="rc-track"><span class="rc-dot"></span><span class="rc-line"></span><span class="rc-dot"></span></div>
+                  <div class="rc-time">09:13</div>
+                </div>
+                <div class="rc-stations">
+                  <div class="rc-station"><div class="rc-station-name">Gare de Lyon</div><div class="rc-station-city">Paris</div></div>
+                  <div class="rc-station rc-station-end"><div class="rc-station-name">Part-Dieu</div><div class="rc-station-city">Lyon</div></div>
+                </div>
               </div>
-              <div class="d-reco-leg">
-                <span class="d-reco-leg-dir">Retour</span>
-                <span class="d-reco-leg-date">Ven. 23 jan.</span>
-                <span class="d-reco-leg-times">18:00 <span class="d-reco-leg-arrow">→</span> 20:00</span>
-                <span class="d-reco-leg-duration">2h · direct</span>
+              <!-- Leg 2: Retour -->
+              <div class="rc-leg">
+                <div class="rc-leg-meta">
+                  <span class="rc-class">2nde</span>
+                  <span class="rc-operator"><span class="rc-op-dot" style="background:#e3f2fd">🚄</span> TGV INOUI</span>
+                  <span class="rc-duration">2h · direct</span>
+                </div>
+                <div class="rc-route">
+                  <div class="rc-time">18:00</div>
+                  <div class="rc-track"><span class="rc-dot"></span><span class="rc-line"></span><span class="rc-dot"></span></div>
+                  <div class="rc-time">20:00</div>
+                </div>
+                <div class="rc-stations">
+                  <div class="rc-station"><div class="rc-station-name">Part-Dieu</div><div class="rc-station-city">Lyon</div></div>
+                  <div class="rc-station rc-station-end"><div class="rc-station-name">Gare de Lyon</div><div class="rc-station-city">Paris</div></div>
+                </div>
               </div>
             </div>
-            <div class="d-reco-card-footer">
-              <span class="amenity-yes">Modifiable avec frais</span>
-              <span class="amenity-no">Non remboursable</span>
+            <div class="rc-footer">
+              <div class="rc-conditions">
+                <span class="rc-cond rc-cond-yes">Modifiable avec frais</span>
+                <span class="rc-cond rc-cond-no">Non remboursable</span>
+              </div>
+
             </div>
           </div>
           <!-- Reco 2: Air France -->
           <div class="d-reco-card" data-id="flight1" onclick="toggleRecoDetail('flight1')">
-            <div class="d-reco-card-tag"><span class="tag tag-fast">Plus rapide</span></div>
-            <div class="d-reco-card-head">
-              <div class="d-reco-card-operator">
-                <div class="d-reco-card-icon flight">✈️</div>
-                <div><div class="d-reco-card-name">Air France</div><div class="d-reco-card-route">Economy · CDG → LYS</div></div>
+            <div class="rc-header">
+              <div class="rc-header-left">
+                <div class="rc-icon flight">✈️</div>
+                <div class="rc-price-block">
+                  <div class="rc-price">378 €</div>
+                  <div class="rc-price-pax">126 € par passager</div>
+                </div>
               </div>
-              <div class="d-reco-card-price-block"><div class="d-reco-card-price">378 €</div><div class="d-reco-card-pax">126 €/pers</div></div>
+              <span class="rc-tag rc-tag-fast">Plus rapide</span>
             </div>
-            <div class="d-reco-legs">
-              <div class="d-reco-leg">
-                <span class="d-reco-leg-dir">Aller</span>
-                <span class="d-reco-leg-date">Ven. 16 jan.</span>
-                <span class="d-reco-leg-times">07:00 <span class="d-reco-leg-arrow">→</span> 08:10</span>
-                <span class="d-reco-leg-duration">1h10 · direct</span>
+            <div class="rc-content">
+              <!-- Leg 1: Aller -->
+              <div class="rc-leg">
+                <div class="rc-leg-meta">
+                  <span class="rc-class">Economy</span>
+                  <span class="rc-operator"><span class="rc-op-dot" style="background:#e8eaf6">✈️</span> Air France</span>
+                  <span class="rc-duration">1h10 · direct</span>
+                </div>
+                <div class="rc-route">
+                  <div class="rc-time">07:00</div>
+                  <div class="rc-track"><span class="rc-dot"></span><span class="rc-line"></span><span class="rc-dot"></span></div>
+                  <div class="rc-time">08:10</div>
+                </div>
+                <div class="rc-stations">
+                  <div class="rc-station"><div class="rc-station-name">CDG</div><div class="rc-station-city">Paris</div></div>
+                  <div class="rc-station rc-station-end"><div class="rc-station-name">LYS</div><div class="rc-station-city">Lyon</div></div>
+                </div>
               </div>
-              <div class="d-reco-leg">
-                <span class="d-reco-leg-dir">Retour</span>
-                <span class="d-reco-leg-date">Ven. 23 jan.</span>
-                <span class="d-reco-leg-times">20:30 <span class="d-reco-leg-arrow">→</span> 21:40</span>
-                <span class="d-reco-leg-duration">1h10 · direct</span>
+              <!-- Leg 2: Retour -->
+              <div class="rc-leg">
+                <div class="rc-leg-meta">
+                  <span class="rc-class">Economy</span>
+                  <span class="rc-operator"><span class="rc-op-dot" style="background:#e8eaf6">✈️</span> Air France</span>
+                  <span class="rc-duration">1h10 · direct</span>
+                </div>
+                <div class="rc-route">
+                  <div class="rc-time">20:30</div>
+                  <div class="rc-track"><span class="rc-dot"></span><span class="rc-line"></span><span class="rc-dot"></span></div>
+                  <div class="rc-time">21:40</div>
+                </div>
+                <div class="rc-stations">
+                  <div class="rc-station"><div class="rc-station-name">LYS</div><div class="rc-station-city">Lyon</div></div>
+                  <div class="rc-station rc-station-end"><div class="rc-station-name">CDG</div><div class="rc-station-city">Paris</div></div>
+                </div>
               </div>
             </div>
-            <div class="d-reco-card-footer">
-              <span class="amenity-yes">Modifiable avec frais</span>
-              <span class="amenity-no">Non remboursable</span>
-              <span>🧳 12kg</span>
+            <div class="rc-footer">
+              <div class="rc-conditions">
+                <span class="rc-cond rc-cond-yes">Modifiable avec frais</span>
+                <span class="rc-cond rc-cond-no">Non remboursable</span>
+                <span class="rc-cond rc-cond-neutral">🧳 12kg</span>
+              </div>
+
             </div>
           </div>
           <!-- Reco 3: OuiGo -->
           <div class="d-reco-card" data-id="train2" onclick="toggleRecoDetail('train2')">
-            <div class="d-reco-card-tag"><span class="tag tag-success">Moins cher</span></div>
-            <div class="d-reco-card-head">
-              <div class="d-reco-card-operator">
-                <div class="d-reco-card-icon train">🚄</div>
-                <div><div class="d-reco-card-name">OuiGo</div><div class="d-reco-card-route">Standard · Paris → Lyon</div></div>
+            <div class="rc-header">
+              <div class="rc-header-left">
+                <div class="rc-icon train">🚄</div>
+                <div class="rc-price-block">
+                  <div class="rc-price">196 €</div>
+                  <div class="rc-price-pax">65 € par passager</div>
+                </div>
               </div>
-              <div class="d-reco-card-price-block"><div class="d-reco-card-price">196 €</div><div class="d-reco-card-pax">65 €/pers</div></div>
+              <span class="rc-tag rc-tag-success">Moins cher</span>
             </div>
-            <div class="d-reco-legs">
-              <div class="d-reco-leg">
-                <span class="d-reco-leg-dir">Aller</span>
-                <span class="d-reco-leg-date">Ven. 16 jan.</span>
-                <span class="d-reco-leg-times">09:00 <span class="d-reco-leg-arrow">→</span> 11:30</span>
-                <span class="d-reco-leg-duration">2h30 · direct</span>
+            <div class="rc-content">
+              <!-- Leg 1: Aller -->
+              <div class="rc-leg">
+                <div class="rc-leg-meta">
+                  <span class="rc-class">Standard</span>
+                  <span class="rc-operator"><span class="rc-op-dot" style="background:#e8f5e9">🚄</span> OuiGo</span>
+                  <span class="rc-duration">2h30 · direct</span>
+                </div>
+                <div class="rc-route">
+                  <div class="rc-time">09:00</div>
+                  <div class="rc-track"><span class="rc-dot"></span><span class="rc-line"></span><span class="rc-dot"></span></div>
+                  <div class="rc-time">11:30</div>
+                </div>
+                <div class="rc-stations">
+                  <div class="rc-station"><div class="rc-station-name">Gare de Lyon</div><div class="rc-station-city">Paris</div></div>
+                  <div class="rc-station rc-station-end"><div class="rc-station-name">Part-Dieu</div><div class="rc-station-city">Lyon</div></div>
+                </div>
               </div>
-              <div class="d-reco-leg">
-                <span class="d-reco-leg-dir">Retour</span>
-                <span class="d-reco-leg-date">Ven. 23 jan.</span>
-                <span class="d-reco-leg-times">19:30 <span class="d-reco-leg-arrow">→</span> 22:00</span>
-                <span class="d-reco-leg-duration">2h30 · direct</span>
+              <!-- Leg 2: Retour -->
+              <div class="rc-leg">
+                <div class="rc-leg-meta">
+                  <span class="rc-class">Standard</span>
+                  <span class="rc-operator"><span class="rc-op-dot" style="background:#e8f5e9">🚄</span> OuiGo</span>
+                  <span class="rc-duration">2h30 · direct</span>
+                </div>
+                <div class="rc-route">
+                  <div class="rc-time">19:30</div>
+                  <div class="rc-track"><span class="rc-dot"></span><span class="rc-line"></span><span class="rc-dot"></span></div>
+                  <div class="rc-time">22:00</div>
+                </div>
+                <div class="rc-stations">
+                  <div class="rc-station"><div class="rc-station-name">Part-Dieu</div><div class="rc-station-city">Lyon</div></div>
+                  <div class="rc-station rc-station-end"><div class="rc-station-name">Gare de Lyon</div><div class="rc-station-city">Paris</div></div>
+                </div>
               </div>
             </div>
-            <div class="d-reco-card-footer">
-              <span class="amenity-no">Non modifiable</span>
-              <span class="amenity-no">Non remboursable</span>
-              <span style="color:var(--color-positive)">♻ Green</span>
+            <div class="rc-footer">
+              <div class="rc-conditions">
+                <span class="rc-cond rc-cond-no">Non modifiable</span>
+                <span class="rc-cond rc-cond-no">Non remboursable</span>
+              </div>
+
             </div>
           </div>
         </div><!-- /d-reco-grid -->
@@ -246,10 +332,6 @@
           </div>
         </div><!-- /d-reco-detail-zone -->
 
-        <div class="d-reco-see-all">
-          <button class="d-see-all-btn" onclick="showAllView('trains')">Voir tous les trains <span class="d-see-all-count">(24)</span></button>
-          <button class="d-see-all-btn" onclick="showAllView('flights')">Voir tous les vols <span class="d-see-all-count">(18)</span></button>
-        </div>
       </div><!-- /d-reco-zone -->
       </div><!-- /view-recos -->
 
