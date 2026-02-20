@@ -842,15 +842,10 @@ body { font-family:var(--font); background:var(--bg-page); color:var(--text-prim
 .d-reco-mobile-header { display:none; }
 
 /* Fixed CTA bar when reco detail is open */
-.d-reco-cta-bar { position:fixed; bottom:0; left:0; right:0; z-index:100; background:white; border-top:1px solid var(--border-light); box-shadow:0 -4px 20px rgba(0,0,0,0.08); padding:10px 24px; display:none; flex-direction:column; gap:4px; }
+.d-reco-cta-bar { position:fixed; bottom:0; left:0; right:0; z-index:100; background:white; border-top:1px solid var(--border-light); box-shadow:0 -4px 20px rgba(0,0,0,0.08); padding:12px 24px; display:none; align-items:center; justify-content:space-between; }
 .d-reco-cta-bar.visible { display:flex; animation:ridSlideUp 200ms var(--ease-decel); }
-.rcb-main { display:flex; align-items:center; justify-content:space-between; }
 .d-reco-cta-bar .rcb-summary { font-size:13px; color:var(--text-subtitle); }
 .d-reco-cta-bar .rcb-summary strong { color:var(--text-primary); font-size:15px; }
-.rcb-see-others { display:flex; align-items:center; justify-content:center; gap:8px; }
-.rcb-see-others a { font-size:11px; font-weight:500; color:var(--text-muted); text-decoration:none; transition:color 0.15s; }
-.rcb-see-others a:hover { color:var(--text-tag-info); }
-.rcb-see-others-sep { color:var(--border-light); font-size:10px; }
 @keyframes ridSlideUp { from { opacity:0; transform:translateY(12px); } to { opacity:1; transform:translateY(0); } }
 .d-reco-card.expanded { border-color:var(--text-tag-info); background:white; box-shadow:0 0 0 2px rgba(0,68,101,0.12); }
 @keyframes ridSlideDown { from { opacity:0; transform:translateY(-8px); } to { opacity:1; transform:translateY(0); } }
@@ -1059,8 +1054,7 @@ body { font-family:var(--font); background:var(--bg-page); color:var(--text-prim
   .d-see-all-btn { flex: 1; text-align: center; min-height: 44px; display: flex; align-items: center; justify-content: center; font-size: 12px; }
 
   /* Reco CTA bar */
-  .d-reco-cta-bar { gap: 6px; padding: 10px 16px calc(10px + env(safe-area-inset-bottom)); }
-  .rcb-main { flex-direction: column; gap: 8px; }
+  .d-reco-cta-bar { flex-direction: column; gap: 8px; padding: 12px 16px calc(12px + env(safe-area-inset-bottom)); }
   .d-reco-cta-bar .rcb-summary { width: 100%; text-align: center; font-size: 12px; }
   .d-reco-cta-bar .btn-primary { width: 100%; min-height: 48px; font-size: 15px; padding: 14px 20px; }
 
