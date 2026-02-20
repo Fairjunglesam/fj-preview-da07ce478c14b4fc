@@ -872,26 +872,24 @@ function toggleRecoDetail(id) {
       }
     }, 300);
 
-    // Inject "Voir les autres" links at the bottom of the detail
-    _injectSeeOthersLinks(detailEl, id);
+    // Update "see others" links in sticky footer
+    _updateSeeOthersLinks(id);
   }
 }
 
-// Helper: inject "Voir les autres trains/vols" links at bottom of reco detail
-function _injectSeeOthersLinks(detailEl, id) {
+// Helper: update "see others" links in sticky CTA footer
+function _updateSeeOthersLinks(id) {
+  const linksEl = document.getElementById('rcb-see-others');
+  if (!linksEl) return;
   const isFlightReco = id.startsWith('flight');
-  const otherMode = isFlightReco ? 'trains' : 'flights';
   const sameMode = isFlightReco ? 'flights' : 'trains';
+  const otherMode = isFlightReco ? 'trains' : 'flights';
   const sameLabel = isFlightReco ? 'Voir les autres vols' : 'Voir les autres trains';
-  const otherLabel = isFlightReco ? 'Voir les trains' : 'Voir les vols';
-  const dpContent = detailEl.querySelector('.dp-content');
-  if (!dpContent) return;
-  const linksHtml = '<div class="d-reco-see-others">' +
-    '<a href="#" onclick="event.preventDefault(); collapseRecoDetail(); showAllView(\'' + sameMode + '\')">' + sameLabel + ' →</a>' +
-    '<span class="d-see-others-sep">·</span>' +
-    '<a href="#" onclick="event.preventDefault(); collapseRecoDetail(); showAllView(\'' + otherMode + '\')">' + otherLabel + ' →</a>' +
-    '</div>';
-  dpContent.insertAdjacentHTML('beforeend', linksHtml);
+  const otherLabel = isFlightReco ? 'Voir les vols' : 'Voir les trains';
+  linksEl.innerHTML =
+    '<a href="#" onclick="event.preventDefault(); collapseRecoDetail(); showAllView(\'' + sameMode + '\')">' + sameLabel + '</a>' +
+    '<span class="rcb-see-others-sep">·</span>' +
+    '<a href="#" onclick="event.preventDefault(); collapseRecoDetail(); showAllView(\'' + otherMode + '\')">' + otherLabel + '</a>';
 }
 
 // Helper: get reco data for CTA bar display
