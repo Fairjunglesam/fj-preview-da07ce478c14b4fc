@@ -49,7 +49,7 @@ const panels = {
           <div class="loyalty-row" style="font-size:10px;margin-top:2px">1ère Classe : 500 pts · Ajoutez votre n° fidélité lors de la réservation</div>
         </div>
       </div>
-      <div class="drawer-cta"><div class="cta-price-summary">Total : <strong>290 €</strong> · 2nde</div><button class="btn-primary" onclick="selectItem('train1','TGV INOUI · 2nde','290 €','transport')">Sélectionner et continuer →</button></div>`
+      <div class="drawer-cta"><div class="cta-price-summary">Aller-retour : <strong>290 €</strong> · 2nde</div><button class="btn-primary" onclick="selectItem('train1','TGV INOUI · 2nde','290 €','transport')">Sélectionner et continuer →</button></div>`
   },
   'train1-1ere': {
     title: '🚄 TGV INOUI · 1ère', type: 'transport', name: 'TGV INOUI · 1ère', price: '459 €',
@@ -67,7 +67,7 @@ const panels = {
           </div>
         </div></div>
       </div>
-      <div class="drawer-cta"><div class="cta-price-summary">Total : <strong>459 €</strong> · 1ère</div><button class="btn-primary" onclick="selectItem('train1','TGV INOUI · 1ère','459 €','transport')">Sélectionner et continuer →</button></div>`
+      <div class="drawer-cta"><div class="cta-price-summary">Aller-retour : <strong>459 €</strong> · 1ère</div><button class="btn-primary" onclick="selectItem('train1','TGV INOUI · 1ère','459 €','transport')">Sélectionner et continuer →</button></div>`
   },
   train2: {
     title: '🚄 OuiGo', type: 'transport', name: 'OuiGo', price: '196 €',
@@ -89,7 +89,7 @@ const panels = {
           <div class="co2-bar"><div class="co2-bar-fill" style="width:4%"></div></div>
         </div>
       </div>
-      <div class="drawer-cta"><div class="cta-price-summary">Total : <strong>196 €</strong></div><button class="btn-primary" onclick="selectItem('train2','OuiGo','196 €','transport')">Sélectionner et continuer →</button></div>`
+      <div class="drawer-cta"><div class="cta-price-summary">Aller-retour : <strong>196 €</strong></div><button class="btn-primary" onclick="selectItem('train2','OuiGo','196 €','transport')">Sélectionner et continuer →</button></div>`
   },
   train3: {
     title: '🚄 TGV INOUI', type: 'transport', name: 'TGV INOUI · 2nde', price: '318 €',
@@ -119,7 +119,7 @@ const panels = {
           <div class="loyalty-row">🎫 Gagnez <span class="loyalty-points">250 pts</span> Grand Voyageur SNCF</div>
         </div>
       </div>
-      <div class="drawer-cta"><div class="cta-price-summary">Total : <strong>318 €</strong> · 2nde</div><button class="btn-primary" onclick="selectItem('train3','TGV INOUI · 2nde','318 €','transport')">Sélectionner et continuer →</button></div>`
+      <div class="drawer-cta"><div class="cta-price-summary">Aller-retour : <strong>318 €</strong> · 2nde</div><button class="btn-primary" onclick="selectItem('train3','TGV INOUI · 2nde','318 €','transport')">Sélectionner et continuer →</button></div>`
   },
   'train3-1ere': {
     title: '🚄 TGV INOUI · 1ère', type: 'transport', name: 'TGV INOUI · 1ère', price: '495 €',
@@ -137,7 +137,7 @@ const panels = {
           </div>
         </div></div>
       </div>
-      <div class="drawer-cta"><div class="cta-price-summary">Total : <strong>495 €</strong> · 1ère</div><button class="btn-primary" onclick="selectItem('train3','TGV INOUI · 1ère','495 €','transport')">Sélectionner et continuer →</button></div>`
+      <div class="drawer-cta"><div class="cta-price-summary">Aller-retour : <strong>495 €</strong> · 1ère</div><button class="btn-primary" onclick="selectItem('train3','TGV INOUI · 1ère','495 €','transport')">Sélectionner et continuer →</button></div>`
   },
   flight1: {
     title: '✈️ Air France', type: 'transport', name: 'Air France · Economy', price: '378 €',
@@ -179,7 +179,7 @@ const panels = {
           <div class="loyalty-row" style="font-size:10px;margin-top:2px">Economy Std : 1 250 Miles · Business : 3 000 Miles</div>
         </div>
       </div>
-      <div class="drawer-cta"><div class="cta-price-summary">Total : <strong>378 €</strong> · Eco Light</div><button class="btn-primary" onclick="selectItem('flight1','Air France · Economy','378 €','transport')">Sélectionner et continuer →</button></div>`
+      <div class="drawer-cta"><div class="cta-price-summary">Aller-retour : <strong>378 €</strong> · Eco Light</div><button class="btn-primary" onclick="selectItem('flight1','Air France · Economy','378 €','transport')">Sélectionner et continuer →</button></div>`
   },
   'flight1-business': {
     title: '✈️ Air France · Business', type: 'transport', name: 'Air France · Business', price: '1 140 €',
@@ -199,7 +199,7 @@ const panels = {
           </div>
         </div></div>
       </div>
-      <div class="drawer-cta"><div class="cta-price-summary">Total : <strong>1 140 €</strong> · Business</div><button class="btn-primary" onclick="selectItem('flight1','Air France · Business','1 140 €','transport')">Sélectionner et continuer →</button></div>`
+      <div class="drawer-cta"><div class="cta-price-summary">Aller-retour : <strong>1 140 €</strong> · Business</div><button class="btn-primary" onclick="selectItem('flight1','Air France · Business','1 140 €','transport')">Sélectionner et continuer →</button></div>`
   },
   flight2: {
     title: '✈️ easyJet', type: 'transport', name: 'easyJet · Standard', price: '312 €',
@@ -230,7 +230,7 @@ const panels = {
           <div class="co2-detail" style="margin-top:4px">Train alternatif : 1,8 kg CO2 (−96%)</div>
         </div>
       </div>
-      <div class="drawer-cta"><div class="cta-price-summary">Total : <strong>312 €</strong></div><button class="btn-primary" onclick="selectItem('flight2','easyJet · Standard','312 €','transport')">Sélectionner et continuer →</button></div>`
+      <div class="drawer-cta"><div class="cta-price-summary">Aller-retour : <strong>312 €</strong></div><button class="btn-primary" onclick="selectItem('flight2','easyJet · Standard','312 €','transport')">Sélectionner et continuer →</button></div>`
   },
   hotel1: {
     title: '🏨 Mercure Lyon Centre', type: 'hotel', name: 'Mercure Lyon Centre', price: '742 €',
