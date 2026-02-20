@@ -94,31 +94,28 @@
   .stepper-step.active .stepper-label { color: var(--blue-700); }
   .stepper-step.active .stepper-date { color: var(--blue-500); }
 
-  /* ===== Dark Stepper (dark/bold mode) ===== */
-  .stepper.stepper-dark { background: linear-gradient(145deg, #1E2330 0%, #262D3F 100%); border-radius: 14px; padding: 16px 10px 12px; }
-  .stepper.stepper-dark .stepper-step:hover { background: rgba(255,255,255,0.04); }
-  .stepper.stepper-dark .stepper-step.active:hover { background: rgba(0,169,252,0.06); }
-  .stepper.stepper-dark .stepper-step.completed { opacity: 0.6; }
-  .stepper.stepper-dark .stepper-step.completed:hover { opacity: 0.8; background: rgba(255,255,255,0.04); }
-  .stepper.stepper-dark .stepper-dot-row { height: 46px; }
-  .stepper.stepper-dark .stepper-dot { width: 28px; height: 28px; background: rgba(255,255,255,0.08); border: 1.5px solid rgba(255,255,255,0.15); }
-  .stepper.stepper-dark .stepper-dot .material-symbols-rounded { font-size: 16px; color: rgba(255,255,255,0.6); }
-  .stepper.stepper-dark .stepper-step.completed .stepper-dot { background: var(--green-500); border-color: var(--green-500); }
-  .stepper.stepper-dark .stepper-step.completed .stepper-dot .material-symbols-rounded { font-size: 14px; color: #fff; }
-  .stepper.stepper-dark .stepper-step.active .stepper-dot { width: 44px; height: 44px; background: var(--blue-500); border-color: var(--blue-500); box-shadow: 0 0 0 5px rgba(0,169,252,0.2), 0 0 24px rgba(0,169,252,0.12); }
-  .stepper.stepper-dark .stepper-step.active .stepper-dot .material-symbols-rounded { font-size: 22px; color: #fff; }
-  .stepper.stepper-dark .stepper-line { background: rgba(255,255,255,0.08); height: 2px; }
-  .stepper.stepper-dark .stepper-step.completed .stepper-line { background: rgba(34,215,161,0.4); }
-  .stepper.stepper-dark .stepper-step.active.transit .stepper-line::after { background: linear-gradient(90deg, var(--blue-400) 40%, rgba(255,255,255,0.08) 60%); }
-  .stepper.stepper-dark .stepper-label { color: rgba(255,255,255,0.65); }
-  .stepper.stepper-dark .stepper-step.active .stepper-label { color: var(--blue-300); font-size: 13px; }
-  .stepper.stepper-dark .stepper-date { color: rgba(255,255,255,0.4); }
-  .stepper.stepper-dark .stepper-step.active .stepper-date { color: var(--blue-400); }
-  .stepper.stepper-dark .stepper-step.completed .stepper-label { color: rgba(255,255,255,0.35); text-decoration-color: rgba(255,255,255,0.2); }
-  .stepper.stepper-dark .stepper-step.completed .stepper-date { color: rgba(255,255,255,0.2); }
-  .stepper.stepper-dark .stepper-check { color: #fff; }
-  .stepper.stepper-dark .stepper-line { left: calc(50% + 16px); right: calc(-50% + 16px); }
-  .stepper.stepper-dark .stepper-dot { transition: all 0.35s var(--ease); }
+  /* ===== Modern Stepper (dark/bold mode) — no heavy bg, dark dots on white card ===== */
+  .stepper.stepper-dark { margin-bottom: 10px; }
+  .stepper.stepper-dark .stepper-step:hover { background: var(--grey-50); }
+  .stepper.stepper-dark .stepper-step.active:hover { background: var(--blue-50); }
+  .stepper.stepper-dark .stepper-step.completed { opacity: 0.55; }
+  .stepper.stepper-dark .stepper-step.completed:hover { opacity: 0.8; }
+  .stepper.stepper-dark .stepper-dot-row { height: 38px; }
+  .stepper.stepper-dark .stepper-dot { width: 26px; height: 26px; background: var(--grey-800); border: none; transition: all 0.35s var(--ease); }
+  .stepper.stepper-dark .stepper-dot .material-symbols-rounded { font-size: 14px; color: rgba(255,255,255,0.85); }
+  .stepper.stepper-dark .stepper-step.completed .stepper-dot { background: var(--green-500); }
+  .stepper.stepper-dark .stepper-step.completed .stepper-dot .material-symbols-rounded { font-size: 13px; color: #fff; }
+  .stepper.stepper-dark .stepper-step.active .stepper-dot { width: 36px; height: 36px; background: var(--blue-500); box-shadow: 0 0 0 4px rgba(0,169,252,0.15); }
+  .stepper.stepper-dark .stepper-step.active .stepper-dot .material-symbols-rounded { font-size: 18px; color: #fff; }
+  .stepper.stepper-dark .stepper-line { background: var(--grey-100); height: 2px; left: calc(50% + 15px); right: calc(-50% + 15px); }
+  .stepper.stepper-dark .stepper-step.completed .stepper-line { background: var(--green-200); }
+  .stepper.stepper-dark .stepper-step.active.transit .stepper-line::after { background: linear-gradient(90deg, var(--blue-400) 40%, var(--grey-100) 60%); }
+  .stepper.stepper-dark .stepper-label { color: var(--grey-700); font-size: 11px; }
+  .stepper.stepper-dark .stepper-step.active .stepper-label { color: var(--blue-700); font-size: 12px; font-weight: 800; }
+  .stepper.stepper-dark .stepper-date { color: var(--grey-400); font-size: 9px; }
+  .stepper.stepper-dark .stepper-step.active .stepper-date { color: var(--blue-500); }
+  .stepper.stepper-dark .stepper-step.completed .stepper-label { color: var(--grey-400); }
+  .stepper.stepper-dark .stepper-step.completed .stepper-date { color: var(--grey-300); }
 
   /* ===== Étape wrapper ===== */
   .etape-content { transition: all 0.3s var(--ease); }
@@ -361,15 +358,13 @@
     .stepper-line { left: calc(50% + 16px); right: calc(-50% + 16px); }
     .stepper-label { font-size: 11px; }
     .stepper-date { font-size: 8px; }
-    /* Dark stepper mobile */
-    .stepper.stepper-dark { padding: 12px 6px 10px; border-radius: 12px; overflow-x: auto; -webkit-overflow-scrolling: touch; scroll-snap-type: x proximity; }
-    .stepper.stepper-dark .stepper-dot-row { height: 40px; }
-    .stepper.stepper-dark .stepper-dot { width: 26px; height: 26px; }
-    .stepper.stepper-dark .stepper-dot .material-symbols-rounded { font-size: 14px; }
-    .stepper.stepper-dark .stepper-step.active .stepper-dot { width: 38px; height: 38px; }
-    .stepper.stepper-dark .stepper-step.active .stepper-dot .material-symbols-rounded { font-size: 20px; }
-    .stepper.stepper-dark .stepper-step { min-width: 80px; scroll-snap-align: center; }
-    .stepper.stepper-dark .stepper-step.active .stepper-label { font-size: 12px; }
+    /* Modern stepper mobile */
+    .stepper.stepper-dark .stepper-dot-row { height: 34px; }
+    .stepper.stepper-dark .stepper-dot { width: 24px; height: 24px; }
+    .stepper.stepper-dark .stepper-dot .material-symbols-rounded { font-size: 13px; }
+    .stepper.stepper-dark .stepper-step.active .stepper-dot { width: 32px; height: 32px; }
+    .stepper.stepper-dark .stepper-step.active .stepper-dot .material-symbols-rounded { font-size: 16px; }
+    .stepper.stepper-dark .stepper-step.active .stepper-label { font-size: 11px; }
     .bp-time { font-size: 22px; }
     .bp-route { padding: 8px 10px 4px; }
     .bp-head { padding: 6px 10px 4px; }
