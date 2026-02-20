@@ -971,6 +971,12 @@ function showRecoView() {
   trainReturnSelection = null;
   document.getElementById('selection-footer').classList.remove('visible');
 
+  // Restore reco CTA bar if a reco is still expanded
+  if (expandedRecoId) {
+    const ctaBar = document.getElementById('reco-cta-bar');
+    if (ctaBar) ctaBar.classList.add('visible');
+  }
+
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
