@@ -16,10 +16,10 @@ let flightSortBy = 'relevance'; // 'relevance' | 'departure' | 'arrival' | 'pric
 // ===== DETAIL PANELS DATA =====
 const panels = {
   train1: {
-    title: '🚄 TGV INOUI 7835', type: 'transport', name: 'TGV INOUI 7835', price: '290 €',
+    title: '🚄 TGV INOUI', type: 'transport', name: 'TGV INOUI · 2nde', price: '290 €',
     html: `
       <div class="dp-content">
-        <div class="dp-header"><div><div class="dp-title-row"><div class="dp-icon" style="background:#e3f2fd">🚄</div><div class="dp-title">TGV INOUI 7835</div></div><div class="dp-subtitle">Paris GdL → Lyon Part-Dieu · A/R · 2nde</div></div><div class="dp-price-box"><div class="dp-price-big">290 €</div><div class="dp-price-info">97 €/p · 3 voy.</div></div></div>
+        <div class="dp-header"><div><div class="dp-title-row"><div class="dp-icon" style="background:#e3f2fd">🚄</div><div class="dp-title">TGV INOUI</div></div><div class="dp-subtitle">Paris GdL → Lyon Part-Dieu · A/R · 2nde</div></div><div class="dp-price-box"><div class="dp-price-big">290 €</div><div class="dp-price-info">97 €/p · 3 voy.</div></div></div>
         <div class="dp-section"><div class="dp-section-title">Itinéraire</div>
           <div class="journey-leg"><div class="journey-label">Aller <span class="journey-date">· Ven. 16 jan.</span></div><div class="tl"><div class="tl-point"><span class="tl-time">07:13</span><span class="tl-station">Paris Gare de Lyon</span></div><div class="tl-connector"><div class="tl-connector-info"><div class="tl-op-dot" style="background:#e3f2fd">🚄</div> 2h · Direct · TGV 7835 · 2nde</div><div class="leg-comfort">💺 Standard, inclinable · 🔌 Prise (selon place) · 📶 WiFi TGV Connect · 🍽️ Bar</div></div><div class="tl-point"><span class="tl-time">09:13</span><span class="tl-station">Lyon Part-Dieu</span></div></div></div>
           <div class="journey-leg"><div class="journey-label">Retour <span class="journey-date">· Ven. 23 jan.</span></div><div class="tl"><div class="tl-point"><span class="tl-time">18:00</span><span class="tl-station">Lyon Part-Dieu</span></div><div class="tl-connector"><div class="tl-connector-info"><div class="tl-op-dot" style="background:#e3f2fd">🚄</div> 2h · Direct · TGV 6642 · 2nde</div><div class="leg-comfort">💺 Standard, inclinable · 🔌 Prise (selon place) · 📶 WiFi TGV Connect · 🍽️ Bar</div></div><div class="tl-point"><span class="tl-time">20:00</span><span class="tl-station">Paris Gare de Lyon</span></div></div></div>
@@ -49,13 +49,13 @@ const panels = {
           <div class="loyalty-row" style="font-size:10px;margin-top:2px">1ère Classe : 500 pts · Ajoutez votre n° fidélité lors de la réservation</div>
         </div>
       </div>
-      <div class="drawer-cta"><div class="cta-price-summary">Total : <strong>290 €</strong> · 2nde</div><button class="btn-primary" onclick="selectItem('train1','TGV INOUI 7835 · 2nde','290 €','transport')">Sélectionner et continuer →</button></div>`
+      <div class="drawer-cta"><div class="cta-price-summary">Total : <strong>290 €</strong> · 2nde</div><button class="btn-primary" onclick="selectItem('train1','TGV INOUI · 2nde','290 €','transport')">Sélectionner et continuer →</button></div>`
   },
   'train1-1ere': {
-    title: '🚄 TGV INOUI 7835 · 1ère', type: 'transport', name: 'TGV INOUI 7835 · 1ère', price: '459 €',
+    title: '🚄 TGV INOUI · 1ère', type: 'transport', name: 'TGV INOUI · 1ère', price: '459 €',
     html: `
       <div class="dp-content">
-        <div class="dp-header"><div><div class="dp-title-row"><div class="dp-icon" style="background:#e3f2fd">🚄</div><div class="dp-title">TGV INOUI 7835</div></div><div class="dp-subtitle">Paris GdL → Lyon Part-Dieu · A/R · 1ère Classe</div></div><div class="dp-price-box"><div class="dp-price-big">459 €</div><div class="dp-price-info">153 €/p · 3 voy.</div></div></div>
+        <div class="dp-header"><div><div class="dp-title-row"><div class="dp-icon" style="background:#e3f2fd">🚄</div><div class="dp-title">TGV INOUI</div></div><div class="dp-subtitle">Paris GdL → Lyon Part-Dieu · A/R · 1ère Classe</div></div><div class="dp-price-box"><div class="dp-price-big">459 €</div><div class="dp-price-info">153 €/p · 3 voy.</div></div></div>
         <div class="dp-section"><div class="dp-section-title">Itinéraire</div>
           <div class="journey-leg"><div class="journey-label">Aller <span class="journey-date">· Ven. 16 jan.</span></div><div class="tl"><div class="tl-point"><span class="tl-time">07:13</span><span class="tl-station">Paris Gare de Lyon</span></div><div class="tl-connector"><div class="tl-connector-info"><div class="tl-op-dot" style="background:#e3f2fd">🚄</div> 2h · Direct · TGV 7835 · 1ère</div><div class="leg-comfort">💺 1ère, large, repose-pieds · 🔌 Prise individuelle · 📶 WiFi premium · 🍽️ Service à la place · 🏛️ Salon GV</div></div><div class="tl-point"><span class="tl-time">09:13</span><span class="tl-station">Lyon Part-Dieu</span></div></div></div>
           <div class="journey-leg"><div class="journey-label">Retour <span class="journey-date">· Ven. 23 jan.</span></div><div class="tl"><div class="tl-point"><span class="tl-time">18:00</span><span class="tl-station">Lyon Part-Dieu</span></div><div class="tl-connector"><div class="tl-connector-info"><div class="tl-op-dot" style="background:#e3f2fd">🚄</div> 2h · Direct · TGV 6642 · 1ère</div><div class="leg-comfort">💺 1ère, large, repose-pieds · 🔌 Prise individuelle · 📶 WiFi premium · 🍽️ Service à la place · 🏛️ Salon GV</div></div><div class="tl-point"><span class="tl-time">20:00</span><span class="tl-station">Paris Gare de Lyon</span></div></div></div>
@@ -67,13 +67,13 @@ const panels = {
           </div>
         </div></div>
       </div>
-      <div class="drawer-cta"><div class="cta-price-summary">Total : <strong>459 €</strong> · 1ère</div><button class="btn-primary" onclick="selectItem('train1','TGV INOUI 7835 · 1ère','459 €','transport')">Sélectionner et continuer →</button></div>`
+      <div class="drawer-cta"><div class="cta-price-summary">Total : <strong>459 €</strong> · 1ère</div><button class="btn-primary" onclick="selectItem('train1','TGV INOUI · 1ère','459 €','transport')">Sélectionner et continuer →</button></div>`
   },
   train2: {
-    title: '🚄 OuiGo 7901', type: 'transport', name: 'OuiGo 7901', price: '196 €',
+    title: '🚄 OuiGo', type: 'transport', name: 'OuiGo', price: '196 €',
     html: `
       <div class="dp-content">
-        <div class="dp-header"><div><div class="dp-title-row"><div class="dp-icon" style="background:#e8f5e9">🚄</div><div class="dp-title">OuiGo 7901</div></div><div class="dp-subtitle">Paris GdL → Lyon Part-Dieu · A/R</div></div><div class="dp-price-box"><div class="dp-price-big">196 €</div><div class="dp-price-info">65 €/p · 3 voy.</div></div></div>
+        <div class="dp-header"><div><div class="dp-title-row"><div class="dp-icon" style="background:#e8f5e9">🚄</div><div class="dp-title">OuiGo</div></div><div class="dp-subtitle">Paris GdL → Lyon Part-Dieu · A/R</div></div><div class="dp-price-box"><div class="dp-price-big">196 €</div><div class="dp-price-info">65 €/p · 3 voy.</div></div></div>
         <div class="dp-section"><div class="dp-section-title">Itinéraire</div>
           <div class="journey-leg"><div class="journey-label">Aller <span class="journey-date">· Ven. 16 jan.</span></div><div class="tl"><div class="tl-point"><span class="tl-time">09:00</span><span class="tl-station">Paris Gare de Lyon</span></div><div class="tl-connector"><div class="tl-connector-info"><div class="tl-op-dot" style="background:#e8f5e9">🚄</div> 2h30 · Direct · OuiGo 7901</div><div class="leg-comfort">💺 Standard, non inclinable · 🔌 Non · 📶 Non · 🍽️ Non</div></div><div class="tl-point"><span class="tl-time">11:30</span><span class="tl-station">Lyon Part-Dieu</span></div></div></div>
           <div class="journey-leg"><div class="journey-label">Retour <span class="journey-date">· Ven. 23 jan.</span></div><div class="tl"><div class="tl-point"><span class="tl-time">19:30</span><span class="tl-station">Lyon Part-Dieu</span></div><div class="tl-connector"><div class="tl-connector-info"><div class="tl-op-dot" style="background:#e8f5e9">🚄</div> 2h30 · Direct · OuiGo 7908</div><div class="leg-comfort">💺 Standard, non inclinable · 🔌 Non · 📶 Non · 🍽️ Non</div></div><div class="tl-point"><span class="tl-time">22:00</span><span class="tl-station">Paris Gare de Lyon</span></div></div></div>
@@ -89,13 +89,13 @@ const panels = {
           <div class="co2-bar"><div class="co2-bar-fill" style="width:4%"></div></div>
         </div>
       </div>
-      <div class="drawer-cta"><div class="cta-price-summary">Total : <strong>196 €</strong></div><button class="btn-primary" onclick="selectItem('train2','OuiGo 7901','196 €','transport')">Sélectionner et continuer →</button></div>`
+      <div class="drawer-cta"><div class="cta-price-summary">Total : <strong>196 €</strong></div><button class="btn-primary" onclick="selectItem('train2','OuiGo','196 €','transport')">Sélectionner et continuer →</button></div>`
   },
   train3: {
-    title: '🚄 TGV INOUI 7841', type: 'transport', name: 'TGV INOUI 7841', price: '318 €',
+    title: '🚄 TGV INOUI', type: 'transport', name: 'TGV INOUI · 2nde', price: '318 €',
     html: `
       <div class="dp-content">
-        <div class="dp-header"><div><div class="dp-title-row"><div class="dp-icon" style="background:#e3f2fd">🚄</div><div class="dp-title">TGV INOUI 7841</div></div><div class="dp-subtitle">Paris GdL → Lyon Part-Dieu · A/R · 2nde</div></div><div class="dp-price-box"><div class="dp-price-big">318 €</div><div class="dp-price-info">106 €/p · 3 voy.</div></div></div>
+        <div class="dp-header"><div><div class="dp-title-row"><div class="dp-icon" style="background:#e3f2fd">🚄</div><div class="dp-title">TGV INOUI</div></div><div class="dp-subtitle">Paris GdL → Lyon Part-Dieu · A/R · 2nde</div></div><div class="dp-price-box"><div class="dp-price-big">318 €</div><div class="dp-price-info">106 €/p · 3 voy.</div></div></div>
         <div class="dp-section"><div class="dp-section-title">Itinéraire</div>
           <div class="journey-leg"><div class="journey-label">Aller <span class="journey-date">· Ven. 16 jan.</span></div><div class="tl"><div class="tl-point"><span class="tl-time">08:30</span><span class="tl-station">Paris Gare de Lyon</span></div><div class="tl-connector"><div class="tl-connector-info"><div class="tl-op-dot" style="background:#e3f2fd">🚄</div> 2h · Direct · TGV 7841 · 2nde</div><div class="leg-comfort">💺 Standard, inclinable · 🔌 Prise · 📶 WiFi TGV Connect · 🍽️ Bar</div></div><div class="tl-point"><span class="tl-time">10:30</span><span class="tl-station">Lyon Part-Dieu</span></div></div></div>
           <div class="journey-leg"><div class="journey-label">Retour <span class="journey-date">· Ven. 23 jan.</span></div><div class="tl"><div class="tl-point"><span class="tl-time">19:00</span><span class="tl-station">Lyon Part-Dieu</span></div><div class="tl-connector"><div class="tl-connector-info"><div class="tl-op-dot" style="background:#e3f2fd">🚄</div> 2h · Direct · TGV 6648 · 2nde</div><div class="leg-comfort">💺 Standard, inclinable · 🔌 Prise · 📶 WiFi TGV Connect · 🍽️ Bar</div></div><div class="tl-point"><span class="tl-time">21:00</span><span class="tl-station">Paris Gare de Lyon</span></div></div></div>
@@ -119,13 +119,13 @@ const panels = {
           <div class="loyalty-row">🎫 Gagnez <span class="loyalty-points">250 pts</span> Grand Voyageur SNCF</div>
         </div>
       </div>
-      <div class="drawer-cta"><div class="cta-price-summary">Total : <strong>318 €</strong> · 2nde</div><button class="btn-primary" onclick="selectItem('train3','TGV INOUI 7841 · 2nde','318 €','transport')">Sélectionner et continuer →</button></div>`
+      <div class="drawer-cta"><div class="cta-price-summary">Total : <strong>318 €</strong> · 2nde</div><button class="btn-primary" onclick="selectItem('train3','TGV INOUI · 2nde','318 €','transport')">Sélectionner et continuer →</button></div>`
   },
   'train3-1ere': {
-    title: '🚄 TGV INOUI 7841 · 1ère', type: 'transport', name: 'TGV INOUI 7841 · 1ère', price: '495 €',
+    title: '🚄 TGV INOUI · 1ère', type: 'transport', name: 'TGV INOUI · 1ère', price: '495 €',
     html: `
       <div class="dp-content">
-        <div class="dp-header"><div><div class="dp-title-row"><div class="dp-icon" style="background:#e3f2fd">🚄</div><div class="dp-title">TGV INOUI 7841</div></div><div class="dp-subtitle">Paris GdL → Lyon Part-Dieu · A/R · 1ère Classe</div></div><div class="dp-price-box"><div class="dp-price-big">495 €</div><div class="dp-price-info">165 €/p · 3 voy.</div></div></div>
+        <div class="dp-header"><div><div class="dp-title-row"><div class="dp-icon" style="background:#e3f2fd">🚄</div><div class="dp-title">TGV INOUI</div></div><div class="dp-subtitle">Paris GdL → Lyon Part-Dieu · A/R · 1ère Classe</div></div><div class="dp-price-box"><div class="dp-price-big">495 €</div><div class="dp-price-info">165 €/p · 3 voy.</div></div></div>
         <div class="dp-section"><div class="dp-section-title">Itinéraire</div>
           <div class="journey-leg"><div class="journey-label">Aller <span class="journey-date">· Ven. 16 jan.</span></div><div class="tl"><div class="tl-point"><span class="tl-time">08:30</span><span class="tl-station">Paris Gare de Lyon</span></div><div class="tl-connector"><div class="tl-connector-info"><div class="tl-op-dot" style="background:#e3f2fd">🚄</div> 2h · Direct · TGV 7841 · 1ère</div><div class="leg-comfort">💺 1ère, large, repose-pieds · 🔌 Prise individuelle · 📶 WiFi premium · 🍽️ Service à la place · 🏛️ Salon GV</div></div><div class="tl-point"><span class="tl-time">10:30</span><span class="tl-station">Lyon Part-Dieu</span></div></div></div>
           <div class="journey-leg"><div class="journey-label">Retour <span class="journey-date">· Ven. 23 jan.</span></div><div class="tl"><div class="tl-point"><span class="tl-time">19:00</span><span class="tl-station">Lyon Part-Dieu</span></div><div class="tl-connector"><div class="tl-connector-info"><div class="tl-op-dot" style="background:#e3f2fd">🚄</div> 2h · Direct · TGV 6648 · 1ère</div><div class="leg-comfort">💺 1ère, large, repose-pieds · 🔌 Prise individuelle · 📶 WiFi premium · 🍽️ Service à la place · 🏛️ Salon GV</div></div><div class="tl-point"><span class="tl-time">21:00</span><span class="tl-station">Paris Gare de Lyon</span></div></div></div>
@@ -137,14 +137,14 @@ const panels = {
           </div>
         </div></div>
       </div>
-      <div class="drawer-cta"><div class="cta-price-summary">Total : <strong>495 €</strong> · 1ère</div><button class="btn-primary" onclick="selectItem('train3','TGV INOUI 7841 · 1ère','495 €','transport')">Sélectionner et continuer →</button></div>`
+      <div class="drawer-cta"><div class="cta-price-summary">Total : <strong>495 €</strong> · 1ère</div><button class="btn-primary" onclick="selectItem('train3','TGV INOUI · 1ère','495 €','transport')">Sélectionner et continuer →</button></div>`
   },
   flight1: {
-    title: '✈️ Air France AF7524', type: 'transport', name: 'Air France AF7524', price: '378 €',
+    title: '✈️ Air France', type: 'transport', name: 'Air France · Economy', price: '378 €',
     budgetLine: 'Budget max : 480 €',
     html: `
       <div class="dp-content">
-        <div class="dp-header"><div><div class="dp-title-row"><div class="dp-icon" style="background:#e8eaf6">✈️</div><div class="dp-title">Air France AF7524</div></div><div class="dp-subtitle">CDG → LYS · A/R · Economy</div></div><div class="dp-price-box"><div class="dp-price-big">378 €</div><div class="dp-price-info">126 €/p · 3 voy.</div></div></div>
+        <div class="dp-header"><div><div class="dp-title-row"><div class="dp-icon" style="background:#e8eaf6">✈️</div><div class="dp-title">Air France</div></div><div class="dp-subtitle">CDG → LYS · A/R · Economy</div></div><div class="dp-price-box"><div class="dp-price-big">378 €</div><div class="dp-price-info">126 €/p · 3 voy.</div></div></div>
         <div class="dp-section"><div class="dp-section-title">Itinéraire</div>
           <div class="journey-leg"><div class="journey-label">Aller <span class="journey-date">· Ven. 16 jan.</span></div><div class="tl"><div class="tl-point"><span class="tl-time">07:00</span><span class="tl-station">CDG <span class="tl-station-sub">· T2F</span></span></div><div class="tl-connector"><div class="tl-connector-info"><div class="tl-op-dot" style="background:#e8eaf6">✈️</div> 1h10 · Direct · AF7524 · A320</div><div class="leg-comfort">💺 Pitch 79cm · 🔌 USB + secteur · 📶 WiFi payant (8,99 €) · 🎬 Air France Play</div></div><div class="tl-point"><span class="tl-time">08:10</span><span class="tl-station">LYS <span class="tl-station-sub">· Saint-Exupéry</span></span></div></div></div>
           <div class="journey-leg"><div class="journey-label">Retour <span class="journey-date">· Ven. 23 jan.</span></div><div class="tl"><div class="tl-point"><span class="tl-time">20:30</span><span class="tl-station">LYS</span></div><div class="tl-connector"><div class="tl-connector-info"><div class="tl-op-dot" style="background:#e8eaf6">✈️</div> 1h10 · Direct · AF7531</div><div class="leg-comfort">💺 Pitch 79cm · 🔌 USB + secteur · 📶 WiFi payant (8,99 €)</div></div><div class="tl-point"><span class="tl-time">21:40</span><span class="tl-station">CDG <span class="tl-station-sub">· T2F</span></span></div></div></div>
@@ -179,14 +179,14 @@ const panels = {
           <div class="loyalty-row" style="font-size:10px;margin-top:2px">Economy Std : 1 250 Miles · Business : 3 000 Miles</div>
         </div>
       </div>
-      <div class="drawer-cta"><div class="cta-price-summary">Total : <strong>378 €</strong> · Eco Light</div><button class="btn-primary" onclick="selectItem('flight1','Air France AF7524 · Economy','378 €','transport')">Sélectionner et continuer →</button></div>`
+      <div class="drawer-cta"><div class="cta-price-summary">Total : <strong>378 €</strong> · Eco Light</div><button class="btn-primary" onclick="selectItem('flight1','Air France · Economy','378 €','transport')">Sélectionner et continuer →</button></div>`
   },
   'flight1-business': {
-    title: '✈️ Air France AF7524 · Business', type: 'transport', name: 'Air France AF7524 · Business', price: '1 140 €',
+    title: '✈️ Air France · Business', type: 'transport', name: 'Air France · Business', price: '1 140 €',
     budgetLine: 'Budget max : 480 € · Ce tarif : 1 140 € <span class="budget-over">(+660 €)</span>',
     html: `
       <div class="dp-content">
-        <div class="dp-header"><div><div class="dp-title-row"><div class="dp-icon" style="background:#e8eaf6">✈️</div><div class="dp-title">Air France AF7524</div></div><div class="dp-subtitle">CDG → LYS · A/R · Business</div></div><div class="dp-price-box"><div class="dp-price-big">1 140 €</div><div class="dp-price-info">380 €/p · 3 voy.</div></div></div>
+        <div class="dp-header"><div><div class="dp-title-row"><div class="dp-icon" style="background:#e8eaf6">✈️</div><div class="dp-title">Air France</div></div><div class="dp-subtitle">CDG → LYS · A/R · Business</div></div><div class="dp-price-box"><div class="dp-price-big">1 140 €</div><div class="dp-price-info">380 €/p · 3 voy.</div></div></div>
         <div class="dp-section"><div class="dp-section-title">Itinéraire</div>
           <div class="journey-leg"><div class="journey-label">Aller <span class="journey-date">· Ven. 16 jan.</span></div><div class="tl"><div class="tl-point"><span class="tl-time">07:00</span><span class="tl-station">CDG <span class="tl-station-sub">· T2F</span></span></div><div class="tl-connector"><div class="tl-connector-info"><div class="tl-op-dot" style="background:#e8eaf6">✈️</div> 1h10 · Direct · AF7524 · Business</div><div class="leg-comfort">💺 Business, grand pitch · 🔌 USB + secteur · 📶 WiFi gratuit · 🍽️ Menu complet inclus · 🏛️ Salon AF</div></div><div class="tl-point"><span class="tl-time">08:10</span><span class="tl-station">LYS <span class="tl-station-sub">· Saint-Exupéry</span></span></div></div></div>
           <div class="journey-leg"><div class="journey-label">Retour <span class="journey-date">· Ven. 23 jan.</span></div><div class="tl"><div class="tl-point"><span class="tl-time">20:30</span><span class="tl-station">LYS</span></div><div class="tl-connector"><div class="tl-connector-info"><div class="tl-op-dot" style="background:#e8eaf6">✈️</div> 1h10 · Direct · AF7531 · Business</div><div class="leg-comfort">💺 Business, grand pitch · 🔌 USB + secteur · 📶 WiFi gratuit · 🍽️ Menu complet inclus</div></div><div class="tl-point"><span class="tl-time">21:40</span><span class="tl-station">CDG <span class="tl-station-sub">· T2F</span></span></div></div></div>
@@ -199,14 +199,14 @@ const panels = {
           </div>
         </div></div>
       </div>
-      <div class="drawer-cta"><div class="cta-price-summary">Total : <strong>1 140 €</strong> · Business</div><button class="btn-primary" onclick="selectItem('flight1','Air France AF7524 · Business','1 140 €','transport')">Sélectionner et continuer →</button></div>`
+      <div class="drawer-cta"><div class="cta-price-summary">Total : <strong>1 140 €</strong> · Business</div><button class="btn-primary" onclick="selectItem('flight1','Air France · Business','1 140 €','transport')">Sélectionner et continuer →</button></div>`
   },
   flight2: {
-    title: '✈️ easyJet U2 4583', type: 'transport', name: 'easyJet U2 4583', price: '312 €',
+    title: '✈️ easyJet', type: 'transport', name: 'easyJet · Standard', price: '312 €',
     budgetLine: 'Budget max : 480 €',
     html: `
       <div class="dp-content">
-        <div class="dp-header"><div><div class="dp-title-row"><div class="dp-icon" style="background:#fff3e0">✈️</div><div class="dp-title">easyJet U2 4583</div></div><div class="dp-subtitle">ORY → LYS · A/R · Economy</div></div><div class="dp-price-box"><div class="dp-price-big">312 €</div><div class="dp-price-info">104 €/p · 3 voy.</div></div></div>
+        <div class="dp-header"><div><div class="dp-title-row"><div class="dp-icon" style="background:#fff3e0">✈️</div><div class="dp-title">easyJet</div></div><div class="dp-subtitle">ORY → LYS · A/R · Economy</div></div><div class="dp-price-box"><div class="dp-price-big">312 €</div><div class="dp-price-info">104 €/p · 3 voy.</div></div></div>
         <div class="dp-section"><div class="dp-section-title">Itinéraire</div>
           <div class="journey-leg"><div class="journey-label">Aller</div><div class="tl"><div class="tl-point"><span class="tl-time">06:30</span><span class="tl-station">ORY <span class="tl-station-sub">· T1</span></span></div><div class="tl-connector"><div class="tl-connector-info"><div class="tl-op-dot" style="background:#fff3e0">✈️</div> 1h15 · Direct · U2 4583</div><div class="leg-comfort">💺 Pitch 74cm, non inclinable · 🔌 Non · 📶 Non · 🍽️ Payante à bord</div></div><div class="tl-point"><span class="tl-time">07:45</span><span class="tl-station">LYS</span></div></div></div>
           <div class="journey-leg"><div class="journey-label">Retour</div><div class="tl"><div class="tl-point"><span class="tl-time">21:00</span><span class="tl-station">LYS</span></div><div class="tl-connector"><div class="tl-connector-info"><div class="tl-op-dot" style="background:#fff3e0">✈️</div> 1h15 · Direct · U2 4590</div><div class="leg-comfort">💺 Pitch 74cm, non inclinable · 🔌 Non · 📶 Non · 🍽️ Payante à bord</div></div><div class="tl-point"><span class="tl-time">22:15</span><span class="tl-station">ORY</span></div></div></div>
@@ -230,7 +230,7 @@ const panels = {
           <div class="co2-detail" style="margin-top:4px">Train alternatif : 1,8 kg CO2 (−96%)</div>
         </div>
       </div>
-      <div class="drawer-cta"><div class="cta-price-summary">Total : <strong>312 €</strong></div><button class="btn-primary" onclick="selectItem('flight2','easyJet U2 4583','312 €','transport')">Sélectionner et continuer →</button></div>`
+      <div class="drawer-cta"><div class="cta-price-summary">Total : <strong>312 €</strong></div><button class="btn-primary" onclick="selectItem('flight2','easyJet · Standard','312 €','transport')">Sélectionner et continuer →</button></div>`
   },
   hotel1: {
     title: '🏨 Mercure Lyon Centre', type: 'hotel', name: 'Mercure Lyon Centre', price: '742 €',
@@ -878,9 +878,9 @@ function toggleRecoDetail(id) {
 // Helper: get reco data for CTA bar display
 function _getRecoData(id) {
   const map = {
-    train1: { icon: '🚄', name: 'TGV INOUI · 2nde', price: '290 €', selectName: 'TGV INOUI 7835 · 2nde' },
-    flight1: { icon: '✈️', name: 'Air France · Economy', price: '378 €', selectName: 'Air France AF7524 · Economy' },
-    train2: { icon: '🚄', name: 'OuiGo · Standard', price: '196 €', selectName: 'OuiGo 7901 · Standard' }
+    train1: { icon: '🚄', name: 'TGV INOUI · 2nde', price: '290 €', selectName: 'TGV INOUI · 2nde' },
+    flight1: { icon: '✈️', name: 'Air France · Economy', price: '378 €', selectName: 'Air France · Economy' },
+    train2: { icon: '🚄', name: 'OuiGo · Standard', price: '196 €', selectName: 'OuiGo · Standard' }
   };
   return map[id] || null;
 }
