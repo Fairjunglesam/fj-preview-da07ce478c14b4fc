@@ -157,75 +157,63 @@
   .bp-tag.warm .bp-tag-label { color: var(--orange-500); }
   .bp-tag.warm .bp-tag-value { color: var(--orange-600); }
 
-  /* ===== DARK STYLE ===== */
-  .bp.bp-dark { background: linear-gradient(145deg, #141B2D 0%, #1C2541 100%); border-color: rgba(255,255,255,0.06); }
-  .bp-dark .bp-carrier { color: rgba(255,255,255,0.9); }
-  .bp-dark .bp-carrier-sub { color: rgba(255,255,255,0.4); }
-  .bp-dark .bp-date { color: rgba(255,255,255,0.35); }
-  .bp-dark .bp-tear { border-color: rgba(255,255,255,0.08); }
-  .bp-dark .bp-tear::before, .bp-dark .bp-tear::after { display: none; }
-  .bp-dark .bp-time { color: #fff; }
-  .bp-dark .bp-loc { color: rgba(255,255,255,0.75); }
-  .bp-dark .bp-sub { color: rgba(255,255,255,0.35); }
-  .bp-dark .bp-arrow-line { background: rgba(255,255,255,0.12); }
-  .bp-dark .bp-arrow-line::after { border-left-color: rgba(255,255,255,0.25); }
-  .bp-dark .bp-dur { color: rgba(255,255,255,0.35); }
-  .bp-dark .bp-tag { background: rgba(255,255,255,0.06); border-color: rgba(255,255,255,0.1); }
-  .bp-dark .bp-tag-label { color: rgba(255,255,255,0.4); }
-  .bp-dark .bp-tag-value { color: #fff; }
-  .bp-dark .bp-tag.accent { background: rgba(0,169,252,0.12); border-color: rgba(0,169,252,0.2); }
-  .bp-dark .bp-tag.accent .bp-tag-label { color: var(--blue-400); }
-  .bp-dark .bp-tag.accent .bp-tag-value { color: var(--blue-200); }
-  .bp-dark .bp-tag.warm { background: rgba(255,141,84,0.1); border-color: rgba(255,141,84,0.18); }
-  .bp-dark .bp-tag.warm .bp-tag-label { color: var(--orange-500); }
-  .bp-dark .bp-tag.warm .bp-tag-value { color: #FFB088; }
-  .bp-dark .bp-doc { border-color: rgba(255,255,255,0.06); }
-  .bp-dark .bp-doc-loc { color: rgba(255,255,255,0.45); border-color: rgba(255,255,255,0.1); }
-  .bp-dark .bp-doc-loc:hover { color: #fff; background: rgba(255,255,255,0.06); border-color: rgba(255,255,255,0.18); }
-  .bp-dark .bp-doc-btn.deferred { background: rgba(255,255,255,0.06); color: rgba(255,255,255,0.3); }
-  .bp-dark .bp-doc-wallet { color: #fff; background: rgba(255,255,255,0.06); border-color: rgba(255,255,255,0.1); }
-  .dark-conn .bp-conn-chip { background: rgba(255,141,84,0.12); border-color: rgba(255,141,84,0.18); color: #FFB088; }
-  .dark-conn .bp-conn-where { color: rgba(255,255,255,0.35); }
-  .bp-transit.dark-transit { background: rgba(0,169,252,0.1); color: var(--blue-300); }
-  .bp-transit.dark-transit strong { color: var(--blue-200); }
-
-  /* ===== BOLD STYLE ===== */
+  /* ===== DARK + BOLD shared base (both use .bpb) ===== */
   .bpb { position: relative; border-radius: 16px; background: linear-gradient(145deg, #1E2330 0%, #262D3F 100%); margin-bottom: 6px; overflow: hidden; border: 1px solid rgba(255,255,255,0.06); }
-  .bpb-head { display: flex; justify-content: space-between; align-items: center; padding: 12px 16px 0; }
-  .bpb-carrier { display: flex; align-items: center; gap: 5px; font-size: 12px; font-weight: 600; color: rgba(255,255,255,0.55); }
+  .bpb.bpb-navy { background: linear-gradient(145deg, #141B2D 0%, #1C2541 100%); }
+  .bpb-head { display: flex; justify-content: space-between; align-items: flex-start; padding: 12px 16px 0; gap: 8px; }
+  .bpb-carrier { display: flex; align-items: center; gap: 5px; font-size: 12px; font-weight: 700; color: rgba(255,255,255,0.75); min-width: 0; flex: 1; }
   .bpb-carrier .bp-carrier-icon { font-size: 14px; }
-  .bpb-carrier .bp-carrier-sub { color: rgba(255,255,255,0.3); font-size: 10px; }
-  .bpb-date { font-size: 11px; font-weight: 500; color: rgba(255,255,255,0.25); }
-  .bpb-route { display: flex; align-items: center; padding: 16px 16px 6px; gap: 8px; }
+  .bpb-carrier .bp-carrier-sub { color: rgba(255,255,255,0.4); font-size: 10px; font-weight: 500; }
+  .bpb-head-right { text-align: right; flex-shrink: 0; }
+  .bpb-date { font-size: 10px; font-weight: 500; color: rgba(255,255,255,0.4); display: block; }
+  .bpb-ref { font-size: 10px; font-weight: 700; color: rgba(255,255,255,0.55); display: block; margin-top: 1px; }
+  .bpb-route { display: flex; align-items: center; padding: 14px 16px 6px; gap: 8px; }
   .bpb-hero { flex: 1; min-width: 0; }
   .bpb-hero.arr { text-align: right; }
-  .bpb-code { font-size: 34px; font-weight: 800; color: #FFFFFF; letter-spacing: -1.5px; line-height: 1; }
-  .bpb-time { font-size: 13px; font-weight: 700; color: rgba(255,255,255,0.5); margin-top: 4px; }
-  .bpb-name { font-size: 11px; color: rgba(255,255,255,0.3); margin-top: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .bpb-code { font-size: 36px; font-weight: 800; color: #FFFFFF; letter-spacing: -1.5px; line-height: 1; }
+  .bpb-time { font-size: 14px; font-weight: 700; color: rgba(255,255,255,0.6); margin-top: 4px; }
+  .bpb-name { font-size: 11px; color: rgba(255,255,255,0.4); margin-top: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
   .bpb-mid { flex-shrink: 0; display: flex; align-items: center; gap: 0; min-width: 60px; }
   .bpb-dash { flex: 1; height: 0; border-top: 1.5px dashed rgba(255,255,255,0.15); }
   .bpb-icon { font-size: 16px; padding: 0 6px; flex-shrink: 0; }
-  .bpb-dur { text-align: center; padding: 0 16px 8px; font-size: 11px; font-weight: 600; color: rgba(255,255,255,0.3); }
+  .bpb-dur { text-align: center; padding: 0 16px 8px; font-size: 11px; font-weight: 600; color: rgba(255,255,255,0.4); }
   .bpb .bp-tags { padding: 4px 16px 8px; }
-  .bpb .bp-tag { background: rgba(255,255,255,0.06); border-color: rgba(255,255,255,0.1); }
-  .bpb .bp-tag-label { color: rgba(255,255,255,0.4); }
+  .bpb .bp-tag { background: rgba(255,255,255,0.07); border-color: rgba(255,255,255,0.12); }
+  .bpb .bp-tag-label { color: rgba(255,255,255,0.55); }
   .bpb .bp-tag-value { color: #fff; }
-  .bpb .bp-tag.accent { background: rgba(0,169,252,0.12); border-color: rgba(0,169,252,0.2); }
+  .bpb .bp-tag.accent { background: rgba(0,169,252,0.15); border-color: rgba(0,169,252,0.22); }
   .bpb .bp-tag.accent .bp-tag-label { color: var(--blue-400); }
   .bpb .bp-tag.accent .bp-tag-value { color: var(--blue-200); }
-  .bpb .bp-tag.warm { background: rgba(255,141,84,0.1); border-color: rgba(255,141,84,0.18); }
+  .bpb .bp-tag.warm { background: rgba(255,141,84,0.12); border-color: rgba(255,141,84,0.2); }
   .bpb .bp-tag.warm .bp-tag-label { color: var(--orange-500); }
   .bpb .bp-tag.warm .bp-tag-value { color: #FFB088; }
   .bpb .bp-doc { border-color: rgba(255,255,255,0.06); padding: 8px 16px 12px; }
-  .bpb .bp-doc-loc { color: rgba(255,255,255,0.45); border-color: rgba(255,255,255,0.1); }
+  .bpb .bp-doc-loc { color: rgba(255,255,255,0.5); border-color: rgba(255,255,255,0.12); }
   .bpb .bp-doc-loc:hover { color: #fff; background: rgba(255,255,255,0.06); }
-  .bpb .bp-doc-btn.deferred { background: rgba(255,255,255,0.06); color: rgba(255,255,255,0.3); }
-  .bpb .bp-doc-wallet { color: #fff; background: rgba(255,255,255,0.06); border-color: rgba(255,255,255,0.1); }
-  .bold-conn .bp-conn-chip { background: rgba(255,141,84,0.12); border-color: rgba(255,141,84,0.18); color: #FFB088; }
-  .bold-conn .bp-conn-where { color: rgba(255,255,255,0.3); }
-  .bp-transit.bold-transit { background: rgba(0,169,252,0.1); color: var(--blue-300); border-radius: 10px; }
-  .bp-transit.bold-transit strong { color: var(--blue-200); }
-  .bp-luggage.luggage-dark { color: rgba(255,255,255,0.4); }
+  .bpb .bp-doc-btn.deferred { background: rgba(255,255,255,0.07); color: rgba(255,255,255,0.35); }
+  .bpb .bp-doc-wallet { color: #fff; background: rgba(255,255,255,0.07); border-color: rgba(255,255,255,0.12); }
+  .dark-conn .bp-conn-chip, .bold-conn .bp-conn-chip { background: rgba(255,141,84,0.12); border-color: rgba(255,141,84,0.2); color: #FFB088; }
+  .dark-conn .bp-conn-where, .bold-conn .bp-conn-where { color: rgba(255,255,255,0.4); }
+  .bp-transit.dark-transit, .bp-transit.bold-transit { background: rgba(0,169,252,0.1); color: var(--blue-300); border-radius: 10px; }
+  .bp-transit.dark-transit strong, .bp-transit.bold-transit strong { color: var(--blue-200); }
+  .bp-luggage.luggage-dark { color: rgba(255,255,255,0.45); }
+  /* Hotel dark card */
+  .htd-head { padding: 12px 16px 6px; }
+  .htd-title { font-size: 15px; font-weight: 700; color: #fff; line-height: 1.3; }
+  .htd-title .stars { color: var(--yellow-500); font-size: 12px; margin-left: 2px; }
+  .htd-sub { font-size: 11px; color: rgba(255,255,255,0.45); margin-top: 4px; line-height: 1.4; }
+  .htd-dates { display: flex; align-items: flex-start; padding: 10px 16px; border-top: 1px solid rgba(255,255,255,0.06); }
+  .htd-date { flex: 1; }
+  .htd-date.arr { text-align: right; }
+  .htd-date-label { font-size: 9px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; color: rgba(255,255,255,0.4); }
+  .htd-date-time { font-size: 28px; font-weight: 800; color: #fff; letter-spacing: -1px; line-height: 1; margin-top: 4px; }
+  .htd-date-day { font-size: 11px; color: rgba(255,255,255,0.5); margin-top: 4px; font-weight: 600; }
+  .htd-mid { flex-shrink: 0; display: flex; align-items: center; padding: 12px 8px 0; min-width: 50px; }
+  .htd-mid-sep { color: rgba(255,255,255,0.2); font-size: 16px; }
+  .htd-nights { font-size: 10px; font-weight: 700; color: rgba(255,255,255,0.35); margin-left: 4px; }
+  .htd-logistics { padding: 8px 16px 12px; border-top: 1px solid rgba(255,255,255,0.06); }
+  .htd-log-item { font-size: 11px; color: rgba(255,255,255,0.55); line-height: 1.7; display: flex; align-items: center; gap: 6px; }
+  .htd-log-item strong { color: rgba(255,255,255,0.85); font-weight: 700; }
 
   /* Per-segment actions row */
   .bp-doc { display: flex; align-items: center; gap: 6px; padding: 6px 14px 8px; border-top: 1px solid var(--grey-100); margin-top: 2px; }
@@ -914,12 +902,12 @@ function renderEtape(e, state, idx, autoIdx, done, total, isPast) {
 
   // ===== TRANSPORT — BOARDING PASS =====
   if (e.type === 'train' || e.type === 'flight') {
-    const detailsStr = e.details.join(' · ');
+    const detailsStr = e.details.filter(d => d !== 'Direct').join(' · ');
 
     // Helper: build unified info tags with logical grouping
     // Train: [num → voie → voiture/place] | [tarif → réf]
     // Flight: [vol → porte → siège] | [réf → tarif → bagages]
-    function infoTags(seat, data, extras, type) {
+    function infoTags(seat, data, extras, type, slim) {
       const g1 = []; // transport identity
       const g2 = []; // booking info
 
@@ -931,22 +919,22 @@ function renderEtape(e, state, idx, autoIdx, done, total, isPast) {
       }
 
       if (type === 'flight') {
-        // Group 1: Vol → Porte → Siège
-        if (data && data.num) g1.push(`<div class="bp-tag"><div><div class="bp-tag-label">Vol</div><div class="bp-tag-value sm">${data.num}</div></div></div>`);
+        // Group 1: Vol → Porte → Siège (slim: only porte + siège)
+        if (!slim && data && data.num) g1.push(`<div class="bp-tag"><div><div class="bp-tag-label">Vol</div><div class="bp-tag-value sm">${data.num}</div></div></div>`);
         if (data && data.gate) g1.push(`<div class="bp-tag warm"><div><div class="bp-tag-label">Porte</div><div class="bp-tag-value">${data.gate}</div></div></div>`);
         const st = seatTag(); if (st) g1.push(st);
-        // Group 2: Réf → Tarif → Bagages
-        if (data && data.pnr) g2.push(`<div class="bp-tag"><div><div class="bp-tag-label">Réf.</div><div class="bp-tag-value sm">${data.pnr}</div></div></div>`);
-        if (data && data.fareName) g2.push(`<div class="bp-tag"><div><div class="bp-tag-label">Tarif</div><div class="bp-tag-value sm">${data.fareName}</div></div></div>`);
-        if (extras) g2.push(`<div class="bp-tag"><div><div class="bp-tag-label">Bagages</div><div class="bp-tag-value sm">${extras}</div></div></div>`);
+        // Group 2: Réf → Tarif → Bagages (slim: skip all)
+        if (!slim && data && data.pnr) g2.push(`<div class="bp-tag"><div><div class="bp-tag-label">Réf.</div><div class="bp-tag-value sm">${data.pnr}</div></div></div>`);
+        if (!slim && data && data.fareName) g2.push(`<div class="bp-tag"><div><div class="bp-tag-label">Tarif</div><div class="bp-tag-value sm">${data.fareName}</div></div></div>`);
+        if (!slim && extras) g2.push(`<div class="bp-tag"><div><div class="bp-tag-label">Bagages</div><div class="bp-tag-value sm">${extras}</div></div></div>`);
       } else {
-        // Group 1: Train → Voie → Voiture/Place
-        if (data && data.num) g1.push(`<div class="bp-tag"><div><div class="bp-tag-label">Train</div><div class="bp-tag-value sm">${data.num}</div></div></div>`);
+        // Group 1: Train → Voie → Voiture/Place (slim: only voie + voiture/place)
+        if (!slim && data && data.num) g1.push(`<div class="bp-tag"><div><div class="bp-tag-label">Train</div><div class="bp-tag-value sm">${data.num}</div></div></div>`);
         if (data && data.platform) g1.push(`<div class="bp-tag warm"><div><div class="bp-tag-label">Voie</div><div class="bp-tag-value">${data.platform}</div></div></div>`);
         const st = seatTag(); if (st) g1.push(st);
-        // Group 2: Tarif → Réf
-        if (data && data.fareName) g2.push(`<div class="bp-tag"><div><div class="bp-tag-label">Tarif</div><div class="bp-tag-value sm">${data.fareName}</div></div></div>`);
-        if (data && data.pnr) g2.push(`<div class="bp-tag"><div><div class="bp-tag-label">Réf.</div><div class="bp-tag-value sm">${data.pnr}</div></div></div>`);
+        // Group 2: Tarif → Réf (slim: skip all)
+        if (!slim && data && data.fareName) g2.push(`<div class="bp-tag"><div><div class="bp-tag-label">Tarif</div><div class="bp-tag-value sm">${data.fareName}</div></div></div>`);
+        if (!slim && data && data.pnr) g2.push(`<div class="bp-tag"><div><div class="bp-tag-label">Réf.</div><div class="bp-tag-value sm">${data.pnr}</div></div></div>`);
       }
 
       if (!g1.length && !g2.length) return '';
@@ -997,22 +985,24 @@ function renderEtape(e, state, idx, autoIdx, done, total, isPast) {
       h += `<div class="bp-route"><div class="bp-point"><div class="bp-time">${dep.time}</div>${locH(dep)}</div><div class="bp-mid"><div class="bp-arrow-line"></div><div class="bp-dur">${midLabel}</div></div><div class="bp-point arr"><div class="bp-time">${arr.time}</div>${locH(arr)}</div></div>`;
       h += infoTags(seat, fareData, extras, type);
       h += ticketDoc(ticket, locUrl);
-      const darkCls = currentStyle === 'dark' ? ' bp-dark' : '';
-      return `<div class="bp${darkCls}">${h}</div>`;
+      return `<div class="bp">${h}</div>`;
     }
 
     // Helper: build one bold-style boarding pass card (iOS widget inspired)
-    function bpCardBold(headerLeft, headerRight, dep, arr, midLabel, seat, extras, ticket, locUrl, fareData, type, icon) {
+    // extraCls: 'bpb-navy' for dark variant; pnr: shown in header right
+    function bpCardBold(carrier, num, pnr, dateStr, dep, arr, midLabel, seat, ticket, locUrl, fareData, type, icon, extraCls) {
       const isFl = type === 'flight';
       let h = '';
-      h += `<div class="bpb-head"><div class="bpb-carrier">${headerLeft}</div><span class="bpb-date">${headerRight}</span></div>`;
+      // Header: carrier + num | date + PNR
+      h += `<div class="bpb-head"><div class="bpb-carrier"><span class="bp-carrier-icon">${icon}</span>${carrier}${num ? '<span class="bp-carrier-sub">· ' + num + '</span>' : ''}</div><div class="bpb-head-right"><span class="bpb-date">${dateStr}</span>${pnr ? '<span class="bpb-ref">Réf. ' + pnr + '</span>' : ''}</div></div>`;
+      // Route: big codes (flights) or big times (trains)
       h += '<div class="bpb-route">';
       if (isFl && dep.code) {
         h += `<div class="bpb-hero"><div class="bpb-code">${dep.code}</div><div class="bpb-time">${dep.time}</div><div class="bpb-name">${dep.name}${dep.terminal ? ' · T' + dep.terminal : ''}</div></div>`;
       } else {
         h += `<div class="bpb-hero"><div class="bpb-code">${dep.time}</div><div class="bpb-name">${dep.name}</div></div>`;
       }
-      h += `<div class="bpb-mid"><div class="bpb-dash"></div><div class="bpb-icon">${icon || (isFl ? '✈️' : '🚄')}</div><div class="bpb-dash"></div></div>`;
+      h += `<div class="bpb-mid"><div class="bpb-dash"></div><div class="bpb-icon">${icon}</div><div class="bpb-dash"></div></div>`;
       if (isFl && arr.code) {
         h += `<div class="bpb-hero arr"><div class="bpb-code">${arr.code}</div><div class="bpb-time">${arr.time}</div><div class="bpb-name">${arr.name}${arr.terminal ? ' · T' + arr.terminal : ''}</div></div>`;
       } else {
@@ -1020,9 +1010,10 @@ function renderEtape(e, state, idx, autoIdx, done, total, isPast) {
       }
       h += '</div>';
       h += `<div class="bpb-dur">${midLabel}</div>`;
-      h += infoTags(seat, fareData, extras, type);
+      // Slim tags: only porte/siège (flight) or voie/voiture (train)
+      h += infoTags(seat, fareData, null, type, true);
       h += ticketDoc(ticket, locUrl);
-      return `<div class="bpb">${h}</div>`;
+      return `<div class="bpb${extraCls ? ' ' + extraCls : ''}">${h}</div>`;
     }
 
     let allH = '';
@@ -1030,10 +1021,12 @@ function renderEtape(e, state, idx, autoIdx, done, total, isPast) {
     // Style flags
     const isDark = currentStyle === 'dark';
     const isBold = currentStyle === 'bold';
+    const isEpure = isDark || isBold;
+    const navyCls = isDark ? 'bpb-navy' : '';
 
-    // Transit bar (above boarding pass)
+    // Transit bar
     if (isTransit) {
-      const transitCls = isDark ? 'bp-transit dark-transit' : isBold ? 'bp-transit bold-transit' : 'bp-transit';
+      const transitCls = isEpure ? 'bp-transit bold-transit' : 'bp-transit';
       allH += `<div class="${transitCls}">⏱ En route · Arrivée prévue à <strong>${e.arrival.time}</strong> · ${e.arrival.name}${e.arrival.code ? ' ' + e.arrival.code : ''}</div>`;
     }
 
@@ -1042,32 +1035,32 @@ function renderEtape(e, state, idx, autoIdx, done, total, isPast) {
       let scrollH = '';
       e.segments.forEach((seg, si) => {
         const isLast = si === e.segments.length - 1;
-        const headerLeft = `<span class="bp-carrier-icon">${e.icon}</span>${e.carrier}<span class="bp-carrier-sub">· ${seg.num}</span>`;
-        if (isBold) {
-          scrollH += bpCardBold(headerLeft, e.departure.date, seg.dep, seg.arr, seg.dur, seg.seat, null, seg.ticket || e.ticket, e.locUrl, seg.fareName ? seg : e, e.type, e.icon);
+        const segData = seg.fareName ? seg : e;
+        if (isEpure) {
+          scrollH += bpCardBold(e.carrier, seg.num, seg.pnr || e.pnr, e.departure.date, seg.dep, seg.arr, seg.dur, seg.seat, seg.ticket || e.ticket, e.locUrl, segData, e.type, e.icon, navyCls);
         } else {
-          scrollH += bpCard(headerLeft, e.departure.date, seg.dep, seg.arr, seg.dur, seg.seat, null, seg.ticket || e.ticket, e.locUrl, seg.fareName ? seg : e, e.type);
+          const headerLeft = `<span class="bp-carrier-icon">${e.icon}</span>${e.carrier}<span class="bp-carrier-sub">· ${seg.num}</span>`;
+          scrollH += bpCard(headerLeft, e.departure.date, seg.dep, seg.arr, seg.dur, seg.seat, null, seg.ticket || e.ticket, e.locUrl, segData, e.type);
         }
-
         if (!isLast && e.connections && e.connections[si]) {
           const conn = e.connections[si];
-          const connCls = isDark ? 'bp-conn-between dark-conn' : isBold ? 'bp-conn-between bold-conn' : 'bp-conn-between';
+          const connCls = isEpure ? 'bp-conn-between bold-conn' : 'bp-conn-between';
           scrollH += `<div class="${connCls}"><div class="bp-conn-chip">⏱ ${conn.dur}</div><div class="bp-conn-where">${conn.loc}</div></div>`;
         }
       });
       const wrapCls = e.segments.length <= 2 ? 'bp-pair' : 'bp-scroll';
       allH += `<div class="${wrapCls}">${scrollH}</div>`;
       if (isFlight && e.luggage) {
-        const lugCls = isDark || isBold ? 'bp-luggage luggage-dark' : 'bp-luggage';
+        const lugCls = isEpure ? 'bp-luggage luggage-dark' : 'bp-luggage';
         allH += `<div class="${lugCls}">🧳 ${e.luggage}</div>`;
       }
     } else {
       // ── Direct: single boarding pass ──
-      const headerLeft = `<span class="bp-carrier-icon">${e.icon}</span>${e.carrier}<span class="bp-carrier-sub">· ${detailsStr}</span>`;
-      const extras = (isFlight && e.luggage) ? e.luggage : null;
-      if (isBold) {
-        allH += bpCardBold(headerLeft, e.departure.date, e.departure, e.arrival, e.duration, e.seat, extras, e.ticket, e.locUrl, e, e.type, e.icon);
+      if (isEpure) {
+        allH += bpCardBold(e.carrier, e.num, e.pnr, e.departure.date, e.departure, e.arrival, e.duration, e.seat, e.ticket, e.locUrl, e, e.type, e.icon, navyCls);
       } else {
+        const headerLeft = `<span class="bp-carrier-icon">${e.icon}</span>${e.carrier}<span class="bp-carrier-sub">· ${detailsStr}</span>`;
+        const extras = (isFlight && e.luggage) ? e.luggage : null;
         allH += bpCard(headerLeft, e.departure.date, e.departure, e.arrival, e.duration, e.seat, extras, e.ticket, e.locUrl, e, e.type);
       }
     }
@@ -1077,81 +1070,119 @@ function renderEtape(e, state, idx, autoIdx, done, total, isPast) {
 
   // ===== HOTEL CARD =====
   else if (e.type === 'hotel') {
+    const isDark = currentStyle === 'dark';
+    const isBold = currentStyle === 'bold';
+    const isEpure = isDark || isBold;
     const stars = e.starsText || '';
 
-    // Photo gallery
-    let galleryH = '';
-    if (e.photos && e.photos.length) {
-      galleryH = '<div class="ht-gallery">' + e.photos.map(p => `<img src="${p}" alt="" loading="lazy">`).join('') + '</div>';
-    }
-
-    // Body
-    let infoH = `<div class="ht-body"><div class="ht-name">${e.title}${stars ? ' <span class="stars">' + stars + '</span>' : ''}</div><div class="ht-sub">📍 ${e.address}${e.roomName ? ' · 🛏 ' + e.roomName : ''}</div>`;
-
-    // Badges
-    const badges = [];
-    if (e.inclusions) {
-      e.inclusions.forEach(inc => {
-        if (inc.toLowerCase().includes('petit-déjeuner') || inc.toLowerCase().includes('breakfast')) {
-          badges.push(`<span class="ht-badge breakfast">☀️ ${inc}</span>`);
-        } else {
-          badges.push(`<span class="ht-badge wifi">✓ ${inc}</span>`);
+    if (isEpure) {
+      // ── Épuré hotel: dark card with essentials only ──
+      const navyCls = isDark ? ' bpb-navy' : '';
+      let h = '';
+      // Header: name + ref
+      h += `<div class="htd-head"><div class="htd-title">${e.title}${stars ? ' <span class="stars">' + stars + '</span>' : ''}</div><div class="htd-sub">${e.roomName ? '🛏 ' + e.roomName + ' · ' : ''}📍 ${e.address}</div></div>`;
+      // Dates: check-in → check-out (big times)
+      h += `<div class="htd-dates"><div class="htd-date"><div class="htd-date-label">Check-in</div><div class="htd-date-time">${e.checkin.time}</div><div class="htd-date-day">${e.checkin.date}</div></div><div class="htd-mid"><div class="htd-mid-sep">→</div><div class="htd-nights">${e.nights} nuit${e.nights > 1 ? 's' : ''}</div></div><div class="htd-date arr"><div class="htd-date-label">Check-out</div><div class="htd-date-time">${e.checkout.time}</div><div class="htd-date-day">${e.checkout.date}</div></div></div>`;
+      // Logistics
+      if (e.checkinInstructions) {
+        const ci = e.checkinInstructions;
+        let items = '';
+        if (ci.methodLabel) items += `<div class="htd-log-item">🔑 ${ci.methodLabel}</div>`;
+        if (ci.reception24) {
+          items += `<div class="htd-log-item">🕐 Réception <strong>24h/24</strong></div>`;
+        } else if (ci.checkinUntil) {
+          items += `<div class="htd-log-item">⚠️ Check-in ${ci.checkinFrom ? ci.checkinFrom + ' – ' : ''}<strong>${ci.checkinUntil}</strong></div>`;
+        } else if (ci.checkinFrom) {
+          items += `<div class="htd-log-item">🕐 Check-in à partir de <strong>${ci.checkinFrom}</strong></div>`;
         }
-      });
-    }
-    if (e.cancellation) {
-      if (e.cancellation.type === 'free') badges.push(`<span class="ht-badge cancel-free">✅ Annulable jusqu'au ${e.cancellation.freeUntil}</span>`);
-      else if (e.cancellation.type === 'restricted') badges.push(`<span class="ht-badge cancel-restricted">⚠️ Annulable jusqu'au ${e.cancellation.freeUntil}</span>`);
-      else if (e.cancellation.type === 'non_refundable') badges.push(`<span class="ht-badge cancel-none">✕ Non remboursable</span>`);
-    }
-    if (badges.length) infoH += '<div class="ht-badges">' + badges.join('') + '</div>';
-
-    // Dates — inline row
-    infoH += `<div class="ht-dates"><span class="ht-date-label">Check-in</span><span class="ht-date-value">${e.checkin.date} · ${e.checkin.time}</span><span class="ht-date-sep">→</span><span class="ht-date-label">Check-out</span><span class="ht-date-value">${e.checkout.date} · ${e.checkout.time}</span><span class="ht-nights">${e.nights} nuit${e.nights > 1 ? 's' : ''}</span></div>`;
-    infoH += '</div>'; // close ht-body
-
-    // Logistics
-    let logH = '';
-    if (e.checkinInstructions) {
-      const ci = e.checkinInstructions;
-      let items = '';
-      if (ci.methodLabel) items += `<div class="ht-logistics-item"><span>🔑</span> ${ci.methodLabel}</div>`;
-      // Check-in hours — make "jusqu'à" prominent
-      if (ci.reception24) {
-        items += `<div class="ht-logistics-item"><span>🕐</span> Réception <strong>24h/24</strong></div>`;
-      } else if (ci.checkinUntil) {
-        items += `<div class="ht-logistics-item"><span>⚠️</span> Check-in ${ci.checkinFrom ? 'à partir de ' + ci.checkinFrom + ', ' : ''}<strong class="ht-until">jusqu'à ${ci.checkinUntil}</strong></div>`;
-      } else if (ci.checkinFrom) {
-        items += `<div class="ht-logistics-item"><span>🕐</span> Check-in à partir de <strong>${ci.checkinFrom}</strong></div>`;
+        if (ci.pinCode) items += `<div class="htd-log-item">🔢 Code : <strong>${ci.pinCode}</strong></div>`;
+        if (ci.phone) items += `<div class="htd-log-item">📞 ${ci.phone}${e.bookingRef ? ' · Réf. <strong>' + e.bookingRef + '</strong>' : ''}</div>`;
+        if (items) h += `<div class="htd-logistics">${items}</div>`;
       }
-      if (ci.pinCode) items += `<div class="ht-logistics-item"><span>🔢</span> Code PIN : <strong>${ci.pinCode}</strong></div>`;
-      if (ci.phone) items += `<div class="ht-logistics-item"><span>📞</span> ${ci.phone}${e.bookingRef ? ' · Réf. <strong>' + e.bookingRef + '</strong>' : ''}</div>`;
-      if (ci.notes) items += `<div class="ht-logistics-item"><span>ℹ️</span> ${ci.notes}</div>`;
-      if (items) logH = `<div class="ht-logistics"><div class="ht-logistics-title">🏠 Infos d'arrivée</div>${items}</div>`;
+      bodyH = `<div class="bpb${navyCls}">${h}</div>`;
+    } else {
+      // ── Classic hotel card ──
+      let galleryH = '';
+      if (e.photos && e.photos.length) {
+        galleryH = '<div class="ht-gallery">' + e.photos.map(p => `<img src="${p}" alt="" loading="lazy">`).join('') + '</div>';
+      }
+      let infoH = `<div class="ht-body"><div class="ht-name">${e.title}${stars ? ' <span class="stars">' + stars + '</span>' : ''}</div><div class="ht-sub">📍 ${e.address}${e.roomName ? ' · 🛏 ' + e.roomName : ''}</div>`;
+      const badges = [];
+      if (e.inclusions) {
+        e.inclusions.forEach(inc => {
+          if (inc.toLowerCase().includes('petit-déjeuner') || inc.toLowerCase().includes('breakfast')) {
+            badges.push(`<span class="ht-badge breakfast">☀️ ${inc}</span>`);
+          } else {
+            badges.push(`<span class="ht-badge wifi">✓ ${inc}</span>`);
+          }
+        });
+      }
+      if (e.cancellation) {
+        if (e.cancellation.type === 'free') badges.push(`<span class="ht-badge cancel-free">✅ Annulable jusqu'au ${e.cancellation.freeUntil}</span>`);
+        else if (e.cancellation.type === 'restricted') badges.push(`<span class="ht-badge cancel-restricted">⚠️ Annulable jusqu'au ${e.cancellation.freeUntil}</span>`);
+        else if (e.cancellation.type === 'non_refundable') badges.push(`<span class="ht-badge cancel-none">✕ Non remboursable</span>`);
+      }
+      if (badges.length) infoH += '<div class="ht-badges">' + badges.join('') + '</div>';
+      infoH += `<div class="ht-dates"><span class="ht-date-label">Check-in</span><span class="ht-date-value">${e.checkin.date} · ${e.checkin.time}</span><span class="ht-date-sep">→</span><span class="ht-date-label">Check-out</span><span class="ht-date-value">${e.checkout.date} · ${e.checkout.time}</span><span class="ht-nights">${e.nights} nuit${e.nights > 1 ? 's' : ''}</span></div>`;
+      infoH += '</div>';
+      let logH = '';
+      if (e.checkinInstructions) {
+        const ci = e.checkinInstructions;
+        let items = '';
+        if (ci.methodLabel) items += `<div class="ht-logistics-item"><span>🔑</span> ${ci.methodLabel}</div>`;
+        if (ci.reception24) {
+          items += `<div class="ht-logistics-item"><span>🕐</span> Réception <strong>24h/24</strong></div>`;
+        } else if (ci.checkinUntil) {
+          items += `<div class="ht-logistics-item"><span>⚠️</span> Check-in ${ci.checkinFrom ? 'à partir de ' + ci.checkinFrom + ', ' : ''}<strong class="ht-until">jusqu'à ${ci.checkinUntil}</strong></div>`;
+        } else if (ci.checkinFrom) {
+          items += `<div class="ht-logistics-item"><span>🕐</span> Check-in à partir de <strong>${ci.checkinFrom}</strong></div>`;
+        }
+        if (ci.pinCode) items += `<div class="ht-logistics-item"><span>🔢</span> Code PIN : <strong>${ci.pinCode}</strong></div>`;
+        if (ci.phone) items += `<div class="ht-logistics-item"><span>📞</span> ${ci.phone}${e.bookingRef ? ' · Réf. <strong>' + e.bookingRef + '</strong>' : ''}</div>`;
+        if (ci.notes) items += `<div class="ht-logistics-item"><span>ℹ️</span> ${ci.notes}</div>`;
+        if (items) logH = `<div class="ht-logistics"><div class="ht-logistics-title">🏠 Infos d'arrivée</div>${items}</div>`;
+      }
+      bodyH = `<div class="ecard">${galleryH}${infoH}${logH}</div><div class="cta-row">${cta}${secCta}</div>`;
     }
-
-    bodyH = `<div class="ecard">${galleryH}${infoH}${logH}</div><div class="cta-row">${cta}${secCta}</div>`;
   }
 
   // ===== CAR CARD =====
   else if (e.type === 'car') {
-    const detailsStr = e.details.map(d => `<span>${d}</span>`).join('<span class="sep">·</span>');
+    const isDark = currentStyle === 'dark';
+    const isBold = currentStyle === 'bold';
+    const isEpure = isDark || isBold;
     const oj = e.pickup.location !== e.dropoff.location;
 
-    // Top: photo + title
-    const photoH = e.carPhoto ? `<div class="car-photo"><img src="${e.carPhoto}" alt="" loading="lazy"></div>` : '';
-    let topH = `<div class="car-top">${photoH}<div class="car-header"><div class="car-title">${e.title}</div><div class="car-details">${detailsStr}${e.bookingRef ? '<span class="sep">·</span><span>Réf. ' + e.bookingRef + '</span>' : ''}</div></div></div>`;
-
-    // Schedule: pickup / dropoff side by side
-    let schedH = `<div class="car-schedule"><div class="car-sched-block"><div class="car-sched-label">Prise en charge</div><div class="car-sched-time">${e.pickup.time}</div><div class="car-sched-date">${e.pickup.date}</div><div class="car-sched-loc">${e.pickup.location}</div></div><div class="car-sched-block${oj ? ' oj' : ''}"><div class="car-sched-label">Restitution${oj ? ' · Open jaw' : ''}</div><div class="car-sched-time">${e.dropoff.time}</div><div class="car-sched-date">${e.dropoff.date}</div><div class="car-sched-loc">${e.dropoff.location}</div></div></div>`;
-
-    // Driver card
-    let driverH = '';
-    if (e.driverName) {
-      driverH = `<div class="car-driver"><div class="car-driver-badge">🪪</div><div class="car-driver-text"><div class="car-driver-label">Conducteur</div><div class="car-driver-name">${e.driverName}</div><div class="car-driver-docs">Permis de conduire + CB au nom du conducteur</div></div></div>`;
+    if (isEpure) {
+      // ── Épuré car: panoramic dark card like transport ──
+      const navyCls = isDark ? ' bpb-navy' : '';
+      const carDetails = e.details.filter(d => d !== 'Direct').join(' · ');
+      let h = '';
+      h += `<div class="bpb-head"><div class="bpb-carrier"><span class="bp-carrier-icon">🚗</span>${e.carrier}<span class="bp-carrier-sub">· ${carDetails}</span></div><div class="bpb-head-right"><span class="bpb-date">${e.pickup.date}</span>${e.bookingRef ? '<span class="bpb-ref">Réf. ' + e.bookingRef + '</span>' : ''}</div></div>`;
+      // Route: pickup → dropoff (times as hero, like trains)
+      h += '<div class="bpb-route">';
+      h += `<div class="bpb-hero"><div class="bpb-code">${e.pickup.time}</div><div class="bpb-name">${e.pickup.location}</div></div>`;
+      h += `<div class="bpb-mid"><div class="bpb-dash"></div><div class="bpb-icon">🚗</div><div class="bpb-dash"></div></div>`;
+      h += `<div class="bpb-hero arr"><div class="bpb-code">${e.dropoff.time}</div><div class="bpb-time">${e.dropoff.date !== e.pickup.date ? e.dropoff.date : ''}</div><div class="bpb-name">${e.dropoff.location}</div></div>`;
+      h += '</div>';
+      if (oj) h += `<div class="bpb-dur">⚠️ Open jaw</div>`;
+      // Driver
+      if (e.driverName) {
+        h += `<div class="htd-logistics"><div class="htd-log-item">🪪 <strong>${e.driverName}</strong></div><div class="htd-log-item">📄 Permis + CB au nom du conducteur</div></div>`;
+      }
+      bodyH = `<div class="bpb${navyCls}">${h}</div>`;
+    } else {
+      // ── Classic car card ──
+      const detailsStr = e.details.map(d => `<span>${d}</span>`).join('<span class="sep">·</span>');
+      const photoH = e.carPhoto ? `<div class="car-photo"><img src="${e.carPhoto}" alt="" loading="lazy"></div>` : '';
+      let topH = `<div class="car-top">${photoH}<div class="car-header"><div class="car-title">${e.title}</div><div class="car-details">${detailsStr}${e.bookingRef ? '<span class="sep">·</span><span>Réf. ' + e.bookingRef + '</span>' : ''}</div></div></div>`;
+      let schedH = `<div class="car-schedule"><div class="car-sched-block"><div class="car-sched-label">Prise en charge</div><div class="car-sched-time">${e.pickup.time}</div><div class="car-sched-date">${e.pickup.date}</div><div class="car-sched-loc">${e.pickup.location}</div></div><div class="car-sched-block${oj ? ' oj' : ''}"><div class="car-sched-label">Restitution${oj ? ' · Open jaw' : ''}</div><div class="car-sched-time">${e.dropoff.time}</div><div class="car-sched-date">${e.dropoff.date}</div><div class="car-sched-loc">${e.dropoff.location}</div></div></div>`;
+      let driverH = '';
+      if (e.driverName) {
+        driverH = `<div class="car-driver"><div class="car-driver-badge">🪪</div><div class="car-driver-text"><div class="car-driver-label">Conducteur</div><div class="car-driver-name">${e.driverName}</div><div class="car-driver-docs">Permis de conduire + CB au nom du conducteur</div></div></div>`;
+      }
+      bodyH = `<div class="ecard">${topH}${schedH}${driverH}</div><div class="cta-row">${cta}${secCta}</div>`;
     }
-
-    bodyH = `<div class="ecard">${topH}${schedH}${driverH}</div><div class="cta-row">${cta}${secCta}</div>`;
   }
 
   ct.innerHTML = `<div class="etape-content ${isPast ? 'is-past' : ''}"><div class="etape-meta"><span class="etape-tag ${tag.c}">${tag.t}</span></div>${bodyH}</div>`;
