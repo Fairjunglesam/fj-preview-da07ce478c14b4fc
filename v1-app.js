@@ -779,6 +779,8 @@ function collapseRecoDetail() {
   expandedRecoId = null;
   if (grid) grid.classList.remove('compact');
   if (ctaBar) ctaBar.classList.remove('visible');
+  // Restore body scroll (mobile fullscreen mode)
+  document.body.style.overflow = '';
   // Scroll back to show reco cards
   const recoZone = document.getElementById('d-reco-zone');
   if (recoZone) {
@@ -817,8 +819,16 @@ function toggleRecoDetail(id) {
     }
     // Expand new — inject panel HTML (same content as md-detail / drawer)
     const panel = panels[id];
+    const isMobile = window.innerWidth < 768;
     if (panel) {
-      detailEl.innerHTML = panel.html;
+      // On mobile: prepend close header
+      let mobileHeader = '';
+      if (isMobile) {
+        const recoData = _getRecoData(id);
+        const title = recoData ? recoData.icon + ' ' + recoData.name : 'Détail';
+        mobileHeader = '<div class="d-reco-mobile-header"><span class="d-reco-mobile-header-title">' + title + '</span><button class="d-reco-mobile-close" onclick="collapseRecoDetail()" aria-label="Fermer">&times;</button></div>';
+      }
+      detailEl.innerHTML = mobileHeader + panel.html;
       // Flights: lock tariff to selected only + info card
       if (id.startsWith('flight')) {
         _lockFlightTariffs(detailEl);
@@ -829,6 +839,10 @@ function toggleRecoDetail(id) {
       }
     }
     detailEl.style.display = '';
+    // On mobile: lock body scroll
+    if (isMobile) {
+      document.body.style.overflow = 'hidden';
+    }
     if (card) card.classList.add('expanded');
     expandedRecoId = id;
     // Enter compact mode
@@ -932,6 +946,10 @@ function selectRecoFromBar() {
   const name = ctaBar.dataset.name;
   const price = ctaBar.dataset.price;
   ctaBar.classList.remove('visible');
+  document.body.style.overflow = '';
+  // Close the detail overlay
+  const detailEl = document.getElementById('reco-detail-' + id);
+  if (detailEl) { detailEl.style.display = 'none'; detailEl.innerHTML = ''; }
   selectRecoTransport(id, name, price);
 }
 
