@@ -863,12 +863,11 @@ function toggleRecoDetail(id) {
       ctaBar.classList.add('visible');
     }
 
-    // Smooth scroll: position the detail zone just below the compact cards
+    // Smooth scroll: align top of the opened detail with top of viewport
     setTimeout(() => {
-      const detailZone = document.getElementById('reco-detail-zone');
-      if (detailZone) {
-        const zoneRect = detailZone.getBoundingClientRect();
-        const targetTop = window.scrollY + zoneRect.top - 80;
+      if (detailEl) {
+        const rect = detailEl.getBoundingClientRect();
+        const targetTop = window.scrollY + rect.top - 16;
         window.scrollTo({ top: Math.max(0, targetTop), behavior: 'smooth' });
       }
     }, 120);
