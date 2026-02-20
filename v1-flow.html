@@ -78,18 +78,9 @@
       <!-- ============================================ -->
       <div id="view-recos">
       <div class="d-reco-zone" id="d-reco-zone">
-        <!-- Collapsed bar (hidden by default, shown when collapsed) -->
-        <div class="d-reco-collapsed-bar" onclick="toggleRecos()">
-          <div class="d-reco-collapsed-label">Nos recommandations <span class="d-reco-collapsed-count">— 3 options</span></div>
-          <span class="d-reco-collapsed-chevron">▾</span>
-        </div>
-        <!-- Expanded content -->
-        <div class="d-reco-zone-header" onclick="toggleRecos()">
+        <div class="d-reco-zone-header">
           <div><div class="d-reco-zone-title">Nos recommandations</div></div>
-          <div style="display:flex;align-items:center;gap:10px">
-            <div class="d-reco-zone-budget">Budget max : 160 €/pers</div>
-            <span class="d-reco-collapsed-chevron" style="display:inline;transform:rotate(180deg)">▾</span>
-          </div>
+          <div><div class="d-reco-zone-budget">Budget max : 160 €/pers</div></div>
         </div>
         <div class="d-reco-zone-hint">Sélectionnées selon votre <strong>politique entreprise</strong>, vos <strong>préférences</strong> et votre <strong>historique</strong> de réservation.</div>
 
@@ -123,29 +114,6 @@
               <span class="amenity-no">Non remboursable</span>
             </div>
           </div>
-          <!-- Inline detail: train1 -->
-          <div class="d-reco-inline-detail" id="reco-detail-train1" style="display:none">
-            <div class="d-rid-content">
-              <div class="dp-section"><div class="dp-section-title">Itinéraire</div>
-                <div class="journey-leg"><div class="journey-label">Aller <span class="journey-date">· Ven. 16 jan.</span></div><div class="tl"><div class="tl-point"><span class="tl-time">07:13</span><span class="tl-station">Paris Gare de Lyon</span></div><div class="tl-connector"><div class="tl-connector-info"><div class="tl-op-dot" style="background:#e3f2fd">🚄</div> 2h · Direct · TGV 7835 · 2nde</div><div class="leg-comfort">💺 Standard, inclinable · 🔌 Prise · 📶 WiFi TGV Connect · 🍽️ Bar</div><div class="leg-ratrules"><strong>TARIF 2NDE CLASSE</strong> — Échangeable avec retenue de 15 € jusqu'à la veille du départ. Non remboursable. Billet nominatif valable uniquement sur ce train, en 2nde classe.</div></div><div class="tl-point"><span class="tl-time">09:13</span><span class="tl-station">Lyon Part-Dieu</span></div></div></div>
-                <div class="journey-leg"><div class="journey-label">Retour <span class="journey-date">· Ven. 23 jan.</span></div><div class="tl"><div class="tl-point"><span class="tl-time">18:00</span><span class="tl-station">Lyon Part-Dieu</span></div><div class="tl-connector"><div class="tl-connector-info"><div class="tl-op-dot" style="background:#e3f2fd">🚄</div> 2h · Direct · TGV 6642 · 2nde</div><div class="leg-comfort">💺 Standard, inclinable · 🔌 Prise · 📶 WiFi TGV Connect · 🍽️ Bar</div><div class="leg-ratrules"><strong>TARIF 2NDE CLASSE</strong> — Échangeable avec retenue de 15 € jusqu'à la veille du départ. Non remboursable. Billet nominatif valable uniquement sur ce train, en 2nde classe.</div></div><div class="tl-point"><span class="tl-time">20:00</span><span class="tl-station">Paris Gare de Lyon</span></div></div></div>
-              </div>
-              <div class="dp-section"><div class="dp-section-title">Tarif</div>
-                <div class="tariff-card selected" style="cursor:default"><div class="tf-left"><div class="tf-name">2nde Classe</div><div class="tf-conditions"><span class="tf-tag yes">Modif. avec frais</span><span class="tf-tag no">Non remboursable</span></div></div><div class="tf-right"><div class="tf-price">290 €</div></div></div>
-              </div>
-              <div class="no-fare-info-card" style="margin-top:10px">
-                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" style="flex-shrink:0"><circle cx="8" cy="8" r="7" stroke="var(--text-tag-info)" stroke-width="1.5"/><path d="M8 5V5.01M8 7V11" stroke="var(--text-tag-info)" stroke-width="1.5" stroke-linecap="round"/></svg>
-                <span>Vous pourrez <strong>ajuster votre tarif</strong> et ajouter des extras à l'étape suivante.</span>
-              </div>
-              <div class="dp-section" style="margin-top:12px"><div class="dp-section-title">Émissions CO2</div>
-                <div class="co2-row">🌿 2,4 kg CO2 — 98% de moins qu'en voiture</div>
-              </div>
-            </div>
-            <div class="d-rid-cta">
-              <button class="btn-primary" onclick="selectRecoTransport('train1','TGV INOUI 7835 · 2nde','290 €')">Sélectionner ce transport →</button>
-            </div>
-          </div>
-
           <!-- Reco 2: Air France -->
           <div class="d-reco-card" data-id="flight1" onclick="toggleRecoDetail('flight1')">
             <div class="d-reco-card-tag"><span class="tag tag-fast">Plus rapide</span></div>
@@ -176,29 +144,6 @@
               <span>🧳 12kg</span>
             </div>
           </div>
-          <!-- Inline detail: flight1 -->
-          <div class="d-reco-inline-detail" id="reco-detail-flight1" style="display:none">
-            <div class="d-rid-content">
-              <div class="dp-section"><div class="dp-section-title">Itinéraire</div>
-                <div class="journey-leg"><div class="journey-label">Aller <span class="journey-date">· Ven. 16 jan.</span></div><div class="tl"><div class="tl-point"><span class="tl-time">07:00</span><span class="tl-station">CDG · Paris Charles de Gaulle</span></div><div class="tl-connector"><div class="tl-connector-info"><div class="tl-op-dot" style="background:#e8eaf6">✈️</div> 1h10 · Direct · Air France AF7524 · Economy</div><div class="leg-comfort">💺 Standard · 🧳 Cabine 12 kg</div><div class="leg-ratrules"><strong>TARIF ECONOMY LIGHT</strong> — Modifiable avec frais (+50 € + diff. tarif). Non remboursable. 1 bagage cabine 12 kg inclus. Pas de bagage en soute.</div></div><div class="tl-point"><span class="tl-time">08:10</span><span class="tl-station">LYS · Lyon Saint-Exupéry</span></div></div></div>
-                <div class="journey-leg"><div class="journey-label">Retour <span class="journey-date">· Ven. 23 jan.</span></div><div class="tl"><div class="tl-point"><span class="tl-time">20:30</span><span class="tl-station">LYS · Lyon Saint-Exupéry</span></div><div class="tl-connector"><div class="tl-connector-info"><div class="tl-op-dot" style="background:#e8eaf6">✈️</div> 1h10 · Direct · Air France AF7524 · Economy</div><div class="leg-comfort">💺 Standard · 🧳 Cabine 12 kg</div><div class="leg-ratrules"><strong>TARIF ECONOMY LIGHT</strong> — Modifiable avec frais (+50 € + diff. tarif). Non remboursable. 1 bagage cabine 12 kg inclus. Pas de bagage en soute.</div></div><div class="tl-point"><span class="tl-time">21:40</span><span class="tl-station">CDG · Paris Charles de Gaulle</span></div></div></div>
-              </div>
-              <div class="dp-section"><div class="dp-section-title">Tarif</div>
-                <div class="tariff-card selected" style="cursor:default"><div class="tf-left"><div class="tf-name">Economy Light</div><div class="tf-conditions"><span class="tf-tag yes">Modif. avec frais</span><span class="tf-tag no">Non remboursable</span></div></div><div class="tf-right"><div class="tf-price">378 €</div></div></div>
-              </div>
-              <div class="no-fare-info-card" style="margin-top:10px">
-                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" style="flex-shrink:0"><circle cx="8" cy="8" r="7" stroke="var(--text-tag-info)" stroke-width="1.5"/><path d="M8 5V5.01M8 7V11" stroke="var(--text-tag-info)" stroke-width="1.5" stroke-linecap="round"/></svg>
-                <span>Vous pourrez <strong>ajuster votre tarif</strong> et ajouter des extras à l'étape suivante.</span>
-              </div>
-              <div class="dp-section" style="margin-top:12px"><div class="dp-section-title">Émissions CO2</div>
-                <div class="co2-row">✈️ 48 kg CO2 par personne</div>
-              </div>
-            </div>
-            <div class="d-rid-cta">
-              <button class="btn-primary" onclick="selectRecoTransport('flight1','Air France AF7524 · Economy','378 €')">Sélectionner ce transport →</button>
-            </div>
-          </div>
-
           <!-- Reco 3: OuiGo -->
           <div class="d-reco-card" data-id="train2" onclick="toggleRecoDetail('train2')">
             <div class="d-reco-card-tag"><span class="tag tag-success">Moins cher</span></div>
@@ -229,6 +174,54 @@
               <span style="color:var(--color-positive)">♻ Green</span>
             </div>
           </div>
+        </div><!-- /d-reco-grid -->
+
+        <!-- Detail zone: always below all 3 cards -->
+        <div class="d-reco-detail-zone" id="reco-detail-zone">
+          <!-- Inline detail: train1 -->
+          <div class="d-reco-inline-detail" id="reco-detail-train1" style="display:none">
+            <div class="d-rid-content">
+              <div class="dp-section"><div class="dp-section-title">Itinéraire</div>
+                <div class="journey-leg"><div class="journey-label">Aller <span class="journey-date">· Ven. 16 jan.</span></div><div class="tl"><div class="tl-point"><span class="tl-time">07:13</span><span class="tl-station">Paris Gare de Lyon</span></div><div class="tl-connector"><div class="tl-connector-info"><div class="tl-op-dot" style="background:#e3f2fd">🚄</div> 2h · Direct · TGV 7835 · 2nde</div><div class="leg-comfort">💺 Standard, inclinable · 🔌 Prise · 📶 WiFi TGV Connect · 🍽️ Bar</div><div class="leg-ratrules"><strong>TARIF 2NDE CLASSE</strong> — Échangeable avec retenue de 15 € jusqu'à la veille du départ. Non remboursable. Billet nominatif valable uniquement sur ce train, en 2nde classe.</div></div><div class="tl-point"><span class="tl-time">09:13</span><span class="tl-station">Lyon Part-Dieu</span></div></div></div>
+                <div class="journey-leg"><div class="journey-label">Retour <span class="journey-date">· Ven. 23 jan.</span></div><div class="tl"><div class="tl-point"><span class="tl-time">18:00</span><span class="tl-station">Lyon Part-Dieu</span></div><div class="tl-connector"><div class="tl-connector-info"><div class="tl-op-dot" style="background:#e3f2fd">🚄</div> 2h · Direct · TGV 6642 · 2nde</div><div class="leg-comfort">💺 Standard, inclinable · 🔌 Prise · 📶 WiFi TGV Connect · 🍽️ Bar</div><div class="leg-ratrules"><strong>TARIF 2NDE CLASSE</strong> — Échangeable avec retenue de 15 € jusqu'à la veille du départ. Non remboursable. Billet nominatif valable uniquement sur ce train, en 2nde classe.</div></div><div class="tl-point"><span class="tl-time">20:00</span><span class="tl-station">Paris Gare de Lyon</span></div></div></div>
+              </div>
+              <div class="dp-section"><div class="dp-section-title">Tarif</div>
+                <div class="tariff-card selected" style="cursor:default"><div class="tf-left"><div class="tf-name">2nde Classe</div><div class="tf-conditions"><span class="tf-tag yes">Modif. avec frais</span><span class="tf-tag no">Non remboursable</span></div></div><div class="tf-right"><div class="tf-price">290 €</div></div></div>
+              </div>
+              <div class="no-fare-info-card" style="margin-top:10px">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" style="flex-shrink:0"><circle cx="8" cy="8" r="7" stroke="var(--text-tag-info)" stroke-width="1.5"/><path d="M8 5V5.01M8 7V11" stroke="var(--text-tag-info)" stroke-width="1.5" stroke-linecap="round"/></svg>
+                <span>Vous pourrez <strong>ajuster votre tarif</strong> et ajouter des extras à l'étape suivante.</span>
+              </div>
+              <div class="dp-section" style="margin-top:12px"><div class="dp-section-title">Émissions CO2</div>
+                <div class="co2-row">🌿 2,4 kg CO2 — 98% de moins qu'en voiture</div>
+              </div>
+            </div>
+            <div class="d-rid-cta">
+              <button class="btn-primary" onclick="selectRecoTransport('train1','TGV INOUI 7835 · 2nde','290 €')">Sélectionner ce transport →</button>
+            </div>
+          </div>
+          <!-- Inline detail: flight1 -->
+          <div class="d-reco-inline-detail" id="reco-detail-flight1" style="display:none">
+            <div class="d-rid-content">
+              <div class="dp-section"><div class="dp-section-title">Itinéraire</div>
+                <div class="journey-leg"><div class="journey-label">Aller <span class="journey-date">· Ven. 16 jan.</span></div><div class="tl"><div class="tl-point"><span class="tl-time">07:00</span><span class="tl-station">CDG · Paris Charles de Gaulle</span></div><div class="tl-connector"><div class="tl-connector-info"><div class="tl-op-dot" style="background:#e8eaf6">✈️</div> 1h10 · Direct · Air France AF7524 · Economy</div><div class="leg-comfort">💺 Standard · 🧳 Cabine 12 kg</div><div class="leg-ratrules"><strong>TARIF ECONOMY LIGHT</strong> — Modifiable avec frais (+50 € + diff. tarif). Non remboursable. 1 bagage cabine 12 kg inclus. Pas de bagage en soute.</div></div><div class="tl-point"><span class="tl-time">08:10</span><span class="tl-station">LYS · Lyon Saint-Exupéry</span></div></div></div>
+                <div class="journey-leg"><div class="journey-label">Retour <span class="journey-date">· Ven. 23 jan.</span></div><div class="tl"><div class="tl-point"><span class="tl-time">20:30</span><span class="tl-station">LYS · Lyon Saint-Exupéry</span></div><div class="tl-connector"><div class="tl-connector-info"><div class="tl-op-dot" style="background:#e8eaf6">✈️</div> 1h10 · Direct · Air France AF7524 · Economy</div><div class="leg-comfort">💺 Standard · 🧳 Cabine 12 kg</div><div class="leg-ratrules"><strong>TARIF ECONOMY LIGHT</strong> — Modifiable avec frais (+50 € + diff. tarif). Non remboursable. 1 bagage cabine 12 kg inclus. Pas de bagage en soute.</div></div><div class="tl-point"><span class="tl-time">21:40</span><span class="tl-station">CDG · Paris Charles de Gaulle</span></div></div></div>
+              </div>
+              <div class="dp-section"><div class="dp-section-title">Tarif</div>
+                <div class="tariff-card selected" style="cursor:default"><div class="tf-left"><div class="tf-name">Economy Light</div><div class="tf-conditions"><span class="tf-tag yes">Modif. avec frais</span><span class="tf-tag no">Non remboursable</span></div></div><div class="tf-right"><div class="tf-price">378 €</div></div></div>
+              </div>
+              <div class="no-fare-info-card" style="margin-top:10px">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" style="flex-shrink:0"><circle cx="8" cy="8" r="7" stroke="var(--text-tag-info)" stroke-width="1.5"/><path d="M8 5V5.01M8 7V11" stroke="var(--text-tag-info)" stroke-width="1.5" stroke-linecap="round"/></svg>
+                <span>Vous pourrez <strong>ajuster votre tarif</strong> et ajouter des extras à l'étape suivante.</span>
+              </div>
+              <div class="dp-section" style="margin-top:12px"><div class="dp-section-title">Émissions CO2</div>
+                <div class="co2-row">✈️ 48 kg CO2 par personne</div>
+              </div>
+            </div>
+            <div class="d-rid-cta">
+              <button class="btn-primary" onclick="selectRecoTransport('flight1','Air France AF7524 · Economy','378 €')">Sélectionner ce transport →</button>
+            </div>
+          </div>
           <!-- Inline detail: train2 (OuiGo) -->
           <div class="d-reco-inline-detail" id="reco-detail-train2" style="display:none">
             <div class="d-rid-content">
@@ -251,7 +244,7 @@
               <button class="btn-primary" onclick="selectRecoTransport('train2','OuiGo 7901 · Standard','196 €')">Sélectionner ce transport →</button>
             </div>
           </div>
-        </div><!-- /d-reco-grid -->
+        </div><!-- /d-reco-detail-zone -->
 
         <div class="d-reco-see-all">
           <button class="d-see-all-btn" onclick="showAllView('trains')">Voir tous les trains <span class="d-see-all-count">(24)</span></button>

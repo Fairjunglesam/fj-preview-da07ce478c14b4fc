@@ -792,8 +792,14 @@ function toggleRecoDetail(id) {
     detailEl.style.display = '';
     if (card) card.classList.add('expanded');
     expandedRecoId = id;
-    // Scroll detail into view
-    setTimeout(() => detailEl.scrollIntoView({ behavior: 'smooth', block: 'nearest' }), 50);
+    // Smooth scroll to reveal the detail below the cards
+    setTimeout(() => {
+      const detailRect = detailEl.getBoundingClientRect();
+      const viewportH = window.innerHeight;
+      // Scroll so the top of the detail is ~60% up the viewport (shows cards above + detail + CTA hint)
+      const targetTop = window.scrollY + detailRect.top - (viewportH * 0.3);
+      window.scrollTo({ top: Math.max(0, targetTop), behavior: 'smooth' });
+    }, 80);
   }
 }
 
