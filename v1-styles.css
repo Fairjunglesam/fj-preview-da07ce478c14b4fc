@@ -681,7 +681,7 @@ body { font-family:var(--font); background:var(--bg-page); color:var(--text-prim
 .d-reco-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:12px; }
 
 /* Rich reco cards — Figma production style (compact) */
-.d-reco-card { background:white; border:1.5px solid #e2e4e8; border-radius:16px; cursor:pointer; transition:all 0.15s; overflow:hidden; padding:0; position:relative; }
+.d-reco-card { background:white; border:1.5px solid #e2e4e8; border-radius:16px; cursor:pointer; transition:all 0.15s; overflow:hidden; padding:0; position:relative; min-width:0; }
 .d-reco-card:hover { border-color:#b2b4b9; box-shadow:0 2px 10px rgba(0,0,0,0.06); }
 .d-reco-card.selected-card { border-color:var(--text-tag-info); background:white; }
 
@@ -802,19 +802,7 @@ body { font-family:var(--font); background:var(--bg-page); color:var(--text-prim
 /* List gap */
 .d-list-gap { display:flex; flex-direction:column; gap:8px; }
 
-/* D reco grid responsive */
-@media (max-width: 768px) {
-  .d-reco-grid { grid-template-columns:1fr; gap:8px; overflow-x:auto; grid-auto-flow:column; grid-auto-columns:85%; padding-bottom:4px; scroll-snap-type:x mandatory; -webkit-overflow-scrolling:touch; }
-  .d-reco-grid::-webkit-scrollbar { display:none; }
-  .d-reco-card { scroll-snap-align:start; }
-  .rc-header { padding:12px 14px 0; }
-  .rc-content { padding:8px 14px; gap:8px; }
-  .rc-footer { padding:8px 14px; }
-  .rc-time { font-size:15px; }
-  .rc-price { font-size:18px; }
-  .d-reco-zone-header { flex-direction:column; gap:8px; }
-  .d-reco-see-all { flex-direction:row; }
-}
+/* D reco grid responsive — see consolidated responsive section at end of file */
 
 /* ===== D HOTEL HEADER (C-style) ===== */
 
@@ -914,10 +902,221 @@ body { font-family:var(--font); background:var(--bg-page); color:var(--text-prim
 .md-nav-bar a { font-size:12px; font-weight:600; color:var(--text-tag-info); text-decoration:none; display:inline-flex; align-items:center; gap:4px; }
 .md-nav-bar a:hover { text-decoration:underline; }
 
-/* ===== V0.1: RESPONSIVE ===== */
-@media (max-width:768px) {
-  .md-layout { flex-direction:column; flex:none; height:auto; min-height:auto; }
-  .md-list { width:100%; border-right:none; border-bottom:1px solid var(--border-light); max-height:50vh; }
-  .md-detail { width:100%; }
-  .d-reco-see-all { flex-direction:row; flex-wrap:wrap; }
+/* ===== V0.1: RESPONSIVE — 4 breakpoints ===== */
+
+/* --- DESKTOP LARGE: >1200px --- */
+@media (min-width: 1201px) {
+  .step-inner { max-width: 1200px; }
+  .d-reco-grid { grid-template-columns: repeat(3, 1fr); gap: 14px; }
+  .md-list { width: 45%; }
+  .md-detail { width: 55%; }
+}
+
+/* --- DESKTOP: 993–1200px --- */
+@media (max-width: 1200px) and (min-width: 993px) {
+  .step-inner { max-width: 1060px; padding: 18px 24px 120px; }
+  .d-reco-grid { grid-template-columns: repeat(3, 1fr); gap: 10px; }
+  .rc-time { font-size: 15px; }
+  .rc-price { font-size: 18px; }
+  .rc-header { padding: 12px 14px 0; }
+  .rc-content { padding: 8px 14px; }
+  .rc-footer { padding: 8px 14px; }
+  .md-nav-bar { gap: 8px; }
+  .d-ctx-chip { font-size: 10px; padding: 2px 6px; }
+  .d-ctx-dot, .d-ctx-sep { font-size: 9px; }
+  .md-switch-btn { font-size: 11px; padding: 4px 10px; }
+  .md-list { width: 42%; }
+  .md-detail { width: 58%; }
+  .d-see-all-btn { font-size: 11px; padding: 6px 12px; }
+}
+
+/* --- TABLET: 769–992px --- */
+@media (max-width: 992px) and (min-width: 769px) {
+  .header { padding: 10px 20px; }
+  .header-pills { display: none; }
+  .step-inner { padding: 16px 20px 120px; }
+  .stepper-total { display: none; }
+  .wf-step-label { font-size: 11px; }
+  .wf-line { width: 20px; }
+
+  /* Reco grid — 1 column */
+  .d-reco-grid { grid-template-columns: 1fr; gap: 10px; }
+
+  /* Nav bar — wrap chips below */
+  .md-nav-bar { flex-wrap: wrap; gap: 6px; }
+  .md-nav-chips { order: 3; flex-basis: 100%; overflow-x: auto; flex-wrap: nowrap; -webkit-overflow-scrolling: touch; padding-bottom: 2px; }
+  .md-nav-chips::-webkit-scrollbar { display: none; }
+  .md-back { order: 1; }
+  .md-switch-btn { order: 2; margin-left: auto; }
+
+  /* Master-detail — stack vertically */
+  .md-layout { flex-direction: column; flex: none; height: auto; min-height: auto; }
+  .md-list { width: 100%; border-right: none; border-bottom: 1px solid var(--border-light); max-height: 50vh; }
+  .md-detail { width: 100%; }
+
+  /* Phase bar */
+  .md-phase-bar { flex-wrap: wrap; gap: 8px; }
+  .md-phase-leg { flex-basis: 100%; }
+
+  /* Reco zone header */
+  .d-reco-zone-header { flex-direction: column; gap: 8px; }
+  .d-reco-see-all { flex-direction: row; }
+  .d-see-all-btn { flex: 1; text-align: center; }
+
+  /* CTA bar */
+  .d-reco-cta-bar { padding: 12px 20px; }
+  .d-reco-cta-bar .btn-primary { padding: 12px 20px; font-size: 14px; min-height: 44px; }
+
+  /* Selection footer */
+  .selection-footer { padding: 10px 20px; }
+  .sf-actions .btn-primary, .sf-actions .btn-secondary { min-height: 44px; padding: 10px 16px; }
+
+  /* Inline reco detail */
+  .d-reco-inline-detail .dp-content { padding: 16px 18px; }
+
+  /* Context chips */
+  .d-ctx-chip { font-size: 10px; }
+
+  /* Drawer */
+  .detail-drawer { width: 520px; }
+
+  /* Hotel split */
+  .hotel-split { flex-direction: column; }
+  .hotel-split-list { width: 100%; }
+  .hotel-split-map { width: 100%; height: 280px; border-left: none; border-top: 1px solid var(--border-light); }
+  .hotel-list-card { grid-template-columns: 8rem 1fr; }
+  .d-hotel-filters-row { overflow-x: auto; }
+  .d-filter-chips-row { flex-wrap: nowrap; overflow-x: auto; }
+  .d-filter-chips-row::-webkit-scrollbar { display: none; }
+  .recap-view { padding: 24px 20px; }
+}
+
+/* --- MOBILE: <768px --- */
+@media (max-width: 768px) {
+  /* Reco grid — horizontal scroll carousel */
+  .d-reco-grid { grid-template-columns: 1fr; gap: 8px; overflow-x: auto; grid-auto-flow: column; grid-auto-columns: 85%; padding-bottom: 4px; scroll-snap-type: x mandatory; -webkit-overflow-scrolling: touch; }
+  .d-reco-grid::-webkit-scrollbar { display: none; }
+  .d-reco-card { scroll-snap-align: start; }
+
+  /* Reco cards — compact */
+  .rc-header { padding: 12px 14px 0; }
+  .rc-content { padding: 8px 14px; gap: 8px; }
+  .rc-footer { padding: 8px 14px; }
+  .rc-time { font-size: 15px; }
+  .rc-price { font-size: 18px; }
+
+  /* Nav bar — wrap: back+switch top, chips below */
+  .md-nav-bar { flex-wrap: wrap; gap: 6px; padding: 0 0 8px; }
+  .md-back { order: 1; font-size: 13px; min-height: 44px; display: inline-flex; align-items: center; }
+  .md-switch-btn { order: 2; margin-left: auto; min-height: 44px; padding: 8px 14px; font-size: 12px; }
+  .md-nav-chips { order: 3; flex-basis: 100%; flex-wrap: nowrap; overflow-x: auto; -webkit-overflow-scrolling: touch; gap: 3px; padding-bottom: 2px; }
+  .md-nav-chips::-webkit-scrollbar { display: none; }
+
+  /* Context chips */
+  .d-ctx-chip { font-size: 10px; padding: 2px 6px; max-width: 120px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; flex-shrink: 0; }
+  .d-ctx-dot { display: none; }
+
+  /* Master-detail — stacked */
+  .md-layout { flex-direction: column; flex: none; height: auto; min-height: auto; }
+  .md-list { width: 100%; border-right: none; border-bottom: 1px solid var(--border-light); max-height: 45vh; padding: 8px; }
+  .md-detail { width: 100%; min-height: 200px; }
+  .md-detail-placeholder { font-size: 13px; padding: 24px 16px; }
+
+  /* Phase bar */
+  .md-phase-bar { flex-direction: column; align-items: flex-start; gap: 4px; padding: 8px 0; }
+  .md-phase-title { font-size: 14px; }
+  .md-phase-leg { width: 100%; flex-wrap: wrap; gap: 4px; font-size: 11px; }
+
+  /* Reco zone header */
+  .d-reco-zone-header { flex-direction: column; gap: 8px; padding-bottom: 8px; }
+  .d-reco-see-all { flex-direction: column; width: 100%; }
+  .d-see-all-btn { width: 100%; text-align: center; min-height: 44px; display: flex; align-items: center; justify-content: center; font-size: 13px; }
+
+  /* Reco CTA bar */
+  .d-reco-cta-bar { flex-direction: column; gap: 8px; padding: 12px 16px calc(12px + env(safe-area-inset-bottom)); }
+  .d-reco-cta-bar .rcb-summary { width: 100%; text-align: center; font-size: 12px; }
+  .d-reco-cta-bar .btn-primary { width: 100%; min-height: 48px; font-size: 15px; padding: 14px 20px; }
+
+  /* Selection footer */
+  .selection-footer { flex-direction: column; gap: 10px; padding: 12px 16px calc(12px + env(safe-area-inset-bottom)); }
+  .sf-selection { width: 100%; }
+  .sf-actions { width: 100%; display: flex; gap: 8px; }
+  .sf-actions .btn-secondary { flex: 1; min-height: 44px; text-align: center; }
+  .sf-actions .btn-primary { flex: 2; min-height: 48px; font-size: 14px; text-align: center; }
+  .sf-name { font-size: 13px; }
+  .sf-price { font-size: 13px; }
+
+  /* Inline reco detail */
+  .d-reco-inline-detail { border-radius: 12px; }
+  .d-reco-inline-detail .dp-content { padding: 14px 12px; }
+  .d-reco-inline-detail .dp-header { flex-direction: column; gap: 8px; }
+  .d-reco-inline-detail .dp-price-box { text-align: left; }
+  .d-reco-inline-detail .tariff-card { flex-direction: column; align-items: flex-start; gap: 6px; }
+  .d-reco-inline-detail .tf-right { text-align: left; }
+  .d-reco-inline-detail .journey-leg { margin-bottom: 12px; }
+  .d-reco-inline-detail .tl { padding-left: 40px; }
+  .d-reco-inline-detail .tl-time { left: -40px; font-size: 12px; }
+  .d-reco-inline-detail .co2-row { font-size: 11px; padding: 8px 10px; }
+
+  /* Hero */
+  .d-hero { padding: 16px 0 12px; }
+  .d-hero-title { font-size: 20px; }
+  .d-hero-sub { font-size: 12px; }
+  .d-reco-zone { padding: 14px 12px; border-radius: 16px; }
+
+  /* Hotel */
+  .d-hero:has(.d-hotel-skip-btn) { flex-direction: column; align-items: flex-start; gap: 8px; }
+  .d-hotel-skip-btn { align-self: flex-start; }
+  .d-hotel-filters-row { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+  .d-filter-chips-row { flex-wrap: nowrap; overflow-x: auto; }
+  .d-filter-chips-row::-webkit-scrollbar { display: none; }
+  .filter-chip { min-height: 44px; display: inline-flex; align-items: center; }
+  .d-filter-all-btn { min-height: 44px; }
+  .d-transport-recap { flex-wrap: wrap; gap: 6px; padding: 8px 12px; font-size: 12px; }
+  .d-transport-recap-edit { margin-left: auto; }
+
+  /* Drawer */
+  .detail-drawer { width: 100%; }
+
+  /* Pagination */
+  .pagination-btn { min-height: 44px; }
+  .md-page-btn { min-height: 44px; }
+
+  /* Recap */
+  .recap-view { padding: 20px 16px; }
+  .recap-card { padding: 16px; border-radius: 16px; }
+  .recap-row { font-size: 13px; }
+  .recap-row.sub { font-size: 11px; }
+  .recap-cta .btn-primary { width: 100%; min-height: 48px; padding: 14px 24px; font-size: 15px; }
+}
+
+/* --- SMALL MOBILE: <480px --- */
+@media (max-width: 480px) {
+  .d-reco-grid { grid-auto-columns: 92%; }
+  .rc-header { padding: 10px 10px 0; }
+  .rc-content { padding: 6px 10px; }
+  .rc-footer { padding: 6px 10px; }
+  .rc-time { font-size: 14px; }
+  .rc-price { font-size: 16px; }
+  .d-ctx-chip { max-width: 100px; font-size: 9px; }
+  .d-ctx-static { display: none; }
+  .d-ctx-sep { font-size: 8px; }
+  .md-phase-title { font-size: 13px; }
+  .d-reco-cta-bar { padding-bottom: calc(16px + env(safe-area-inset-bottom)); }
+  .selection-footer { padding-bottom: calc(16px + env(safe-area-inset-bottom)); }
+  .d-reco-inline-detail .dp-content { padding: 10px 8px; }
+  .d-reco-inline-detail .tl { padding-left: 36px; }
+  .d-reco-inline-detail .tl-time { left: -36px; font-size: 11px; width: 32px; }
+  .d-reco-inline-detail .dp-section-title { font-size: 11px; }
+  .md-back { min-height: 44px; padding: 8px 0; }
+  .md-switch-btn { min-height: 44px; }
+  .d-see-all-btn { min-height: 44px; }
+  .btn-primary { min-height: 48px; }
+  .btn-secondary { min-height: 44px; }
+  .hotel-list-card { grid-template-columns: 4rem 1fr; }
+  .hlc-img { min-height: 4rem; padding: 4px; }
+  .hlc-img-rating-info { display: none; }
+  .hlc-name { font-size: 11px; }
+  .hlc-features { font-size: 9px; }
+  .hlc-price { font-size: 16px; }
 }
