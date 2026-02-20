@@ -890,6 +890,9 @@ body { font-family:var(--font); background:var(--bg-page); color:var(--text-prim
 .md-detail::-webkit-scrollbar { width:4px; }
 .md-detail::-webkit-scrollbar-thumb { background:var(--border-light); border-radius:2px; }
 .md-detail-placeholder { display:flex; align-items:center; justify-content:center; height:100%; color:var(--text-muted); font-size:14px; padding:40px; text-align:center; }
+.md-page-btn { width:100%; padding:10px; border:1.5px dashed var(--border-light); border-radius:10px; background:white; font-size:12px; font-weight:600; color:var(--text-tag-info); cursor:pointer; font-family:var(--font); transition:all 0.15s; text-align:center; }
+.md-page-btn:hover { background:var(--bg-tag-info); border-color:var(--text-tag-info); }
+.md-page-hint { font-weight:400; color:var(--text-muted); }
 .md-list .list-card { margin:0; }
 .md-list .list-card.selected-card { border-color:var(--text-tag-info); background:#f7fbff; }
 
