@@ -1,0 +1,1029 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Next Trip Card — Proto V8</title>
+<link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --font: 'Source Sans 3', 'Source Sans Pro', sans-serif;
+    --black: #00050A; --white: #FFFFFF;
+    --blue-50: #F2FBFF; --blue-75: #E5F8FF; --blue-100: #CCEEFE;
+    --blue-200: #99DDFE; --blue-300: #66CBFD; --blue-400: #33BAFD;
+    --blue-500: #00A9FC; --blue-600: #0087CA; --blue-700: #006597; --blue-800: #004465;
+    --green-50: #F4FDFA; --green-100: #D3F7EC; --green-200: #A7EFD9;
+    --green-500: #22D7A1; --green-600: #1BAC81; --green-700: #148161;
+    --red-50: #FFF6F7; --red-100: #FFDADD; --red-400: #FF6C79; --red-500: #FF4757;
+    --orange-50: #FFF4EE; --orange-100: #FFE8DD; --orange-500: #FF8D54; --orange-600: #CC7143;
+    --yellow-50: #FFFCF2; --yellow-500: #FFBE00;
+    --grey-50: #F8FAFF; --grey-75: #EEF0F5; --grey-100: #E4E6EB;
+    --grey-200: #D0D2D7; --grey-300: #B2B4B9; --grey-400: #9EA0A5;
+    --grey-500: #808287; --grey-600: #6C6E73; --grey-700: #4E5055;
+    --grey-800: #3A3C41; --grey-900: #1C1E23;
+    --radius-xs: 12px; --radius-sm: 24px; --radius-pill: 9999px;
+    --stroke-sm: 1px; --stroke-md: 1.5px; --stroke-lg: 2.5px;
+    --shadow-card: 4px 4px 16px rgba(228,230,235,0.4);
+    --shadow-accent: 0 4px 20px rgba(0,169,252,0.15);
+    --ease: cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: var(--font); background: var(--grey-50); color: var(--black); line-height: 1.5; padding: 16px; -webkit-font-smoothing: antialiased; }
+
+  /* ===== Demo Controls ===== */
+  .demo-controls { max-width: 960px; margin: 0 auto 12px; padding: 10px 14px; background: var(--white); border-radius: var(--radius-xs); border: var(--stroke-sm) solid var(--grey-100); display: flex; flex-wrap: wrap; gap: 5px; align-items: center; }
+  .demo-controls label { font-size: 10px; font-weight: 700; color: var(--grey-500); text-transform: uppercase; letter-spacing: 0.5px; }
+  .demo-controls button { padding: 3px 9px; border: var(--stroke-md) solid var(--grey-100); border-radius: 7px; background: var(--white); font-size: 10px; font-weight: 600; cursor: pointer; transition: all 0.15s; color: var(--grey-700); font-family: var(--font); }
+  .demo-controls button:hover { background: var(--grey-50); border-color: var(--grey-200); }
+  .demo-controls button.active { background: var(--black); color: var(--white); border-color: var(--black); }
+  .demo-controls .sep { width: 1px; height: 18px; background: var(--grey-100); margin: 0 3px; }
+  .demo-controls select { padding: 3px 7px; border: var(--stroke-md) solid var(--grey-100); border-radius: 7px; font-size: 10px; background: var(--white); color: var(--grey-700); font-family: var(--font); }
+
+  /* ===== Trip Card shell ===== */
+  .trip-card { max-width: 960px; margin: 0 auto; background: var(--white); border-radius: 18px; border: var(--stroke-lg) solid transparent; overflow: hidden; transition: all 0.3s var(--ease); box-shadow: var(--shadow-card); }
+  .trip-card.state-upcoming { border-color: var(--grey-100); }
+  .trip-card.state-imminent { border-color: var(--blue-200); background: linear-gradient(160deg, var(--blue-50) 0%, var(--white) 35%); box-shadow: var(--shadow-accent); }
+  .trip-card.state-in_transit { border-color: var(--blue-300); background: linear-gradient(160deg, var(--blue-75) 0%, var(--white) 45%); box-shadow: var(--shadow-accent); }
+  .trip-card.state-between_segments { border-color: var(--grey-100); }
+  .trip-card.state-trip_ending { border-color: var(--green-200); background: linear-gradient(160deg, var(--green-50) 0%, var(--white) 35%); }
+  .card-inner { padding: 18px 22px 14px; }
+
+  /* ===== Header ===== */
+  .card-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
+  .header-left { flex: 1; min-width: 0; }
+  .headline-row { display: flex; align-items: center; gap: 8px; }
+  .state-dot { width: 9px; height: 9px; border-radius: 50%; flex-shrink: 0; background: var(--grey-300); }
+  .state-upcoming .state-dot { background: var(--blue-400); }
+  .state-imminent .state-dot { background: var(--blue-500); animation: pulse-dot 2s ease-in-out infinite; }
+  .state-in_transit .state-dot { background: var(--blue-500); animation: pulse-dot 1.5s ease-in-out infinite; }
+  .state-between_segments .state-dot { background: var(--green-500); }
+  .state-trip_ending .state-dot { background: var(--green-500); }
+  @keyframes pulse-dot { 0%,100%{ box-shadow:0 0 0 0 rgba(0,169,252,0.4); } 50%{ box-shadow:0 0 0 5px rgba(0,169,252,0); } }
+  .headline { font-size: 17px; font-weight: 700; color: var(--black); line-height: 1.2; }
+  .state-imminent .headline, .state-in_transit .headline { color: var(--blue-800); }
+  .state-trip_ending .headline { color: var(--green-700); }
+  .co-travelers { font-size: 11px; color: var(--grey-500); margin-top: 1px; margin-left: 17px; }
+  .header-link { display: inline-flex; align-items: center; gap: 5px; font-size: 11px; font-weight: 600; color: var(--grey-500); text-decoration: none; padding: 5px 10px; border-radius: 7px; border: var(--stroke-md) solid var(--grey-100); transition: all 0.15s; white-space: nowrap; flex-shrink: 0; margin-left: 12px; font-family: var(--font); }
+  .header-link:hover { background: var(--grey-50); border-color: var(--grey-200); color: var(--black); }
+
+  /* ===== Stepper ===== */
+  .stepper { display: flex; align-items: flex-start; margin-bottom: 14px; }
+  .stepper.hidden { display: none; }
+  .stepper-step { flex: 1; display: flex; flex-direction: column; align-items: center; position: relative; cursor: pointer; padding: 3px 0; border-radius: 10px; transition: all 0.2s; }
+  .stepper-step:hover { background: var(--grey-50); }
+  .stepper-step.active:hover { background: var(--blue-50); }
+  .stepper-step.completed { opacity: 0.5; }
+  .stepper-step.completed:hover { opacity: 0.8; background: var(--grey-50); }
+  .stepper-step.completed.viewing { opacity: 0.85; }
+  .stepper-dot-row { display: flex; align-items: center; width: 100%; position: relative; height: 34px; }
+  .stepper-dot { width: 30px; height: 30px; border-radius: 50%; border: 2.5px solid var(--grey-200); background: var(--white); position: relative; z-index: 2; flex-shrink: 0; margin: 0 auto; transition: all 0.3s var(--ease); display: flex; align-items: center; justify-content: center; font-size: 15px; }
+  .stepper-step.completed .stepper-dot { background: var(--green-500); border-color: var(--green-500); }
+  .stepper-step.active .stepper-dot { border-color: var(--blue-500); background: var(--blue-500); width: 34px; height: 34px; box-shadow: 0 0 0 4px rgba(0,169,252,0.12); }
+  .stepper-check { color: var(--white); font-size: 12px; font-weight: 800; }
+  .stepper-line { position: absolute; top: 50%; left: calc(50% + 18px); right: calc(-50% + 18px); height: 3px; background: var(--grey-100); transform: translateY(-50%); z-index: 1; border-radius: 3px; }
+  .stepper-step:last-child .stepper-line { display: none; }
+  .stepper-step.completed .stepper-line { background: var(--green-500); }
+  .stepper-step.active.transit .stepper-line { overflow: hidden; }
+  .stepper-step.active.transit .stepper-line::after { content: ''; position: absolute; inset: 0; background: linear-gradient(90deg, var(--blue-500) 40%, var(--grey-100) 60%); animation: transit-slide 2.5s ease-in-out infinite; }
+  @keyframes transit-slide { 0%{ transform:translateX(-60%); } 100%{ transform:translateX(60%); } }
+  .stepper-label { font-size: 12px; font-weight: 700; color: var(--grey-700); margin-top: 6px; text-align: center; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; line-height: 1.3; padding: 0 4px; }
+  .stepper-date { font-size: 10px; color: var(--grey-400); margin-top: 2px; text-align: center; font-weight: 500; }
+  .stepper-step.completed .stepper-label { color: var(--grey-400); text-decoration: line-through; text-decoration-color: var(--grey-300); }
+  .stepper-step.completed .stepper-date { color: var(--grey-300); }
+  .stepper-step.active .stepper-label { color: var(--blue-700); }
+  .stepper-step.active .stepper-date { color: var(--blue-500); }
+
+  /* ===== Étape wrapper ===== */
+  .etape-content { transition: all 0.3s var(--ease); }
+  .etape-content.is-past { opacity: 0.5; filter: grayscale(0.3); }
+  .etape-content.is-past:hover { opacity: 0.7; }
+  .etape-meta { display: flex; align-items: center; gap: 6px; margin-bottom: 8px; }
+  .etape-tag { display: inline-flex; align-items: center; gap: 3px; font-size: 10px; font-weight: 700; padding: 2px 8px; border-radius: var(--radius-pill); }
+  .etape-tag.next { background: var(--blue-100); color: var(--blue-800); }
+  .etape-tag.current { background: var(--blue-200); color: var(--blue-800); }
+  .etape-tag.done { background: var(--green-100); color: var(--green-700); }
+  .etape-tag.past { background: var(--grey-75); color: var(--grey-500); }
+  .etape-tag.future { background: var(--grey-75); color: var(--grey-600); }
+
+  /* ===== Shared étape card container ===== */
+  .ecard { border: 1.5px solid var(--grey-200); border-radius: 12px; overflow: hidden; margin-bottom: 8px; background: var(--white); }
+
+  /* ===== Transport — Boarding Pass ===== */
+  .bp { position: relative; border: 1.5px solid var(--grey-200); border-radius: 14px; background: var(--white); margin-bottom: 6px; overflow: visible; }
+  .bp-head { display: flex; justify-content: space-between; align-items: center; padding: 8px 14px 6px; }
+  .bp-carrier { display: flex; align-items: center; gap: 5px; font-size: 12px; font-weight: 700; color: var(--black); }
+  .bp-carrier-icon { font-size: 15px; }
+  .bp-carrier-sub { font-size: 11px; font-weight: 500; color: var(--grey-500); }
+  .bp-date { font-size: 11px; font-weight: 600; color: var(--grey-500); }
+  /* Tear line + poinçons */
+  .bp-tear { position: relative; border-top: 1.5px dashed var(--grey-200); margin: 0 12px; }
+  .bp-tear::before, .bp-tear::after { content: ''; position: absolute; top: -10px; width: 20px; height: 20px; border-radius: 50%; background: var(--white); border: 1.5px solid var(--grey-200); z-index: 2; }
+  .bp-tear::before { left: -23px; }
+  .bp-tear::after { right: -23px; }
+  .state-imminent .bp-tear::before, .state-imminent .bp-tear::after { background: linear-gradient(135deg, var(--blue-50), var(--white)); }
+  .state-in_transit .bp-tear::before, .state-in_transit .bp-tear::after { background: linear-gradient(135deg, var(--blue-75), var(--white)); }
+  .state-trip_ending .bp-tear::before, .state-trip_ending .bp-tear::after { background: linear-gradient(135deg, var(--green-50), var(--white)); }
+  /* Route row */
+  .bp-route { display: flex; align-items: flex-start; padding: 10px 14px 6px; gap: 8px; }
+  .bp-point { flex: 1; min-width: 0; }
+  .bp-point.arr { text-align: right; }
+  .bp-time { font-size: 26px; font-weight: 800; color: var(--black); letter-spacing: -1px; line-height: 1; }
+  .is-past .bp-time { color: var(--grey-400); }
+  .bp-loc { font-size: 11px; font-weight: 700; color: var(--grey-800); margin-top: 3px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .bp-sub { font-size: 10px; color: var(--grey-400); margin-top: 1px; }
+  /* Arrow center */
+  .bp-mid { flex-shrink: 0; display: flex; flex-direction: column; align-items: center; padding-top: 8px; min-width: 60px; }
+  .bp-arrow-line { width: 100%; height: 1.5px; background: var(--grey-200); position: relative; }
+  .bp-arrow-line::after { content: ''; position: absolute; right: -1px; top: -3.5px; width: 0; height: 0; border-top: 3.5px solid transparent; border-bottom: 3.5px solid transparent; border-left: 6px solid var(--grey-300); }
+  .bp-dur { font-size: 10px; font-weight: 600; color: var(--grey-400); white-space: nowrap; margin-top: 3px; }
+  /* (info row replaced by .bp-tags above) */
+  /* Connection badge (between separate boarding passes) */
+  .bp-conn-between { display: flex; align-items: center; justify-content: center; flex-shrink: 0; align-self: center; }
+  .bp-conn-chip { display: flex; align-items: center; gap: 3px; padding: 4px 10px; background: var(--orange-50); border: 1px solid var(--orange-100); border-radius: 8px; font-size: 10px; font-weight: 700; color: var(--orange-600); white-space: nowrap; }
+  .bp-conn-where { font-size: 9px; font-weight: 500; color: var(--grey-400); white-space: nowrap; text-align: center; }
+  .bp-luggage { font-size: 11px; color: var(--grey-500); padding: 2px 0 4px; }
+  /* (seat badge styles merged into .bp-tag above) */
+  /* Info tags (unified card-style badges: seat, train#, platform, fare, PNR) */
+  .bp-tags { display: flex; flex-wrap: wrap; gap: 6px; padding: 4px 14px 8px; }
+  .bp-tag { display: inline-flex; align-items: center; gap: 6px; padding: 4px 10px; background: var(--grey-50); border: 1px solid var(--grey-100); border-radius: 8px; font-size: 11px; color: var(--grey-700); }
+  .bp-tag-label { font-size: 9px; font-weight: 600; color: var(--grey-400); text-transform: uppercase; letter-spacing: 0.3px; }
+  .bp-tag-value { font-size: 14px; font-weight: 800; color: var(--black); letter-spacing: -0.3px; }
+  .bp-tag-value.sm { font-size: 11px; font-weight: 700; letter-spacing: 0; }
+  .bp-tag.accent { background: var(--blue-50); border-color: var(--blue-100); }
+  .bp-tag.accent .bp-tag-label { color: var(--blue-500); }
+  .bp-tag.accent .bp-tag-value { color: var(--blue-800); }
+  .bp-tag.warm { background: var(--orange-50); border-color: var(--orange-100); }
+  .bp-tag.warm .bp-tag-label { color: var(--orange-500); }
+  .bp-tag.warm .bp-tag-value { color: var(--orange-600); }
+  /* Per-segment actions row */
+  .bp-doc { display: flex; align-items: center; gap: 6px; padding: 6px 14px 8px; border-top: 1px solid var(--grey-100); margin-top: 2px; }
+  .bp-doc-btn { display: inline-flex; align-items: center; gap: 4px; padding: 5px 10px; border-radius: 8px; font-size: 11px; font-weight: 700; cursor: pointer; text-decoration: none; border: none; font-family: var(--font); transition: all 0.15s; }
+  .bp-doc-btn svg { width: 14px; height: 14px; flex-shrink: 0; fill: currentColor; }
+  .bp-doc-btn.available { background: var(--blue-500); color: var(--white); }
+  .bp-doc-btn.available:hover { background: var(--blue-600); transform: translateY(-1px); box-shadow: 0 2px 8px rgba(0,169,252,0.25); }
+  .bp-doc-btn.deferred { background: var(--grey-75); color: var(--grey-400); cursor: default; }
+  .bp-doc-loc { display: inline-flex; align-items: center; gap: 3px; font-size: 10px; font-weight: 600; color: var(--grey-500); text-decoration: none; padding: 4px 8px; border-radius: 6px; border: 1px solid var(--grey-100); transition: all 0.15s; font-family: var(--font); margin-left: auto; white-space: nowrap; }
+  .bp-doc-loc:hover { background: var(--grey-50); color: var(--grey-700); border-color: var(--grey-200); }
+  .bp-doc-wallet { display: none; }
+  @media (max-width: 640px) {
+    .bp-doc-wallet { display: inline-flex; align-items: center; gap: 3px; padding: 3px 8px; border-radius: 6px; font-size: 9px; font-weight: 600; color: var(--black); background: var(--grey-50); border: 1px solid var(--grey-100); cursor: pointer; font-family: var(--font); }
+  }
+  /* Transit bar */
+  .bp-transit { display: flex; align-items: center; gap: 6px; padding: 6px 14px; background: var(--blue-50); font-size: 11px; font-weight: 600; color: var(--blue-700); border-radius: 8px; margin-bottom: 6px; }
+  /* Pair layout: 2 segments side by side, fill width */
+  .bp-pair { display: flex; align-items: stretch; gap: 0; margin-bottom: 6px; }
+  .bp-pair .bp { flex: 1; min-width: 0; margin-bottom: 0; }
+  .bp-pair .bp-time { font-size: 22px; }
+  .bp-pair .bp-mid { min-width: 50px; }
+  .bp-pair .bp-conn-between { flex-direction: column; gap: 2px; padding: 0 6px; }
+  /* Horizontal scroll for 3+ segments */
+  .bp-scroll { display: flex; align-items: stretch; gap: 0; overflow-x: auto; scroll-snap-type: x mandatory; -webkit-overflow-scrolling: touch; padding-bottom: 4px; margin-bottom: 6px; scrollbar-width: thin; scrollbar-color: var(--grey-200) transparent; }
+  .bp-scroll::-webkit-scrollbar { height: 3px; }
+  .bp-scroll::-webkit-scrollbar-track { background: transparent; }
+  .bp-scroll::-webkit-scrollbar-thumb { background: var(--grey-200); border-radius: 2px; }
+  .bp-scroll .bp { min-width: 260px; max-width: 320px; flex-shrink: 0; scroll-snap-align: start; margin-bottom: 0; }
+  .bp-scroll .bp-time { font-size: 22px; }
+  .bp-scroll .bp-mid { min-width: 50px; }
+  .bp-scroll .bp-conn-between { flex-direction: column; gap: 2px; padding: 0 6px; }
+
+  /* ===== HOTEL CARD ===== */
+  .ht-gallery { display: flex; gap: 3px; height: 110px; }
+  .ht-gallery img { flex: 1; min-width: 0; object-fit: cover; height: 100%; }
+  .ht-gallery img:first-child { flex: 2; }
+  .ht-body { padding: 10px 14px 10px; }
+  .ht-name { font-size: 15px; font-weight: 700; line-height: 1.25; color: var(--black); }
+  .ht-name .stars { color: var(--yellow-500); font-size: 12px; margin-left: 4px; }
+  .ht-sub { font-size: 11px; color: var(--grey-500); line-height: 1.4; margin-top: 3px; }
+  .ht-badges { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 8px; }
+  .ht-badge { display: inline-flex; align-items: center; gap: 3px; padding: 2px 8px; border-radius: var(--radius-pill); font-size: 10px; font-weight: 600; }
+  .ht-badge.breakfast { background: var(--green-50); color: var(--green-700); border: 1px solid var(--green-200); }
+  .ht-badge.wifi { background: var(--blue-50); color: var(--blue-700); border: 1px solid var(--blue-100); }
+  .ht-badge.cancel-free { background: var(--green-50); color: var(--green-700); border: 1px solid var(--green-200); }
+  .ht-badge.cancel-restricted { background: var(--orange-50); color: var(--orange-600); border: 1px solid var(--orange-100); }
+  .ht-badge.cancel-none { background: var(--red-50); color: var(--red-400); border: 1px solid var(--red-100); }
+  .ht-dates { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; padding: 6px 10px; background: var(--grey-50); border-radius: 8px; margin-top: 8px; font-size: 12px; }
+  .ht-date-label { font-size: 9px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.3px; color: var(--grey-400); }
+  .ht-date-value { font-weight: 700; color: var(--black); }
+  .ht-date-sep { color: var(--grey-300); font-size: 11px; }
+  .ht-nights { font-size: 11px; font-weight: 600; color: var(--grey-500); margin-left: auto; }
+  .ht-until { color: var(--orange-600); background: var(--orange-50); padding: 0 5px; border-radius: 3px; font-weight: 700; }
+  .ht-logistics { background: var(--blue-50); border-top: 1px solid var(--blue-100); padding: 8px 14px; }
+  .ht-logistics-title { font-size: 9px; font-weight: 700; color: var(--blue-700); margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.5px; }
+  .ht-logistics-item { font-size: 11px; color: var(--grey-700); line-height: 1.5; display: flex; align-items: center; gap: 5px; }
+  .ht-logistics-item strong { color: var(--black); font-weight: 700; }
+
+  /* ===== CAR CARD ===== */
+  .car-top { display: flex; gap: 12px; padding: 10px 14px 8px; }
+  .car-photo { width: 100px; height: 72px; border-radius: 8px; overflow: hidden; flex-shrink: 0; background: var(--grey-50); }
+  .car-photo img { width: 100%; height: 100%; object-fit: cover; }
+  .car-header { flex: 1; min-width: 0; }
+  .car-title { font-size: 14px; font-weight: 700; color: var(--black); line-height: 1.2; }
+  .car-details { font-size: 11px; color: var(--grey-500); margin-top: 3px; display: flex; align-items: center; gap: 4px; flex-wrap: wrap; }
+  .car-details .sep { color: var(--grey-300); }
+  .car-schedule { display: flex; gap: 0; padding: 0 14px 8px; }
+  .car-sched-block { flex: 1; }
+  .car-sched-label { font-size: 9px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; color: var(--grey-400); margin-bottom: 3px; }
+  .car-sched-time { font-size: 18px; font-weight: 800; color: var(--black); line-height: 1; }
+  .is-past .car-sched-time { color: var(--grey-400); }
+  .car-sched-date { font-size: 11px; font-weight: 600; color: var(--grey-700); margin-top: 2px; }
+  .car-sched-loc { font-size: 10px; color: var(--grey-500); margin-top: 1px; max-width: 200px; }
+  .car-sched-block.oj .car-sched-label { color: var(--orange-600); }
+  .car-driver { display: flex; align-items: center; gap: 10px; padding: 8px 14px; background: var(--grey-50); border-top: 1px solid var(--grey-100); }
+  .car-driver-badge { width: 36px; height: 36px; border-radius: 8px; background: var(--blue-50); display: flex; align-items: center; justify-content: center; font-size: 18px; flex-shrink: 0; border: 1px solid var(--blue-100); }
+  .car-driver-text { flex: 1; }
+  .car-driver-label { font-size: 9px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; color: var(--grey-400); }
+  .car-driver-name { font-size: 13px; font-weight: 700; color: var(--black); }
+  .car-driver-docs { font-size: 10px; color: var(--grey-500); margin-top: 1px; }
+
+  /* CTAs */
+  .cta-row { display: flex; gap: 6px; margin-top: 8px; flex-wrap: wrap; }
+  .cta-pri { display: inline-flex; align-items: center; gap: 5px; padding: 7px 14px; border-radius: 8px; font-size: 12px; font-weight: 700; border: none; cursor: pointer; transition: all 0.2s var(--ease); text-decoration: none; font-family: var(--font); background: var(--blue-500); color: var(--white); }
+  .cta-pri:hover { background: var(--blue-600); transform: translateY(-1px); box-shadow: 0 3px 10px rgba(0,169,252,0.25); }
+  .cta-pri.hero { width: 100%; justify-content: center; padding: 10px 18px; font-size: 13px; border-radius: 10px; box-shadow: 0 3px 14px rgba(0,169,252,0.2); }
+  .cta-pri.green { background: var(--green-500); }
+  .cta-pri.green:hover { background: var(--green-600); box-shadow: 0 3px 10px rgba(34,215,161,0.25); }
+  .cta-pri.disabled { background: var(--grey-75); color: var(--grey-400); cursor: default; box-shadow: none; font-weight: 600; }
+  .cta-pri.disabled:hover { background: var(--grey-75); transform: none; box-shadow: none; }
+  .cta-sec { display: inline-flex; align-items: center; gap: 5px; padding: 6px 12px; border-radius: 8px; font-size: 11px; font-weight: 600; border: var(--stroke-md) solid var(--grey-100); background: var(--white); color: var(--grey-600); cursor: pointer; transition: all 0.15s; text-decoration: none; font-family: var(--font); }
+  .cta-sec:hover { background: var(--grey-50); border-color: var(--grey-200); color: var(--black); }
+
+  /* Footer */
+  .card-footer { display: none; }
+  .card-footer a { font-size: 11px; font-weight: 600; color: var(--blue-600); text-decoration: none; display: inline-flex; align-items: center; gap: 3px; padding: 2px 5px; border-radius: 5px; transition: all 0.15s; }
+  .card-footer a:hover { background: var(--blue-50); color: var(--blue-700); }
+
+  /* ===== Mobile ===== */
+  @media (max-width: 640px) {
+    body { padding: 8px; }
+    .card-inner { padding: 14px 12px 10px; }
+    .card-header { margin-bottom: 10px; flex-direction: column; gap: 6px; }
+    .headline { font-size: 15px; }
+    .co-travelers { font-size: 10px; }
+    .header-link { margin-left: 0; align-self: flex-start; padding: 4px 8px; font-size: 10px; }
+    .stepper { margin-bottom: 10px; }
+    .stepper-step { padding: 3px 0; }
+    .stepper-dot-row { height: 30px; }
+    .stepper-dot { width: 26px; height: 26px; font-size: 13px; }
+    .stepper-step.active .stepper-dot { width: 30px; height: 30px; }
+    .stepper-line { left: calc(50% + 16px); right: calc(-50% + 16px); }
+    .stepper-label { font-size: 11px; }
+    .stepper-date { font-size: 8px; }
+    .bp-time { font-size: 22px; }
+    .bp-route { padding: 8px 10px 4px; }
+    .bp-head { padding: 6px 10px 4px; }
+    .bp-tags { padding: 4px 10px 6px; gap: 4px; }
+    .bp-pair { flex-direction: column; }
+    .bp-pair .bp-conn-between { flex-direction: row; gap: 6px; padding: 6px 0; }
+    .bp-scroll .bp { min-width: 220px; max-width: 260px; }
+    .bp-scroll .bp-time { font-size: 20px; }
+    .bp-tear { margin: 0 8px; }
+    .bp-tear::before, .bp-tear::after { width: 16px; height: 16px; top: -9px; }
+    .bp-tear::before { left: -19px; }
+    .bp-tear::after { right: -19px; }
+    .ht-gallery { height: 90px; }
+    .ht-body { padding: 8px 10px 8px; }
+    .ht-name { font-size: 14px; }
+    .car-top { padding: 8px 10px 6px; }
+    .car-photo { width: 80px; height: 60px; }
+    .car-title { font-size: 13px; }
+    .car-schedule { padding: 0 10px 8px; }
+    .car-sched-time { font-size: 16px; }
+    .car-driver { padding: 6px 10px; }
+    .cta-row { flex-direction: column; gap: 5px; }
+    .cta-pri { width: 100%; justify-content: center; padding: 8px 12px; font-size: 12px; }
+    .cta-sec { width: 100%; justify-content: center; padding: 6px 10px; font-size: 10px; }
+    .card-footer { margin-top: 8px; padding-top: 6px; }
+    .demo-controls { flex-direction: column; align-items: stretch; }
+    .demo-controls .sep { display: none; }
+  }
+  @media (max-width: 380px) {
+    .card-inner { padding: 12px 10px 8px; }
+    .headline { font-size: 14px; }
+    .stepper-label { font-size: 9px; -webkit-line-clamp: 1; }
+    .stepper-date { display: none; }
+    .bp-time { font-size: 18px; }
+    .bp-mid { min-width: 50px; }
+    .ht-gallery { height: 72px; }
+    .ht-name { font-size: 13px; }
+    .car-photo { width: 64px; height: 48px; }
+  }
+
+  /* Below fold */
+  .below-fold { max-width: 960px; margin: 16px auto 0; opacity: 0.3; pointer-events: none; }
+  .bf-block { background: var(--white); border-radius: 14px; border: var(--stroke-sm) solid var(--grey-100); padding: 14px 18px; margin-bottom: 10px; }
+  .bf-block h3 { font-size: 13px; font-weight: 700; margin-bottom: 6px; }
+  .bf-row { height: 9px; background: var(--grey-75); border-radius: 3px; margin-bottom: 5px; }
+  .bf-row:nth-child(2) { width: 85%; } .bf-row:nth-child(3) { width: 60%; } .bf-row:nth-child(4) { width: 72%; }
+</style>
+</head>
+<body>
+
+<div class="demo-controls">
+  <label>État</label>
+  <button onclick="setState('upcoming')" id="btn-upcoming">upcoming</button>
+  <button onclick="setState('imminent')" id="btn-imminent">imminent</button>
+  <button onclick="setState('in_transit')" id="btn-in_transit">in_transit</button>
+  <button onclick="setState('between_segments')" id="btn-between_segments">between</button>
+  <button onclick="setState('trip_ending')" id="btn-trip_ending">ending</button>
+  <div class="sep"></div>
+  <label>Trip</label>
+  <select id="trip-select" onchange="changeTrip(this.value)">
+    <option value="full">4 étapes — train+hôtel+voiture+train</option>
+    <option value="openjaw">4 étapes — vol+hôtel+car open jaw+vol</option>
+    <option value="correspondance">3 étapes — train 2 segments+hôtel+train</option>
+    <option value="escale">3 étapes — vol avec escale+hôtel+vol</option>
+    <option value="simple">2 étapes — aller-retour train</option>
+    <option value="flight">1 étape — vol direct</option>
+    <option value="hotelonly">1 étape — hôtel seul</option>
+  </select>
+  <div class="sep"></div>
+  <label>Contexte</label>
+  <button onclick="setContext('home')" id="btn-home" class="active">Home</button>
+  <button onclick="setContext('mytrips')" id="btn-mytrips">My Trips</button>
+</div>
+
+<div class="trip-card" id="trip-card">
+  <div class="card-inner">
+    <div class="card-header">
+      <div class="header-left">
+        <div class="headline-row"><div class="state-dot"></div><div class="headline" id="headline"></div></div>
+        <div class="co-travelers" id="co-travelers"></div>
+      </div>
+      <a href="#" class="header-link" id="header-link" onclick="event.preventDefault()">Voir le voyage →</a>
+    </div>
+    <div class="stepper" id="stepper"></div>
+    <div id="etape-content"></div>
+    <div class="card-footer" id="card-footer"><a href="#" onclick="event.preventDefault()">Voir tout le voyage →</a></div>
+  </div>
+</div>
+
+<div class="below-fold" id="below-fold">
+  <div class="bf-block"><h3>4 validations en attente</h3><div class="bf-row"></div><div class="bf-row"></div><div class="bf-row"></div></div>
+  <div class="bf-block"><h3>Réservez votre prochain voyage</h3><div class="bf-row"></div><div class="bf-row"></div></div>
+  <div class="bf-block"><h3>Budget</h3><div class="bf-row"></div><div class="bf-row"></div><div class="bf-row"></div><div class="bf-row"></div></div>
+</div>
+
+<script>
+const TRIPS = {
+  full: {
+    destination: 'Bordeaux',
+    travelers: ['Stella Smith', 'Donnie Schmidt'],
+    etapes: [
+      {
+        type: 'train', icon: '🚄',
+        title: 'Paris Montparnasse → Bordeaux Saint-Jean',
+        shortLabel: 'Paris → Bordeaux', dateShort: 'Ven 09 · 12:30',
+        departure: { time: '12:30', name: 'Paris Montparnasse', date: 'Ven. 09 Fév' },
+        arrival: { time: '16:32', name: 'Bordeaux Saint-Jean', date: 'Ven. 09 Fév' },
+        duration: '2h02',
+        carrier: 'Ouigo', details: ['2nde classe', 'Direct'],
+        seat: { wagon: '12', place: '45' },
+        ticket: { available: true, hasQR: true, wallet: false },
+        num: 'OUIGO 7641', pnr: 'HJKL42', platform: '3',
+        fareName: 'Prem\'s', fareExch: false, fareRefund: false, amenities: ['wifi', 'power'],
+        docLabel: 'Voir mon billet', docIcon: '🎫', docAvailable: true,
+        locLabel: 'Itinéraire vers la gare', locIcon: '📍', locUrl: '#',
+      },
+      {
+        type: 'hotel', icon: '🏨',
+        title: 'Hôtel Renaissance Bordeaux Centre Historique',
+        shortLabel: 'Hôtel Renaissance Bordeaux', dateShort: 'Ven 09 – Dim 11',
+        checkin: { date: 'Ven. 09 Fév', time: '15:00' },
+        checkout: { date: 'Dim. 11 Fév', time: '11:00' },
+        nights: 3, starsText: '★★★★',
+        roomName: 'Chambre Deluxe Double',
+        inclusions: ['Petit-déjeuner inclus'],
+        cancellation: { type: 'free', freeUntil: '7 Fév 2026' },
+        checkinInstructions: { methodLabel: 'Récupérez votre clé à la réception', pinCode: null, phone: '+33 5 56 48 88 88', checkinFrom: '15h', checkinUntil: null, reception24: true },
+        bookingRef: 'MRR-482910',
+        address: '15 Rue du Temple, 33000 Bordeaux',
+        photos: [
+          'https://images.unsplash.com/photo-1566073771259-6a8506099945?w=600&h=300&fit=crop',
+          'https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?w=300&h=300&fit=crop',
+          'https://images.unsplash.com/photo-1590490360182-c33d57733427?w=300&h=300&fit=crop',
+        ],
+        docLabel: 'Voir mon voucher', docIcon: '📄', docAvailable: true,
+        locLabel: "Itinéraire vers l'hôtel", locIcon: '📍', locUrl: '#',
+      },
+      {
+        type: 'car', icon: '🚗',
+        title: 'Avis – Location de véhicule',
+        shortLabel: 'Avis Bordeaux', dateShort: 'Mar 17',
+        pickup: { time: '14:00', date: 'Mar. 17 Fév', location: 'Gare Saint-Jean, 33800 Bordeaux' },
+        dropoff: { time: '18:00', date: 'Mar. 17 Fév', location: 'Gare Saint-Jean, 33800 Bordeaux' },
+        carrier: 'Avis', details: ['Cat. B', '1 jour'],
+        bookingRef: 'AVIS-84729',
+        driverName: 'Stella Smith',
+        carPhoto: 'https://images.unsplash.com/photo-1502877338535-766e1452684a?w=260&h=180&fit=crop',
+        docLabel: 'Voir mon voucher', docIcon: '📄', docAvailable: true,
+        locLabel: "Itinéraire vers l'agence", locIcon: '📍', locUrl: '#',
+      },
+      {
+        type: 'train', icon: '🚄',
+        title: 'Bordeaux Saint-Jean → Paris Montparnasse',
+        shortLabel: 'Bordeaux → Paris', dateShort: 'Mer 18 · 14:00',
+        departure: { time: '14:00', name: 'Bordeaux Saint-Jean', date: 'Mer. 18 Fév' },
+        arrival: { time: '16:15', name: 'Paris Montparnasse', date: 'Mer. 18 Fév' },
+        duration: '2h15',
+        carrier: 'Ouigo', details: ['2nde classe', 'Direct'],
+        seat: null,
+        ticket: { available: false, hasQR: false, wallet: false, availableDate: '14 Fév' },
+        num: 'OUIGO 7860', pnr: 'HJKL42',
+        fareName: 'Prem\'s', fareExch: false, fareRefund: false, amenities: ['wifi', 'power'],
+        docLabel: 'Voir mon billet', docIcon: '🎫',
+        docAvailable: false, docDisabledText: 'Billet disponible à partir du 14 Fév',
+        locLabel: 'Itinéraire vers la gare', locIcon: '📍', locUrl: '#',
+      }
+    ]
+  },
+  openjaw: {
+    destination: 'Nice',
+    travelers: ['Stella Smith'],
+    etapes: [
+      {
+        type: 'flight', icon: '✈️',
+        title: 'Paris CDG → Nice Côte d\'Azur',
+        shortLabel: 'CDG → NCE', dateShort: 'Lun 09 · 07:15',
+        departure: { time: '07:15', name: 'Paris', code: 'CDG', terminal: 'T2F', date: 'Lun. 09 Fév' },
+        arrival: { time: '08:50', name: 'Nice', code: 'NCE', terminal: 'T1', date: 'Lun. 09 Fév' },
+        duration: '1h35', carrier: 'Air France', details: ['Economy', 'Direct'],
+        luggage: '1 cabine + 1 soute 23 kg',
+        seat: { place: '14A' },
+        ticket: { available: true, hasQR: true, wallet: true },
+        num: 'AF 7680', pnr: 'ABC123', gate: 'B24',
+        fareName: 'Economy Standard', fareExch: 'with_fee', fareRefund: false, amenities: ['meal', 'wifi'],
+        docLabel: 'Voir mon billet', docIcon: '🎫', docAvailable: true,
+        locLabel: "Itinéraire vers l'aéroport", locIcon: '📍', locUrl: '#',
+      },
+      {
+        type: 'hotel', icon: '🏨',
+        title: 'Hyatt Regency Nice Palais de la Méditerranée',
+        shortLabel: 'Hyatt Nice', dateShort: 'Lun 09 – Jeu 12',
+        checkin: { date: 'Lun. 09 Fév', time: '14:00' },
+        checkout: { date: 'Jeu. 12 Fév', time: '12:00' },
+        nights: 3, starsText: '★★★★★',
+        roomName: 'Suite Méditerranée Vue Mer',
+        inclusions: ['Petit-déjeuner inclus', 'Demi-pension'],
+        cancellation: { type: 'restricted', freeUntil: '5 Fév 2026' },
+        checkinInstructions: { methodLabel: 'Récupérez votre clé à la réception', pinCode: null, phone: '+33 4 93 27 12 34', checkinFrom: '14h', checkinUntil: '23h', reception24: false, notes: 'Late check-out possible sur demande' },
+        bookingRef: 'HYT-556271',
+        address: '13 Promenade des Anglais, 06000 Nice',
+        photos: [
+          'https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?w=600&h=300&fit=crop',
+          'https://images.unsplash.com/photo-1618773928121-c32242e63f39?w=300&h=300&fit=crop',
+          'https://images.unsplash.com/photo-1584132967334-10e028bd69f7?w=300&h=300&fit=crop',
+        ],
+        docLabel: 'Voir mon voucher', docIcon: '📄', docAvailable: true,
+        locLabel: "Itinéraire vers l'hôtel", locIcon: '📍', locUrl: '#',
+      },
+      {
+        type: 'car', icon: '🚗',
+        title: 'Europcar – Nice → Marseille',
+        shortLabel: 'Europcar OJ', dateShort: 'Jeu 12 – Ven 13',
+        pickup: { time: '12:00', date: 'Jeu. 12 Fév', location: 'Aéroport Nice NCE, T1' },
+        dropoff: { time: '09:00', date: 'Ven. 13 Fév', location: 'Aéroport Marseille MRS, T1' },
+        carrier: 'Europcar', details: ['Cat. C', '1 jour'],
+        bookingRef: 'EUR-19384',
+        driverName: 'Stella Smith',
+        carPhoto: 'https://images.unsplash.com/photo-1549399542-7e3f8b79c341?w=260&h=180&fit=crop',
+        docLabel: 'Voir mon voucher', docIcon: '📄', docAvailable: true,
+        locLabel: "Itinéraire vers l'agence", locIcon: '📍', locUrl: '#',
+      },
+      {
+        type: 'flight', icon: '✈️',
+        title: 'Marseille MRS → Paris CDG',
+        shortLabel: 'MRS → CDG', dateShort: 'Ven 13 · 11:30',
+        departure: { time: '11:30', name: 'Marseille', code: 'MRS', terminal: 'T1', date: 'Ven. 13 Fév' },
+        arrival: { time: '13:00', name: 'Paris', code: 'CDG', terminal: 'T2F', date: 'Ven. 13 Fév' },
+        duration: '1h30', carrier: 'Air France', details: ['Economy', 'Direct'],
+        luggage: '1 cabine + 1 soute 23 kg', seat: null,
+        ticket: { available: true, hasQR: true, wallet: true },
+        num: 'AF 7695', pnr: 'ABC123',
+        fareName: 'Economy Standard', fareExch: 'with_fee', fareRefund: false, amenities: ['meal', 'wifi'],
+        docLabel: 'Voir mon billet', docIcon: '🎫', docAvailable: true,
+        locLabel: "Itinéraire vers l'aéroport", locIcon: '📍', locUrl: '#',
+      }
+    ]
+  },
+  correspondance: {
+    destination: 'Bordeaux',
+    travelers: ['Stella Smith', 'Donnie Schmidt'],
+    etapes: [
+      {
+        type: 'train', icon: '🚄',
+        title: 'Paris Montparnasse → Bordeaux Saint-Jean',
+        shortLabel: 'Paris → Bordeaux', dateShort: 'Ven 09 · 08:30',
+        departure: { time: '08:30', name: 'Paris Montparnasse', date: 'Ven. 09 Fév' },
+        arrival: { time: '14:28', name: 'Bordeaux Saint-Jean', date: 'Ven. 09 Fév' },
+        duration: '5h58',
+        carrier: 'SNCF', details: ['2nde classe', '1 correspondance'],
+        segments: [
+          { dep: { time: '08:30', name: 'Paris Montparnasse' }, arr: { time: '10:32', name: 'Lyon Part-Dieu' }, dur: '2h02', num: 'TGV 6211', pnr: 'XYZW89', platform: '7', seat: { wagon: '7', place: '62' }, ticket: { available: true, hasQR: true, wallet: false }, fareName: 'Loisir', fareExch: 'with_fee', fareRefund: false, amenities: ['wifi', 'power', 'bar'] },
+          { dep: { time: '11:15', name: 'Lyon Part-Dieu' }, arr: { time: '14:28', name: 'Bordeaux Saint-Jean' }, dur: '3h13', num: 'TGV 6825', pnr: 'XYZW89', platform: '12', seat: { wagon: '3', place: '18' }, ticket: { available: true, hasQR: true, wallet: false }, fareName: 'Loisir', fareExch: 'with_fee', fareRefund: false, amenities: ['wifi', 'power', 'bar'] },
+        ],
+        connections: [{ loc: 'Lyon Part-Dieu', dur: '43 min' }],
+        seat: { wagon: '7', place: '62' },
+        ticket: { available: true, hasQR: true, wallet: false },
+        pnr: 'XYZW89',
+        fareName: 'Loisir', fareExch: 'with_fee', fareRefund: false, amenities: ['wifi', 'power', 'bar'],
+        docLabel: 'Voir mon billet', docIcon: '🎫', docAvailable: true,
+        locLabel: 'Itinéraire vers la gare', locIcon: '📍', locUrl: '#',
+      },
+      {
+        type: 'hotel', icon: '🏨',
+        title: 'Hôtel Renaissance Bordeaux Centre Historique',
+        shortLabel: 'Hôtel Renaissance Bordeaux', dateShort: 'Ven 09 – Dim 11',
+        checkin: { date: 'Ven. 09 Fév', time: '15:00' },
+        checkout: { date: 'Dim. 11 Fév', time: '11:00' },
+        nights: 2, starsText: '★★★★',
+        roomName: 'Chambre Deluxe Double',
+        inclusions: ['Petit-déjeuner inclus'],
+        cancellation: { type: 'free', freeUntil: '7 Fév 2026' },
+        checkinInstructions: { methodLabel: 'Récupérez votre clé à la réception', pinCode: null, phone: '+33 5 56 48 88 88', checkinFrom: '15h', checkinUntil: null, reception24: true },
+        bookingRef: 'MRR-482910',
+        address: '15 Rue du Temple, 33000 Bordeaux',
+        photos: [
+          'https://images.unsplash.com/photo-1566073771259-6a8506099945?w=600&h=300&fit=crop',
+          'https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?w=300&h=300&fit=crop',
+          'https://images.unsplash.com/photo-1590490360182-c33d57733427?w=300&h=300&fit=crop',
+        ],
+        docLabel: 'Voir mon voucher', docIcon: '📄', docAvailable: true,
+        locLabel: "Itinéraire vers l'hôtel", locIcon: '📍', locUrl: '#',
+      },
+      {
+        type: 'train', icon: '🚄',
+        title: 'Bordeaux Saint-Jean → Paris Montparnasse',
+        shortLabel: 'Bordeaux → Paris', dateShort: 'Dim 11 · 14:00',
+        departure: { time: '14:00', name: 'Bordeaux Saint-Jean', date: 'Dim. 11 Fév' },
+        arrival: { time: '16:15', name: 'Paris Montparnasse', date: 'Dim. 11 Fév' },
+        duration: '2h15', carrier: 'Ouigo', details: ['2nde classe', 'Direct'],
+        seat: null,
+        ticket: { available: true, hasQR: true, wallet: false },
+        num: 'OUIGO 7854', pnr: 'XYZW89',
+        fareName: 'Prem\'s', fareExch: false, fareRefund: false, amenities: ['wifi'],
+        docLabel: 'Voir mon billet', docIcon: '🎫', docAvailable: true,
+        locLabel: 'Itinéraire vers la gare', locIcon: '📍', locUrl: '#',
+      }
+    ]
+  },
+  escale: {
+    destination: 'Athènes',
+    travelers: ['Stella Smith'],
+    etapes: [
+      {
+        type: 'flight', icon: '✈️',
+        title: 'Paris CDG → Athènes ATH',
+        shortLabel: 'CDG → ATH', dateShort: 'Lun 09 · 06:45',
+        departure: { time: '06:45', name: 'Paris', code: 'CDG', terminal: 'T1', date: 'Lun. 09 Fév' },
+        arrival: { time: '13:35', name: 'Athènes', code: 'ATH', terminal: null, date: 'Lun. 09 Fév' },
+        duration: '7h50',
+        carrier: 'Lufthansa', details: ['Economy', '1 escale'],
+        segments: [
+          { dep: { time: '06:45', name: 'Paris', code: 'CDG', terminal: 'T1' }, arr: { time: '08:25', name: 'Munich', code: 'MUC', terminal: 'T2' }, dur: '1h40', num: 'LH 2231', pnr: 'KLM456', gate: 'G23', seat: { place: '22F' }, ticket: { available: true, hasQR: true, wallet: true }, fareName: 'Economy Light', fareExch: false, fareRefund: false, amenities: ['meal', 'entertainment'] },
+          { dep: { time: '09:45', name: 'Munich', code: 'MUC', terminal: 'T2' }, arr: { time: '13:35', name: 'Athènes', code: 'ATH' }, dur: '2h50', num: 'LH 1752', pnr: 'KLM456', seat: { place: '22F' }, ticket: { available: true, hasQR: true, wallet: true }, fareName: 'Economy Light', fareExch: false, fareRefund: false, amenities: ['meal', 'entertainment'] },
+        ],
+        connections: [{ loc: 'Munich MUC', dur: '1h20', detail: 'Terminal 2' }],
+        luggage: '1 cabine + 1 soute 23 kg · Bagages jusqu\'à ATH',
+        seat: { place: '22F' },
+        ticket: { available: true, hasQR: true, wallet: true },
+        pnr: 'KLM456',
+        fareName: 'Economy Light', fareExch: false, fareRefund: false, amenities: ['meal', 'entertainment'],
+        docLabel: 'Voir mon billet', docIcon: '🎫', docAvailable: true,
+        locLabel: "Itinéraire vers l'aéroport", locIcon: '📍', locUrl: '#',
+      },
+      {
+        type: 'hotel', icon: '🏨',
+        title: 'Hotel Grande Bretagne, a Luxury Collection Hotel, Athens',
+        shortLabel: 'Hotel Grande Bretagne Athens', dateShort: 'Lun 09 – Jeu 12',
+        checkin: { date: 'Lun. 09 Fév', time: '15:00' },
+        checkout: { date: 'Jeu. 12 Fév', time: '12:00' },
+        nights: 3, starsText: '★★★★★',
+        roomName: 'Grand Deluxe Suite vue Acropole',
+        inclusions: ['Petit-déjeuner buffet inclus', 'Wifi premium'],
+        cancellation: { type: 'free', freeUntil: '3 Fév 2026' },
+        checkinInstructions: { methodLabel: 'Récupérez votre clé à la réception', pinCode: null, phone: '+30 210 333 0000', checkinFrom: '15h', checkinUntil: null, reception24: true, notes: 'Late check-out 14h disponible' },
+        bookingRef: 'ATH-556271',
+        address: '1 Vasileos Georgiou A\', Syntagma, 105 64 Athènes',
+        photos: [
+          'https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?w=600&h=300&fit=crop',
+          'https://images.unsplash.com/photo-1618773928121-c32242e63f39?w=300&h=300&fit=crop',
+          'https://images.unsplash.com/photo-1584132967334-10e028bd69f7?w=300&h=300&fit=crop',
+        ],
+        docLabel: 'Voir mon voucher', docIcon: '📄', docAvailable: true,
+        locLabel: "Itinéraire vers l'hôtel", locIcon: '📍', locUrl: '#',
+      },
+      {
+        type: 'flight', icon: '✈️',
+        title: 'Athènes ATH → Paris CDG',
+        shortLabel: 'ATH → CDG', dateShort: 'Jeu 12 · 14:20',
+        departure: { time: '14:20', name: 'Athènes', code: 'ATH', terminal: null, date: 'Jeu. 12 Fév' },
+        arrival: { time: '17:05', name: 'Paris', code: 'CDG', terminal: 'T1', date: 'Jeu. 12 Fév' },
+        duration: '3h45', carrier: 'Aegean', details: ['Economy', 'Direct'],
+        luggage: '1 cabine + 1 soute 23 kg', seat: null,
+        ticket: { available: true, hasQR: true, wallet: false },
+        num: 'A3 621', pnr: 'KLM456',
+        fareName: 'Economy Flex', fareExch: true, fareRefund: 'with_fee', amenities: ['meal'],
+        docLabel: 'Voir mon billet', docIcon: '🎫', docAvailable: true,
+        locLabel: "Itinéraire vers l'aéroport", locIcon: '📍', locUrl: '#',
+      }
+    ]
+  },
+  simple: {
+    destination: 'Bordeaux',
+    travelers: ['Stella Smith'],
+    etapes: [
+      {
+        type: 'train', icon: '🚄',
+        title: 'Paris Montparnasse → Bordeaux Saint-Jean',
+        shortLabel: 'Paris → Bordeaux', dateShort: 'Ven 09 · 12:30',
+        departure: { time: '12:30', name: 'Paris Montparnasse', date: 'Ven. 09 Fév' },
+        arrival: { time: '16:32', name: 'Bordeaux Saint-Jean', date: 'Ven. 09 Fév' },
+        duration: '2h02', carrier: 'Ouigo', details: ['2nde classe', 'Direct'],
+        seat: { wagon: '12', place: '45' },
+        ticket: { available: true, hasQR: true, wallet: false },
+        num: 'OUIGO 7641', pnr: 'HJKL42', platform: '3',
+        fareName: 'Prem\'s', fareExch: false, fareRefund: false, amenities: ['wifi', 'power'],
+        docLabel: 'Voir mon billet', docIcon: '🎫', docAvailable: true,
+        locLabel: 'Itinéraire vers la gare', locIcon: '📍', locUrl: '#',
+      },
+      {
+        type: 'train', icon: '🚄',
+        title: 'Bordeaux Saint-Jean → Paris Montparnasse',
+        shortLabel: 'Bordeaux → Paris', dateShort: 'Mer 18 · 14:00',
+        departure: { time: '14:00', name: 'Bordeaux Saint-Jean', date: 'Mer. 18 Fév' },
+        arrival: { time: '16:15', name: 'Paris Montparnasse', date: 'Mer. 18 Fév' },
+        duration: '2h15', carrier: 'Ouigo', details: ['2nde classe', 'Direct'],
+        seat: null,
+        ticket: { available: false, hasQR: false, wallet: false, availableDate: '14 Fév' },
+        num: 'OUIGO 7860', pnr: 'HJKL42',
+        fareName: 'Prem\'s', fareExch: false, fareRefund: false, amenities: ['wifi', 'power'],
+        docLabel: 'Voir mon billet', docIcon: '🎫', docAvailable: true,
+        locLabel: 'Itinéraire vers la gare', locIcon: '📍', locUrl: '#',
+      }
+    ]
+  },
+  flight: {
+    destination: 'Bordeaux',
+    travelers: [],
+    etapes: [
+      {
+        type: 'flight', icon: '✈️',
+        title: 'Paris CDG → Bordeaux Mérignac',
+        shortLabel: 'CDG → BOD', dateShort: 'Ven 09 · 07:15',
+        departure: { time: '07:15', name: 'Paris', code: 'CDG', terminal: 'T2F', date: 'Ven. 09 Fév' },
+        arrival: { time: '08:30', name: 'Bordeaux', code: 'BOD', terminal: null, date: 'Ven. 09 Fév' },
+        duration: '1h15', carrier: 'Air France', details: ['Economy', 'Direct'],
+        luggage: '1 cabine + 1 soute 23 kg',
+        seat: { place: '7C' },
+        ticket: { available: true, hasQR: true, wallet: true },
+        num: 'AF 7514', pnr: 'DEF789', gate: 'A12',
+        fareName: 'Economy Standard', fareExch: 'with_fee', fareRefund: false, amenities: ['wifi'],
+        docLabel: 'Voir mon billet', docIcon: '🎫', docAvailable: true,
+        locLabel: "Itinéraire vers l'aéroport", locIcon: '📍', locUrl: '#',
+      }
+    ]
+  },
+  hotelonly: {
+    destination: 'Bordeaux',
+    travelers: ['Donnie Schmidt'],
+    etapes: [
+      {
+        type: 'hotel', icon: '🏨',
+        title: 'Intercontinental Bordeaux – Le Grand Hôtel',
+        shortLabel: 'Grand Hôtel', dateShort: 'Lun 16 – Mer 18',
+        checkin: { date: 'Lun. 16 Fév', time: '15:00' },
+        checkout: { date: 'Mer. 18 Fév', time: '12:00' },
+        nights: 2, starsText: '★★★★★',
+        roomName: 'Chambre Premium Vue Opéra',
+        inclusions: [],
+        cancellation: { type: 'non_refundable' },
+        checkinInstructions: { methodLabel: 'Accès par code d\'entrée', pinCode: '4829', phone: '+33 5 57 30 44 44', checkinFrom: '15h', checkinUntil: '22h', reception24: false, notes: 'Parking souterrain (25€/nuit)' },
+        bookingRef: 'BDX-928471',
+        address: '2-5 Place de la Comédie, 33000 Bordeaux',
+        photos: [
+          'https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?w=600&h=300&fit=crop',
+          'https://images.unsplash.com/photo-1618773928121-c32242e63f39?w=300&h=300&fit=crop',
+        ],
+        docLabel: 'Voir mon voucher', docIcon: '📄', docAvailable: true,
+        locLabel: "Itinéraire vers l'hôtel", locIcon: '📍', locUrl: '#',
+      }
+    ]
+  }
+};
+
+let currentState = 'upcoming';
+let currentTrip = 'full';
+let currentContext = 'home';
+let selectedEtapeIndex = null;
+let autoResetTimer = null;
+
+const HEADLINES = {
+  upcoming: t => `Voyage à ${t.destination} dans 2 jours`,
+  imminent: () => `Départ dans 3h15`,
+  in_transit: t => `En route vers ${t.destination}`,
+  between_segments: t => `À ${t.destination}`,
+  trip_ending: () => `Bon retour !`,
+};
+
+function getAutoIdx(state, trip) {
+  const n = trip.etapes.length;
+  switch (state) {
+    case 'upcoming': case 'imminent': case 'in_transit': return 0;
+    case 'between_segments': return Math.min(2, n - 1);
+    case 'trip_ending': return n - 1;
+    default: return 0;
+  }
+}
+function getCompleted(state, trip) {
+  const n = trip.etapes.length;
+  if (state === 'between_segments') return [0, 1];
+  if (state === 'trip_ending') return Array.from({length: n}, (_, i) => i);
+  return [];
+}
+function getTag(idx, autoIdx, done, state) {
+  const auto = selectedEtapeIndex === null;
+  if (auto && state === 'in_transit' && idx === autoIdx) return { t: 'En cours', c: 'current' };
+  if (state === 'trip_ending') return { t: 'Terminée ✓', c: 'done' };
+  if (done.includes(idx)) return { t: 'Terminée ✓', c: 'past' };
+  if (auto && idx === autoIdx) return { t: state === 'imminent' ? 'Départ imminent' : 'Prochaine étape', c: 'next' };
+  if (idx < autoIdx) return { t: 'Terminée ✓', c: 'past' };
+  if (idx === autoIdx) return { t: 'Prochaine étape', c: 'next' };
+  return { t: 'À venir', c: 'future' };
+}
+
+function render() {
+  const trip = TRIPS[currentTrip], state = currentState;
+  const autoIdx = getAutoIdx(state, trip);
+  const activeIdx = selectedEtapeIndex ?? autoIdx;
+  const done = getCompleted(state, trip);
+  const etape = trip.etapes[activeIdx];
+  const isPast = done.includes(activeIdx) && state !== 'trip_ending';
+
+  document.getElementById('trip-card').className = 'trip-card state-' + state;
+  document.getElementById('headline').textContent = HEADLINES[state](trip);
+
+  const co = document.getElementById('co-travelers');
+  co.style.display = trip.travelers.length ? '' : 'none';
+  if (trip.travelers.length) co.textContent = 'avec ' + trip.travelers.join(' et ');
+
+  document.getElementById('header-link').style.display = currentContext === 'mytrips' ? 'none' : '';
+  document.getElementById('card-footer').style.display = currentContext === 'mytrips' ? 'none' : '';
+
+  const stepper = document.getElementById('stepper');
+  if (trip.etapes.length <= 2) { stepper.className = 'stepper hidden'; }
+  else { stepper.className = 'stepper'; renderStepper(trip, state, activeIdx, autoIdx, done); }
+
+  renderEtape(etape, state, activeIdx, autoIdx, done, trip.etapes.length, isPast);
+
+  document.getElementById('below-fold').style.display = currentContext === 'home' ? '' : 'none';
+  document.querySelectorAll('.demo-controls button[id]').forEach(b => {
+    const s = b.id.replace('btn-', '');
+    b.classList.toggle('active', s === state || s === currentContext);
+  });
+}
+
+function renderStepper(trip, state, activeIdx, autoIdx, done) {
+  const el = document.getElementById('stepper');
+  el.innerHTML = '';
+  trip.etapes.forEach((e, i) => {
+    const s = document.createElement('div');
+    s.className = 'stepper-step';
+    if (done.includes(i)) s.classList.add('completed');
+    if (i === activeIdx) {
+      s.classList.add('active');
+      if (done.includes(i)) s.classList.add('viewing');
+      if (state === 'in_transit' && i === autoIdx) s.classList.add('transit');
+    }
+    const dotContent = done.includes(i) ? '<span class="stepper-check">✓</span>' : e.icon;
+    s.innerHTML = `<div class="stepper-dot-row"><div class="stepper-dot">${dotContent}</div><div class="stepper-line"></div></div><div class="stepper-label">${e.shortLabel}</div><div class="stepper-date">${e.dateShort}</div>`;
+    s.onclick = () => { clearTimeout(autoResetTimer); selectedEtapeIndex = i; render(); autoResetTimer = setTimeout(() => { selectedEtapeIndex = null; render(); }, 8000); };
+    el.appendChild(s);
+  });
+}
+
+function renderEtape(e, state, idx, autoIdx, done, total, isPast) {
+  const ct = document.getElementById('etape-content');
+  const isHero = state === 'imminent' && idx === autoIdx && !isPast;
+  const isTransit = state === 'in_transit' && idx === autoIdx && !isPast;
+  const tag = getTag(idx, autoIdx, done, state);
+  const hasSeg = e.segments && e.segments.length > 1;
+  const isFlight = e.type === 'flight';
+
+  // CTA
+  let cta;
+  if (e.docAvailable) {
+    const cls = isHero ? 'cta-pri hero' : (state === 'trip_ending' ? 'cta-pri green' : 'cta-pri');
+    cta = `<a href="#" class="${cls}" onclick="event.preventDefault()">${e.docIcon} ${e.docLabel}</a>`;
+  } else {
+    const cls = isHero ? 'cta-pri disabled hero' : 'cta-pri disabled';
+    cta = `<span class="${cls}">${e.docIcon} ${e.docDisabledText || 'Non disponible'}</span>`;
+  }
+  const secCta = `<a href="${e.locUrl || '#'}" class="cta-sec" onclick="event.preventDefault()">${e.locIcon || '📍'} ${e.locLabel || 'Itinéraire'}</a>`;
+
+  let bodyH = '';
+
+  // ===== TRANSPORT — BOARDING PASS =====
+  if (e.type === 'train' || e.type === 'flight') {
+    const detailsStr = e.details.join(' · ');
+
+    // Helper: build unified info tags (card-style badges for seat, train#, platform/gate, fare, PNR)
+    function infoTags(seat, data, extras, type) {
+      const tags = [];
+      if (seat) {
+        if (seat.wagon) {
+          tags.push(`<div class="bp-tag"><div><div class="bp-tag-label">Voiture</div><div class="bp-tag-value">${seat.wagon}</div></div><div><div class="bp-tag-label">Place</div><div class="bp-tag-value">${seat.place}</div></div></div>`);
+        } else {
+          tags.push(`<div class="bp-tag"><div><div class="bp-tag-label">Siège</div><div class="bp-tag-value">${seat.place}</div></div></div>`);
+        }
+      }
+      if (data && data.num) {
+        const numLabel = type === 'flight' ? 'Vol' : 'Train';
+        tags.push(`<div class="bp-tag accent"><div><div class="bp-tag-label">${numLabel}</div><div class="bp-tag-value sm">${data.num}</div></div></div>`);
+      }
+      if (data && data.platform) {
+        tags.push(`<div class="bp-tag warm"><div><div class="bp-tag-label">Voie</div><div class="bp-tag-value">${data.platform}</div></div></div>`);
+      }
+      if (data && data.gate) {
+        tags.push(`<div class="bp-tag warm"><div><div class="bp-tag-label">Porte</div><div class="bp-tag-value">${data.gate}</div></div></div>`);
+      }
+      if (data && data.fareName) {
+        tags.push(`<div class="bp-tag"><div><div class="bp-tag-label">Tarif</div><div class="bp-tag-value sm">${data.fareName}</div></div></div>`);
+      }
+      if (data && data.pnr) {
+        tags.push(`<div class="bp-tag"><div><div class="bp-tag-label">Réf.</div><div class="bp-tag-value sm">${data.pnr}</div></div></div>`);
+      }
+      if (extras) {
+        tags.push(`<div class="bp-tag"><div><div class="bp-tag-label">Bagages</div><div class="bp-tag-value sm">${extras}</div></div></div>`);
+      }
+      if (!tags.length) return '';
+      return `<div class="bp-tags">${tags.join('')}</div>`;
+    }
+
+    // Helper: build location HTML for a stop
+    function locH(stop) {
+      if (stop.code) {
+        let h = `<div class="bp-loc">${stop.code}</div>`;
+        if (stop.terminal) h += `<div class="bp-sub">Terminal ${stop.terminal}</div>`;
+        if (stop.name) h += `<div class="bp-sub">${stop.name}</div>`;
+        return h;
+      }
+      return `<div class="bp-loc">${stop.name}</div>`;
+    }
+
+    // SVG for QR code icon (inherits color via currentColor)
+    const qrSvg = `<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3 11h8V3H3v8zm2-6h4v4H5V5zm8-2v8h8V3h-8zm6 6h-4V5h4v4zM3 21h8v-8H3v8zm2-6h4v4H5v-4zm13-2h-2v3h-3v2h3v3h2v-3h3v-2h-3v-3zm0 5v3h2v-3h-2zm-5 3h2v-5h-2v5z"/></svg>`;
+
+    // Helper: build actions row (ticket + itinerary) for a boarding pass
+    function ticketDoc(ticket, locUrl) {
+      let h = '<div class="bp-doc">';
+      if (ticket) {
+        if (ticket.available) {
+          const icon = ticket.hasQR ? qrSvg : '🎫';
+          h += `<button class="bp-doc-btn available" onclick="event.preventDefault()">${icon} Voir mon billet</button>`;
+        } else {
+          h += `<button class="bp-doc-btn deferred">📅 Dispo le ${ticket.availableDate || '—'}</button>`;
+        }
+        if (ticket.available && ticket.wallet) {
+          h += `<button class="bp-doc-wallet" onclick="event.preventDefault()"> Wallet</button>`;
+        }
+      }
+      h += `<a href="${locUrl || '#'}" class="bp-doc-loc" onclick="event.preventDefault()">📍 Itinéraire</a>`;
+      h += '</div>';
+      return h;
+    }
+
+    // Helper: build one boarding pass card
+    function bpCard(headerLeft, headerRight, dep, arr, midLabel, seat, extras, ticket, locUrl, fareData, type) {
+      let h = '';
+      h += `<div class="bp-head"><div class="bp-carrier">${headerLeft}</div><span class="bp-date">${headerRight}</span></div>`;
+      h += '<div class="bp-tear"></div>';
+      h += `<div class="bp-route"><div class="bp-point"><div class="bp-time">${dep.time}</div>${locH(dep)}</div><div class="bp-mid"><div class="bp-arrow-line"></div><div class="bp-dur">${midLabel}</div></div><div class="bp-point arr"><div class="bp-time">${arr.time}</div>${locH(arr)}</div></div>`;
+      h += infoTags(seat, fareData, extras, type);
+      h += ticketDoc(ticket, locUrl);
+      return `<div class="bp">${h}</div>`;
+    }
+
+    let allH = '';
+
+    // Transit bar (above boarding pass)
+    if (isTransit) {
+      allH += `<div class="bp-transit">⏱ En route · Arrivée prévue à <strong>${e.arrival.time}</strong> · ${e.arrival.name}${e.arrival.code ? ' ' + e.arrival.code : ''}</div>`;
+    }
+
+    if (hasSeg) {
+      // ── Multi-segment: pair (≤2) or scroll (3+) ──
+      let scrollH = '';
+      e.segments.forEach((seg, si) => {
+        const isLast = si === e.segments.length - 1;
+        const headerLeft = `<span class="bp-carrier-icon">${e.icon}</span>${e.carrier}<span class="bp-carrier-sub">· ${seg.num}</span>`;
+        scrollH += bpCard(headerLeft, e.departure.date, seg.dep, seg.arr, seg.dur, seg.seat, null, seg.ticket || e.ticket, e.locUrl, seg.fareName ? seg : e, e.type);
+
+        if (!isLast && e.connections && e.connections[si]) {
+          const conn = e.connections[si];
+          scrollH += `<div class="bp-conn-between"><div class="bp-conn-chip">⏱ ${conn.dur}</div><div class="bp-conn-where">${conn.loc}</div></div>`;
+        }
+      });
+      const wrapCls = e.segments.length <= 2 ? 'bp-pair' : 'bp-scroll';
+      allH += `<div class="${wrapCls}">${scrollH}</div>`;
+      if (isFlight && e.luggage) {
+        allH += `<div class="bp-luggage">🧳 ${e.luggage}</div>`;
+      }
+    } else {
+      // ── Direct: single boarding pass ──
+      const headerLeft = `<span class="bp-carrier-icon">${e.icon}</span>${e.carrier}<span class="bp-carrier-sub">· ${detailsStr}</span>`;
+      const extras = (isFlight && e.luggage) ? e.luggage : null;
+      allH += bpCard(headerLeft, e.departure.date, e.departure, e.arrival, e.duration, e.seat, extras, e.ticket, e.locUrl, e, e.type);
+    }
+
+    bodyH = allH;
+  }
+
+  // ===== HOTEL CARD =====
+  else if (e.type === 'hotel') {
+    const stars = e.starsText || '';
+
+    // Photo gallery
+    let galleryH = '';
+    if (e.photos && e.photos.length) {
+      galleryH = '<div class="ht-gallery">' + e.photos.map(p => `<img src="${p}" alt="" loading="lazy">`).join('') + '</div>';
+    }
+
+    // Body
+    let infoH = `<div class="ht-body"><div class="ht-name">${e.title}${stars ? ' <span class="stars">' + stars + '</span>' : ''}</div><div class="ht-sub">📍 ${e.address}${e.roomName ? ' · 🛏 ' + e.roomName : ''}</div>`;
+
+    // Badges
+    const badges = [];
+    if (e.inclusions) {
+      e.inclusions.forEach(inc => {
+        if (inc.toLowerCase().includes('petit-déjeuner') || inc.toLowerCase().includes('breakfast')) {
+          badges.push(`<span class="ht-badge breakfast">☀️ ${inc}</span>`);
+        } else {
+          badges.push(`<span class="ht-badge wifi">✓ ${inc}</span>`);
+        }
+      });
+    }
+    if (e.cancellation) {
+      if (e.cancellation.type === 'free') badges.push(`<span class="ht-badge cancel-free">✅ Annulable jusqu'au ${e.cancellation.freeUntil}</span>`);
+      else if (e.cancellation.type === 'restricted') badges.push(`<span class="ht-badge cancel-restricted">⚠️ Annulable jusqu'au ${e.cancellation.freeUntil}</span>`);
+      else if (e.cancellation.type === 'non_refundable') badges.push(`<span class="ht-badge cancel-none">✕ Non remboursable</span>`);
+    }
+    if (badges.length) infoH += '<div class="ht-badges">' + badges.join('') + '</div>';
+
+    // Dates — inline row
+    infoH += `<div class="ht-dates"><span class="ht-date-label">Check-in</span><span class="ht-date-value">${e.checkin.date} · ${e.checkin.time}</span><span class="ht-date-sep">→</span><span class="ht-date-label">Check-out</span><span class="ht-date-value">${e.checkout.date} · ${e.checkout.time}</span><span class="ht-nights">${e.nights} nuit${e.nights > 1 ? 's' : ''}</span></div>`;
+    infoH += '</div>'; // close ht-body
+
+    // Logistics
+    let logH = '';
+    if (e.checkinInstructions) {
+      const ci = e.checkinInstructions;
+      let items = '';
+      if (ci.methodLabel) items += `<div class="ht-logistics-item"><span>🔑</span> ${ci.methodLabel}</div>`;
+      // Check-in hours — make "jusqu'à" prominent
+      if (ci.reception24) {
+        items += `<div class="ht-logistics-item"><span>🕐</span> Réception <strong>24h/24</strong></div>`;
+      } else if (ci.checkinUntil) {
+        items += `<div class="ht-logistics-item"><span>⚠️</span> Check-in ${ci.checkinFrom ? 'à partir de ' + ci.checkinFrom + ', ' : ''}<strong class="ht-until">jusqu'à ${ci.checkinUntil}</strong></div>`;
+      } else if (ci.checkinFrom) {
+        items += `<div class="ht-logistics-item"><span>🕐</span> Check-in à partir de <strong>${ci.checkinFrom}</strong></div>`;
+      }
+      if (ci.pinCode) items += `<div class="ht-logistics-item"><span>🔢</span> Code PIN : <strong>${ci.pinCode}</strong></div>`;
+      if (ci.phone) items += `<div class="ht-logistics-item"><span>📞</span> ${ci.phone}${e.bookingRef ? ' · Réf. <strong>' + e.bookingRef + '</strong>' : ''}</div>`;
+      if (ci.notes) items += `<div class="ht-logistics-item"><span>ℹ️</span> ${ci.notes}</div>`;
+      if (items) logH = `<div class="ht-logistics"><div class="ht-logistics-title">🏠 Infos d'arrivée</div>${items}</div>`;
+    }
+
+    bodyH = `<div class="ecard">${galleryH}${infoH}${logH}</div><div class="cta-row">${cta}${secCta}</div>`;
+  }
+
+  // ===== CAR CARD =====
+  else if (e.type === 'car') {
+    const detailsStr = e.details.map(d => `<span>${d}</span>`).join('<span class="sep">·</span>');
+    const oj = e.pickup.location !== e.dropoff.location;
+
+    // Top: photo + title
+    const photoH = e.carPhoto ? `<div class="car-photo"><img src="${e.carPhoto}" alt="" loading="lazy"></div>` : '';
+    let topH = `<div class="car-top">${photoH}<div class="car-header"><div class="car-title">${e.title}</div><div class="car-details">${detailsStr}${e.bookingRef ? '<span class="sep">·</span><span>Réf. ' + e.bookingRef + '</span>' : ''}</div></div></div>`;
+
+    // Schedule: pickup / dropoff side by side
+    let schedH = `<div class="car-schedule"><div class="car-sched-block"><div class="car-sched-label">Prise en charge</div><div class="car-sched-time">${e.pickup.time}</div><div class="car-sched-date">${e.pickup.date}</div><div class="car-sched-loc">${e.pickup.location}</div></div><div class="car-sched-block${oj ? ' oj' : ''}"><div class="car-sched-label">Restitution${oj ? ' · Open jaw' : ''}</div><div class="car-sched-time">${e.dropoff.time}</div><div class="car-sched-date">${e.dropoff.date}</div><div class="car-sched-loc">${e.dropoff.location}</div></div></div>`;
+
+    // Driver card
+    let driverH = '';
+    if (e.driverName) {
+      driverH = `<div class="car-driver"><div class="car-driver-badge">🪪</div><div class="car-driver-text"><div class="car-driver-label">Conducteur</div><div class="car-driver-name">${e.driverName}</div><div class="car-driver-docs">Permis de conduire + CB au nom du conducteur</div></div></div>`;
+    }
+
+    bodyH = `<div class="ecard">${topH}${schedH}${driverH}</div><div class="cta-row">${cta}${secCta}</div>`;
+  }
+
+  ct.innerHTML = `<div class="etape-content ${isPast ? 'is-past' : ''}"><div class="etape-meta"><span class="etape-tag ${tag.c}">${tag.t}</span></div>${bodyH}</div>`;
+}
+
+function setState(s) { currentState = s; selectedEtapeIndex = null; clearTimeout(autoResetTimer); render(); }
+function changeTrip(t) { currentTrip = t; selectedEtapeIndex = null; currentState = 'upcoming'; clearTimeout(autoResetTimer); render(); }
+function setContext(c) { currentContext = c; render(); }
+render();
+</script>
+</body>
+</html>
