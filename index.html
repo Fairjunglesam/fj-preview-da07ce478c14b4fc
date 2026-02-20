@@ -466,6 +466,13 @@
           </div>
           <button class="md-switch-btn" onclick="showAllView('trains')">Voir les trains →</button>
         </div>
+        <div class="md-sort-bar" id="md-flight-sort-bar">
+          <span class="md-sort-label">Trier par</span>
+          <button class="md-sort-btn active" data-sort="relevance" onclick="sortFlights('relevance')">Pertinence</button>
+          <button class="md-sort-btn" data-sort="departure" onclick="sortFlights('departure')">Heure de départ</button>
+          <button class="md-sort-btn" data-sort="arrival" onclick="sortFlights('arrival')">Heure d'arrivée</button>
+          <button class="md-sort-btn" data-sort="price" onclick="sortFlights('price')">Prix</button>
+        </div>
         <div class="d-hotel-filters-row" style="margin-bottom:8px">
           <button class="d-filter-all-btn"><svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M1.5 2h13L9.5 8.5V13l-3 1.5V8.5L1.5 2z" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/></svg> Tous les filtres</button>
           <div class="d-filter-chips-row">
