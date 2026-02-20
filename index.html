@@ -291,26 +291,27 @@
       <!-- VIEW 2: ALL TRAINS (master-detail, hidden)   -->
       <!-- ============================================ -->
       <div id="view-all-trains" style="display:none">
-        <div class="md-nav-bar"><a href="#" onclick="showRecoView(); return false">← Retour aux recommandations</a><a href="#" class="md-cross-link" onclick="showAllView('flights'); return false">✈️ Voir les vols</a></div>
-        <div class="md-search-adjust">
-          <div class="d-context-chips" id="md-context-trains-out">
-            <span class="d-ctx-chip">Paris Gare de Lyon <span class="d-ctx-chevron">›</span></span>
+        <div class="md-nav-bar">
+          <a href="#" class="md-back" onclick="showRecoView(); return false">← Recos</a>
+          <div class="md-nav-chips" id="md-context-trains-out">
+            <span class="d-ctx-chip">Paris GdL <span class="d-ctx-chevron">›</span></span>
             <span class="d-ctx-sep">→</span>
-            <span class="d-ctx-chip">Lyon Part-Dieu <span class="d-ctx-chevron">›</span></span>
+            <span class="d-ctx-chip">Lyon P-D <span class="d-ctx-chevron">›</span></span>
             <span class="d-ctx-dot">·</span>
-            <span class="d-ctx-chip">Ven. 16 jan. → Ven. 23 jan. <span class="d-ctx-chevron">›</span></span>
+            <span class="d-ctx-chip">16 jan. → 23 jan. <span class="d-ctx-chevron">›</span></span>
             <span class="d-ctx-dot">·</span>
-            <span class="d-ctx-static">3 voyageurs</span>
+            <span class="d-ctx-static">3 voy.</span>
           </div>
-          <div class="d-context-chips" id="md-context-trains-ret" style="display:none">
-            <span class="d-ctx-chip">Lyon Part-Dieu <span class="d-ctx-chevron">›</span></span>
+          <div class="md-nav-chips" id="md-context-trains-ret" style="display:none">
+            <span class="d-ctx-chip">Lyon P-D <span class="d-ctx-chevron">›</span></span>
             <span class="d-ctx-sep">→</span>
-            <span class="d-ctx-chip">Paris Gare de Lyon <span class="d-ctx-chevron">›</span></span>
+            <span class="d-ctx-chip">Paris GdL <span class="d-ctx-chevron">›</span></span>
             <span class="d-ctx-dot">·</span>
-            <span class="d-ctx-chip">Ven. 23 jan. <span class="d-ctx-chevron">›</span></span>
+            <span class="d-ctx-chip">23 jan. <span class="d-ctx-chevron">›</span></span>
             <span class="d-ctx-dot">·</span>
-            <span class="d-ctx-static">3 voyageurs</span>
+            <span class="d-ctx-static">3 voy.</span>
           </div>
+          <button class="md-switch-btn" onclick="showAllView('flights')">Vols</button>
         </div>
         <div class="md-phase-bar" id="md-guidance-trains">
           <span class="md-phase-title" id="md-stepper-instruction">Choix de l'aller</span>
@@ -452,17 +453,18 @@
       <!-- VIEW 3: ALL FLIGHTS (master-detail, hidden)  -->
       <!-- ============================================ -->
       <div id="view-all-flights" style="display:none">
-        <div class="md-nav-bar"><a href="#" onclick="showRecoView(); return false">← Retour aux recommandations</a><a href="#" class="md-cross-link" onclick="showAllView('trains'); return false">🚄 Voir les trains</a></div>
-        <div class="md-search-adjust">
-          <div class="d-context-chips">
-            <span class="d-ctx-chip">PAR · Tous aéroports <span class="d-ctx-chevron">›</span></span>
+        <div class="md-nav-bar">
+          <a href="#" class="md-back" onclick="showRecoView(); return false">← Recos</a>
+          <div class="md-nav-chips">
+            <span class="d-ctx-chip">PAR <span class="d-ctx-chevron">›</span></span>
             <span class="d-ctx-sep">→</span>
-            <span class="d-ctx-chip">LYS · Saint-Exupéry <span class="d-ctx-chevron">›</span></span>
+            <span class="d-ctx-chip">LYS <span class="d-ctx-chevron">›</span></span>
             <span class="d-ctx-dot">·</span>
-            <span class="d-ctx-chip">Ven. 16 jan. → Ven. 23 jan. <span class="d-ctx-chevron">›</span></span>
+            <span class="d-ctx-chip">16 jan. → 23 jan. <span class="d-ctx-chevron">›</span></span>
             <span class="d-ctx-dot">·</span>
-            <span class="d-ctx-static">3 voyageurs</span>
+            <span class="d-ctx-static">3 voy.</span>
           </div>
+          <button class="md-switch-btn" onclick="showAllView('trains')">Trains</button>
         </div>
         <div class="d-hotel-filters-row" style="margin-bottom:8px">
           <button class="d-filter-all-btn"><svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M1.5 2h13L9.5 8.5V13l-3 1.5V8.5L1.5 2z" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/></svg> Tous les filtres</button>
