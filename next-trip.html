@@ -165,7 +165,7 @@
   .bpb-carrier .bp-carrier-icon { font-size: 14px; }
   .bpb-carrier .bp-carrier-sub { color: rgba(255,255,255,0.7); font-size: 10px; font-weight: 500; }
   .bpb-head-right { text-align: right; flex-shrink: 0; }
-  .bpb-date { font-size: 10px; font-weight: 500; color: rgba(255,255,255,0.65); display: block; }
+  .bpb-date { font-size: 11px; font-weight: 700; color: rgba(255,255,255,0.85); margin-right: 6px; }
   .bpb-ref { font-size: 10px; font-weight: 700; color: rgba(255,255,255,0.7); display: block; margin-top: 1px; }
   .bpb-route { display: flex; align-items: center; padding: 8px 14px 4px; gap: 6px; }
   .bpb-hero { flex: 1; min-width: 0; }
@@ -173,10 +173,9 @@
   .bpb-code { font-size: 30px; font-weight: 800; color: #FFFFFF; letter-spacing: -1px; line-height: 1; }
   .bpb-time { font-size: 12px; font-weight: 700; color: rgba(255,255,255,0.8); margin-top: 3px; }
   .bpb-name { font-size: 11px; color: rgba(255,255,255,0.7); margin-top: 2px; font-weight: 500; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-  .bpb-mid { flex-shrink: 0; display: flex; align-items: center; gap: 0; min-width: 60px; }
-  .bpb-dash { flex: 1; height: 0; border-top: 1.5px dashed rgba(255,255,255,0.25); }
-  .bpb-icon { font-size: 16px; padding: 0 6px; flex-shrink: 0; }
-  .bpb-dur { text-align: center; padding: 0 14px 4px; font-size: 10px; font-weight: 600; color: rgba(255,255,255,0.65); }
+  .bpb-mid { flex-shrink: 0; display: flex; flex-direction: column; align-items: center; gap: 1px; }
+  .bpb-icon { font-size: 14px; }
+  .bpb-dur { font-size: 9px; font-weight: 600; color: rgba(255,255,255,0.5); white-space: nowrap; }
   .bpb .bp-tags { padding: 2px 14px 6px; }
   .bpb .bp-tag { background: rgba(255,255,255,0.07); border-color: rgba(255,255,255,0.12); }
   .bpb .bp-tag-label { color: rgba(255,255,255,0.65); }
@@ -993,8 +992,8 @@ function renderEtape(e, state, idx, autoIdx, done, total, isPast) {
     function bpCardBold(carrier, num, pnr, dateStr, dep, arr, midLabel, seat, ticket, locUrl, fareData, type, icon, extraCls) {
       const isFl = type === 'flight';
       let h = '';
-      // Header: carrier + num | date + PNR
-      h += `<div class="bpb-head"><div class="bpb-carrier"><span class="bp-carrier-icon">${icon}</span>${carrier}${num ? '<span class="bp-carrier-sub">· ' + num + '</span>' : ''}</div><div class="bpb-head-right"><span class="bpb-date">${dateStr}</span>${pnr ? '<span class="bpb-ref">Réf. ' + pnr + '</span>' : ''}</div></div>`;
+      // Header: date + carrier + num | PNR
+      h += `<div class="bpb-head"><div class="bpb-carrier"><span class="bpb-date">${dateStr}</span><span class="bp-carrier-icon">${icon}</span>${carrier}${num ? '<span class="bp-carrier-sub">· ' + num + '</span>' : ''}</div>${pnr ? '<div class="bpb-head-right"><span class="bpb-ref">Réf. ' + pnr + '</span></div>' : ''}</div>`;
       // Route: big codes (flights) or big times (trains)
       h += '<div class="bpb-route">';
       if (isFl && dep.code) {
@@ -1002,14 +1001,13 @@ function renderEtape(e, state, idx, autoIdx, done, total, isPast) {
       } else {
         h += `<div class="bpb-hero"><div class="bpb-code">${dep.time}</div><div class="bpb-name">${dep.name}</div></div>`;
       }
-      h += `<div class="bpb-mid"><div class="bpb-dash"></div><div class="bpb-icon">${icon}</div><div class="bpb-dash"></div></div>`;
+      h += `<div class="bpb-mid"><div class="bpb-icon">${icon}</div><div class="bpb-dur">${midLabel}</div></div>`;
       if (isFl && arr.code) {
         h += `<div class="bpb-hero arr"><div class="bpb-code">${arr.code}</div><div class="bpb-time">${arr.time}</div><div class="bpb-name">${arr.name}${arr.terminal ? ' · T' + arr.terminal : ''}</div></div>`;
       } else {
         h += `<div class="bpb-hero arr"><div class="bpb-code">${arr.time}</div><div class="bpb-name">${arr.name}</div></div>`;
       }
       h += '</div>';
-      h += `<div class="bpb-dur">${midLabel}</div>`;
       // Slim tags: only porte/siège (flight) or voie/voiture (train)
       h += infoTags(seat, fareData, null, type, true);
       h += ticketDoc(ticket, locUrl);
@@ -1158,12 +1156,12 @@ function renderEtape(e, state, idx, autoIdx, done, total, isPast) {
       const navyCls = isDark ? ' bpb-navy' : '';
       const carDetails = e.details.filter(d => d !== 'Direct').join(' · ');
       let h = '';
-      h += `<div class="bpb-head"><div class="bpb-carrier"><span class="bp-carrier-icon">🚗</span>${e.carrier}<span class="bp-carrier-sub">· ${carDetails}</span></div><div class="bpb-head-right"><span class="bpb-date">${e.pickup.date}</span>${e.bookingRef ? '<span class="bpb-ref">Réf. ' + e.bookingRef + '</span>' : ''}</div></div>`;
+      h += `<div class="bpb-head"><div class="bpb-carrier"><span class="bpb-date">${e.pickup.date}</span><span class="bp-carrier-icon">🚗</span>${e.carrier}<span class="bp-carrier-sub">· ${carDetails}</span></div>${e.bookingRef ? '<div class="bpb-head-right"><span class="bpb-ref">Réf. ' + e.bookingRef + '</span></div>' : ''}</div>`;
       // Route: pickup → dropoff (times as hero, like trains)
       h += '<div class="bpb-route">';
-      h += `<div class="bpb-hero"><div class="bpb-code">${e.pickup.time}</div><div class="bpb-name">${e.pickup.location}</div></div>`;
-      h += `<div class="bpb-mid"><div class="bpb-dash"></div><div class="bpb-icon">🚗</div><div class="bpb-dash"></div></div>`;
-      h += `<div class="bpb-hero arr"><div class="bpb-code">${e.dropoff.time}</div><div class="bpb-time">${e.dropoff.date !== e.pickup.date ? e.dropoff.date : ''}</div><div class="bpb-name">${e.dropoff.location}</div></div>`;
+      h += `<div class="bpb-hero"><div class="bpb-code">${e.pickup.time}</div><div class="bpb-time">${e.pickup.date}</div><div class="bpb-name">${e.pickup.location}</div></div>`;
+      h += `<div class="bpb-mid"><div class="bpb-icon">🚗</div></div>`;
+      h += `<div class="bpb-hero arr"><div class="bpb-code">${e.dropoff.time}</div><div class="bpb-time">${e.dropoff.date}</div><div class="bpb-name">${e.dropoff.location}</div></div>`;
       h += '</div>';
       if (oj) h += `<div class="bpb-dur">⚠️ Open jaw</div>`;
       // Driver
