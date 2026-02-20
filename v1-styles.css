@@ -838,9 +838,9 @@ body { font-family:var(--font); background:var(--bg-page); color:var(--text-prim
 
 /* ===== V0.1: INLINE RECO DETAIL ===== */
 .d-reco-detail-zone { margin-top:14px; }
-.d-reco-inline-detail { border:1.5px solid var(--text-tag-info); border-radius:14px; background:white; animation:ridSlideDown 250ms var(--ease-decel); }
-.d-reco-inline-detail .d-rid-content { padding:20px 24px; }
-.d-reco-inline-detail .d-rid-cta { display:none; /* CTA moved to fixed bar */ }
+.d-reco-inline-detail { border:1.5px solid var(--text-tag-info); border-radius:14px; background:white; animation:ridSlideDown 250ms var(--ease-decel); overflow:hidden; }
+.d-reco-inline-detail .dp-content { padding:20px 24px; }
+.d-reco-inline-detail .drawer-cta { display:none; /* CTA handled by fixed bar */ }
 
 /* Fixed CTA bar when reco detail is open */
 .d-reco-cta-bar { position:fixed; bottom:0; left:0; right:0; z-index:100; background:white; border-top:1px solid var(--border-light); box-shadow:0 -4px 20px rgba(0,0,0,0.08); padding:12px 24px; display:none; align-items:center; justify-content:space-between; }
@@ -880,8 +880,8 @@ body { font-family:var(--font); background:var(--bg-page); color:var(--text-prim
 .d-see-all-count { color:var(--text-muted); font-weight:400; }
 
 /* ===== V0.1: MASTER-DETAIL LAYOUT ===== */
-.md-info-bar { font-size:11px; color:var(--text-muted); padding:6px 12px; margin-bottom:6px; background:#f8f9fb; border-radius:8px; display:flex; align-items:center; gap:6px; }
-.md-info-bar::before { content:'ℹ️'; font-size:12px; }
+.md-info-bar { font-size:12px; color:var(--text-subtitle); line-height:1.5; padding:10px 14px; margin-bottom:8px; background:#e3f3fd; border-left:3px solid var(--text-tag-info); border-radius:0 10px 10px 0; display:flex; align-items:center; gap:8px; }
+.md-info-bar::before { content:'ℹ️'; font-size:13px; flex-shrink:0; }
 .md-layout { display:flex; height:calc(100vh - 220px); min-height:500px; border:1px solid var(--border-light); border-radius:16px; overflow:hidden; background:white; }
 .md-list { width:45%; overflow-y:auto; padding:10px; display:flex; flex-direction:column; gap:6px; border-right:1px solid var(--border-light); }
 .md-list::-webkit-scrollbar { width:4px; }

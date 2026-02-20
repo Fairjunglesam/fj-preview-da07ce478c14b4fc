@@ -779,6 +779,7 @@ function toggleRecoDetail(id) {
   if (expandedRecoId === id) {
     // Collapse current
     detailEl.style.display = 'none';
+    detailEl.innerHTML = '';
     if (card) card.classList.remove('expanded');
     expandedRecoId = null;
     // Remove compact mode
@@ -791,14 +792,18 @@ function toggleRecoDetail(id) {
     if (expandedRecoId) {
       const prevDetail = document.getElementById('reco-detail-' + expandedRecoId);
       const prevCard = document.querySelector('.d-reco-card[data-id="' + expandedRecoId + '"]');
-      if (prevDetail) prevDetail.style.display = 'none';
+      if (prevDetail) { prevDetail.style.display = 'none'; prevDetail.innerHTML = ''; }
       if (prevCard) prevCard.classList.remove('expanded');
     }
-    // Expand new
+    // Expand new — inject panel HTML (same content as md-detail / drawer)
+    const panel = panels[id];
+    if (panel) {
+      detailEl.innerHTML = panel.html;
+    }
     detailEl.style.display = '';
     if (card) card.classList.add('expanded');
     expandedRecoId = id;
-    // Enter compact mode — collapse cards, hide hint
+    // Enter compact mode
     if (grid) grid.classList.add('compact');
     if (zone) zone.classList.add('has-expanded');
 
