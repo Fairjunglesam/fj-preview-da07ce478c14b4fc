@@ -845,8 +845,30 @@ function _getRecoData(id) {
   return map[id] || null;
 }
 
-// Helper: for trains in reco detail, add info card about tariff flexibility
+// Helper: for trains in reco detail, inject fare conditions into timeline + add info card
 function _addTrainTariffInfo(el) {
+  // 1) Inject leg-ratrules into each timeline leg (same component as All Trains)
+  const selected = el.querySelector('.tariff-card.selected');
+  if (selected) {
+    const fareName = selected.querySelector('.tf-name')?.textContent || '';
+    const detailPanel = selected.nextElementSibling;
+    let condLines = [];
+    if (detailPanel && detailPanel.classList.contains('tf-detail-panel')) {
+      detailPanel.querySelectorAll('.tf-detail-line').forEach(l => condLines.push(l.textContent.replace(/^·\s*/, '')));
+    }
+    if (condLines.length) {
+      const rulesText = '<strong>TARIF ' + fareName.toUpperCase() + '</strong> — ' + condLines.join('. ') + '.';
+      el.querySelectorAll('.tl-connector').forEach(conn => {
+        if (!conn.querySelector('.leg-ratrules')) {
+          const div = document.createElement('div');
+          div.className = 'leg-ratrules';
+          div.innerHTML = rulesText;
+          conn.appendChild(div);
+        }
+      });
+    }
+  }
+  // 2) Add info card about Review & Options
   const tariffCards = el.querySelector('.tariff-cards');
   if (!tariffCards) return;
   const tariffSection = tariffCards.closest('.dp-section');
@@ -932,8 +954,10 @@ function showAllView(mode) {
     document.getElementById('md-flight-detail').innerHTML = '<div class="md-detail-placeholder">Sélectionnez un vol pour voir les détails</div>';
     document.querySelectorAll('#md-flight-list .list-card').forEach(c => c.classList.remove('selected-card'));
   }
-  // Hide selection footer
+  // Hide selection footer + reco CTA bar
   document.getElementById('selection-footer').classList.remove('visible');
+  const ctaBar = document.getElementById('reco-cta-bar');
+  if (ctaBar) ctaBar.classList.remove('visible');
 
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
