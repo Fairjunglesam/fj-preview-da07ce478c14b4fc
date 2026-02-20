@@ -173,8 +173,11 @@
   .bpb-code { font-size: 30px; font-weight: 800; color: #FFFFFF; letter-spacing: -1px; line-height: 1; }
   .bpb-time { font-size: 12px; font-weight: 700; color: rgba(255,255,255,0.8); margin-top: 3px; }
   .bpb-name { font-size: 11px; color: rgba(255,255,255,0.7); margin-top: 2px; font-weight: 500; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-  .bpb-mid { flex-shrink: 0; display: flex; flex-direction: column; align-items: center; gap: 1px; }
-  .bpb-icon { font-size: 14px; }
+  .bpb-mid { flex-shrink: 0; display: flex; flex-direction: column; align-items: center; gap: 2px; min-width: 70px; }
+  .bpb-mid-row { display: flex; align-items: center; width: 100%; }
+  .bpb-mid-line { flex: 1; height: 1px; background: rgba(255,255,255,0.12); }
+  .bpb-mid-badge { width: 30px; height: 30px; border-radius: 50%; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1); display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin: 0 4px; }
+  .bpb-mid-badge svg { width: 14px; height: 14px; fill: rgba(255,255,255,0.55); display: block; }
   .bpb-dur { font-size: 9px; font-weight: 600; color: rgba(255,255,255,0.5); white-space: nowrap; }
   .bpb .bp-tags { padding: 2px 14px 6px; }
   .bpb .bp-tag { background: rgba(255,255,255,0.07); border-color: rgba(255,255,255,0.12); }
@@ -213,6 +216,10 @@
   .htd-logistics { padding: 6px 14px 10px; border-top: 1px solid rgba(255,255,255,0.06); }
   .htd-log-item { font-size: 11px; color: rgba(255,255,255,0.7); line-height: 1.7; display: flex; align-items: center; gap: 6px; }
   .htd-log-item strong { color: rgba(255,255,255,0.85); font-weight: 700; }
+  /* Car driver row — warm amber tint */
+  .bpb-driver { padding: 8px 14px; border-top: 1px solid rgba(255,176,88,0.12); background: linear-gradient(135deg, rgba(255,176,88,0.06) 0%, rgba(255,141,84,0.03) 100%); }
+  .bpb-driver-item { font-size: 11px; color: rgba(255,210,160,0.85); line-height: 1.7; display: flex; align-items: center; gap: 6px; }
+  .bpb-driver-item strong { color: rgba(255,220,180,0.95); font-weight: 700; }
 
   /* Per-segment actions row */
   .bp-doc { display: flex; align-items: center; gap: 6px; padding: 6px 14px 8px; border-top: 1px solid var(--grey-100); margin-top: 2px; }
@@ -987,6 +994,12 @@ function renderEtape(e, state, idx, autoIdx, done, total, isPast) {
       return `<div class="bp">${h}</div>`;
     }
 
+    // SVG icons for mid badge (crisp vector instead of emoji)
+    const svgTrain = '<svg viewBox="0 0 24 24"><path d="M12 2C8 2 4 2.5 4 6v9.5c0 2.21 1.79 4 4 4l-1.5 1.5v.5h2l2-2h3l2 2h2v-.5L16 19.5c2.21 0 4-1.79 4-4V6c0-3.5-4-4-8-4zM7.5 17c-.83 0-1.5-.67-1.5-1.5S6.67 14 7.5 14s1.5.67 1.5 1.5S8.33 17 7.5 17zm3.5-7H6V6h5v4zm2 0V6h5v4h-5zm3.5 7c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5z"/></svg>';
+    const svgPlane = '<svg viewBox="0 0 24 24" style="transform:rotate(90deg)"><path d="M21 16v-2l-8-5V3.5c0-.83-.67-1.5-1.5-1.5S10 2.67 10 3.5V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5z"/></svg>';
+    const svgCar = '<svg viewBox="0 0 24 24"><path d="M18.92 6.01C18.72 5.42 18.16 5 17.5 5h-11c-.66 0-1.21.42-1.42 1.01L3 12v8c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-1h12v1c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-8l-2.08-5.99zM6.5 16c-.83 0-1.5-.67-1.5-1.5S5.67 13 6.5 13s1.5.67 1.5 1.5S7.33 16 6.5 16zm11 0c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zM5 11l1.5-4.5h11L19 11H5z"/></svg>';
+    function midBadge(type) { return type === 'flight' ? svgPlane : svgTrain; }
+
     // Helper: build one bold-style boarding pass card (iOS widget inspired)
     // extraCls: 'bpb-navy' for dark variant; pnr: shown in header right
     function bpCardBold(carrier, num, pnr, dateStr, dep, arr, midLabel, seat, ticket, locUrl, fareData, type, icon, extraCls) {
@@ -1001,7 +1014,7 @@ function renderEtape(e, state, idx, autoIdx, done, total, isPast) {
       } else {
         h += `<div class="bpb-hero"><div class="bpb-code">${dep.time}</div><div class="bpb-name">${dep.name}</div></div>`;
       }
-      h += `<div class="bpb-mid"><div class="bpb-icon">${icon}</div><div class="bpb-dur">${midLabel}</div></div>`;
+      h += `<div class="bpb-mid"><div class="bpb-mid-row"><div class="bpb-mid-line"></div><div class="bpb-mid-badge">${midBadge(type)}</div><div class="bpb-mid-line"></div></div><div class="bpb-dur">${midLabel}</div></div>`;
       if (isFl && arr.code) {
         h += `<div class="bpb-hero arr"><div class="bpb-code">${arr.code}</div><div class="bpb-time">${arr.time}</div><div class="bpb-name">${arr.name}${arr.terminal ? ' · T' + arr.terminal : ''}</div></div>`;
       } else {
@@ -1160,13 +1173,13 @@ function renderEtape(e, state, idx, autoIdx, done, total, isPast) {
       // Route: pickup → dropoff (times as hero, like trains)
       h += '<div class="bpb-route">';
       h += `<div class="bpb-hero"><div class="bpb-code">${e.pickup.time}</div><div class="bpb-time">${e.pickup.date}</div><div class="bpb-name">${e.pickup.location}</div></div>`;
-      h += `<div class="bpb-mid"><div class="bpb-icon">🚗</div></div>`;
+      h += `<div class="bpb-mid"><div class="bpb-mid-row"><div class="bpb-mid-line"></div><div class="bpb-mid-badge">${svgCar}</div><div class="bpb-mid-line"></div></div></div>`;
       h += `<div class="bpb-hero arr"><div class="bpb-code">${e.dropoff.time}</div><div class="bpb-time">${e.dropoff.date}</div><div class="bpb-name">${e.dropoff.location}</div></div>`;
       h += '</div>';
       if (oj) h += `<div class="bpb-dur">⚠️ Open jaw</div>`;
-      // Driver
+      // Driver — warm amber tinted row
       if (e.driverName) {
-        h += `<div class="htd-logistics"><div class="htd-log-item">🪪 <strong>${e.driverName}</strong></div><div class="htd-log-item">📄 Permis + CB au nom du conducteur</div></div>`;
+        h += `<div class="bpb-driver"><div class="bpb-driver-item">🪪 <strong>${e.driverName}</strong></div><div class="bpb-driver-item">📄 Permis + CB au nom du conducteur</div></div>`;
       }
       bodyH = `<div class="bpb${navyCls}">${h}</div>`;
     } else {
