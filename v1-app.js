@@ -771,7 +771,6 @@ function toggleRecoDetail(id) {
   const card = document.querySelector('.d-reco-card[data-id="' + id + '"]');
   const ctaBar = document.getElementById('reco-cta-bar');
   const grid = document.querySelector('.d-reco-grid');
-  const zone = document.getElementById('d-reco-zone');
   if (!detailEl) return;
 
   if (expandedRecoId === id) {
@@ -782,7 +781,6 @@ function toggleRecoDetail(id) {
     expandedRecoId = null;
     // Remove compact mode
     if (grid) grid.classList.remove('compact');
-    if (zone) zone.classList.remove('has-expanded');
     // Hide CTA bar
     if (ctaBar) ctaBar.classList.remove('visible');
   } else {
@@ -811,7 +809,6 @@ function toggleRecoDetail(id) {
     expandedRecoId = id;
     // Enter compact mode
     if (grid) grid.classList.add('compact');
-    if (zone) zone.classList.add('has-expanded');
 
     // Update CTA bar
     const recoData = _getRecoData(id);

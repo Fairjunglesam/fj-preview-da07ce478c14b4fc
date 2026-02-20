@@ -869,7 +869,6 @@ body { font-family:var(--font); background:var(--bg-page); color:var(--text-prim
 .d-reco-grid.compact .rc-price { font-size:15px; }
 .d-reco-grid.compact .rc-price-pax { display:none; }
 .d-reco-grid.compact .rc-tag { font-size:9px; padding:1px 6px; }
-.d-reco-zone.has-expanded .d-reco-zone-header { margin-bottom:4px; padding-bottom:6px; }
 
 /* ===== V0.1: "VOIR TOUS" BUTTONS ===== */
 .d-reco-see-all { display:flex; gap:8px; margin-top:0; padding-top:0; border-top:none; }
