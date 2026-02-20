@@ -994,8 +994,15 @@ body { font-family:var(--font); background:var(--bg-page); color:var(--text-prim
 
 /* --- MOBILE: <768px --- */
 @media (max-width: 768px) {
-  /* Reco grid — vertical stack */
-  .d-reco-grid { grid-template-columns: 1fr; gap: 8px; }
+  /* Reco grid — horizontal carousel with peek */
+  .d-reco-grid {
+    display: flex; gap: 10px;
+    overflow-x: auto; scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    padding: 2px 0 6px;
+  }
+  .d-reco-grid::-webkit-scrollbar { display: none; }
+  .d-reco-card { flex: 0 0 82%; scroll-snap-align: start; }
 
   /* Reco cards — compact */
   .rc-header { padding: 12px 14px 0; }
@@ -1119,7 +1126,7 @@ body { font-family:var(--font); background:var(--bg-page); color:var(--text-prim
 
 /* --- SMALL MOBILE: <480px --- */
 @media (max-width: 480px) {
-  .d-reco-grid { grid-template-columns: 1fr; }
+  .d-reco-card { flex: 0 0 88%; }
   .rc-header { padding: 10px 10px 0; }
   .rc-content { padding: 6px 10px; }
   .rc-footer { padding: 6px 10px; }
