@@ -417,65 +417,44 @@
     .car-photo { width: 64px; height: 48px; }
   }
 
-  /* Below fold */
-  .below-fold { max-width: 960px; margin: 16px auto 0; opacity: 0.3; pointer-events: none; }
-  .bf-block { background: var(--white); border-radius: 14px; border: var(--stroke-sm) solid var(--grey-100); padding: 14px 18px; margin-bottom: 10px; }
-  .bf-block h3 { font-size: 13px; font-weight: 700; margin-bottom: 6px; }
-  .bf-row { height: 9px; background: var(--grey-75); border-radius: 3px; margin-bottom: 5px; }
-  .bf-row:nth-child(2) { width: 85%; } .bf-row:nth-child(3) { width: 60%; } .bf-row:nth-child(4) { width: 72%; }
+  /* ===== Sticky Nav ===== */
+  .sticky-nav { position: sticky; top: 0; z-index: 100; background: rgba(248,250,255,0.95); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border-bottom: 1px solid var(--grey-100); padding: 8px 16px; }
+  .sticky-nav .nav-row { display: flex; flex-wrap: wrap; gap: 5px; align-items: center; }
+  .sticky-nav label { font-size: 10px; font-weight: 700; color: var(--grey-500); text-transform: uppercase; letter-spacing: 0.5px; }
+  .sticky-nav button { padding: 3px 9px; border: var(--stroke-md) solid var(--grey-100); border-radius: 7px; background: var(--white); font-size: 10px; font-weight: 600; cursor: pointer; transition: all 0.15s; color: var(--grey-700); font-family: var(--font); }
+  .sticky-nav button:hover { background: var(--grey-50); border-color: var(--grey-200); }
+  .sticky-nav button.active { background: var(--black); color: var(--white); border-color: var(--black); }
+  .sticky-nav .sep { width: 1px; height: 18px; background: var(--grey-100); margin: 0 3px; }
+  .nav-scenarios { display: flex; gap: 4px; margin-top: 6px; overflow-x: auto; padding-bottom: 2px; scrollbar-width: none; }
+  .nav-scenarios::-webkit-scrollbar { display: none; }
+  .nav-scenarios a { padding: 4px 10px; border-radius: 7px; font-size: 10px; font-weight: 600; text-decoration: none; color: var(--grey-600); background: var(--white); border: 1px solid var(--grey-100); white-space: nowrap; transition: all 0.15s; font-family: var(--font); scroll-snap-align: start; }
+  .nav-scenarios a:hover { background: var(--grey-50); border-color: var(--grey-200); color: var(--black); }
+
+  /* ===== Scenario Sections ===== */
+  .scenario-section { max-width: 960px; margin: 24px auto; scroll-margin-top: 90px; }
+  .scenario-label { font-size: 11px; font-weight: 700; color: var(--grey-400); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 8px; padding-left: 4px; }
 </style>
 </head>
 <body>
 
-<div class="demo-controls">
-  <label>État</label>
-  <button onclick="setState('upcoming')" id="btn-upcoming">upcoming</button>
-  <button onclick="setState('imminent')" id="btn-imminent">imminent</button>
-  <button onclick="setState('in_transit')" id="btn-in_transit">in_transit</button>
-  <button onclick="setState('between_segments')" id="btn-between_segments">between</button>
-  <button onclick="setState('trip_ending')" id="btn-trip_ending">ending</button>
-  <div class="sep"></div>
-  <label>Trip</label>
-  <select id="trip-select" onchange="changeTrip(this.value)">
-    <option value="full">4 étapes — train+hôtel+voiture+train</option>
-    <option value="openjaw">4 étapes — vol+hôtel+car open jaw+vol</option>
-    <option value="correspondance">3 étapes — train 2 segments+hôtel+train</option>
-    <option value="escale">3 étapes — vol avec escale+hôtel+vol</option>
-    <option value="simple">2 étapes — aller-retour train</option>
-    <option value="flight">1 étape — vol direct</option>
-    <option value="hotelonly">1 étape — hôtel seul</option>
-  </select>
-  <div class="sep"></div>
-  <label>Contexte</label>
-  <button onclick="setContext('home')" id="btn-home" class="active">Home</button>
-  <button onclick="setContext('mytrips')" id="btn-mytrips">My Trips</button>
-  <div class="sep"></div>
-  <label>Style</label>
-  <button onclick="setStyle('classic')" id="btn-classic" class="active">Classic</button>
-  <button onclick="setStyle('dark')" id="btn-dark">Dark</button>
-  <button onclick="setStyle('bold')" id="btn-bold">Bold</button>
-</div>
-
-<div class="trip-card" id="trip-card">
-  <div class="card-inner">
-    <div class="card-header">
-      <div class="header-left">
-        <div class="headline-row"><div class="state-dot"></div><div class="headline" id="headline"></div></div>
-        <div class="co-travelers" id="co-travelers"></div>
-      </div>
-      <a href="#" class="header-link" id="header-link" onclick="event.preventDefault()">Voir le voyage →</a>
-    </div>
-    <div class="stepper" id="stepper"></div>
-    <div id="etape-content"></div>
-    <div class="card-footer" id="card-footer"><a href="#" onclick="event.preventDefault()">Voir tout le voyage →</a></div>
+<div class="sticky-nav" id="sticky-nav">
+  <div class="nav-row">
+    <label>Style</label>
+    <button onclick="setStyle('classic')" id="btn-classic" class="active">Classic</button>
+    <button onclick="setStyle('dark')" id="btn-dark">Dark</button>
+    <button onclick="setStyle('bold')" id="btn-bold">Bold</button>
+    <div class="sep"></div>
+    <label>État</label>
+    <button onclick="setState('upcoming')" id="btn-upcoming" class="active">upcoming</button>
+    <button onclick="setState('imminent')" id="btn-imminent">imminent</button>
+    <button onclick="setState('in_transit')" id="btn-in_transit">in_transit</button>
+    <button onclick="setState('between_segments')" id="btn-between_segments">between</button>
+    <button onclick="setState('trip_ending')" id="btn-trip_ending">ending</button>
   </div>
+  <div class="nav-scenarios" id="nav-scenarios"></div>
 </div>
 
-<div class="below-fold" id="below-fold">
-  <div class="bf-block"><h3>4 validations en attente</h3><div class="bf-row"></div><div class="bf-row"></div><div class="bf-row"></div></div>
-  <div class="bf-block"><h3>Réservez votre prochain voyage</h3><div class="bf-row"></div><div class="bf-row"></div></div>
-  <div class="bf-block"><h3>Budget</h3><div class="bf-row"></div><div class="bf-row"></div><div class="bf-row"></div><div class="bf-row"></div></div>
-</div>
+<div id="cards-container"></div>
 
 <script>
 const TRIPS = {
@@ -856,60 +835,35 @@ function getCompleted(state, trip) {
   return [];
 }
 function getTag(idx, autoIdx, done, state) {
-  const auto = selectedEtapeIndex === null;
-  if (auto && state === 'in_transit' && idx === autoIdx) return { t: 'En cours', c: 'current' };
+  if (state === 'in_transit' && idx === autoIdx) return { t: 'En cours', c: 'current' };
   if (state === 'trip_ending') return { t: 'Terminée ✓', c: 'done' };
   if (done.includes(idx)) return { t: 'Terminée ✓', c: 'past' };
-  if (auto && idx === autoIdx) return { t: state === 'imminent' ? 'Départ imminent' : 'Prochaine étape', c: 'next' };
+  if (idx === autoIdx) return { t: state === 'imminent' ? 'Départ imminent' : 'Prochaine étape', c: 'next' };
   if (idx < autoIdx) return { t: 'Terminée ✓', c: 'past' };
-  if (idx === autoIdx) return { t: 'Prochaine étape', c: 'next' };
   return { t: 'À venir', c: 'future' };
 }
 
-function render() {
-  const trip = TRIPS[currentTrip], state = currentState;
-  const autoIdx = getAutoIdx(state, trip);
-  const activeIdx = selectedEtapeIndex ?? autoIdx;
-  const done = getCompleted(state, trip);
-  const etape = trip.etapes[activeIdx];
-  const isPast = done.includes(activeIdx) && state !== 'trip_ending';
-
-  document.getElementById('trip-card').className = 'trip-card state-' + state;
-  document.getElementById('headline').textContent = HEADLINES[state](trip);
-
-  const co = document.getElementById('co-travelers');
-  co.style.display = trip.travelers.length ? '' : 'none';
-  if (trip.travelers.length) co.textContent = 'avec ' + trip.travelers.join(' et ');
-
-  document.getElementById('header-link').style.display = currentContext === 'mytrips' ? 'none' : '';
-  document.getElementById('card-footer').style.display = currentContext === 'mytrips' ? 'none' : '';
-
-  const stepper = document.getElementById('stepper');
-  const isEpureStyle = currentStyle === 'dark' || currentStyle === 'bold';
-  if (trip.etapes.length <= 2) { stepper.className = 'stepper hidden'; }
-  else { stepper.className = 'stepper' + (isEpureStyle ? ' stepper-dark' : ''); renderStepper(trip, state, activeIdx, autoIdx, done, isEpureStyle); }
-
-  renderEtape(etape, state, activeIdx, autoIdx, done, trip.etapes.length, isPast);
-
-  document.getElementById('below-fold').style.display = currentContext === 'home' ? '' : 'none';
-  document.querySelectorAll('.demo-controls button[id]').forEach(b => {
-    const s = b.id.replace('btn-', '');
-    b.classList.toggle('active', s === state || s === currentContext || s === currentStyle);
-  });
-}
-
 const STEPPER_ICONS = { train: 'train', flight: 'flight', hotel: 'hotel', car: 'directions_car' };
-function renderStepper(trip, state, activeIdx, autoIdx, done, isDark) {
-  const el = document.getElementById('stepper');
-  el.innerHTML = '';
+const TRIP_LABELS = {
+  full: '4 étapes — Train + Hôtel + Voiture + Train',
+  openjaw: '4 étapes — Vol + Hôtel + Car open jaw + Vol',
+  correspondance: '3 étapes — Train 2 segments + Hôtel + Train',
+  escale: '3 étapes — Vol avec escale + Hôtel + Vol',
+  simple: '2 étapes — Aller-retour Train',
+  flight: '1 étape — Vol direct',
+  hotelonly: '1 étape — Hôtel seul'
+};
+
+function buildStepperHTML(trip, state, activeIdx, autoIdx, done, isDark) {
+  if (trip.etapes.length <= 2) return '';
+  let h = '';
   trip.etapes.forEach((e, i) => {
-    const s = document.createElement('div');
-    s.className = 'stepper-step';
-    if (done.includes(i)) s.classList.add('completed');
+    let cls = 'stepper-step';
+    if (done.includes(i)) cls += ' completed';
     if (i === activeIdx) {
-      s.classList.add('active');
-      if (done.includes(i)) s.classList.add('viewing');
-      if (state === 'in_transit' && i === autoIdx) s.classList.add('transit');
+      cls += ' active';
+      if (done.includes(i)) cls += ' viewing';
+      if (state === 'in_transit' && i === autoIdx) cls += ' transit';
     }
     let dotContent;
     if (done.includes(i)) {
@@ -917,19 +871,49 @@ function renderStepper(trip, state, activeIdx, autoIdx, done, isDark) {
     } else {
       dotContent = isDark ? `<span class="material-symbols-rounded">${STEPPER_ICONS[e.type] || 'trip'}</span>` : e.icon;
     }
-    s.innerHTML = `<div class="stepper-dot-row"><div class="stepper-dot">${dotContent}</div><div class="stepper-line"></div></div><div class="stepper-label">${e.shortLabel}</div><div class="stepper-date">${e.dateShort}</div>`;
-    s.onclick = () => { clearTimeout(autoResetTimer); selectedEtapeIndex = i; render(); autoResetTimer = setTimeout(() => { selectedEtapeIndex = null; render(); }, 8000); };
-    el.appendChild(s);
+    h += `<div class="${cls}"><div class="stepper-dot-row"><div class="stepper-dot">${dotContent}</div><div class="stepper-line"></div></div><div class="stepper-label">${e.shortLabel}</div><div class="stepper-date">${e.dateShort}</div></div>`;
   });
-  // Auto-scroll active step into view on mobile
-  if (isDark) {
-    const activeEl = el.querySelector('.stepper-step.active');
-    if (activeEl) activeEl.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
-  }
+  const stepperCls = 'stepper' + (isDark ? ' stepper-dark' : '');
+  return `<div class="${stepperCls}">${h}</div>`;
 }
 
-function renderEtape(e, state, idx, autoIdx, done, total, isPast) {
-  const ct = document.getElementById('etape-content');
+function renderAll() {
+  const state = currentState;
+  const isEpure = currentStyle === 'dark' || currentStyle === 'bold';
+  const container = document.getElementById('cards-container');
+  container.innerHTML = '';
+
+  // Build nav scenario links
+  const navEl = document.getElementById('nav-scenarios');
+  navEl.innerHTML = Object.entries(TRIP_LABELS).map(([key, label]) =>
+    `<a href="#scenario-${key}" onclick="event.preventDefault(); document.getElementById('scenario-${key}').scrollIntoView({behavior:'smooth'})">${label}</a>`
+  ).join('');
+
+  Object.entries(TRIP_LABELS).forEach(([key, label]) => {
+    const trip = TRIPS[key];
+    const autoIdx = getAutoIdx(state, trip);
+    const done = getCompleted(state, trip);
+    const etape = trip.etapes[autoIdx];
+    const isPast = done.includes(autoIdx) && state !== 'trip_ending';
+
+    const headline = HEADLINES[state](trip);
+    const travelers = trip.travelers.length ? `<div class="co-travelers">avec ${trip.travelers.join(' et ')}</div>` : '';
+    const stepperH = buildStepperHTML(trip, state, autoIdx, autoIdx, done, isEpure);
+
+    const cardHTML = `<div class="scenario-section" id="scenario-${key}"><div class="scenario-label">${label}</div><div class="trip-card state-${state}"><div class="card-inner"><div class="card-header"><div class="header-left"><div class="headline-row"><div class="state-dot"></div><div class="headline">${headline}</div></div>${travelers}</div><a href="#" class="header-link" onclick="event.preventDefault()">Voir le voyage →</a></div>${stepperH}<div id="etape-${key}"></div></div></div></div>`;
+    container.insertAdjacentHTML('beforeend', cardHTML);
+    renderEtape(etape, state, autoIdx, autoIdx, done, trip.etapes.length, isPast, `etape-${key}`);
+  });
+
+  // Update button states
+  document.querySelectorAll('.sticky-nav button[id]').forEach(b => {
+    const s = b.id.replace('btn-', '');
+    b.classList.toggle('active', s === state || s === currentStyle);
+  });
+}
+
+function renderEtape(e, state, idx, autoIdx, done, total, isPast, targetId) {
+  const ct = document.getElementById(targetId || 'etape-content');
   const isHero = state === 'imminent' && idx === autoIdx && !isPast;
   const isTransit = state === 'in_transit' && idx === autoIdx && !isPast;
   const tag = getTag(idx, autoIdx, done, state);
@@ -1240,41 +1224,10 @@ function renderEtape(e, state, idx, autoIdx, done, total, isPast) {
   ct.innerHTML = `<div class="etape-content ${isPast ? 'is-past' : ''}"><div class="etape-meta"><span class="etape-tag ${tag.c}">${tag.t}</span></div>${bodyH}</div>`;
 }
 
-function setState(s) { currentState = s; selectedEtapeIndex = null; clearTimeout(autoResetTimer); render(); }
-function changeTrip(t) { currentTrip = t; selectedEtapeIndex = null; currentState = 'upcoming'; clearTimeout(autoResetTimer); render(); }
-function setContext(c) { currentContext = c; render(); }
-function setStyle(s) { currentStyle = s; render(); }
+function setState(s) { currentState = s; renderAll(); }
+function setStyle(s) { currentStyle = s; renderAll(); }
 
-// ===== Mobile swipe to navigate étapes =====
-(function() {
-  let touchStartX = 0, touchStartY = 0;
-  const el = document.getElementById('etape-content');
-  el.addEventListener('touchstart', function(ev) {
-    touchStartX = ev.changedTouches[0].screenX;
-    touchStartY = ev.changedTouches[0].screenY;
-  }, { passive: true });
-  el.addEventListener('touchend', function(ev) {
-    const dx = ev.changedTouches[0].screenX - touchStartX;
-    const dy = ev.changedTouches[0].screenY - touchStartY;
-    if (Math.abs(dx) < 50 || Math.abs(dx) < Math.abs(dy) * 1.5) return; // not a horizontal swipe
-    const trip = TRIPS[currentTrip];
-    const total = trip.etapes.length;
-    const autoIdx = getAutoIdx(currentState, trip);
-    const currentIdx = selectedEtapeIndex ?? autoIdx;
-    if (dx < 0 && currentIdx < total - 1) {
-      // Swipe left → next étape
-      selectedEtapeIndex = currentIdx + 1;
-    } else if (dx > 0 && currentIdx > 0) {
-      // Swipe right → previous étape
-      selectedEtapeIndex = currentIdx - 1;
-    } else { return; }
-    clearTimeout(autoResetTimer);
-    render();
-    autoResetTimer = setTimeout(function() { selectedEtapeIndex = null; render(); }, 8000);
-  }, { passive: true });
-})();
-
-render();
+renderAll();
 </script>
 </body>
 </html>
