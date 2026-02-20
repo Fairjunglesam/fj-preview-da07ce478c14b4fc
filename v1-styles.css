@@ -1015,11 +1015,17 @@ body { font-family:var(--font); background:var(--bg-page); color:var(--text-prim
   .d-ctx-chip { font-size: 10px; padding: 2px 6px; max-width: 120px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; flex-shrink: 0; }
   .d-ctx-dot { display: none; }
 
-  /* Master-detail — stacked */
+  /* Master-detail — list full width, detail as fullscreen overlay */
   .md-layout { flex-direction: column; flex: none; height: auto; min-height: auto; }
-  .md-list { width: 100%; border-right: none; border-bottom: 1px solid var(--border-light); max-height: 45vh; padding: 8px; }
-  .md-detail { width: 100%; min-height: 200px; }
-  .md-detail-placeholder { font-size: 13px; padding: 24px 16px; }
+  .md-list { width: 100%; border-right: none; border-bottom: none; padding: 8px; }
+  .md-detail { width: 100%; display: none; }
+  .md-detail-placeholder { display: none; }
+  .md-detail.md-detail-fullscreen {
+    display: block; position: fixed; inset: 0; z-index: 200;
+    background: white; overflow-y: auto; -webkit-overflow-scrolling: touch;
+    animation: ridSlideUp 250ms var(--ease-decel);
+    padding-bottom: 80px;
+  }
 
   /* Phase bar */
   .md-phase-bar { flex-direction: column; align-items: flex-start; gap: 4px; padding: 8px 0; }

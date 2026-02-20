@@ -718,9 +718,13 @@ function selectTrainLeg(direction, id, name, price, times, cls) {
     trainOutboundSelection = { id, name, price, times, cls };
     trainPhase = 'return';
     updateMdTrainPhaseUI();
-    // Clear right panel for return selection
+    // Close mobile fullscreen if open
     const detailPanel = document.getElementById('md-train-detail');
-    if (detailPanel) detailPanel.innerHTML = '<div class="md-detail-placeholder">Sélectionnez un train retour pour voir les détails</div>';
+    if (detailPanel) {
+      detailPanel.classList.remove('md-detail-fullscreen');
+      detailPanel.innerHTML = '<div class="md-detail-placeholder">Sélectionnez un train retour pour voir les détails</div>';
+    }
+    document.body.style.overflow = '';
     // Remove card highlights
     document.querySelectorAll('#md-train-list .list-card').forEach(c => c.classList.remove('selected-card'));
     // Scroll list to top
@@ -1002,6 +1006,10 @@ function showAllView(mode) {
   const ctaBar = document.getElementById('reco-cta-bar');
   if (ctaBar) ctaBar.classList.remove('visible');
 
+  // Update mobile stepper label
+  const msLabel = document.getElementById('ms-label');
+  if (msLabel) msLabel.textContent = mode === 'trains' ? 'Étape 2/5 · Tous les trains' : 'Étape 2/5 · Tous les vols';
+
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
@@ -1022,6 +1030,10 @@ function showRecoView() {
     const ctaBar = document.getElementById('reco-cta-bar');
     if (ctaBar) ctaBar.classList.add('visible');
   }
+
+  // Restore mobile stepper label
+  const msLabel = document.getElementById('ms-label');
+  if (msLabel) msLabel.textContent = 'Étape 2/5 · Transport';
 
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
@@ -1060,16 +1072,35 @@ function selectMdItem(mode, panelId) {
     }
   }
 
+  const isMobile = window.innerWidth < 768;
+
+  // On mobile: open detail as fullscreen overlay
+  if (isMobile) {
+    detailContainer.classList.add('md-detail-fullscreen');
+    document.body.style.overflow = 'hidden';
+  }
+
   if (panel) {
+    // Build mobile close header
+    let mobileHeader = '';
+    if (isMobile) {
+      const icon = mode === 'trains' ? '🚄' : '✈️';
+      const title = panel.title || (mode === 'trains' ? 'Détail train' : 'Détail vol');
+      mobileHeader = '<div class="d-reco-mobile-header"><span class="d-reco-mobile-header-title">' + icon + ' ' + title + '</span><button class="d-reco-mobile-close" onclick="closeMdDetail(\'' + mode + '\')" aria-label="Fermer">&times;</button></div>';
+    }
     // Inject panel HTML with skeleton loading
-    detailContainer.innerHTML = '<div class="drawer-skeleton"><div class="skeleton-block skeleton-header"></div><div class="skeleton-block skeleton-body"></div><div class="skeleton-block skeleton-tariffs"></div></div>';
+    detailContainer.innerHTML = mobileHeader + '<div class="drawer-skeleton"><div class="skeleton-block skeleton-header"></div><div class="skeleton-block skeleton-body"></div><div class="skeleton-block skeleton-tariffs"></div></div>';
     setTimeout(() => {
       let html = panel.html;
-      detailContainer.innerHTML = html;
+      detailContainer.innerHTML = mobileHeader + html;
     }, 200);
   } else {
     // Panel data not available — show wireframe placeholder
-    detailContainer.innerHTML = `
+    let mobileHeader = '';
+    if (isMobile) {
+      mobileHeader = '<div class="d-reco-mobile-header"><span class="d-reco-mobile-header-title">Détail</span><button class="d-reco-mobile-close" onclick="closeMdDetail(\'' + mode + '\')" aria-label="Fermer">&times;</button></div>';
+    }
+    detailContainer.innerHTML = mobileHeader + `
       <div class="dp-content" style="padding:24px">
         <div class="dp-header"><div><div class="dp-title-row"><div class="dp-icon" style="background:#e3f2fd">🚄</div><div class="dp-title">Détail train</div></div><div class="dp-subtitle">Données non disponibles dans ce wireframe</div></div></div>
         <div style="padding:40px 20px;text-align:center;color:var(--text-muted)">
@@ -1078,6 +1109,23 @@ function selectMdItem(mode, panelId) {
         </div>
       </div>`;
   }
+}
+
+// Close mobile fullscreen md-detail
+function closeMdDetail(mode) {
+  const detailContainer = mode === 'trains'
+    ? document.getElementById('md-train-detail')
+    : document.getElementById('md-flight-detail');
+  if (detailContainer) {
+    detailContainer.classList.remove('md-detail-fullscreen');
+    detailContainer.innerHTML = '<div class="md-detail-placeholder">Sélectionnez un ' + (mode === 'trains' ? 'train' : 'vol') + ' pour voir les détails</div>';
+  }
+  // Remove card highlight
+  const listContainer = mode === 'trains'
+    ? document.getElementById('md-train-list')
+    : document.getElementById('md-flight-list');
+  if (listContainer) listContainer.querySelectorAll('.list-card').forEach(c => c.classList.remove('selected-card'));
+  document.body.style.overflow = '';
 }
 
 function resetMdTrainOutbound() {
