@@ -158,12 +158,12 @@
   .bp-tag.warm .bp-tag-value { color: var(--orange-600); }
   /* Per-segment actions row */
   .bp-doc { display: flex; align-items: center; gap: 6px; padding: 6px 14px 8px; border-top: 1px solid var(--grey-100); margin-top: 2px; }
-  .bp-doc-btn { display: inline-flex; align-items: center; gap: 4px; padding: 5px 10px; border-radius: 8px; font-size: 11px; font-weight: 700; cursor: pointer; text-decoration: none; border: none; font-family: var(--font); transition: all 0.15s; }
+  .bp-doc-btn { display: inline-flex; align-items: center; gap: 4px; padding: 5px 10px; border-radius: 8px; font-size: 11px; font-weight: 700; cursor: pointer; text-decoration: none; border: none; font-family: var(--font); transition: all 0.15s; margin-left: auto; }
   .bp-doc-btn svg { width: 14px; height: 14px; flex-shrink: 0; fill: currentColor; }
   .bp-doc-btn.available { background: var(--blue-500); color: var(--white); }
   .bp-doc-btn.available:hover { background: var(--blue-600); transform: translateY(-1px); box-shadow: 0 2px 8px rgba(0,169,252,0.25); }
   .bp-doc-btn.deferred { background: var(--grey-75); color: var(--grey-400); cursor: default; }
-  .bp-doc-loc { display: inline-flex; align-items: center; gap: 3px; font-size: 10px; font-weight: 600; color: var(--grey-500); text-decoration: none; padding: 4px 8px; border-radius: 6px; border: 1px solid var(--grey-100); transition: all 0.15s; font-family: var(--font); margin-left: auto; white-space: nowrap; }
+  .bp-doc-loc { display: inline-flex; align-items: center; gap: 3px; font-size: 10px; font-weight: 600; color: var(--grey-500); text-decoration: none; padding: 4px 8px; border-radius: 6px; border: 1px solid var(--grey-100); transition: all 0.15s; font-family: var(--font); white-space: nowrap; }
   .bp-doc-loc:hover { background: var(--grey-50); color: var(--grey-700); border-color: var(--grey-200); }
   .bp-doc-wallet { display: none; }
   @media (max-width: 640px) {
@@ -885,6 +885,7 @@ function renderEtape(e, state, idx, autoIdx, done, total, isPast) {
     // Helper: build actions row (ticket + itinerary) for a boarding pass
     function ticketDoc(ticket, locUrl) {
       let h = '<div class="bp-doc">';
+      h += `<a href="${locUrl || '#'}" class="bp-doc-loc" onclick="event.preventDefault()">📍 Itinéraire</a>`;
       if (ticket) {
         if (ticket.available) {
           const icon = ticket.hasQR ? qrSvg : '🎫';
@@ -896,7 +897,6 @@ function renderEtape(e, state, idx, autoIdx, done, total, isPast) {
           h += `<button class="bp-doc-wallet" onclick="event.preventDefault()"> Wallet</button>`;
         }
       }
-      h += `<a href="${locUrl || '#'}" class="bp-doc-loc" onclick="event.preventDefault()">📍 Itinéraire</a>`;
       h += '</div>';
       return h;
     }
