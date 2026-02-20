@@ -36,7 +36,6 @@ const panels = {
           <div class="tf-detail-panel">
             <div class="tf-detail-section"><div class="tf-detail-title">Conditions</div><div class="tf-detail-line">· Échangeable et remboursable sans frais</div><div class="tf-detail-line">· Valable sur tous les TGV du jour</div><div class="tf-detail-line">· Accès espace 1ère et salon Grand Voyageur</div><div class="tf-detail-line">· Siège large, repose-pieds, prise individuelle</div></div>
           </div>
-          <div class="tariff-skeleton"></div>
         </div></div>
         <div class="dp-section"><div class="dp-section-title">Émissions CO2</div>
           <div class="co2-row">🌿 2,4 kg CO2 — 98% de moins qu'en voiture</div>
@@ -109,7 +108,6 @@ const panels = {
           <div class="tf-detail-panel">
             <div class="tf-detail-section"><div class="tf-detail-title">Conditions</div><div class="tf-detail-line">· Échangeable et remboursable sans frais</div><div class="tf-detail-line">· Valable sur tous les TGV du jour</div><div class="tf-detail-line">· Accès 1ère classe et salon Grand Voyageur</div></div>
           </div>
-          <div class="tariff-skeleton"></div>
         </div></div>
         <div class="dp-section"><div class="dp-section-title">Émissions CO2</div>
           <div class="co2-row">🌿 2,4 kg CO2</div>
@@ -803,6 +801,10 @@ function toggleRecoDetail(id) {
       if (id.startsWith('flight')) {
         _lockFlightTariffs(detailEl);
       }
+      // Trains: add info card (tariff changeable here + at Review & Options)
+      if (id.startsWith('train')) {
+        _addTrainTariffInfo(detailEl);
+      }
     }
     detailEl.style.display = '';
     if (card) card.classList.add('expanded');
@@ -843,13 +845,26 @@ function _getRecoData(id) {
   return map[id] || null;
 }
 
+// Helper: for trains in reco detail, add info card about tariff flexibility
+function _addTrainTariffInfo(el) {
+  const tariffCards = el.querySelector('.tariff-cards');
+  if (!tariffCards) return;
+  const tariffSection = tariffCards.closest('.dp-section');
+  if (tariffSection) {
+    const infoCard = document.createElement('div');
+    infoCard.className = 'no-fare-info-card';
+    infoCard.style.marginTop = '10px';
+    infoCard.innerHTML = '<svg width="16" height="16" viewBox="0 0 16 16" fill="none" style="flex-shrink:0"><circle cx="8" cy="8" r="7" stroke="var(--text-tag-info)" stroke-width="1.5"/><path d="M8 5V5.01M8 7V11" stroke="var(--text-tag-info)" stroke-width="1.5" stroke-linecap="round"/></svg><span>Vous pouvez aussi <strong>ajuster votre tarif</strong> et ajouter des extras à l\'étape Revue &amp; Options.</span>';
+    tariffSection.appendChild(infoCard);
+  }
+}
+
 // Helper: for flights in reco detail, keep only the selected tariff (read-only) + info card
 function _lockFlightTariffs(el) {
   const tariffCards = el.querySelector('.tariff-cards');
   if (!tariffCards) return;
   // Keep only the selected tariff card, remove others
   tariffCards.querySelectorAll('.tariff-card:not(.selected)').forEach(c => c.remove());
-  tariffCards.querySelectorAll('.tariff-skeleton').forEach(c => c.remove());
   // Make selected card read-only
   const selected = tariffCards.querySelector('.tariff-card.selected');
   if (selected) selected.style.cursor = 'default';
