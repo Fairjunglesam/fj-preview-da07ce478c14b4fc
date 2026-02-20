@@ -144,7 +144,8 @@
   .bp-luggage { font-size: 11px; color: var(--grey-500); padding: 2px 0 4px; }
   /* (seat badge styles merged into .bp-tag above) */
   /* Info tags (unified card-style badges: seat, train#, platform, fare, PNR) */
-  .bp-tags { display: flex; flex-wrap: wrap; gap: 6px; padding: 4px 14px 8px; }
+  .bp-tags { display: flex; flex-wrap: wrap; gap: 12px; padding: 4px 14px 8px; align-items: center; }
+  .bp-tag-group { display: inline-flex; flex-wrap: wrap; gap: 5px; align-items: center; }
   .bp-tag { display: inline-flex; align-items: center; gap: 6px; padding: 4px 10px; background: var(--grey-50); border: 1px solid var(--grey-100); border-radius: 8px; font-size: 11px; color: var(--grey-700); }
   .bp-tag-label { font-size: 9px; font-weight: 600; color: var(--grey-400); text-transform: uppercase; letter-spacing: 0.3px; }
   .bp-tag-value { font-size: 14px; font-weight: 800; color: var(--black); letter-spacing: -0.3px; }
@@ -271,7 +272,8 @@
     .bp-time { font-size: 22px; }
     .bp-route { padding: 8px 10px 4px; }
     .bp-head { padding: 6px 10px 4px; }
-    .bp-tags { padding: 4px 10px 6px; gap: 4px; }
+    .bp-tags { padding: 4px 10px 6px; gap: 8px; }
+    .bp-tag-group { gap: 4px; }
     .bp-pair { flex-direction: column; }
     .bp-pair .bp-conn-between { flex-direction: row; gap: 6px; padding: 6px 0; }
     .bp-scroll .bp { min-width: 220px; max-width: 260px; }
@@ -826,37 +828,44 @@ function renderEtape(e, state, idx, autoIdx, done, total, isPast) {
   if (e.type === 'train' || e.type === 'flight') {
     const detailsStr = e.details.join(' · ');
 
-    // Helper: build unified info tags (card-style badges for seat, train#, platform/gate, fare, PNR)
+    // Helper: build unified info tags with logical grouping
+    // Train: [num → voie → voiture/place] | [tarif → réf]
+    // Flight: [vol → porte → siège] | [réf → tarif → bagages]
     function infoTags(seat, data, extras, type) {
-      const tags = [];
-      if (seat) {
-        if (seat.wagon) {
-          tags.push(`<div class="bp-tag"><div><div class="bp-tag-label">Voiture</div><div class="bp-tag-value">${seat.wagon}</div></div><div><div class="bp-tag-label">Place</div><div class="bp-tag-value">${seat.place}</div></div></div>`);
-        } else {
-          tags.push(`<div class="bp-tag"><div><div class="bp-tag-label">Siège</div><div class="bp-tag-value">${seat.place}</div></div></div>`);
-        }
+      const g1 = []; // transport identity
+      const g2 = []; // booking info
+
+      // Seat tag (shared)
+      function seatTag() {
+        if (!seat) return null;
+        if (seat.wagon) return `<div class="bp-tag"><div><div class="bp-tag-label">Voiture</div><div class="bp-tag-value">${seat.wagon}</div></div><div><div class="bp-tag-label">Place</div><div class="bp-tag-value">${seat.place}</div></div></div>`;
+        return `<div class="bp-tag"><div><div class="bp-tag-label">Siège</div><div class="bp-tag-value">${seat.place}</div></div></div>`;
       }
-      if (data && data.num) {
-        const numLabel = type === 'flight' ? 'Vol' : 'Train';
-        tags.push(`<div class="bp-tag accent"><div><div class="bp-tag-label">${numLabel}</div><div class="bp-tag-value sm">${data.num}</div></div></div>`);
+
+      if (type === 'flight') {
+        // Group 1: Vol → Porte → Siège
+        if (data && data.num) g1.push(`<div class="bp-tag accent"><div><div class="bp-tag-label">Vol</div><div class="bp-tag-value sm">${data.num}</div></div></div>`);
+        if (data && data.gate) g1.push(`<div class="bp-tag warm"><div><div class="bp-tag-label">Porte</div><div class="bp-tag-value">${data.gate}</div></div></div>`);
+        const st = seatTag(); if (st) g1.push(st);
+        // Group 2: Réf → Tarif → Bagages
+        if (data && data.pnr) g2.push(`<div class="bp-tag"><div><div class="bp-tag-label">Réf.</div><div class="bp-tag-value sm">${data.pnr}</div></div></div>`);
+        if (data && data.fareName) g2.push(`<div class="bp-tag"><div><div class="bp-tag-label">Tarif</div><div class="bp-tag-value sm">${data.fareName}</div></div></div>`);
+        if (extras) g2.push(`<div class="bp-tag"><div><div class="bp-tag-label">Bagages</div><div class="bp-tag-value sm">${extras}</div></div></div>`);
+      } else {
+        // Group 1: Train → Voie → Voiture/Place
+        if (data && data.num) g1.push(`<div class="bp-tag accent"><div><div class="bp-tag-label">Train</div><div class="bp-tag-value sm">${data.num}</div></div></div>`);
+        if (data && data.platform) g1.push(`<div class="bp-tag warm"><div><div class="bp-tag-label">Voie</div><div class="bp-tag-value">${data.platform}</div></div></div>`);
+        const st = seatTag(); if (st) g1.push(st);
+        // Group 2: Tarif → Réf
+        if (data && data.fareName) g2.push(`<div class="bp-tag"><div><div class="bp-tag-label">Tarif</div><div class="bp-tag-value sm">${data.fareName}</div></div></div>`);
+        if (data && data.pnr) g2.push(`<div class="bp-tag"><div><div class="bp-tag-label">Réf.</div><div class="bp-tag-value sm">${data.pnr}</div></div></div>`);
       }
-      if (data && data.platform) {
-        tags.push(`<div class="bp-tag warm"><div><div class="bp-tag-label">Voie</div><div class="bp-tag-value">${data.platform}</div></div></div>`);
-      }
-      if (data && data.gate) {
-        tags.push(`<div class="bp-tag warm"><div><div class="bp-tag-label">Porte</div><div class="bp-tag-value">${data.gate}</div></div></div>`);
-      }
-      if (data && data.fareName) {
-        tags.push(`<div class="bp-tag"><div><div class="bp-tag-label">Tarif</div><div class="bp-tag-value sm">${data.fareName}</div></div></div>`);
-      }
-      if (data && data.pnr) {
-        tags.push(`<div class="bp-tag"><div><div class="bp-tag-label">Réf.</div><div class="bp-tag-value sm">${data.pnr}</div></div></div>`);
-      }
-      if (extras) {
-        tags.push(`<div class="bp-tag"><div><div class="bp-tag-label">Bagages</div><div class="bp-tag-value sm">${extras}</div></div></div>`);
-      }
-      if (!tags.length) return '';
-      return `<div class="bp-tags">${tags.join('')}</div>`;
+
+      if (!g1.length && !g2.length) return '';
+      let h = '';
+      if (g1.length) h += `<div class="bp-tag-group">${g1.join('')}</div>`;
+      if (g2.length) h += `<div class="bp-tag-group">${g2.join('')}</div>`;
+      return `<div class="bp-tags">${h}</div>`;
     }
 
     // Helper: build location HTML for a stop
