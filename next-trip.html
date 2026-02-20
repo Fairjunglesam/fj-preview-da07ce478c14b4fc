@@ -835,16 +835,16 @@ function renderEtape(e, state, idx, autoIdx, done, total, isPast) {
       const g1 = []; // transport identity
       const g2 = []; // booking info
 
-      // Seat tag (shared)
+      // Seat tag — accent (blue) to stand out
       function seatTag() {
         if (!seat) return null;
-        if (seat.wagon) return `<div class="bp-tag"><div><div class="bp-tag-label">Voiture</div><div class="bp-tag-value">${seat.wagon}</div></div><div><div class="bp-tag-label">Place</div><div class="bp-tag-value">${seat.place}</div></div></div>`;
-        return `<div class="bp-tag"><div><div class="bp-tag-label">Siège</div><div class="bp-tag-value">${seat.place}</div></div></div>`;
+        if (seat.wagon) return `<div class="bp-tag accent"><div><div class="bp-tag-label">Voiture</div><div class="bp-tag-value">${seat.wagon}</div></div><div><div class="bp-tag-label">Place</div><div class="bp-tag-value">${seat.place}</div></div></div>`;
+        return `<div class="bp-tag accent"><div><div class="bp-tag-label">Siège</div><div class="bp-tag-value">${seat.place}</div></div></div>`;
       }
 
       if (type === 'flight') {
         // Group 1: Vol → Porte → Siège
-        if (data && data.num) g1.push(`<div class="bp-tag accent"><div><div class="bp-tag-label">Vol</div><div class="bp-tag-value sm">${data.num}</div></div></div>`);
+        if (data && data.num) g1.push(`<div class="bp-tag"><div><div class="bp-tag-label">Vol</div><div class="bp-tag-value sm">${data.num}</div></div></div>`);
         if (data && data.gate) g1.push(`<div class="bp-tag warm"><div><div class="bp-tag-label">Porte</div><div class="bp-tag-value">${data.gate}</div></div></div>`);
         const st = seatTag(); if (st) g1.push(st);
         // Group 2: Réf → Tarif → Bagages
@@ -853,7 +853,7 @@ function renderEtape(e, state, idx, autoIdx, done, total, isPast) {
         if (extras) g2.push(`<div class="bp-tag"><div><div class="bp-tag-label">Bagages</div><div class="bp-tag-value sm">${extras}</div></div></div>`);
       } else {
         // Group 1: Train → Voie → Voiture/Place
-        if (data && data.num) g1.push(`<div class="bp-tag accent"><div><div class="bp-tag-label">Train</div><div class="bp-tag-value sm">${data.num}</div></div></div>`);
+        if (data && data.num) g1.push(`<div class="bp-tag"><div><div class="bp-tag-label">Train</div><div class="bp-tag-value sm">${data.num}</div></div></div>`);
         if (data && data.platform) g1.push(`<div class="bp-tag warm"><div><div class="bp-tag-label">Voie</div><div class="bp-tag-value">${data.platform}</div></div></div>`);
         const st = seatTag(); if (st) g1.push(st);
         // Group 2: Tarif → Réf
