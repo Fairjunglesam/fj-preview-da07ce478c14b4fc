@@ -799,6 +799,10 @@ function toggleRecoDetail(id) {
     const panel = panels[id];
     if (panel) {
       detailEl.innerHTML = panel.html;
+      // Flights: lock tariff to selected only + info card
+      if (id.startsWith('flight')) {
+        _lockFlightTariffs(detailEl);
+      }
     }
     detailEl.style.display = '';
     if (card) card.classList.add('expanded');
@@ -837,6 +841,30 @@ function _getRecoData(id) {
     train2: { icon: '🚄', name: 'OuiGo · Standard', price: '196 €', selectName: 'OuiGo 7901 · Standard' }
   };
   return map[id] || null;
+}
+
+// Helper: for flights in reco detail, keep only the selected tariff (read-only) + info card
+function _lockFlightTariffs(el) {
+  const tariffCards = el.querySelector('.tariff-cards');
+  if (!tariffCards) return;
+  // Keep only the selected tariff card, remove others
+  tariffCards.querySelectorAll('.tariff-card:not(.selected)').forEach(c => c.remove());
+  tariffCards.querySelectorAll('.tariff-skeleton').forEach(c => c.remove());
+  // Make selected card read-only
+  const selected = tariffCards.querySelector('.tariff-card.selected');
+  if (selected) selected.style.cursor = 'default';
+  // Hide the guidance card about Light tariff (already in the section)
+  const guidance = el.querySelector('.guidance-card');
+  if (guidance) guidance.remove();
+  // Add info card after tariff section
+  const tariffSection = tariffCards.closest('.dp-section');
+  if (tariffSection) {
+    const infoCard = document.createElement('div');
+    infoCard.className = 'no-fare-info-card';
+    infoCard.style.marginTop = '10px';
+    infoCard.innerHTML = '<svg width="16" height="16" viewBox="0 0 16 16" fill="none" style="flex-shrink:0"><circle cx="8" cy="8" r="7" stroke="var(--text-tag-info)" stroke-width="1.5"/><path d="M8 5V5.01M8 7V11" stroke="var(--text-tag-info)" stroke-width="1.5" stroke-linecap="round"/></svg><span>Vous pourrez <strong>ajuster votre tarif</strong> et ajouter des extras à la prochaine étape.</span>';
+    tariffSection.appendChild(infoCard);
+  }
 }
 
 function selectRecoFromBar() {
