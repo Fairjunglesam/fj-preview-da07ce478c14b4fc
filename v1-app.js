@@ -1008,6 +1008,16 @@ function selectMdItem(mode, panelId) {
     if (card) card.classList.add('selected-card');
   }
 
+  // Scroll so the md-layout fills the viewport (push header out)
+  const mdLayout = detailContainer.closest('.md-layout');
+  if (mdLayout) {
+    const layoutTop = mdLayout.getBoundingClientRect().top + window.scrollY;
+    const targetScroll = layoutTop - 10; // 10px breathing room
+    if (window.scrollY < targetScroll) {
+      window.scrollTo({ top: targetScroll, behavior: 'smooth' });
+    }
+  }
+
   if (panel) {
     // Inject panel HTML with skeleton loading
     detailContainer.innerHTML = '<div class="drawer-skeleton"><div class="skeleton-block skeleton-header"></div><div class="skeleton-block skeleton-body"></div><div class="skeleton-block skeleton-tariffs"></div></div>';
