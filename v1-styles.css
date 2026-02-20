@@ -793,11 +793,11 @@ body { font-family:var(--font); background:var(--bg-page); color:var(--text-prim
 .d-guidance-dismiss:hover { background:rgba(0,68,101,0.08); color:var(--text-subtitle); }
 
 /* Unified train stepper + leg bar */
-.d-train-bar { display:flex; align-items:center; justify-content:space-between; gap:12px; padding:6px 12px; margin-bottom:4px; background:#e3f3fd; border-left:3px solid var(--text-tag-info); border-radius:0 10px 10px 0; font-size:12px; line-height:1.4; color:var(--text-subtitle); }
-.d-train-bar strong { font-weight:600; color:var(--text-tag-info); }
-.d-train-bar-main { display:flex; flex-direction:column; gap:4px; flex:1; min-width:0; }
-.d-train-bar-leg { display:inline-flex; align-items:center; gap:6px; font-size:12px; font-weight:500; color:var(--text-primary); }
-.d-train-bar-edit { padding:0; border:none; background:none; font-size:11px; font-weight:600; color:var(--text-tag-info); text-decoration:underline; text-underline-offset:2px; cursor:pointer; font-family:var(--font); margin-left:4px; }
+/* Phase bar (compact title + leg summary) */
+.md-phase-bar { display:flex; align-items:center; gap:12px; margin-bottom:4px; font-size:13px; line-height:1.4; flex-wrap:wrap; }
+.md-phase-title { font-weight:700; color:var(--text-primary); }
+.md-phase-leg { display:inline-flex; align-items:center; gap:6px; font-size:12px; font-weight:500; color:var(--text-subtitle); }
+.md-phase-edit { padding:0; border:none; background:none; font-size:11px; font-weight:600; color:var(--text-tag-info); text-decoration:underline; text-underline-offset:2px; cursor:pointer; font-family:var(--font); margin-left:4px; }
 
 /* List gap */
 .d-list-gap { display:flex; flex-direction:column; gap:8px; }

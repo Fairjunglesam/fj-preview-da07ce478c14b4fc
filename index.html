@@ -312,15 +312,13 @@
             <span class="d-ctx-static">3 voyageurs</span>
           </div>
         </div>
-        <div class="d-train-bar" id="md-guidance-trains">
-          <div class="d-train-bar-main">
-            <span id="md-stepper-instruction">Choix de l'aller, puis du retour.</span>
-            <span class="d-train-bar-leg" id="md-leg-summary" style="display:none">
-              <svg width="14" height="14" viewBox="0 0 16 16" fill="none" style="flex-shrink:0"><circle cx="8" cy="8" r="7" fill="var(--color-positive)"/><path d="M5 8L7.2 10.2L11 5.8" stroke="#fff" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
-              <span id="md-leg-summary-text"></span>
-              <button class="d-train-bar-edit" type="button" onclick="resetMdTrainOutbound()">Modifier</button>
-            </span>
-          </div>
+        <div class="md-phase-bar" id="md-guidance-trains">
+          <span class="md-phase-title" id="md-stepper-instruction">Choix de l'aller</span>
+          <span class="md-phase-leg" id="md-leg-summary" style="display:none">
+            <svg width="14" height="14" viewBox="0 0 16 16" fill="none" style="flex-shrink:0"><circle cx="8" cy="8" r="7" fill="var(--color-positive)"/><path d="M5 8L7.2 10.2L11 5.8" stroke="#fff" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <span id="md-leg-summary-text"></span>
+            <button class="md-phase-edit" type="button" onclick="resetMdTrainOutbound()">Modifier</button>
+          </span>
         </div>
         <div class="md-info-bar">Les trains complets ne sont pas affichés.</div>
         <div class="md-layout">

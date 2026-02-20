@@ -1090,7 +1090,7 @@ function updateMdTrainPhaseUI() {
     if (outList) outList.style.display = '';
     if (retList) retList.style.display = 'none';
     if (legSummary) legSummary.style.display = 'none';
-    if (instruction) instruction.innerHTML = 'Choix de l\u2019aller, puis du retour.';
+    if (instruction) instruction.textContent = 'Choix de l\u2019aller';
     if (ctxOut) ctxOut.style.display = '';
     if (ctxRet) ctxRet.style.display = 'none';
     guidanceTrains.style.display = '';
@@ -1102,7 +1102,7 @@ function updateMdTrainPhaseUI() {
     if (summaryText && trainOutboundSelection) {
       summaryText.textContent = 'Aller : ' + trainOutboundSelection.name + ' ' + trainOutboundSelection.times + ' \u00B7 ' + trainOutboundSelection.cls + ' \u00B7 ' + trainOutboundSelection.price;
     }
-    if (instruction) instruction.innerHTML = '<strong>Choisissez votre retour</strong>';
+    if (instruction) instruction.textContent = 'Choix du retour';
     if (ctxOut) ctxOut.style.display = 'none';
     if (ctxRet) ctxRet.style.display = '';
     guidanceTrains.style.display = '';
