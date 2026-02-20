@@ -49,7 +49,7 @@ const panels = {
           <div class="loyalty-row" style="font-size:10px;margin-top:2px">1ère Classe : 500 pts · Ajoutez votre n° fidélité lors de la réservation</div>
         </div>
       </div>
-      <div class="drawer-cta"><div class="cta-price-summary">Aller-retour : <strong>290 €</strong> · 2nde</div><button class="btn-primary" onclick="selectItem('train1','TGV INOUI · 2nde','290 €','transport')">Sélectionner et continuer →</button></div>`
+      <div class="drawer-cta"><div class="cta-price-summary">Aller-retour : <strong>290 €</strong> · TGV INOUI · 2nde</div><button class="btn-primary" onclick="selectItem('train1','TGV INOUI · 2nde','290 €','transport')">Sélectionner et continuer →</button></div>`
   },
   'train1-1ere': {
     title: '🚄 TGV INOUI · 1ère', type: 'transport', name: 'TGV INOUI · 1ère', price: '459 €',
@@ -67,7 +67,7 @@ const panels = {
           </div>
         </div></div>
       </div>
-      <div class="drawer-cta"><div class="cta-price-summary">Aller-retour : <strong>459 €</strong> · 1ère</div><button class="btn-primary" onclick="selectItem('train1','TGV INOUI · 1ère','459 €','transport')">Sélectionner et continuer →</button></div>`
+      <div class="drawer-cta"><div class="cta-price-summary">Aller-retour : <strong>459 €</strong> · TGV INOUI · 1ère</div><button class="btn-primary" onclick="selectItem('train1','TGV INOUI · 1ère','459 €','transport')">Sélectionner et continuer →</button></div>`
   },
   train2: {
     title: '🚄 OuiGo', type: 'transport', name: 'OuiGo', price: '196 €',
@@ -89,7 +89,7 @@ const panels = {
           <div class="co2-bar"><div class="co2-bar-fill" style="width:4%"></div></div>
         </div>
       </div>
-      <div class="drawer-cta"><div class="cta-price-summary">Aller-retour : <strong>196 €</strong></div><button class="btn-primary" onclick="selectItem('train2','OuiGo','196 €','transport')">Sélectionner et continuer →</button></div>`
+      <div class="drawer-cta"><div class="cta-price-summary">Aller-retour : <strong>196 €</strong> · OuiGo</div><button class="btn-primary" onclick="selectItem('train2','OuiGo','196 €','transport')">Sélectionner et continuer →</button></div>`
   },
   train3: {
     title: '🚄 TGV INOUI', type: 'transport', name: 'TGV INOUI · 2nde', price: '318 €',
@@ -119,7 +119,7 @@ const panels = {
           <div class="loyalty-row">🎫 Gagnez <span class="loyalty-points">250 pts</span> Grand Voyageur SNCF</div>
         </div>
       </div>
-      <div class="drawer-cta"><div class="cta-price-summary">Aller-retour : <strong>318 €</strong> · 2nde</div><button class="btn-primary" onclick="selectItem('train3','TGV INOUI · 2nde','318 €','transport')">Sélectionner et continuer →</button></div>`
+      <div class="drawer-cta"><div class="cta-price-summary">Aller-retour : <strong>318 €</strong> · TGV INOUI · 2nde</div><button class="btn-primary" onclick="selectItem('train3','TGV INOUI · 2nde','318 €','transport')">Sélectionner et continuer →</button></div>`
   },
   'train3-1ere': {
     title: '🚄 TGV INOUI · 1ère', type: 'transport', name: 'TGV INOUI · 1ère', price: '495 €',
@@ -137,7 +137,7 @@ const panels = {
           </div>
         </div></div>
       </div>
-      <div class="drawer-cta"><div class="cta-price-summary">Aller-retour : <strong>495 €</strong> · 1ère</div><button class="btn-primary" onclick="selectItem('train3','TGV INOUI · 1ère','495 €','transport')">Sélectionner et continuer →</button></div>`
+      <div class="drawer-cta"><div class="cta-price-summary">Aller-retour : <strong>495 €</strong> · TGV INOUI · 1ère</div><button class="btn-primary" onclick="selectItem('train3','TGV INOUI · 1ère','495 €','transport')">Sélectionner et continuer →</button></div>`
   },
   flight1: {
     title: '✈️ Air France', type: 'transport', name: 'Air France · Economy', price: '378 €',
@@ -179,7 +179,7 @@ const panels = {
           <div class="loyalty-row" style="font-size:10px;margin-top:2px">Economy Std : 1 250 Miles · Business : 3 000 Miles</div>
         </div>
       </div>
-      <div class="drawer-cta"><div class="cta-price-summary">Aller-retour : <strong>378 €</strong> · Eco Light</div><button class="btn-primary" onclick="selectItem('flight1','Air France · Economy','378 €','transport')">Sélectionner et continuer →</button></div>`
+      <div class="drawer-cta"><div class="cta-price-summary">Aller-retour : <strong>378 €</strong> · Air France · Eco Light</div><button class="btn-primary" onclick="selectItem('flight1','Air France · Economy','378 €','transport')">Sélectionner et continuer →</button></div>`
   },
   'flight1-business': {
     title: '✈️ Air France · Business', type: 'transport', name: 'Air France · Business', price: '1 140 €',
@@ -199,7 +199,7 @@ const panels = {
           </div>
         </div></div>
       </div>
-      <div class="drawer-cta"><div class="cta-price-summary">Aller-retour : <strong>1 140 €</strong> · Business</div><button class="btn-primary" onclick="selectItem('flight1','Air France · Business','1 140 €','transport')">Sélectionner et continuer →</button></div>`
+      <div class="drawer-cta"><div class="cta-price-summary">Aller-retour : <strong>1 140 €</strong> · Air France · Business</div><button class="btn-primary" onclick="selectItem('flight1','Air France · Business','1 140 €','transport')">Sélectionner et continuer →</button></div>`
   },
   flight2: {
     title: '✈️ easyJet', type: 'transport', name: 'easyJet · Standard', price: '312 €',
@@ -230,7 +230,7 @@ const panels = {
           <div class="co2-detail" style="margin-top:4px">Train alternatif : 1,8 kg CO2 (−96%)</div>
         </div>
       </div>
-      <div class="drawer-cta"><div class="cta-price-summary">Aller-retour : <strong>312 €</strong></div><button class="btn-primary" onclick="selectItem('flight2','easyJet · Standard','312 €','transport')">Sélectionner et continuer →</button></div>`
+      <div class="drawer-cta"><div class="cta-price-summary">Aller-retour : <strong>312 €</strong> · easyJet</div><button class="btn-primary" onclick="selectItem('flight2','easyJet · Standard','312 €','transport')">Sélectionner et continuer →</button></div>`
   },
   hotel1: {
     title: '🏨 Mercure Lyon Centre', type: 'hotel', name: 'Mercure Lyon Centre', price: '742 €',
@@ -437,7 +437,7 @@ panels['train1-out'] = {
         <div class="co2-row">🌿 1,2 kg CO2 — 98% de moins qu'en voiture</div>
       </div>
     </div>
-    <div class="drawer-cta"><div class="cta-price-summary">Aller : <strong>145 €</strong> · 2nde</div><button class="btn-primary" onclick="selectTrainLeg('outbound','train1-out','TGV INOUI','145 €','07:13→09:13','2nde')">Sélectionner cet aller →</button></div>`
+    <div class="drawer-cta"><div class="cta-price-summary">Aller : <strong>145 €</strong> · TGV INOUI · 2nde</div><button class="btn-primary" onclick="selectTrainLeg('outbound','train1-out','TGV INOUI','145 €','07:13→09:13','2nde')">Sélectionner cet aller →</button></div>`
 };
 panels['train1-out-1ere'] = {
   title: '🚄 TGV INOUI 7835 · Aller · 1ère', type: 'transport', subtype: 'train-outbound',
@@ -452,7 +452,7 @@ panels['train1-out-1ere'] = {
         <div class="tariff-card selected"><div class="tf-left"><div class="tf-name">1ère Classe</div><div class="tf-conditions"><span class="tf-tag yes">Modif. sans frais</span><span class="tf-tag yes">Remboursable</span></div></div><div class="tf-right"><div class="tf-price">230 €</div></div></div>
       </div></div>
     </div>
-    <div class="drawer-cta"><div class="cta-price-summary">Aller : <strong>230 €</strong> · 1ère</div><button class="btn-primary" onclick="selectTrainLeg('outbound','train1-out-1ere','TGV INOUI','230 €','07:13→09:13','1ère')">Sélectionner cet aller →</button></div>`
+    <div class="drawer-cta"><div class="cta-price-summary">Aller : <strong>230 €</strong> · TGV INOUI · 1ère</div><button class="btn-primary" onclick="selectTrainLeg('outbound','train1-out-1ere','TGV INOUI','230 €','07:13→09:13','1ère')">Sélectionner cet aller →</button></div>`
 };
 panels['train2-out'] = {
   title: '🚄 OuiGo 7901 · Aller', type: 'transport', subtype: 'train-outbound',
@@ -465,7 +465,7 @@ panels['train2-out'] = {
       </div>
       <div class="dp-section"><div class="dp-section-title">Tarifs</div><div class="tariff-cards"><div class="tariff-card selected"><div class="tf-left"><div class="tf-name">OuiGo Standard</div><div class="tf-conditions"><span class="tf-tag no">Non modifiable</span><span class="tf-tag no">Non remboursable</span></div></div><div class="tf-right"><div class="tf-price">98 €</div></div></div></div></div>
     </div>
-    <div class="drawer-cta"><div class="cta-price-summary">Aller : <strong>98 €</strong></div><button class="btn-primary" onclick="selectTrainLeg('outbound','train2-out','OuiGo','98 €','09:00→11:30','Standard')">Sélectionner cet aller →</button></div>`
+    <div class="drawer-cta"><div class="cta-price-summary">Aller : <strong>98 €</strong> · OuiGo</div><button class="btn-primary" onclick="selectTrainLeg('outbound','train2-out','OuiGo','98 €','09:00→11:30','Standard')">Sélectionner cet aller →</button></div>`
 };
 panels['train3-out'] = {
   title: '🚄 TGV INOUI 7841 · Aller', type: 'transport', subtype: 'train-outbound',
@@ -481,7 +481,7 @@ panels['train3-out'] = {
         <div class="tariff-card"><div class="tf-left"><div class="tf-name">1ère Classe</div><div class="tf-conditions"><span class="tf-tag yes">Modif. sans frais</span><span class="tf-tag yes">Remboursable</span></div></div><div class="tf-right"><div class="tf-price">248 €</div><div class="tf-delta">+89 €</div></div></div>
       </div></div>
     </div>
-    <div class="drawer-cta"><div class="cta-price-summary">Aller : <strong>159 €</strong> · 2nde</div><button class="btn-primary" onclick="selectTrainLeg('outbound','train3-out','TGV INOUI','159 €','08:30→10:30','2nde')">Sélectionner cet aller →</button></div>`
+    <div class="drawer-cta"><div class="cta-price-summary">Aller : <strong>159 €</strong> · TGV INOUI · 2nde</div><button class="btn-primary" onclick="selectTrainLeg('outbound','train3-out','TGV INOUI','159 €','08:30→10:30','2nde')">Sélectionner cet aller →</button></div>`
 };
 panels['train3-out-1ere'] = {
   title: '🚄 TGV INOUI 7841 · Aller · 1ère', type: 'transport', subtype: 'train-outbound',
@@ -496,7 +496,7 @@ panels['train3-out-1ere'] = {
         <div class="tariff-card selected"><div class="tf-left"><div class="tf-name">1ère Classe</div><div class="tf-conditions"><span class="tf-tag yes">Modif. sans frais</span><span class="tf-tag yes">Remboursable</span></div></div><div class="tf-right"><div class="tf-price">248 €</div></div></div>
       </div></div>
     </div>
-    <div class="drawer-cta"><div class="cta-price-summary">Aller : <strong>248 €</strong> · 1ère</div><button class="btn-primary" onclick="selectTrainLeg('outbound','train3-out-1ere','TGV INOUI','248 €','08:30→10:30','1ère')">Sélectionner cet aller →</button></div>`
+    <div class="drawer-cta"><div class="cta-price-summary">Aller : <strong>248 €</strong> · TGV INOUI · 1ère</div><button class="btn-primary" onclick="selectTrainLeg('outbound','train3-out-1ere','TGV INOUI','248 €','08:30→10:30','1ère')">Sélectionner cet aller →</button></div>`
 };
 
 // ===== RETURN TRAIN PANELS (single-leg) =====
@@ -514,7 +514,7 @@ panels['train1-ret'] = {
         <div class="tariff-card"><div class="tf-left"><div class="tf-name">1ère Classe</div><div class="tf-conditions"><span class="tf-tag yes">Modif. sans frais</span><span class="tf-tag yes">Remboursable</span></div></div><div class="tf-right"><div class="tf-price">230 €</div><div class="tf-delta">+85 €</div></div></div>
       </div></div>
     </div>
-    <div class="drawer-cta"><div class="cta-price-summary">Retour : <strong>145 €</strong> · 2nde</div><button class="btn-primary" onclick="selectTrainLeg('return','train1-ret','TGV INOUI','145 €','17:00→19:00','2nde')">Sélectionner ce retour →</button></div>`
+    <div class="drawer-cta"><div class="cta-price-summary">Retour : <strong>145 €</strong> · TGV INOUI · 2nde</div><button class="btn-primary" onclick="selectTrainLeg('return','train1-ret','TGV INOUI','145 €','17:00→19:00','2nde')">Sélectionner ce retour →</button></div>`
 };
 panels['train1-ret-1ere'] = {
   title: '🚄 TGV INOUI 6640 · Retour · 1ère', type: 'transport', subtype: 'train-return',
@@ -529,7 +529,7 @@ panels['train1-ret-1ere'] = {
         <div class="tariff-card selected"><div class="tf-left"><div class="tf-name">1ère Classe</div><div class="tf-conditions"><span class="tf-tag yes">Modif. sans frais</span><span class="tf-tag yes">Remboursable</span></div></div><div class="tf-right"><div class="tf-price">230 €</div></div></div>
       </div></div>
     </div>
-    <div class="drawer-cta"><div class="cta-price-summary">Retour : <strong>230 €</strong> · 1ère</div><button class="btn-primary" onclick="selectTrainLeg('return','train1-ret-1ere','TGV INOUI','230 €','17:00→19:00','1ère')">Sélectionner ce retour →</button></div>`
+    <div class="drawer-cta"><div class="cta-price-summary">Retour : <strong>230 €</strong> · TGV INOUI · 1ère</div><button class="btn-primary" onclick="selectTrainLeg('return','train1-ret-1ere','TGV INOUI','230 €','17:00→19:00','1ère')">Sélectionner ce retour →</button></div>`
 };
 panels['train2-ret'] = {
   title: '🚄 TGV INOUI 6642 · Retour', type: 'transport', subtype: 'train-return',
@@ -545,7 +545,7 @@ panels['train2-ret'] = {
         <div class="tariff-card"><div class="tf-left"><div class="tf-name">1ère Classe</div><div class="tf-conditions"><span class="tf-tag yes">Modif. sans frais</span><span class="tf-tag yes">Remboursable</span></div></div><div class="tf-right"><div class="tf-price">248 €</div><div class="tf-delta">+89 €</div></div></div>
       </div></div>
     </div>
-    <div class="drawer-cta"><div class="cta-price-summary">Retour : <strong>159 €</strong> · 2nde</div><button class="btn-primary" onclick="selectTrainLeg('return','train2-ret','TGV INOUI','159 €','18:00→20:00','2nde')">Sélectionner ce retour →</button></div>`
+    <div class="drawer-cta"><div class="cta-price-summary">Retour : <strong>159 €</strong> · TGV INOUI · 2nde</div><button class="btn-primary" onclick="selectTrainLeg('return','train2-ret','TGV INOUI','159 €','18:00→20:00','2nde')">Sélectionner ce retour →</button></div>`
 };
 panels['train2-ret-1ere'] = {
   title: '🚄 TGV INOUI 6642 · Retour · 1ère', type: 'transport', subtype: 'train-return',
@@ -560,7 +560,7 @@ panels['train2-ret-1ere'] = {
         <div class="tariff-card selected"><div class="tf-left"><div class="tf-name">1ère Classe</div><div class="tf-conditions"><span class="tf-tag yes">Modif. sans frais</span><span class="tf-tag yes">Remboursable</span></div></div><div class="tf-right"><div class="tf-price">248 €</div></div></div>
       </div></div>
     </div>
-    <div class="drawer-cta"><div class="cta-price-summary">Retour : <strong>248 €</strong> · 1ère</div><button class="btn-primary" onclick="selectTrainLeg('return','train2-ret-1ere','TGV INOUI','248 €','18:00→20:00','1ère')">Sélectionner ce retour →</button></div>`
+    <div class="drawer-cta"><div class="cta-price-summary">Retour : <strong>248 €</strong> · TGV INOUI · 1ère</div><button class="btn-primary" onclick="selectTrainLeg('return','train2-ret-1ere','TGV INOUI','248 €','18:00→20:00','1ère')">Sélectionner ce retour →</button></div>`
 };
 panels['train3-ret'] = {
   title: '🚄 OuiGo 7908 · Retour', type: 'transport', subtype: 'train-return',
@@ -573,7 +573,7 @@ panels['train3-ret'] = {
       </div>
       <div class="dp-section"><div class="dp-section-title">Tarifs</div><div class="tariff-cards"><div class="tariff-card selected"><div class="tf-left"><div class="tf-name">OuiGo Standard</div><div class="tf-conditions"><span class="tf-tag no">Non modifiable</span><span class="tf-tag no">Non remboursable</span></div></div><div class="tf-right"><div class="tf-price">98 €</div></div></div></div></div>
     </div>
-    <div class="drawer-cta"><div class="cta-price-summary">Retour : <strong>98 €</strong></div><button class="btn-primary" onclick="selectTrainLeg('return','train3-ret','OuiGo','98 €','19:30→22:00','Standard')">Sélectionner ce retour →</button></div>`
+    <div class="drawer-cta"><div class="cta-price-summary">Retour : <strong>98 €</strong> · OuiGo</div><button class="btn-primary" onclick="selectTrainLeg('return','train3-ret','OuiGo','98 €','19:30→22:00','Standard')">Sélectionner ce retour →</button></div>`
 };
 
 // ===== TAB FILTERS =====
