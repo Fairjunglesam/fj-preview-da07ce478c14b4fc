@@ -837,6 +837,10 @@ body { font-family:var(--font); background:var(--bg-page); color:var(--text-prim
 .d-reco-inline-detail { border:1.5px solid var(--text-tag-info); border-radius:14px; background:white; animation:ridSlideDown 250ms var(--ease-decel); overflow:hidden; }
 .d-reco-inline-detail .dp-content { padding:20px 24px; }
 .d-reco-inline-detail .drawer-cta { display:none; /* CTA handled by fixed bar */ }
+.d-reco-see-others { display:flex; align-items:center; gap:8px; justify-content:center; padding:14px 0 4px; margin-top:12px; border-top:1px solid var(--border-light); }
+.d-reco-see-others a { font-size:11px; font-weight:500; color:var(--text-muted); text-decoration:none; transition:color 0.15s; }
+.d-reco-see-others a:hover { color:var(--text-tag-info); }
+.d-see-others-sep { color:var(--border-light); font-size:10px; }
 
 /* Mobile close header (hidden on desktop, shown via mobile media query) */
 .d-reco-mobile-header { display:none; }
