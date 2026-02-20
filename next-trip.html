@@ -156,6 +156,77 @@
   .bp-tag.warm { background: var(--orange-50); border-color: var(--orange-100); }
   .bp-tag.warm .bp-tag-label { color: var(--orange-500); }
   .bp-tag.warm .bp-tag-value { color: var(--orange-600); }
+
+  /* ===== DARK STYLE ===== */
+  .bp.bp-dark { background: linear-gradient(145deg, #141B2D 0%, #1C2541 100%); border-color: rgba(255,255,255,0.06); }
+  .bp-dark .bp-carrier { color: rgba(255,255,255,0.9); }
+  .bp-dark .bp-carrier-sub { color: rgba(255,255,255,0.4); }
+  .bp-dark .bp-date { color: rgba(255,255,255,0.35); }
+  .bp-dark .bp-tear { border-color: rgba(255,255,255,0.08); }
+  .bp-dark .bp-tear::before, .bp-dark .bp-tear::after { display: none; }
+  .bp-dark .bp-time { color: #fff; }
+  .bp-dark .bp-loc { color: rgba(255,255,255,0.75); }
+  .bp-dark .bp-sub { color: rgba(255,255,255,0.35); }
+  .bp-dark .bp-arrow-line { background: rgba(255,255,255,0.12); }
+  .bp-dark .bp-arrow-line::after { border-left-color: rgba(255,255,255,0.25); }
+  .bp-dark .bp-dur { color: rgba(255,255,255,0.35); }
+  .bp-dark .bp-tag { background: rgba(255,255,255,0.06); border-color: rgba(255,255,255,0.1); }
+  .bp-dark .bp-tag-label { color: rgba(255,255,255,0.4); }
+  .bp-dark .bp-tag-value { color: #fff; }
+  .bp-dark .bp-tag.accent { background: rgba(0,169,252,0.12); border-color: rgba(0,169,252,0.2); }
+  .bp-dark .bp-tag.accent .bp-tag-label { color: var(--blue-400); }
+  .bp-dark .bp-tag.accent .bp-tag-value { color: var(--blue-200); }
+  .bp-dark .bp-tag.warm { background: rgba(255,141,84,0.1); border-color: rgba(255,141,84,0.18); }
+  .bp-dark .bp-tag.warm .bp-tag-label { color: var(--orange-500); }
+  .bp-dark .bp-tag.warm .bp-tag-value { color: #FFB088; }
+  .bp-dark .bp-doc { border-color: rgba(255,255,255,0.06); }
+  .bp-dark .bp-doc-loc { color: rgba(255,255,255,0.45); border-color: rgba(255,255,255,0.1); }
+  .bp-dark .bp-doc-loc:hover { color: #fff; background: rgba(255,255,255,0.06); border-color: rgba(255,255,255,0.18); }
+  .bp-dark .bp-doc-btn.deferred { background: rgba(255,255,255,0.06); color: rgba(255,255,255,0.3); }
+  .bp-dark .bp-doc-wallet { color: #fff; background: rgba(255,255,255,0.06); border-color: rgba(255,255,255,0.1); }
+  .dark-conn .bp-conn-chip { background: rgba(255,141,84,0.12); border-color: rgba(255,141,84,0.18); color: #FFB088; }
+  .dark-conn .bp-conn-where { color: rgba(255,255,255,0.35); }
+  .bp-transit.dark-transit { background: rgba(0,169,252,0.1); color: var(--blue-300); }
+  .bp-transit.dark-transit strong { color: var(--blue-200); }
+
+  /* ===== BOLD STYLE ===== */
+  .bpb { position: relative; border-radius: 16px; background: linear-gradient(145deg, #1E2330 0%, #262D3F 100%); margin-bottom: 6px; overflow: hidden; border: 1px solid rgba(255,255,255,0.06); }
+  .bpb-head { display: flex; justify-content: space-between; align-items: center; padding: 12px 16px 0; }
+  .bpb-carrier { display: flex; align-items: center; gap: 5px; font-size: 12px; font-weight: 600; color: rgba(255,255,255,0.55); }
+  .bpb-carrier .bp-carrier-icon { font-size: 14px; }
+  .bpb-carrier .bp-carrier-sub { color: rgba(255,255,255,0.3); font-size: 10px; }
+  .bpb-date { font-size: 11px; font-weight: 500; color: rgba(255,255,255,0.25); }
+  .bpb-route { display: flex; align-items: center; padding: 16px 16px 6px; gap: 8px; }
+  .bpb-hero { flex: 1; min-width: 0; }
+  .bpb-hero.arr { text-align: right; }
+  .bpb-code { font-size: 34px; font-weight: 800; color: #FFFFFF; letter-spacing: -1.5px; line-height: 1; }
+  .bpb-time { font-size: 13px; font-weight: 700; color: rgba(255,255,255,0.5); margin-top: 4px; }
+  .bpb-name { font-size: 11px; color: rgba(255,255,255,0.3); margin-top: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .bpb-mid { flex-shrink: 0; display: flex; align-items: center; gap: 0; min-width: 60px; }
+  .bpb-dash { flex: 1; height: 0; border-top: 1.5px dashed rgba(255,255,255,0.15); }
+  .bpb-icon { font-size: 16px; padding: 0 6px; flex-shrink: 0; }
+  .bpb-dur { text-align: center; padding: 0 16px 8px; font-size: 11px; font-weight: 600; color: rgba(255,255,255,0.3); }
+  .bpb .bp-tags { padding: 4px 16px 8px; }
+  .bpb .bp-tag { background: rgba(255,255,255,0.06); border-color: rgba(255,255,255,0.1); }
+  .bpb .bp-tag-label { color: rgba(255,255,255,0.4); }
+  .bpb .bp-tag-value { color: #fff; }
+  .bpb .bp-tag.accent { background: rgba(0,169,252,0.12); border-color: rgba(0,169,252,0.2); }
+  .bpb .bp-tag.accent .bp-tag-label { color: var(--blue-400); }
+  .bpb .bp-tag.accent .bp-tag-value { color: var(--blue-200); }
+  .bpb .bp-tag.warm { background: rgba(255,141,84,0.1); border-color: rgba(255,141,84,0.18); }
+  .bpb .bp-tag.warm .bp-tag-label { color: var(--orange-500); }
+  .bpb .bp-tag.warm .bp-tag-value { color: #FFB088; }
+  .bpb .bp-doc { border-color: rgba(255,255,255,0.06); padding: 8px 16px 12px; }
+  .bpb .bp-doc-loc { color: rgba(255,255,255,0.45); border-color: rgba(255,255,255,0.1); }
+  .bpb .bp-doc-loc:hover { color: #fff; background: rgba(255,255,255,0.06); }
+  .bpb .bp-doc-btn.deferred { background: rgba(255,255,255,0.06); color: rgba(255,255,255,0.3); }
+  .bpb .bp-doc-wallet { color: #fff; background: rgba(255,255,255,0.06); border-color: rgba(255,255,255,0.1); }
+  .bold-conn .bp-conn-chip { background: rgba(255,141,84,0.12); border-color: rgba(255,141,84,0.18); color: #FFB088; }
+  .bold-conn .bp-conn-where { color: rgba(255,255,255,0.3); }
+  .bp-transit.bold-transit { background: rgba(0,169,252,0.1); color: var(--blue-300); border-radius: 10px; }
+  .bp-transit.bold-transit strong { color: var(--blue-200); }
+  .bp-luggage.luggage-dark { color: rgba(255,255,255,0.4); }
+
   /* Per-segment actions row */
   .bp-doc { display: flex; align-items: center; gap: 6px; padding: 6px 14px 8px; border-top: 1px solid var(--grey-100); margin-top: 2px; }
   .bp-doc-btn { display: inline-flex; align-items: center; gap: 4px; padding: 5px 10px; border-radius: 8px; font-size: 11px; font-weight: 700; cursor: pointer; text-decoration: none; border: none; font-family: var(--font); transition: all 0.15s; margin-left: auto; }
@@ -278,6 +349,16 @@
     .bp-pair .bp-conn-between { flex-direction: row; gap: 6px; padding: 6px 0; }
     .bp-scroll .bp { min-width: 220px; max-width: 260px; }
     .bp-scroll .bp-time { font-size: 20px; }
+    /* Stack segments vertically on mobile — no carousel */
+    .bp-scroll { flex-wrap: wrap; overflow-x: visible; scroll-snap-type: none; }
+    .bp-scroll .bp, .bp-scroll .bpb { min-width: 100% !important; max-width: 100% !important; flex-shrink: 1; }
+    .bp-scroll .bp-conn-between { width: 100%; padding: 6px 0; }
+    /* Bold mobile */
+    .bpb-code { font-size: 28px; }
+    .bpb-route { padding: 12px 12px 6px; }
+    .bpb-head { padding: 10px 12px 0; }
+    .bpb .bp-tags { padding: 4px 12px 6px; }
+    .bpb .bp-doc { padding: 6px 12px 10px; }
     .bp-tear { margin: 0 8px; }
     .bp-tear::before, .bp-tear::after { width: 16px; height: 16px; top: -9px; }
     .bp-tear::before { left: -19px; }
@@ -304,6 +385,7 @@
     .stepper-label { font-size: 9px; -webkit-line-clamp: 1; }
     .stepper-date { display: none; }
     .bp-time { font-size: 18px; }
+    .bpb-code { font-size: 24px; }
     .bp-mid { min-width: 50px; }
     .ht-gallery { height: 72px; }
     .ht-name { font-size: 13px; }
@@ -342,6 +424,11 @@
   <label>Contexte</label>
   <button onclick="setContext('home')" id="btn-home" class="active">Home</button>
   <button onclick="setContext('mytrips')" id="btn-mytrips">My Trips</button>
+  <div class="sep"></div>
+  <label>Style</label>
+  <button onclick="setStyle('classic')" id="btn-classic" class="active">Classic</button>
+  <button onclick="setStyle('dark')" id="btn-dark">Dark</button>
+  <button onclick="setStyle('bold')" id="btn-bold">Bold</button>
 </div>
 
 <div class="trip-card" id="trip-card">
@@ -718,6 +805,7 @@ let currentTrip = 'full';
 let currentContext = 'home';
 let selectedEtapeIndex = null;
 let autoResetTimer = null;
+let currentStyle = 'classic';
 
 const HEADLINES = {
   upcoming: t => `Voyage à ${t.destination} dans 2 jours`,
@@ -780,7 +868,7 @@ function render() {
   document.getElementById('below-fold').style.display = currentContext === 'home' ? '' : 'none';
   document.querySelectorAll('.demo-controls button[id]').forEach(b => {
     const s = b.id.replace('btn-', '');
-    b.classList.toggle('active', s === state || s === currentContext);
+    b.classList.toggle('active', s === state || s === currentContext || s === currentStyle);
   });
 }
 
@@ -909,39 +997,79 @@ function renderEtape(e, state, idx, autoIdx, done, total, isPast) {
       h += `<div class="bp-route"><div class="bp-point"><div class="bp-time">${dep.time}</div>${locH(dep)}</div><div class="bp-mid"><div class="bp-arrow-line"></div><div class="bp-dur">${midLabel}</div></div><div class="bp-point arr"><div class="bp-time">${arr.time}</div>${locH(arr)}</div></div>`;
       h += infoTags(seat, fareData, extras, type);
       h += ticketDoc(ticket, locUrl);
-      return `<div class="bp">${h}</div>`;
+      const darkCls = currentStyle === 'dark' ? ' bp-dark' : '';
+      return `<div class="bp${darkCls}">${h}</div>`;
+    }
+
+    // Helper: build one bold-style boarding pass card (iOS widget inspired)
+    function bpCardBold(headerLeft, headerRight, dep, arr, midLabel, seat, extras, ticket, locUrl, fareData, type, icon) {
+      const isFl = type === 'flight';
+      let h = '';
+      h += `<div class="bpb-head"><div class="bpb-carrier">${headerLeft}</div><span class="bpb-date">${headerRight}</span></div>`;
+      h += '<div class="bpb-route">';
+      if (isFl && dep.code) {
+        h += `<div class="bpb-hero"><div class="bpb-code">${dep.code}</div><div class="bpb-time">${dep.time}</div><div class="bpb-name">${dep.name}${dep.terminal ? ' · T' + dep.terminal : ''}</div></div>`;
+      } else {
+        h += `<div class="bpb-hero"><div class="bpb-code">${dep.time}</div><div class="bpb-name">${dep.name}</div></div>`;
+      }
+      h += `<div class="bpb-mid"><div class="bpb-dash"></div><div class="bpb-icon">${icon || (isFl ? '✈️' : '🚄')}</div><div class="bpb-dash"></div></div>`;
+      if (isFl && arr.code) {
+        h += `<div class="bpb-hero arr"><div class="bpb-code">${arr.code}</div><div class="bpb-time">${arr.time}</div><div class="bpb-name">${arr.name}${arr.terminal ? ' · T' + arr.terminal : ''}</div></div>`;
+      } else {
+        h += `<div class="bpb-hero arr"><div class="bpb-code">${arr.time}</div><div class="bpb-name">${arr.name}</div></div>`;
+      }
+      h += '</div>';
+      h += `<div class="bpb-dur">${midLabel}</div>`;
+      h += infoTags(seat, fareData, extras, type);
+      h += ticketDoc(ticket, locUrl);
+      return `<div class="bpb">${h}</div>`;
     }
 
     let allH = '';
 
+    // Style flags
+    const isDark = currentStyle === 'dark';
+    const isBold = currentStyle === 'bold';
+
     // Transit bar (above boarding pass)
     if (isTransit) {
-      allH += `<div class="bp-transit">⏱ En route · Arrivée prévue à <strong>${e.arrival.time}</strong> · ${e.arrival.name}${e.arrival.code ? ' ' + e.arrival.code : ''}</div>`;
+      const transitCls = isDark ? 'bp-transit dark-transit' : isBold ? 'bp-transit bold-transit' : 'bp-transit';
+      allH += `<div class="${transitCls}">⏱ En route · Arrivée prévue à <strong>${e.arrival.time}</strong> · ${e.arrival.name}${e.arrival.code ? ' ' + e.arrival.code : ''}</div>`;
     }
 
     if (hasSeg) {
-      // ── Multi-segment: pair (≤2) or scroll (3+) ──
+      // ── Multi-segment ──
       let scrollH = '';
       e.segments.forEach((seg, si) => {
         const isLast = si === e.segments.length - 1;
         const headerLeft = `<span class="bp-carrier-icon">${e.icon}</span>${e.carrier}<span class="bp-carrier-sub">· ${seg.num}</span>`;
-        scrollH += bpCard(headerLeft, e.departure.date, seg.dep, seg.arr, seg.dur, seg.seat, null, seg.ticket || e.ticket, e.locUrl, seg.fareName ? seg : e, e.type);
+        if (isBold) {
+          scrollH += bpCardBold(headerLeft, e.departure.date, seg.dep, seg.arr, seg.dur, seg.seat, null, seg.ticket || e.ticket, e.locUrl, seg.fareName ? seg : e, e.type, e.icon);
+        } else {
+          scrollH += bpCard(headerLeft, e.departure.date, seg.dep, seg.arr, seg.dur, seg.seat, null, seg.ticket || e.ticket, e.locUrl, seg.fareName ? seg : e, e.type);
+        }
 
         if (!isLast && e.connections && e.connections[si]) {
           const conn = e.connections[si];
-          scrollH += `<div class="bp-conn-between"><div class="bp-conn-chip">⏱ ${conn.dur}</div><div class="bp-conn-where">${conn.loc}</div></div>`;
+          const connCls = isDark ? 'bp-conn-between dark-conn' : isBold ? 'bp-conn-between bold-conn' : 'bp-conn-between';
+          scrollH += `<div class="${connCls}"><div class="bp-conn-chip">⏱ ${conn.dur}</div><div class="bp-conn-where">${conn.loc}</div></div>`;
         }
       });
       const wrapCls = e.segments.length <= 2 ? 'bp-pair' : 'bp-scroll';
       allH += `<div class="${wrapCls}">${scrollH}</div>`;
       if (isFlight && e.luggage) {
-        allH += `<div class="bp-luggage">🧳 ${e.luggage}</div>`;
+        const lugCls = isDark || isBold ? 'bp-luggage luggage-dark' : 'bp-luggage';
+        allH += `<div class="${lugCls}">🧳 ${e.luggage}</div>`;
       }
     } else {
       // ── Direct: single boarding pass ──
       const headerLeft = `<span class="bp-carrier-icon">${e.icon}</span>${e.carrier}<span class="bp-carrier-sub">· ${detailsStr}</span>`;
       const extras = (isFlight && e.luggage) ? e.luggage : null;
-      allH += bpCard(headerLeft, e.departure.date, e.departure, e.arrival, e.duration, e.seat, extras, e.ticket, e.locUrl, e, e.type);
+      if (isBold) {
+        allH += bpCardBold(headerLeft, e.departure.date, e.departure, e.arrival, e.duration, e.seat, extras, e.ticket, e.locUrl, e, e.type, e.icon);
+      } else {
+        allH += bpCard(headerLeft, e.departure.date, e.departure, e.arrival, e.duration, e.seat, extras, e.ticket, e.locUrl, e, e.type);
+      }
     }
 
     bodyH = allH;
@@ -1032,6 +1160,7 @@ function renderEtape(e, state, idx, autoIdx, done, total, isPast) {
 function setState(s) { currentState = s; selectedEtapeIndex = null; clearTimeout(autoResetTimer); render(); }
 function changeTrip(t) { currentTrip = t; selectedEtapeIndex = null; currentState = 'upcoming'; clearTimeout(autoResetTimer); render(); }
 function setContext(c) { currentContext = c; render(); }
+function setStyle(s) { currentStyle = s; render(); }
 render();
 </script>
 </body>
