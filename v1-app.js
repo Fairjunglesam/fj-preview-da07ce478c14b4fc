@@ -864,13 +864,12 @@ function toggleRecoDetail(id) {
     }
 
     // Smooth scroll: align top of the opened detail with top of viewport
+    // Wait for slide-down animation (250ms) + layout to settle
     setTimeout(() => {
       if (detailEl) {
-        const rect = detailEl.getBoundingClientRect();
-        const targetTop = window.scrollY + rect.top - 16;
-        window.scrollTo({ top: Math.max(0, targetTop), behavior: 'smooth' });
+        detailEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
       }
-    }, 120);
+    }, 300);
   }
 }
 
