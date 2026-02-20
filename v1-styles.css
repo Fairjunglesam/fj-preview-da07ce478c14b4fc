@@ -882,6 +882,8 @@ body { font-family:var(--font); background:var(--bg-page); color:var(--text-prim
 .d-see-all-count { color:var(--text-muted); font-weight:400; }
 
 /* ===== V0.1: MASTER-DETAIL LAYOUT ===== */
+.md-info-bar { font-size:11px; color:var(--text-muted); padding:6px 12px; margin-bottom:6px; background:#f8f9fb; border-radius:8px; display:flex; align-items:center; gap:6px; }
+.md-info-bar::before { content:'ℹ️'; font-size:12px; }
 .md-layout { display:flex; height:calc(100vh - 220px); min-height:500px; border:1px solid var(--border-light); border-radius:16px; overflow:hidden; background:white; }
 .md-list { width:45%; overflow-y:auto; padding:10px; display:flex; flex-direction:column; gap:6px; border-right:1px solid var(--border-light); }
 .md-list::-webkit-scrollbar { width:4px; }
