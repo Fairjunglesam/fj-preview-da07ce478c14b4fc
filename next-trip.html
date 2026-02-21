@@ -672,9 +672,9 @@
   .sheet-footer { display: flex; justify-content: center; margin-top: 18px; padding-top: 14px; border-top: 1px solid var(--grey-100); }
   .sheet-footer a { font-size: 13px; font-weight: 600; color: var(--grey-600); text-decoration: none; display: flex; align-items: center; gap: 4px; transition: color 0.15s; }
   .sheet-footer a:hover { color: var(--blue-500); }
-  .sheet-nav-btn { display: inline-flex; align-items: center; gap: 4px; margin-top: 4px; padding: 5px 10px; border-radius: 8px; background: var(--blue-50); color: var(--blue-600); font-size: 11px; font-weight: 700; text-decoration: none; border: 1px solid var(--blue-100); transition: all 0.15s; cursor: pointer; }
-  .sheet-nav-btn:hover { background: var(--blue-100); color: var(--blue-700); }
-  .sheet-nav-btn .material-symbols-rounded { font-size: 14px; }
+  .sheet-map-btn { display: inline-flex; align-items: center; justify-content: center; width: 40px; height: 40px; border-radius: 10px; background: var(--grey-100); color: var(--grey-600); border: none; cursor: pointer; transition: all 0.15s; flex-shrink: 0; text-decoration: none; }
+  .sheet-map-btn:hover { background: var(--grey-200); color: var(--grey-800); transform: translateY(-1px); }
+  .sheet-map-btn .material-symbols-rounded { font-size: 20px; line-height: 1; }
   .wallet-badge { display: flex; align-items: center; justify-content: center; gap: 8px; width: 100%; height: 44px; border-radius: 10px; padding: 0 16px; cursor: pointer; border: none; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; text-decoration: none; transition: opacity 0.15s; box-sizing: border-box; }
   .wallet-badge:hover { opacity: 0.85; }
   .wallet-badge-apple { background: #000; color: #fff; }
@@ -713,8 +713,8 @@
   .sheet-overlay[data-color="contrast"] .sheet-detail-sub { color: rgba(255,255,255,0.5); }
   .sheet-overlay[data-color="contrast"] .sheet-conditions { background: rgba(255,255,255,0.06); color: rgba(255,255,255,0.65); }
   .sheet-overlay[data-color="contrast"] .sheet-conditions strong { color: rgba(255,255,255,0.85); }
-  .sheet-overlay[data-color="contrast"] .sheet-nav-btn { background: rgba(0,169,252,0.15); color: var(--blue-200); border-color: rgba(0,169,252,0.25); }
-  .sheet-overlay[data-color="contrast"] .sheet-nav-btn:hover { background: rgba(0,169,252,0.25); }
+  .sheet-overlay[data-color="contrast"] .sheet-map-btn { background: rgba(255,255,255,0.1); color: rgba(255,255,255,0.7); }
+  .sheet-overlay[data-color="contrast"] .sheet-map-btn:hover { background: rgba(255,255,255,0.18); color: #fff; }
   .sheet-overlay[data-color="contrast"] .sheet-footer { border-color: rgba(255,255,255,0.12); }
   .sheet-overlay[data-color="contrast"] .sheet-footer a { color: rgba(255,255,255,0.7); }
   .sheet-overlay[data-color="contrast"] .sheet-footer a:hover { color: var(--blue-200); }
@@ -762,8 +762,8 @@
   .sheet-overlay[data-color="dark"] .sheet-detail-sub { color: rgba(255,255,255,0.45); }
   .sheet-overlay[data-color="dark"] .sheet-conditions { background: rgba(255,255,255,0.05); color: rgba(255,255,255,0.6); }
   .sheet-overlay[data-color="dark"] .sheet-conditions strong { color: rgba(255,255,255,0.8); }
-  .sheet-overlay[data-color="dark"] .sheet-nav-btn { background: rgba(0,169,252,0.12); color: var(--blue-300); border-color: rgba(0,169,252,0.2); }
-  .sheet-overlay[data-color="dark"] .sheet-nav-btn:hover { background: rgba(0,169,252,0.2); }
+  .sheet-overlay[data-color="dark"] .sheet-map-btn { background: rgba(255,255,255,0.08); color: rgba(255,255,255,0.6); }
+  .sheet-overlay[data-color="dark"] .sheet-map-btn:hover { background: rgba(255,255,255,0.15); color: #fff; }
   .sheet-overlay[data-color="dark"] .sheet-footer { border-color: rgba(255,255,255,0.06); }
   .sheet-overlay[data-color="dark"] .sheet-footer a { color: rgba(255,255,255,0.4); }
   .sheet-overlay[data-color="dark"] .sheet-footer a:hover { color: var(--blue-300); }
@@ -1268,7 +1268,7 @@
   #showcase-container[data-color="contrast"] .sheet-detail-value { color: #fff; }
   #showcase-container[data-color="contrast"] .sheet-detail-sub { color: rgba(255,255,255,0.5); }
   #showcase-container[data-color="contrast"] .sheet-conditions { background: rgba(255,255,255,0.06); color: rgba(255,255,255,0.65); }
-  #showcase-container[data-color="contrast"] .sheet-nav-btn { background: rgba(0,169,252,0.15); color: var(--blue-200); border-color: rgba(0,169,252,0.25); }
+  #showcase-container[data-color="contrast"] .sheet-map-btn { background: rgba(255,255,255,0.1); color: rgba(255,255,255,0.7); }
   #showcase-container[data-color="contrast"] .sheet-footer { border-color: rgba(255,255,255,0.08); }
   #showcase-container[data-color="contrast"] .sheet-footer a { color: rgba(255,255,255,0.45); }
   #showcase-container[data-color="contrast"] .sheet-actions .cta-pri { background: #fff; color: #1a2747; font-weight: 800; }
@@ -1299,7 +1299,7 @@
   #showcase-container[data-color="dark"] .sheet-detail-value { color: #fff; }
   #showcase-container[data-color="dark"] .sheet-detail-sub { color: rgba(255,255,255,0.45); }
   #showcase-container[data-color="dark"] .sheet-conditions { background: rgba(255,255,255,0.05); color: rgba(255,255,255,0.55); }
-  #showcase-container[data-color="dark"] .sheet-nav-btn { background: rgba(0,169,252,0.12); color: var(--blue-300); border-color: rgba(0,169,252,0.2); }
+  #showcase-container[data-color="dark"] .sheet-map-btn { background: rgba(255,255,255,0.08); color: rgba(255,255,255,0.6); }
   #showcase-container[data-color="dark"] .sheet-footer { border-color: rgba(255,255,255,0.06); }
   #showcase-container[data-color="dark"] .sheet-footer a { color: rgba(255,255,255,0.4); }
   #showcase-container[data-color="dark"] .sheet-actions .cta-pri { background: #fff; color: #252540; font-weight: 800; }
@@ -2501,6 +2501,9 @@ function buildTransportSheet(e, platform) {
     return h;
   }
 
+  const depName = e.departure ? e.departure.name || '' : '';
+  const mUrl = depName ? mapsLink(isFl ? depName + ' airport' : 'gare ' + depName) : e.locUrl;
+
   // Visual: QR code or clickable PDF document
   if (ticket.hasQR) {
     h += `<div class="sheet-qr">${qrPlaceholderSvg}<div class="sheet-qr-label">Présentez au contrôleur</div></div>`;
@@ -2514,6 +2517,7 @@ function buildTransportSheet(e, platform) {
       h += `<a href="${e.voucherPdf}" target="_blank" class="sheet-pdf"><iframe src="${e.voucherPdf}#toolbar=0&view=Fit&page=1" title="${docName}"></iframe></a>`;
       h += '<div class="sheet-dl-row">';
       h += `<div class="sheet-dl-info"><div class="sheet-dl-name">${docName} ${carrier} ${num}</div><div class="sheet-dl-meta">${paxMeta || 'PDF'}</div></div>`;
+      if (mUrl) h += mapBtn(mUrl);
       h += `<a href="${e.voucherPdf}" target="_blank" download class="sheet-dl-btn" title="Télécharger"><span class="material-symbols-rounded">download</span></a>`;
       h += '</div>';
     } else {
@@ -2539,28 +2543,33 @@ function buildTransportSheet(e, platform) {
     h += `<div class="sheet-info" style="margin-top:8px;margin-bottom:0"><span class="sheet-info-icon">&#9432;</span><div>Ceci est votre e-ticket. Enregistrez-vous auprès de la compagnie.</div></div>`;
   }
   h += '</div>';
-  // Itinéraire — inline nav button
-  if (e.locUrl && e.departure) {
-    const depName = e.departure.name || '';
-    const lieu = isFl ? "l'aéroport " + depName : 'la gare ' + depName;
-    h += `<div style="margin-top:10px"><a href="${e.locUrl}" class="sheet-nav-btn" onclick="event.preventDefault()"><span class="material-symbols-rounded">near_me</span> S'y rendre · ${lieu}</a></div>`;
-  }
 
   return h;
 }
 
+function mapsLink(query) { return 'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(query); }
+function mapBtn(url) { return `<a href="${url}" target="_blank" class="sheet-map-btn" title="Voir sur la carte"><span class="material-symbols-rounded">location_on</span></a>`; }
+
 function buildHotelSheet(e) {
   let h = '';
+  const mUrl = e.address ? mapsLink(e.address) : e.locUrl;
   // PDF preview when available
   if (e.voucherPdf) {
     h += `<a href="${e.voucherPdf}" target="_blank" class="sheet-pdf"><iframe src="${e.voucherPdf}#toolbar=0&view=Fit&page=1" title="Voucher"></iframe></a>`;
     h += '<div class="sheet-dl-row">';
     h += `<div class="sheet-dl-info"><div class="sheet-dl-name">Voucher ${e.shortLabel || e.title || ''}</div><div class="sheet-dl-meta">PDF · ${e.bookingRef || ''}</div></div>`;
+    if (mUrl) h += mapBtn(mUrl);
     h += `<a href="${e.voucherPdf}" target="_blank" download class="sheet-dl-btn" title="Télécharger"><span class="material-symbols-rounded">download</span></a>`;
     h += '</div>';
   } else if (e.docAvailable) {
-    h += '<div class="sheet-actions">';
-    h += `<button class="cta-pri" onclick="event.preventDefault()">&#128196; ${e.docLabel || 'Voir le voucher'}</button>`;
+    h += '<div class="sheet-dl-row">';
+    h += `<div class="sheet-dl-info"><div class="sheet-dl-name">${e.docLabel || 'Voucher'}</div><div class="sheet-dl-meta">${e.bookingRef || ''}</div></div>`;
+    if (mUrl) h += mapBtn(mUrl);
+    h += '</div>';
+  } else if (mUrl) {
+    h += '<div class="sheet-dl-row">';
+    h += `<div class="sheet-dl-info"><div class="sheet-dl-name">${e.shortLabel || e.title || ''}</div></div>`;
+    h += mapBtn(mUrl);
     h += '</div>';
   }
   // Booking details grid
@@ -2578,11 +2587,7 @@ function buildHotelSheet(e) {
     h += `<div><div class="sheet-detail-label">Référence</div><div class="sheet-detail-value">${e.bookingRef}</div></div>`;
   }
   if (e.address) {
-    h += `<div class="sheet-detail-full"><div class="sheet-detail-label">Adresse</div><div class="sheet-detail-sub">${e.address}</div>`;
-    if (e.locUrl) {
-      h += `<a href="${e.locUrl}" class="sheet-nav-btn" onclick="event.preventDefault()"><span class="material-symbols-rounded">near_me</span> S'y rendre</a>`;
-    }
-    h += '</div>';
+    h += `<div class="sheet-detail-full"><div class="sheet-detail-label">Adresse</div><div class="sheet-detail-sub">${e.address}</div></div>`;
   }
   h += '</div>';
   // Free-text conditions
@@ -2594,25 +2599,31 @@ function buildHotelSheet(e) {
 
 function buildCarSheet(e) {
   const isOJ = e.pickup && e.dropoff && e.pickup.location !== e.dropoff.location;
+  const mUrl = e.pickup ? mapsLink(e.pickup.location) : e.locUrl;
   let h = '';
   // PDF preview when available
   if (e.voucherPdf) {
     h += `<a href="${e.voucherPdf}" target="_blank" class="sheet-pdf"><iframe src="${e.voucherPdf}#toolbar=0&view=Fit&page=1" title="Voucher"></iframe></a>`;
     h += '<div class="sheet-dl-row">';
     h += `<div class="sheet-dl-info"><div class="sheet-dl-name">Voucher ${e.carrier || e.title || ''}</div><div class="sheet-dl-meta">PDF · ${e.bookingRef || ''}</div></div>`;
+    if (mUrl && !isOJ) h += mapBtn(mUrl);
     h += `<a href="${e.voucherPdf}" target="_blank" download class="sheet-dl-btn" title="Télécharger"><span class="material-symbols-rounded">download</span></a>`;
     h += '</div>';
   } else if (e.docAvailable) {
-    h += '<div class="sheet-actions">';
-    h += `<button class="cta-pri" onclick="event.preventDefault()">&#128196; ${e.docLabel || 'Voir le voucher'}</button>`;
+    h += '<div class="sheet-dl-row">';
+    h += `<div class="sheet-dl-info"><div class="sheet-dl-name">${e.docLabel || 'Voucher'}</div><div class="sheet-dl-meta">${e.bookingRef || ''}</div></div>`;
+    if (mUrl && !isOJ) h += mapBtn(mUrl);
+    h += '</div>';
+  } else if (mUrl && !isOJ) {
+    h += '<div class="sheet-dl-row">';
+    h += `<div class="sheet-dl-info"><div class="sheet-dl-name">${e.carrier || e.title || ''}</div></div>`;
+    h += mapBtn(mUrl);
     h += '</div>';
   }
   // Booking details grid
   h += '<div class="sheet-detail-grid">';
   if (e.pickup) {
-    h += `<div><div class="sheet-detail-label">Prise en charge</div><div class="sheet-detail-value">${e.pickup.time}</div><div class="sheet-detail-sub">${e.pickup.date}</div><div class="sheet-detail-sub">${e.pickup.location}</div>`;
-    if (e.locUrl && !isOJ) h += `<a href="${e.locUrl}" class="sheet-nav-btn" onclick="event.preventDefault()"><span class="material-symbols-rounded">near_me</span> S'y rendre</a>`;
-    h += '</div>';
+    h += `<div><div class="sheet-detail-label">Prise en charge</div><div class="sheet-detail-value">${e.pickup.time}</div><div class="sheet-detail-sub">${e.pickup.date}</div><div class="sheet-detail-sub">${e.pickup.location}</div></div>`;
   }
   if (e.dropoff) {
     h += `<div><div class="sheet-detail-label">Restitution${isOJ ? ' · Open jaw' : ''}</div><div class="sheet-detail-value">${e.dropoff.time}</div><div class="sheet-detail-sub">${e.dropoff.date}</div><div class="sheet-detail-sub">${e.dropoff.location}</div></div>`;
