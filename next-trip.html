@@ -862,18 +862,19 @@
   .proto-globals button { padding: 3px 8px; border: 1.5px solid var(--grey-100); border-radius: 6px; background: var(--white); font-size: 10px; font-weight: 600; cursor: pointer; transition: all 0.15s; color: var(--grey-500); font-family: var(--font); line-height: 1.2; }
   .proto-globals button:hover { background: var(--grey-50); border-color: var(--grey-200); color: var(--grey-700); }
   .proto-globals button.active { background: var(--black); color: var(--white); border-color: var(--black); }
-  .proto-panel { padding: 10px 16px 12px; display: flex; flex-wrap: wrap; gap: 6px 16px; align-items: flex-start; }
-  .proto-section { display: flex; align-items: center; gap: 5px; }
-  .proto-section-label { font-size: 9px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; color: var(--grey-400); min-width: 52px; font-family: var(--font); }
-  .proto-section .sc-config-pill { padding: 3px 9px; border-radius: 7px; font-size: 10px; font-weight: 600; border: 1.5px solid var(--grey-100); background: var(--white); color: var(--grey-600); cursor: pointer; font-family: var(--font); transition: all 0.15s; }
-  .proto-section .sc-config-pill:hover { background: var(--grey-50); border-color: var(--grey-200); color: var(--black); }
-  .proto-section .sc-config-pill.active { background: var(--black); color: var(--white); border-color: var(--black); }
+  .proto-panel { padding: 12px 20px 16px; display: flex; flex-wrap: wrap; gap: 0; align-items: flex-start; border-top: 1px solid var(--grey-50); margin-bottom: 16px; }
+  .proto-row { display: flex; flex-wrap: wrap; gap: 8px 20px; align-items: center; width: 100%; padding: 6px 0; }
+  .proto-section { display: inline-flex; align-items: center; gap: 5px; background: var(--grey-50); border-radius: 8px; padding: 4px 4px 4px 10px; }
+  .proto-section-label { font-size: 9px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; color: var(--grey-400); font-family: var(--font); white-space: nowrap; }
+  .proto-section .sc-config-pill { padding: 4px 10px; border-radius: 6px; font-size: 11px; font-weight: 600; border: none; background: transparent; color: var(--grey-500); cursor: pointer; font-family: var(--font); transition: all 0.15s; }
+  .proto-section .sc-config-pill:hover { background: var(--white); color: var(--black); box-shadow: 0 1px 3px rgba(0,0,0,0.06); }
+  .proto-section .sc-config-pill.active { background: var(--white); color: var(--black); box-shadow: 0 1px 4px rgba(0,0,0,0.1); font-weight: 700; }
   .proto-section .sc-toggle { position: relative; width: 32px; height: 18px; border-radius: 9px; background: var(--grey-200); border: none; cursor: pointer; transition: background 0.2s; flex-shrink: 0; }
   .proto-section .sc-toggle.on { background: var(--blue-500); }
   .proto-section .sc-toggle::after { content: ''; position: absolute; top: 2px; left: 2px; width: 14px; height: 14px; border-radius: 50%; background: #fff; box-shadow: 0 1px 2px rgba(0,0,0,0.2); transition: transform 0.2s; }
   .proto-section .sc-toggle.on::after { transform: translateX(14px); }
-  .proto-section .sc-toggle-label { font-size: 10px; font-weight: 600; color: var(--grey-500); font-family: var(--font); }
-  .proto-divider { width: 100%; height: 0; border-top: 1px solid var(--grey-100); margin: 2px 0; }
+  .proto-section .sc-toggle-label { font-size: 11px; font-weight: 600; color: var(--grey-500); font-family: var(--font); }
+  .proto-divider { width: 100%; height: 0; border-top: 1px solid var(--grey-100); margin: 4px 0; }
   /* Float drawer */
   .float-drawer { position: fixed; bottom: 20px; right: 20px; z-index: 1100; display: none; }
   .float-drawer.visible { display: flex; flex-direction: column; align-items: flex-end; gap: 6px; }
@@ -915,11 +916,11 @@
   .skel-card .skel-title { font-size: 12px; font-weight: 600; color: var(--grey-400); margin-bottom: 8px; }
   .skel-separator { height: 1px; background: var(--grey-100); margin: 20px 0; }
   /* Contrast overrides */
-  body.color-contrast .home-skeleton .skel-card { background: rgba(255,255,255,0.04); border-color: rgba(255,255,255,0.08); }
-  body.color-contrast .home-skeleton .skel-bar { background: rgba(255,255,255,0.08); }
-  body.color-contrast .home-skeleton .skel-circle { background: rgba(255,255,255,0.08); }
-  body.color-contrast .home-skeleton .skel-section-title { color: rgba(255,255,255,0.4); }
-  body.color-contrast .home-skeleton .skel-badge { background: #dc2626; }
+  body.color-contrast .home-skeleton .skel-card { background: rgba(255,255,255,0.06); border-color: rgba(255,255,255,0.10); }
+  body.color-contrast .home-skeleton .skel-bar { background: rgba(255,255,255,0.12); }
+  body.color-contrast .home-skeleton .skel-circle { background: rgba(255,255,255,0.12); }
+  body.color-contrast .home-skeleton .skel-section-title { color: rgba(255,255,255,0.7); }
+  body.color-contrast .home-skeleton .skel-badge { background: #ef4444; }
 
   /* ===== Scenario Sections ===== */
   .scenario-section { max-width: 960px; margin: 24px auto; scroll-margin-top: 90px; }
@@ -1397,9 +1398,9 @@ const TRIPS = {
       {
         type: 'car', icon: '🚗',
         title: 'Avis – Location de véhicule',
-        shortLabel: 'Avis Bordeaux', dateShort: 'Mar 17',
+        shortLabel: 'Avis Bordeaux', dateShort: 'Mar 17 – Mer 18',
         pickup: { time: '14:00', date: 'Mardi 17 Février', location: 'Gare Saint-Jean, 33800 Bordeaux' },
-        dropoff: { time: '18:00', date: 'Mardi 17 Février', location: 'Gare Saint-Jean, 33800 Bordeaux' },
+        dropoff: { time: '18:00', date: 'Mercredi 18 Février', location: 'Gare Saint-Jean, 33800 Bordeaux' },
         carrier: 'Avis', details: ['Cat. B', '1 jour'],
         bookingRef: 'AVIS-84729',
         driverName: 'Stella Smith',
@@ -2527,22 +2528,23 @@ function renderPanel() {
     const pill = (key, val, label) => `<button class="sc-config-pill${st[key] === val ? ' active' : ''}" onclick="tlSet('${key}','${val}')">${label}</button>`;
     const tog = (key, label) => `<span class="sc-toggle-label">${label}</span><button class="sc-toggle${st[key] ? ' on' : ''}" onclick="tlSet('${key}',${!st[key]})"></button>`;
 
-    // Row 1: Transport?
-    let h = '<div class="proto-section"><span class="proto-section-label">Transport</span>' +
+    let h = '<div class="proto-row">';
+
+    // Transport + Direction on same row
+    h += '<div class="proto-section"><span class="proto-section-label">Transport</span>' +
       `<button class="sc-config-pill${st.transport ? ' active' : ''}" onclick="tlSet('transport',true)">Oui</button>` +
       `<button class="sc-config-pill${!st.transport ? ' active' : ''}" onclick="tlSet('transport',false)">Non</button>` +
       '</div>';
 
     if (st.transport) {
-      // Row 2: Direction
       h += '<div class="proto-section"><span class="proto-section-label">Direction</span>' +
         pill('direction','ar','Aller-retour') + pill('direction','as','Aller simple') + '</div>';
+      h += '</div><div class="proto-row">';
 
-      // Row 3: Mode
+      // Mode + Legs on same row
       h += '<div class="proto-section"><span class="proto-section-label">Mode</span>' +
         pill('mode','train','Train') + pill('mode','vol','Avion') + '</div>';
 
-      // Row 4: Legs
       if (st.mode === 'vol') {
         h += '<div class="proto-section"><span class="proto-section-label">Legs</span>' +
           pill('legs','direct','Direct') + pill('legs','1-stop','1 escale') + pill('legs','multi','Multi-escale') + '</div>';
@@ -2551,33 +2553,32 @@ function renderPanel() {
           pill('legs','direct','Direct') + pill('legs','1-stop','Correspondance') + '</div>';
       }
 
-      // Row 5: Extras
+      // Extras
       if (st.direction === 'ar') {
         h += '<div class="proto-section"><span class="proto-section-label">Extras</span>' +
           tog('hotel', 'Hôtel') +
-          `<span style="margin-left:8px"></span>` + tog('car', 'Voiture') +
+          `<span style="width:6px"></span>` + tog('car', 'Voiture') +
           '</div>';
       } else {
-        // Aller simple: car only
         h += '<div class="proto-section"><span class="proto-section-label">Extras</span>' +
           tog('car', 'Voiture') +
           '</div>';
       }
     } else {
-      // No transport: hotel + car toggles
+      // No transport: services
       h += '<div class="proto-section"><span class="proto-section-label">Services</span>' +
         tog('hotel', 'Hôtel') +
-        `<span style="margin-left:8px"></span>` + tog('car', 'Voiture') +
+        `<span style="width:6px"></span>` + tog('car', 'Voiture') +
         '</div>';
     }
 
-    h += '<div class="proto-divider"></div>';
+    h += '</div><div class="proto-divider"></div><div class="proto-row">';
     h += '<div class="proto-section"><span class="proto-section-label">État</span>';
     ['upcoming','imminent','in_transit','between_segments','trip_ending'].forEach(s => {
-      const label = { upcoming:'upcoming', imminent:'imminent', in_transit:'in_transit', between_segments:'between', trip_ending:'ending' }[s];
+      const label = { upcoming:'Upcoming', imminent:'Imminent', in_transit:'In transit', between_segments:'Between', trip_ending:'Ending' }[s];
       h += `<button class="sc-config-pill${currentState === s ? ' active' : ''}" onclick="setState('${s}')">${label}</button>`;
     });
-    h += '</div>';
+    h += '</div></div>';
 
     panel.innerHTML = h;
   } else {
@@ -2589,7 +2590,8 @@ function renderPanel() {
     const showMulti = isTrain && !isDiffere;
     const showPlatform = isTrain && st.ticket === 'qr-wallet' && !isDiffere;
 
-    let h = '<div class="proto-section"><span class="proto-section-label">Type</span>';
+    let h = '<div class="proto-row">';
+    h += '<div class="proto-section"><span class="proto-section-label">Type</span>';
     [['train','Train'],['flight','Avion'],['hotel','Hôtel'],['car','Voiture']].forEach(([k,l]) => {
       h += `<button class="sc-config-pill${st.type === k ? ' active' : ''}" onclick="scSet('type','${k}')">${l}</button>`;
     });
@@ -2612,6 +2614,7 @@ function renderPanel() {
       });
       h += '</div>';
     }
+    h += '</div>';
     panel.innerHTML = h;
   }
 }
