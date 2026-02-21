@@ -1517,8 +1517,8 @@ const TRIPS = {
         duration: '5h58',
         carrier: 'SNCF', details: ['2nde classe', '1 correspondance'],
         segments: [
-          { dep: { time: '08:30', name: 'Paris Montparnasse' }, arr: { time: '10:32', name: 'Lyon Part-Dieu' }, dur: '2h02', num: 'TGV 6211', pnr: 'XYZW89', platform: '7', seat: { wagon: '7', place: '62' }, ticket: { available: true, hasQR: true, wallet: false }, fareName: 'Loisir', fareExch: 'with_fee', fareRefund: false, amenities: ['wifi', 'power', 'bar'] },
-          { dep: { time: '11:15', name: 'Lyon Part-Dieu' }, arr: { time: '14:28', name: 'Bordeaux Saint-Jean' }, dur: '3h13', num: 'TGV 6825', pnr: 'XYZW89', platform: '12', seat: { wagon: '3', place: '18' }, ticket: { available: true, hasQR: true, wallet: false }, fareName: 'Loisir', fareExch: 'with_fee', fareRefund: false, amenities: ['wifi', 'power', 'bar'] },
+          { dep: { time: '08:30', name: 'Paris Montparnasse' }, arr: { time: '10:32', name: 'Lyon Part-Dieu' }, dur: '2h02', num: 'TGV 6211', pnr: 'XYZW89', platform: '7', seat: { wagon: '7', place: '62' }, fareName: 'Loisir', fareExch: 'with_fee', fareRefund: false, amenities: ['wifi', 'power', 'bar'] },
+          { dep: { time: '11:15', name: 'Lyon Part-Dieu' }, arr: { time: '14:28', name: 'Bordeaux Saint-Jean' }, dur: '3h13', num: 'TGV 6825', pnr: 'XYZW89', platform: '12', seat: { wagon: '3', place: '18' }, fareName: 'Loisir', fareExch: 'with_fee', fareRefund: false, amenities: ['wifi', 'power', 'bar'] },
         ],
         connections: [{ loc: 'Lyon Part-Dieu', dur: '43 min' }],
         seat: { wagon: '7', place: '62' },
@@ -1578,8 +1578,8 @@ const TRIPS = {
         duration: '7h50',
         carrier: 'Lufthansa', details: ['Economy', '1 escale'],
         segments: [
-          { dep: { time: '06:45', name: 'Paris', code: 'CDG', terminal: 'T1' }, arr: { time: '08:25', name: 'Munich', code: 'MUC', terminal: 'T2' }, dur: '1h40', num: 'LH 2231', pnr: 'KLM456', gate: 'G23', seat: { place: '22F' }, ticket: { available: true, hasQR: true, wallet: true }, fareName: 'Economy Light', fareExch: false, fareRefund: false, amenities: ['meal', 'entertainment'] },
-          { dep: { time: '09:45', name: 'Munich', code: 'MUC', terminal: 'T2' }, arr: { time: '13:35', name: 'Athènes', code: 'ATH' }, dur: '2h50', num: 'LH 1752', pnr: 'KLM456', seat: { place: '22F' }, ticket: { available: true, hasQR: true, wallet: true }, fareName: 'Economy Light', fareExch: false, fareRefund: false, amenities: ['meal', 'entertainment'] },
+          { dep: { time: '06:45', name: 'Paris', code: 'CDG', terminal: 'T1' }, arr: { time: '08:25', name: 'Munich', code: 'MUC', terminal: 'T2' }, dur: '1h40', num: 'LH 2231', pnr: 'KLM456', gate: 'G23', seat: { place: '22F' }, fareName: 'Economy Light', fareExch: false, fareRefund: false, amenities: ['meal', 'entertainment'] },
+          { dep: { time: '09:45', name: 'Munich', code: 'MUC', terminal: 'T2' }, arr: { time: '13:35', name: 'Ath\u00e8nes', code: 'ATH' }, dur: '2h50', num: 'LH 1752', pnr: 'KLM456', seat: { place: '22F' }, fareName: 'Economy Light', fareExch: false, fareRefund: false, amenities: ['meal', 'entertainment'] },
         ],
         connections: [{ loc: 'Munich MUC', dur: '1h20', detail: 'Terminal 2' }],
         luggage: '1 cabine + 1 soute 23 kg · Bagages jusqu\'à ATH',
