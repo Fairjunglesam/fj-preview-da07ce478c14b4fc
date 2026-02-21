@@ -289,10 +289,10 @@
   .etape-tag.future { background: var(--grey-75); color: var(--grey-600); }
 
   /* ===== Shared étape card container ===== */
-  .ecard { border: 1px solid rgba(195,200,212,0.45); border-radius: 12px; overflow: hidden; margin-bottom: 8px; background: linear-gradient(165deg, #f1f2f6 0%, #e9ebf0 45%, #f0f1f5 100%); box-shadow: inset 0 1px 0 rgba(255,255,255,0.65), 0 1px 3px rgba(0,0,0,0.04); }
+  .ecard { border: 1px solid rgba(140,165,230,0.18); border-radius: 12px; overflow: hidden; margin-bottom: 8px; background: linear-gradient(165deg, #eef2fc 0%, #e6ecf8 45%, #f0f4fe 100%); box-shadow: inset 0 1px 0 rgba(255,255,255,0.8), 0 2px 10px rgba(100,130,210,0.06); }
 
   /* ===== Transport — Boarding Pass ===== */
-  .bp { position: relative; border: 1px solid rgba(195,200,212,0.45); border-radius: 14px; background: linear-gradient(165deg, #f1f2f6 0%, #e9ebf0 45%, #f0f1f5 100%); margin-bottom: 6px; overflow: visible; box-shadow: inset 0 1px 0 rgba(255,255,255,0.65), 0 1px 3px rgba(0,0,0,0.04); }
+  .bp { position: relative; border: 1px solid rgba(140,165,230,0.18); border-radius: 14px; background: linear-gradient(165deg, #eef2fc 0%, #e6ecf8 45%, #f0f4fe 100%); margin-bottom: 6px; overflow: visible; box-shadow: inset 0 1px 0 rgba(255,255,255,0.8), 0 2px 10px rgba(100,130,210,0.06); }
   .bp-head { display: flex; justify-content: space-between; align-items: center; padding: 8px 14px 6px; }
   .bp-carrier { display: flex; align-items: center; gap: 5px; font-size: 12px; font-weight: 700; color: var(--black); }
   .bp-carrier-icon { font-size: 15px; }
@@ -667,16 +667,9 @@
   .sheet-map-btn { display: inline-flex; align-items: center; justify-content: center; width: 40px; height: 40px; border-radius: 10px; background: var(--grey-100); color: var(--grey-600); border: none; cursor: pointer; transition: all 0.15s; flex-shrink: 0; text-decoration: none; }
   .sheet-map-btn:hover { background: var(--grey-200); color: var(--grey-800); transform: translateY(-1px); }
   .sheet-map-btn .material-symbols-rounded { font-size: 20px; line-height: 1; }
-  .wallet-badge { display: flex; align-items: center; justify-content: center; gap: 8px; width: 100%; height: 44px; border-radius: 10px; padding: 0 16px; cursor: pointer; border: none; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; text-decoration: none; transition: opacity 0.15s; box-sizing: border-box; }
+  .wallet-badge { display: flex; align-items: center; justify-content: center; width: 100%; height: 44px; border-radius: 10px; cursor: pointer; border: none; text-decoration: none; transition: opacity 0.15s; box-sizing: border-box; overflow: hidden; background: transparent; }
   .wallet-badge:hover { opacity: 0.85; }
-  .wallet-badge-apple { background: #000; color: #fff; }
-  .wallet-badge-apple svg { width: 20px; height: 24px; flex-shrink: 0; }
-  .wallet-badge-apple .wb-text { font-size: 12px; font-weight: 500; line-height: 1.2; letter-spacing: 0.2px; }
-  .wallet-badge-apple .wb-text strong { font-weight: 600; font-size: 14px; display: block; }
-  .wallet-badge-google { background: #000; color: #fff; }
-  .wallet-badge-google svg { width: 20px; height: 20px; flex-shrink: 0; }
-  .wallet-badge-google .wb-text { font-size: 12px; font-weight: 500; line-height: 1.2; letter-spacing: 0.2px; }
-  .wallet-badge-google .wb-text strong { font-weight: 600; font-size: 14px; display: block; }
+  .wallet-badge img { height: 44px; width: 100%; object-fit: contain; }
   /* Contrast mode sheet */
   .sheet-overlay[data-color="contrast"] .sheet-panel { background: #1a2747; border: 1px solid rgba(255,255,255,0.08); box-shadow: 0 8px 40px rgba(0,0,0,0.4); }
   .sheet-overlay[data-color="contrast"] .sheet-handle { background: rgba(255,255,255,0.2); }
@@ -723,6 +716,7 @@
   .sheet-overlay[data-color="contrast"] .sheet-conn { background: rgba(255,141,84,0.08); }
   .sheet-overlay[data-color="contrast"] .sheet-conn-text { color: var(--orange-300); }
   .sheet-overlay[data-color="contrast"] .sheet-divider { background: rgba(255,255,255,0.06); }
+  /* Wallet badges are official images — no color override needed */
   /* Bold card tappable — hover/bounce only on mobile (desktop: only pill is clickable) */
   .bpb.tappable { cursor: default; }
   /* Deferred button clickable */
@@ -986,7 +980,7 @@
   .scenario-label { font-size: 11px; font-weight: 700; color: var(--grey-400); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 8px; padding-left: 4px; }
 
   /* ===== Light+Bold — Override bpb dark colors to light ===== */
-  .trip-card:not(.contrast-mode) .bpb { background: linear-gradient(135deg, #f4f5f9 0%, #eceef3 25%, #f6f7fa 50%, #e9ebf1 75%, #f2f3f7 100%); border: 1px solid rgba(195,200,215,0.4); box-shadow: inset 0 1px 0 rgba(255,255,255,0.8), inset 0 -1px 2px rgba(0,0,0,0.02), 0 2px 8px rgba(0,0,0,0.04); }
+  .trip-card:not(.contrast-mode):not(.dark-mode) .bpb { background: linear-gradient(135deg, #eef2fc 0%, #e6ecf8 18%, #f0f4fe 36%, #e3e9f6 52%, #ecf1fb 68%, #e7edf9 84%, #f1f4fd 100%); border: 1px solid rgba(140,165,230,0.18); box-shadow: inset 0 1px 0 rgba(255,255,255,0.95), inset 0 -1px 2px rgba(100,130,210,0.04), 0 4px 16px rgba(100,130,210,0.08), 0 1px 3px rgba(0,0,0,0.03); }
   .trip-card:not(.contrast-mode) .bpb-carrier { color: var(--black); }
   .trip-card:not(.contrast-mode) .bpb-carrier .bp-carrier-sub { color: var(--grey-500); }
   .trip-card:not(.contrast-mode) .bpb-date { color: var(--grey-600); }
@@ -2915,10 +2909,9 @@ function renderFloatDrawer() {
   body.innerHTML = h;
 }
 
-// Official wallet badge SVGs
-const appleWalletBadge = `<a href="#" class="wallet-badge wallet-badge-apple" onclick="event.preventDefault()"><svg viewBox="0 0 20 24" fill="none"><path d="M15.5 12.6c-.02-2.1 1.72-3.12 1.8-3.17-.98-1.43-2.5-1.63-3.05-1.65-1.3-.13-2.53.76-3.19.76-.66 0-1.67-.75-2.75-.73-1.41.02-2.72.82-3.44 2.09-1.47 2.55-.38 6.32 1.06 8.39.7 1.02 1.53 2.15 2.63 2.11 1.05-.04 1.45-.68 2.73-.68s1.64.68 2.76.66c1.13-.02 1.86-1.04 2.54-2.06.8-1.18 1.13-2.32 1.15-2.38-.03-.01-2.21-.85-2.24-3.34zM13.38 5.66c.58-.71.97-1.68.86-2.66-.83.03-1.84.55-2.44 1.26-.53.62-1 1.6-.88 2.55.93.07 1.88-.47 2.46-1.15z" fill="white"/></svg><div class="wb-text">Add to<strong>Apple Wallet</strong></div></a>`;
-
-const googleWalletBadge = `<a href="#" class="wallet-badge wallet-badge-google" onclick="event.preventDefault()"><svg viewBox="0 0 24 24" fill="none"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 0 1-2.2 3.32v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.1z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18A10.96 10.96 0 0 0 1 12c0 1.77.42 3.45 1.18 4.93l3.66-2.84z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg><div class="wb-text">Add to<strong>Google Wallet</strong></div></a>`;
+// Official wallet badges (img tags — official SVGs from Wikimedia/Apple/Google)
+const appleWalletBadge = `<a href="#" class="wallet-badge wallet-badge-apple" onclick="event.preventDefault()"><img src="https://upload.wikimedia.org/wikipedia/commons/3/30/Add_to_Apple_Wallet_badge.svg" alt="Add to Apple Wallet" style="height:44px;width:100%;object-fit:contain"></a>`;
+const googleWalletBadge = `<a href="#" class="wallet-badge wallet-badge-google" onclick="event.preventDefault()"><img src="https://upload.wikimedia.org/wikipedia/commons/f/f7/Add_to_Google_Wallet_badge.svg" alt="Add to Google Wallet" style="height:44px;width:100%;object-fit:contain"></a>`;
 
 const pdfDocSvg = '<svg viewBox="0 0 24 28" fill="none"><path d="M2 4a2 2 0 0 1 2-2h10l8 8v14a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V4z" fill="white" fill-opacity="0.9"/><path d="M14 2l8 8h-6a2 2 0 0 1-2-2V2z" fill="white" fill-opacity="0.6"/><text x="12" y="21" text-anchor="middle" font-size="7" font-weight="800" fill="#e53935" font-family="system-ui">PDF</text></svg>';
 
