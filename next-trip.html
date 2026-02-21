@@ -1456,9 +1456,10 @@ const TRIPS = {
         arrival: { time: '13:00', name: 'Paris', code: 'CDG', terminal: 'T2F', date: 'Ven. 13 Fév' },
         duration: '1h30', carrier: 'Air France', details: ['Economy', 'Direct'],
         luggage: '1 cabine + 1 soute 23 kg', seat: null,
-        ticket: { available: true, hasQR: true, wallet: true },
+        ticket: { available: true, hasQR: false, wallet: false },
         num: 'AF 7695', pnr: 'ABC123',
         fareName: 'Economy Standard', fareExch: 'with_fee', fareRefund: false, amenities: ['meal', 'wifi'],
+        voucherPdf: 'transport-voucher.pdf',
         docLabel: 'Voir mon billet', docIcon: '🎫', docAvailable: true,
         locLabel: "Itinéraire vers l'aéroport", locIcon: '📍', locUrl: '#',
       }
@@ -1579,9 +1580,10 @@ const TRIPS = {
         arrival: { time: '01:35', name: 'Paris', code: 'CDG', terminal: 'T1', date: 'Ven. 13 Fév', dayOffset: 1 },
         duration: '3h45', carrier: 'Aegean', details: ['Economy', 'Direct'],
         luggage: '1 cabine + 1 soute 23 kg', seat: null,
-        ticket: { available: true, hasQR: true, wallet: false },
+        ticket: { available: true, hasQR: false, wallet: false },
         num: 'A3 621', pnr: 'KLM456',
         fareName: 'Economy Flex', fareExch: true, fareRefund: 'with_fee', amenities: ['meal'],
+        voucherPdf: 'transport-voucher.pdf',
         docLabel: 'Voir mon billet', docIcon: '🎫', docAvailable: true,
         locLabel: "Itinéraire vers l'aéroport", locIcon: '📍', locUrl: '#',
       }
@@ -2480,7 +2482,15 @@ function buildTransportSheet(e, platform) {
     const carrier = e.carrier || '';
     const num = e.num || '';
     const paxMeta = (e._travelerName || '') + (e._travelerName && e.pnr ? ' \u00b7 ' : '') + (e.pnr || '');
-    h += `<a href="#" class="sheet-doc" onclick="event.preventDefault()"><div class="sheet-doc-icon">${pdfDocSvg}</div><div class="sheet-doc-info"><div class="sheet-doc-name">${docName} ${carrier} ${num}</div><div class="sheet-doc-meta">${paxMeta || 'PDF'}</div></div></a>`;
+    if (e.voucherPdf) {
+      h += `<a href="${e.voucherPdf}" target="_blank" class="sheet-pdf"><iframe src="${e.voucherPdf}#toolbar=0&view=Fit&page=1" title="${docName}"></iframe></a>`;
+      h += '<div class="sheet-dl-row">';
+      h += `<div class="sheet-dl-info"><div class="sheet-dl-name">${docName} ${carrier} ${num}</div><div class="sheet-dl-meta">${paxMeta || 'PDF'}</div></div>`;
+      h += `<a href="${e.voucherPdf}" target="_blank" download class="sheet-dl-btn" title="Télécharger"><span class="material-symbols-rounded">download</span></a>`;
+      h += '</div>';
+    } else {
+      h += `<a href="#" class="sheet-doc" onclick="event.preventDefault()"><div class="sheet-doc-icon">${pdfDocSvg}</div><div class="sheet-doc-info"><div class="sheet-doc-name">${docName} ${carrier} ${num}</div><div class="sheet-doc-meta">${paxMeta || 'PDF'}</div></div></a>`;
+    }
   }
 
   // Actions
@@ -2657,21 +2667,21 @@ function renderShowcase() {
     'iOS': [
       { label: 'Wallet (pkpass)', type: 'train', ticket: { available: true, hasQR: true, wallet: true }, platform: 'ios', carrier: 'SNCF', num: 'TGV 6234', pnr: 'HJKL42', dep: trainDep, arr: trainArr },
       { label: 'QR code (pas de wallet)', type: 'train', ticket: { available: true, hasQR: true, wallet: false }, platform: 'ios', carrier: 'OUIGO', num: '7641', pnr: 'MNOP55', dep: trainDep, arr: trainArr },
-      { label: 'PDF seul (train)', type: 'train', ticket: { available: true, hasQR: false, wallet: false }, platform: 'ios', carrier: 'SNCF', num: 'TGV 8891', pnr: 'QRST78', dep: trainDep, arr: trainArr },
-      { label: 'Vol \u2014 e-ticket', type: 'flight', ticket: { available: true, hasQR: false, wallet: false }, platform: 'ios', carrier: 'Air France', num: 'AF 1234', pnr: 'ABC123', dep: flightDep, arr: flightArr },
+      { label: 'PDF seul (train)', type: 'train', ticket: { available: true, hasQR: false, wallet: false }, platform: 'ios', carrier: 'SNCF', num: 'TGV 8891', pnr: 'QRST78', dep: trainDep, arr: trainArr, voucherPdf: 'transport-voucher.pdf' },
+      { label: 'Vol \u2014 e-ticket', type: 'flight', ticket: { available: true, hasQR: false, wallet: false }, platform: 'ios', carrier: 'Air France', num: 'AF 1234', pnr: 'ABC123', dep: flightDep, arr: flightArr, voucherPdf: 'transport-voucher.pdf' },
       { label: 'Billet diff\u00e9r\u00e9', type: 'train', ticket: { available: false, availableDate: '15 mars 2026' }, platform: 'ios', carrier: 'SNCF', num: 'TGV 9012', pnr: 'UVWX90', dep: trainDep, arr: trainArr },
     ],
     'Android': [
       { label: 'Wallet (pkpass)', type: 'train', ticket: { available: true, hasQR: true, wallet: true }, platform: 'android', carrier: 'SNCF', num: 'TGV 6234', pnr: 'HJKL42', dep: trainDep, arr: trainArr },
       { label: 'QR code (pas de wallet)', type: 'train', ticket: { available: true, hasQR: true, wallet: false }, platform: 'android', carrier: 'OUIGO', num: '7641', pnr: 'MNOP55', dep: trainDep, arr: trainArr },
-      { label: 'PDF seul (train)', type: 'train', ticket: { available: true, hasQR: false, wallet: false }, platform: 'android', carrier: 'SNCF', num: 'TGV 8891', pnr: 'QRST78', dep: trainDep, arr: trainArr },
-      { label: 'Vol \u2014 e-ticket', type: 'flight', ticket: { available: true, hasQR: false, wallet: false }, platform: 'android', carrier: 'Air France', num: 'AF 1234', pnr: 'ABC123', dep: flightDep, arr: flightArr },
+      { label: 'PDF seul (train)', type: 'train', ticket: { available: true, hasQR: false, wallet: false }, platform: 'android', carrier: 'SNCF', num: 'TGV 8891', pnr: 'QRST78', dep: trainDep, arr: trainArr, voucherPdf: 'transport-voucher.pdf' },
+      { label: 'Vol \u2014 e-ticket', type: 'flight', ticket: { available: true, hasQR: false, wallet: false }, platform: 'android', carrier: 'Air France', num: 'AF 1234', pnr: 'ABC123', dep: flightDep, arr: flightArr, voucherPdf: 'transport-voucher.pdf' },
       { label: 'Billet diff\u00e9r\u00e9', type: 'train', ticket: { available: false, availableDate: '15 mars 2026' }, platform: 'android', carrier: 'SNCF', num: 'TGV 9012', pnr: 'UVWX90', dep: trainDep, arr: trainArr },
     ],
     'Desktop': [
       { label: 'Billet dispo (QR)', type: 'train', ticket: { available: true, hasQR: true, wallet: true }, platform: 'desktop', carrier: 'SNCF', num: 'TGV 6234', pnr: 'HJKL42', dep: trainDep, arr: trainArr },
-      { label: 'PDF seul', type: 'train', ticket: { available: true, hasQR: false, wallet: false }, platform: 'desktop', carrier: 'SNCF', num: 'TGV 8891', pnr: 'QRST78', dep: trainDep, arr: trainArr },
-      { label: 'Vol \u2014 e-ticket', type: 'flight', ticket: { available: true, hasQR: false, wallet: false }, platform: 'desktop', carrier: 'Air France', num: 'AF 1234', pnr: 'ABC123', dep: flightDep, arr: flightArr },
+      { label: 'PDF seul', type: 'train', ticket: { available: true, hasQR: false, wallet: false }, platform: 'desktop', carrier: 'SNCF', num: 'TGV 8891', pnr: 'QRST78', dep: trainDep, arr: trainArr, voucherPdf: 'transport-voucher.pdf' },
+      { label: 'Vol \u2014 e-ticket', type: 'flight', ticket: { available: true, hasQR: false, wallet: false }, platform: 'desktop', carrier: 'Air France', num: 'AF 1234', pnr: 'ABC123', dep: flightDep, arr: flightArr, voucherPdf: 'transport-voucher.pdf' },
       { label: 'Billet diff\u00e9r\u00e9', type: 'train', ticket: { available: false, availableDate: '15 mars 2026' }, platform: 'desktop', carrier: 'SNCF', num: 'TGV 9012', pnr: 'UVWX90', dep: trainDep, arr: trainArr },
     ],
     'H\u00f4tel / Voiture': [
