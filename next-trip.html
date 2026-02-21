@@ -612,6 +612,11 @@
   .sheet-actions { display: flex; flex-direction: column; gap: 8px; }
   .sheet-actions .cta-pri { width: 100%; justify-content: center; padding: 11px 18px; font-size: 14px; border-radius: 10px; }
   .sheet-actions .cta-sec { width: 100%; justify-content: center; padding: 8px 14px; }
+  .sheet-actions-row { display: flex; align-items: center; gap: 10px; }
+  .sheet-actions-row .wallet-badge-apple, .sheet-actions-row .wallet-badge-google { flex: 1; }
+  .sheet-pdf-link { display: inline-flex; align-items: center; gap: 5px; font-size: 12px; font-weight: 700; color: var(--grey-500); text-decoration: none; padding: 6px 0; transition: color 0.15s; cursor: pointer; border: none; background: none; font-family: var(--font); flex-shrink: 0; }
+  .sheet-pdf-link:hover { color: var(--blue-500); }
+  .sheet-pdf-link .material-symbols-rounded { font-size: 16px; }
   .sheet-info { display: flex; align-items: flex-start; gap: 8px; padding: 10px 12px; background: var(--blue-50); border: 1px solid var(--blue-100); border-radius: 10px; font-size: 12px; color: var(--blue-700); line-height: 1.4; margin-bottom: 12px; }
   .sheet-info-icon { font-size: 16px; flex-shrink: 0; }
   .sheet-qr { width: 200px; height: 200px; margin: 16px auto 18px; background: var(--grey-50); border: 1px solid var(--grey-100); border-radius: 14px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px; padding: 20px; }
@@ -718,6 +723,8 @@
   .sheet-overlay[data-color="contrast"] .sheet-footer { border-color: rgba(255,255,255,0.12); }
   .sheet-overlay[data-color="contrast"] .sheet-footer a { color: rgba(255,255,255,0.7); }
   .sheet-overlay[data-color="contrast"] .sheet-footer a:hover { color: var(--blue-200); }
+  .sheet-overlay[data-color="contrast"] .sheet-pdf-link { color: rgba(255,255,255,0.5); }
+  .sheet-overlay[data-color="contrast"] .sheet-pdf-link:hover { color: var(--blue-200); }
   .sheet-overlay[data-color="contrast"] .sheet-actions .cta-pri { background: #fff; color: #1a2747; font-weight: 800; }
   .sheet-overlay[data-color="contrast"] .sheet-actions .cta-pri:hover { background: rgba(255,255,255,0.9); }
   .sheet-overlay[data-color="contrast"] .sheet-actions .cta-sec { border-color: rgba(255,255,255,0.18); color: #fff; background: rgba(255,255,255,0.08); }
@@ -767,6 +774,8 @@
   .sheet-overlay[data-color="dark"] .sheet-footer { border-color: rgba(255,255,255,0.06); }
   .sheet-overlay[data-color="dark"] .sheet-footer a { color: rgba(255,255,255,0.4); }
   .sheet-overlay[data-color="dark"] .sheet-footer a:hover { color: var(--blue-300); }
+  .sheet-overlay[data-color="dark"] .sheet-pdf-link { color: rgba(255,255,255,0.4); }
+  .sheet-overlay[data-color="dark"] .sheet-pdf-link:hover { color: var(--blue-300); }
   .sheet-overlay[data-color="dark"] .sheet-actions .cta-pri { background: #fff; color: #252540; font-weight: 800; }
   .sheet-overlay[data-color="dark"] .sheet-actions .cta-pri:hover { background: rgba(255,255,255,0.9); }
   .sheet-overlay[data-color="dark"] .sheet-actions .cta-sec { border-color: rgba(255,255,255,0.15); color: #fff; background: rgba(255,255,255,0.08); }
@@ -2521,24 +2530,27 @@ function buildTransportSheet(e, platform) {
     }
   }
 
-  // Actions
-  h += '<div class="sheet-actions">';
-  if (isMobile && ticket.wallet) {
+  // Actions: wallet + PDF side by side
+  if (isMobile && ticket.wallet && ticket.hasQR) {
+    h += '<div class="sheet-actions-row">';
     if (platform === 'ios') h += appleWalletBadge;
     else h += googleWalletBadge;
-  }
-  // PDF button only when QR is shown (doc block is already clickable otherwise)
-  if (ticket.hasQR) {
-    if (isMobile) {
-      h += `<button class="cta-sec" onclick="event.preventDefault()">&#128196; Voir le billet PDF</button>`;
-    } else {
-      h += `<button class="cta-pri" onclick="event.preventDefault()">&#128196; Télécharger le PDF</button>`;
+    h += `<button class="sheet-pdf-link" onclick="event.preventDefault()"><span class="material-symbols-rounded">download</span> PDF</button>`;
+    h += '</div>';
+  } else {
+    h += '<div class="sheet-actions">';
+    if (isMobile && ticket.wallet) {
+      if (platform === 'ios') h += appleWalletBadge;
+      else h += googleWalletBadge;
     }
+    if (ticket.hasQR) {
+      h += `<button class="sheet-pdf-link" onclick="event.preventDefault()"><span class="material-symbols-rounded">download</span> PDF</button>`;
+    }
+    if (isFl && !ticket.wallet && !ticket.hasQR) {
+      h += `<div class="sheet-info" style="margin-top:8px;margin-bottom:0"><span class="sheet-info-icon">&#9432;</span><div>Ceci est votre e-ticket. Enregistrez-vous auprès de la compagnie.</div></div>`;
+    }
+    h += '</div>';
   }
-  if (isFl && !ticket.wallet && !ticket.hasQR) {
-    h += `<div class="sheet-info" style="margin-top:8px;margin-bottom:0"><span class="sheet-info-icon">&#9432;</span><div>Ceci est votre e-ticket. Enregistrez-vous auprès de la compagnie.</div></div>`;
-  }
-  h += '</div>';
 
   return h;
 }
