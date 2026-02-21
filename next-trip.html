@@ -173,7 +173,7 @@
     }
     .card-inner:has(.stepper-bold) > .card-header { grid-column: 1 / -1; margin-bottom: 6px; }
     .card-inner:has(.stepper-bold) > .stepper { grid-row: 2; grid-column: 1; align-self: center; }
-    .card-inner:has(.stepper-bold) > [id^="etape-"] { grid-row: 2; grid-column: 2; align-self: center; }
+    .card-inner:has(.stepper-bold) > [id^="etape-"] { grid-row: 2; grid-column: 2; align-self: center; overflow: visible; }
 
     /* Stepper becomes vertical column */
     .stepper.stepper-bold {
@@ -286,7 +286,7 @@
   }
 
   /* ===== Étape wrapper ===== */
-  .etape-content { transition: all 0.3s var(--ease); }
+  .etape-content { transition: all 0.3s var(--ease); overflow: visible; }
   .etape-content.is-past { opacity: 0.5; filter: grayscale(0.3); }
   .etape-content.is-past:hover { opacity: 0.7; }
   .etape-meta { display: flex; align-items: center; gap: 6px; margin-bottom: 8px; }
