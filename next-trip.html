@@ -249,13 +249,6 @@
       background-size: 100% 250%;
       animation: bold-transit-v 2.5s ease-in-out infinite;
     }
-    /* Dark mode vertical transit */
-    .trip-card.dark-mode .stepper-bold .stepper-step.active.transit::after {
-      background: linear-gradient(180deg, var(--blue-400) 40%, rgba(255,255,255,0.08) 60%);
-      background-size: 100% 250%;
-      animation: bold-transit-v 2.5s ease-in-out infinite;
-    }
-
     /* Desktop: only pill + nav buttons are clickable */
     .bpb.tappable .bpb-action-pill,
     .bpb .leg-action-center .bpb-action-pill { cursor: pointer; }
@@ -729,52 +722,6 @@
   .sheet-overlay[data-color="contrast"] .sheet-conn { background: rgba(255,141,84,0.08); }
   .sheet-overlay[data-color="contrast"] .sheet-conn-text { color: var(--orange-300); }
   .sheet-overlay[data-color="contrast"] .sheet-divider { background: rgba(255,255,255,0.06); }
-  /* Dark contrast mode sheet */
-  .sheet-overlay[data-color="dark"] .sheet-panel { background: #252540; border: 1px solid rgba(255,255,255,0.06); box-shadow: 0 8px 40px rgba(0,0,0,0.5); }
-  .sheet-overlay[data-color="dark"] .sheet-handle { background: rgba(255,255,255,0.15); }
-  .sheet-overlay[data-color="dark"] .sheet-header { border-color: rgba(255,255,255,0.06); }
-  .sheet-overlay[data-color="dark"] .sheet-title { color: #fff; }
-  .sheet-overlay[data-color="dark"] .date-icon { background: rgba(255,255,255,0.10); border-color: rgba(255,255,255,0.12); }
-  .sheet-overlay[data-color="dark"] .date-icon-day { color: #fff; }
-  .sheet-overlay[data-color="dark"] .date-icon-month { color: rgba(255,255,255,0.55); }
-  .sheet-overlay[data-color="dark"] .sheet-close { background: rgba(255,255,255,0.08); color: rgba(255,255,255,0.6); }
-  .sheet-overlay[data-color="dark"] .sheet-close:hover { background: rgba(255,255,255,0.12); color: #fff; }
-  .sheet-overlay[data-color="dark"] .sheet-body { color: rgba(255,255,255,0.85); }
-  .sheet-overlay[data-color="dark"] .sheet-info { background: rgba(0,169,252,0.1); border-color: rgba(0,169,252,0.18); color: var(--blue-300); }
-  .sheet-overlay[data-color="dark"] .sheet-qr { background: rgba(255,255,255,0.05); border-color: rgba(255,255,255,0.12); color: rgba(255,255,255,0.4); }
-  .sheet-overlay[data-color="dark"] .sheet-qr-label { color: rgba(255,255,255,0.35); }
-  .sheet-overlay[data-color="dark"] .sheet-doc { background: rgba(255,255,255,0.05); border-color: rgba(255,255,255,0.1); }
-  .sheet-overlay[data-color="dark"] .sheet-doc-name { color: #fff; }
-  .sheet-overlay[data-color="dark"] .sheet-doc-meta { color: rgba(255,255,255,0.4); }
-  .sheet-overlay[data-color="dark"] .sheet-pax { color: rgba(255,255,255,0.4); }
-  .sheet-overlay[data-color="dark"] .sheet-pax strong { color: rgba(255,255,255,0.6); }
-  .sheet-overlay[data-color="dark"] .sheet-pdf { border-color: rgba(255,255,255,0.15); background: #fff; }
-  .sheet-overlay[data-color="dark"] .sheet-dl-name { color: #fff; }
-  .sheet-overlay[data-color="dark"] .sheet-dl-meta { color: rgba(255,255,255,0.4); }
-  .sheet-overlay[data-color="dark"] .sheet-dl-btn { background: rgba(255,255,255,0.1); color: #fff; }
-  .sheet-overlay[data-color="dark"] .sheet-detail-label { color: rgba(255,255,255,0.35); }
-  .sheet-overlay[data-color="dark"] .sheet-detail-value { color: #fff; }
-  .sheet-overlay[data-color="dark"] .sheet-detail-sub { color: rgba(255,255,255,0.45); }
-  .sheet-overlay[data-color="dark"] .sheet-conditions { background: rgba(255,255,255,0.05); color: rgba(255,255,255,0.6); }
-  .sheet-overlay[data-color="dark"] .sheet-conditions strong { color: rgba(255,255,255,0.8); }
-  .sheet-overlay[data-color="dark"] .sheet-map-btn { background: rgba(255,255,255,0.08); color: rgba(255,255,255,0.6); }
-  .sheet-overlay[data-color="dark"] .sheet-map-btn:hover { background: rgba(255,255,255,0.15); color: #fff; }
-  .sheet-overlay[data-color="dark"] .sheet-footer { border-color: rgba(255,255,255,0.06); }
-  .sheet-overlay[data-color="dark"] .sheet-footer a { color: rgba(255,255,255,0.4); }
-  .sheet-overlay[data-color="dark"] .sheet-footer a:hover { color: var(--blue-300); }
-  .sheet-overlay[data-color="dark"] .sheet-pdf-link { color: rgba(255,255,255,0.4); }
-  .sheet-overlay[data-color="dark"] .sheet-pdf-link:hover { color: var(--blue-300); }
-  .sheet-overlay[data-color="dark"] .sheet-actions .cta-pri { background: #fff; color: #252540; font-weight: 800; }
-  .sheet-overlay[data-color="dark"] .sheet-actions .cta-pri:hover { background: rgba(255,255,255,0.9); }
-  .sheet-overlay[data-color="dark"] .sheet-actions .cta-sec { border-color: rgba(255,255,255,0.15); color: #fff; background: rgba(255,255,255,0.08); }
-  .sheet-overlay[data-color="dark"] .sheet-actions .cta-sec:hover { background: rgba(255,255,255,0.14); }
-  .sheet-overlay[data-color="dark"] .sheet-ticket-label { color: #fff; }
-  .sheet-overlay[data-color="dark"] .sheet-ticket-route { color: rgba(255,255,255,0.4); }
-  .sheet-overlay[data-color="dark"] .sheet-ticket-nav button { border-color: rgba(255,255,255,0.15); color: rgba(255,255,255,0.6); }
-  .sheet-overlay[data-color="dark"] .sheet-ticket-counter { color: rgba(255,255,255,0.35); }
-  .sheet-overlay[data-color="dark"] .sheet-conn { background: rgba(255,141,84,0.06); }
-  .sheet-overlay[data-color="dark"] .sheet-conn-text { color: var(--orange-300); }
-  .sheet-overlay[data-color="dark"] .sheet-divider { background: rgba(255,255,255,0.06); }
   /* Bold card tappable — hover/bounce only on mobile (desktop: only pill is clickable) */
   .bpb.tappable { cursor: default; }
   /* Deferred button clickable */
@@ -932,11 +879,17 @@
   .float-drawer.visible { display: flex; flex-direction: column; align-items: flex-end; gap: 6px; }
   .float-drawer-toggle { width: 36px; height: 36px; border-radius: 50%; border: none; background: var(--black); color: #fff; font-size: 16px; cursor: pointer; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 8px rgba(0,0,0,0.2); transition: all 0.15s; font-family: var(--font); }
   .float-drawer-toggle:hover { transform: scale(1.05); box-shadow: 0 4px 12px rgba(0,0,0,0.25); }
-  .float-drawer-body { background: #fff; border-radius: 10px; box-shadow: 0 4px 20px rgba(0,0,0,0.12); padding: 8px 10px; display: none; }
-  .float-drawer.open .float-drawer-body { display: flex; gap: 4px; align-items: center; }
+  .float-drawer-body { background: #fff; border-radius: 10px; box-shadow: 0 4px 20px rgba(0,0,0,0.12); padding: 10px 12px; display: none; }
+  .float-drawer.open .float-drawer-body { display: flex; flex-direction: column; gap: 8px; }
+  .float-drawer .fd-row { display: flex; align-items: center; gap: 4px; }
+  .float-drawer .fd-label { font-size: 9px; font-weight: 700; color: var(--grey-400); text-transform: uppercase; letter-spacing: 0.3px; margin-right: 4px; white-space: nowrap; }
   .float-drawer .fd-pill { padding: 3px 9px; border-radius: 7px; font-size: 10px; font-weight: 600; border: 1.5px solid var(--grey-100); background: var(--white); color: var(--grey-600); cursor: pointer; font-family: var(--font); transition: all 0.15s; }
   .float-drawer .fd-pill:hover { background: var(--grey-50); border-color: var(--grey-200); }
   .float-drawer .fd-pill.active { background: var(--black); color: var(--white); border-color: var(--black); }
+  .float-drawer .fd-toggle { width: 28px; height: 16px; border-radius: 8px; border: none; background: var(--grey-200); cursor: pointer; position: relative; transition: background 0.15s; padding: 0; }
+  .float-drawer .fd-toggle::after { content: ''; position: absolute; left: 2px; top: 2px; width: 12px; height: 12px; border-radius: 50%; background: #fff; transition: transform 0.15s; }
+  .float-drawer .fd-toggle.on { background: var(--black); }
+  .float-drawer .fd-toggle.on::after { transform: translateX(12px); }
 
   /* ===== Home Skeleton Sections ===== */
   .home-skeleton { max-width: 960px; margin: 0 auto; padding: 0 16px 60px; }
@@ -961,16 +914,11 @@
   .skel-circle.sm { width: 28px; height: 28px; }
   .skel-card .skel-title { font-size: 12px; font-weight: 600; color: var(--grey-400); margin-bottom: 8px; }
   .skel-separator { height: 1px; background: var(--grey-100); margin: 20px 0; }
-  /* Dark overrides */
-  body.color-dark .home-skeleton .skel-card,
+  /* Contrast overrides */
   body.color-contrast .home-skeleton .skel-card { background: rgba(255,255,255,0.04); border-color: rgba(255,255,255,0.08); }
-  body.color-dark .home-skeleton .skel-bar,
   body.color-contrast .home-skeleton .skel-bar { background: rgba(255,255,255,0.08); }
-  body.color-dark .home-skeleton .skel-circle,
   body.color-contrast .home-skeleton .skel-circle { background: rgba(255,255,255,0.08); }
-  body.color-dark .home-skeleton .skel-section-title,
   body.color-contrast .home-skeleton .skel-section-title { color: rgba(255,255,255,0.4); }
-  body.color-dark .home-skeleton .skel-badge,
   body.color-contrast .home-skeleton .skel-badge { background: #dc2626; }
 
   /* ===== Scenario Sections ===== */
@@ -1036,42 +984,6 @@
   .trip-card:not(.contrast-mode) .htd-log-item { color: var(--grey-600); }
   .trip-card:not(.contrast-mode) .htd-log-item strong { color: var(--black); }
 
-  /* ===== Dark Mode — Stepper inside dark card ===== */
-  .trip-card.dark-mode .stepper-dark .stepper-step:hover { background: rgba(255,255,255,0.04); }
-  .trip-card.dark-mode .stepper-dark .stepper-step.active:hover { background: rgba(0,169,252,0.08); }
-  .trip-card.dark-mode .stepper-dark .stepper-line { background: rgba(255,255,255,0.1); }
-  .trip-card.dark-mode .stepper-dark .stepper-label { color: rgba(255,255,255,0.5); }
-  .trip-card.dark-mode .stepper-dark .stepper-step.active .stepper-label { color: var(--blue-300, #5bc0fa); }
-  .trip-card.dark-mode .stepper-dark .stepper-date { color: rgba(255,255,255,0.3); }
-  .trip-card.dark-mode .stepper-dark .stepper-step.active .stepper-date { color: var(--blue-400, #5bc0fa); }
-  .trip-card.dark-mode .stepper-dark .stepper-step.completed .stepper-label { color: rgba(255,255,255,0.3); }
-  .trip-card.dark-mode .stepper-dark .stepper-step.completed .stepper-line { background: rgba(34,215,161,0.2); }
-  /* Dark mode bold stepper overrides */
-  .trip-card.dark-mode .stepper-bold .stepper-step:not(.active) { opacity: 0.4; }
-  .trip-card.dark-mode .stepper-bold .stepper-step:not(.active):hover { opacity: 0.7; }
-  .trip-card.dark-mode .stepper-bold .stepper-step.completed:not(.active) { opacity: 0.28; }
-  .trip-card.dark-mode .stepper-bold .stepper-step.active .stepper-dot { box-shadow: 0 0 0 5px rgba(0,169,252,0.18), 0 2px 12px rgba(0,169,252,0.25); }
-  .trip-card.dark-mode .stepper-bold .stepper-step::before,
-  .trip-card.dark-mode .stepper-bold .stepper-step::after { background: rgba(255,255,255,0.08); }
-  .trip-card.dark-mode .stepper-bold .stepper-step.completed::before,
-  .trip-card.dark-mode .stepper-bold .stepper-step.completed::after { background: rgba(34,215,161,0.2); }
-  .trip-card.dark-mode .stepper-bold .stepper-step.completed + .stepper-step::before { background: rgba(34,215,161,0.2); }
-
-  /* ===== Dark Mode — Full dark trip card ===== */
-  .trip-card.dark-mode { background: #252540; border-color: rgba(255,255,255,0.06); box-shadow: 0 4px 20px rgba(0,0,0,0.25); backdrop-filter: none; -webkit-backdrop-filter: none; }
-  .trip-card.dark-mode.state-imminent { background: linear-gradient(160deg, #213557 0%, #252540 35%); border-color: rgba(0,169,252,0.2); box-shadow: 0 4px 20px rgba(0,0,0,0.25), 0 0 24px rgba(0,169,252,0.08); backdrop-filter: none; -webkit-backdrop-filter: none; }
-  .trip-card.dark-mode.state-in_transit { background: linear-gradient(160deg, #20395c 0%, #252540 45%); border-color: rgba(0,169,252,0.25); box-shadow: 0 4px 20px rgba(0,0,0,0.25), 0 0 24px rgba(0,169,252,0.12); backdrop-filter: none; -webkit-backdrop-filter: none; }
-  .trip-card.dark-mode.state-between_segments { border-color: rgba(34,215,161,0.12); }
-  .trip-card.dark-mode.state-trip_ending { background: linear-gradient(160deg, #25374a 0%, #252540 35%); border-color: rgba(34,215,161,0.2); box-shadow: 0 4px 20px rgba(0,0,0,0.25), 0 0 20px rgba(34,215,161,0.06); backdrop-filter: none; -webkit-backdrop-filter: none; }
-  .trip-card.dark-mode .card-inner { color: rgba(255,255,255,0.9); }
-  .trip-card.dark-mode .headline { color: #fff; }
-  .trip-card.dark-mode.state-imminent .headline,
-  .trip-card.dark-mode.state-in_transit .headline { color: var(--blue-200); }
-  .trip-card.dark-mode.state-trip_ending .headline { color: var(--green-200); }
-  .trip-card.dark-mode .co-travelers { color: rgba(255,255,255,0.5); }
-  .trip-card.dark-mode .header-link { color: var(--black); background: rgba(255,255,255,0.85); border-color: rgba(255,255,255,0.6); }
-  .trip-card.dark-mode .header-link:hover { background: rgba(255,255,255,0.95); border-color: rgba(255,255,255,0.8); }
-  .trip-card.dark-mode .etape-tag { opacity: 0.9; }
   /* ===== Contrast-mode — outer card state overrides (stronger signals for high-contrast) ===== */
   .trip-card.contrast-mode.state-imminent { border-color: rgba(0,169,252,0.28); background: linear-gradient(160deg, rgba(0,169,252,0.10) 0%, rgba(255,255,255,0.55) 35%); box-shadow: 0 2px 20px rgba(0,169,252,0.14), 0 0 0 1px rgba(0,169,252,0.10); }
   .trip-card.contrast-mode.state-in_transit { border-color: rgba(0,169,252,0.35); background: linear-gradient(160deg, rgba(0,169,252,0.14) 0%, rgba(255,255,255,0.55) 45%); box-shadow: 0 2px 20px rgba(0,169,252,0.18), 0 0 0 1px rgba(0,169,252,0.12); }
@@ -1335,41 +1247,6 @@
   #showcase-container[data-color="contrast"] .sheet-footer a { color: rgba(255,255,255,0.45); }
   #showcase-container[data-color="contrast"] .sheet-actions .cta-pri { background: #fff; color: #1a2747; font-weight: 800; }
   #showcase-container[data-color="contrast"] .sheet-actions .cta-sec { border-color: rgba(255,255,255,0.18); color: #fff; background: rgba(255,255,255,0.08); }
-  #showcase-container[data-color="dark"] .showcase-item { box-shadow: 0 1px 6px rgba(0,0,0,0.4); }
-  #showcase-container[data-color="dark"] .showcase-label { background: #1a1a35; color: rgba(255,255,255,0.4); border-color: rgba(255,255,255,0.05); }
-  #showcase-container[data-color="dark"] .showcase-panel { background: #252540; color: rgba(255,255,255,0.85); }
-  #showcase-container[data-color="dark"] .sheet-header { border-color: rgba(255,255,255,0.06); }
-  #showcase-container[data-color="dark"] .sheet-title { color: #fff; }
-  #showcase-container[data-color="dark"] .date-icon { background: rgba(255,255,255,0.10); border-color: rgba(255,255,255,0.12); }
-  #showcase-container[data-color="dark"] .date-icon-day { color: #fff; }
-  #showcase-container[data-color="dark"] .date-icon-month { color: rgba(255,255,255,0.55); }
-  #showcase-container[data-color="dark"] .sheet-close { background: rgba(255,255,255,0.08); color: rgba(255,255,255,0.6); }
-  #showcase-container[data-color="dark"] .sheet-info { background: rgba(0,169,252,0.1); border-color: rgba(0,169,252,0.18); color: var(--blue-300); }
-  #showcase-container[data-color="dark"] .sheet-qr { background: rgba(255,255,255,0.05); border-color: rgba(255,255,255,0.12); color: rgba(255,255,255,0.4); }
-  #showcase-container[data-color="dark"] .sheet-qr-label { color: rgba(255,255,255,0.35); }
-  #showcase-container[data-color="dark"] .sheet-doc { background: rgba(255,255,255,0.05); border-color: rgba(255,255,255,0.1); }
-  #showcase-container[data-color="dark"] .sheet-doc-name { color: #fff; }
-  #showcase-container[data-color="dark"] .sheet-doc-meta { color: rgba(255,255,255,0.4); }
-  #showcase-container[data-color="dark"] .sheet-pax { color: rgba(255,255,255,0.4); }
-  #showcase-container[data-color="dark"] .sheet-pax strong { color: rgba(255,255,255,0.6); }
-  #showcase-container[data-color="dark"] .sheet-pdf { border-color: rgba(255,255,255,0.15); background: #fff; }
-  #showcase-container[data-color="dark"] .sheet-dl-name { color: #fff; }
-  #showcase-container[data-color="dark"] .sheet-dl-meta { color: rgba(255,255,255,0.4); }
-  #showcase-container[data-color="dark"] .sheet-dl-btn { background: rgba(255,255,255,0.1); color: #fff; }
-  #showcase-container[data-color="dark"] .sheet-detail-label { color: rgba(255,255,255,0.35); }
-  #showcase-container[data-color="dark"] .sheet-detail-value { color: #fff; }
-  #showcase-container[data-color="dark"] .sheet-detail-sub { color: rgba(255,255,255,0.45); }
-  #showcase-container[data-color="dark"] .sheet-conditions { background: rgba(255,255,255,0.05); color: rgba(255,255,255,0.55); }
-  #showcase-container[data-color="dark"] .sheet-map-btn { background: rgba(255,255,255,0.08); color: rgba(255,255,255,0.6); }
-  #showcase-container[data-color="dark"] .sheet-ticket-label { color: #fff; }
-  #showcase-container[data-color="dark"] .sheet-ticket-route { color: rgba(255,255,255,0.4); }
-  #showcase-container[data-color="dark"] .sheet-ticket-nav button { border-color: rgba(255,255,255,0.15); color: rgba(255,255,255,0.6); }
-  #showcase-container[data-color="dark"] .sheet-ticket-counter { color: rgba(255,255,255,0.35); }
-  #showcase-container[data-color="dark"] .sheet-divider { background: rgba(255,255,255,0.06); }
-  #showcase-container[data-color="dark"] .sheet-footer { border-color: rgba(255,255,255,0.06); }
-  #showcase-container[data-color="dark"] .sheet-footer a { color: rgba(255,255,255,0.4); }
-  #showcase-container[data-color="dark"] .sheet-actions .cta-pri { background: #fff; color: #252540; font-weight: 800; }
-  #showcase-container[data-color="dark"] .sheet-actions .cta-sec { border-color: rgba(255,255,255,0.15); color: #fff; background: rgba(255,255,255,0.08); }
 </style>
 </head>
 <body class="color-contrast">
@@ -1381,7 +1258,6 @@
     <div class="proto-globals">
       <button onclick="setColor('light')" id="btn-color-light">Light</button>
       <button onclick="setColor('contrast')" id="btn-color-contrast" class="active">Contrast</button>
-      <button onclick="setColor('dark')" id="btn-color-dark">Dark</button>
       <div class="sep"></div>
       <button onclick="setLayout('classic')" id="btn-layout-classic">Classic</button>
       <button onclick="setLayout('bold')" id="btn-layout-bold" class="active">Bold</button>
@@ -2060,8 +1936,8 @@ function buildStepperHTML(trip, state, activeIdx, autoIdx, done, isDark, isBold,
 function renderAll() {
   sheetTargets = [];
   const state = currentState;
-  const isDark = currentColor === 'dark' || currentColor === 'contrast';
   const isContrast = currentColor === 'contrast';
+  const isDark = isContrast;
   const isBold = currentLayout === 'bold';
   const isEpure = isBold;
   const container = document.getElementById('cards-container');
@@ -2083,7 +1959,7 @@ function renderAll() {
     const travelers = trip.travelers.length ? `<div class="co-travelers">avec ${trip.travelers.join(' et ')}</div>` : '';
     const stepperH = buildStepperHTML(trip, state, selIdx, autoIdx, done, isDark, isBold, key);
 
-    const colorCls = isContrast ? ' contrast-mode' : (currentColor === 'dark' ? ' dark-mode' : '');
+    const colorCls = isContrast ? ' contrast-mode' : '';
     const cardHTML = `<div id="scenario-${key}"><div class="trip-card state-${state}${colorCls}"><div class="card-inner"><div class="card-header"><div class="header-left"><div class="headline-row"><div class="state-dot"></div><div class="headline">${headline}</div></div>${travelers}</div><a href="#" class="header-link" onclick="event.preventDefault()">Voir le voyage →</a></div>${stepperH}<div id="etape-${key}"></div></div></div></div>`;
     container.insertAdjacentHTML('beforeend', cardHTML);
 
@@ -2428,10 +2304,9 @@ function renderEtape(e, state, idx, autoIdx, done, total, isPast, targetId) {
     let allH = '';
 
     // Style flags
-    const isDark = currentColor === 'dark';
     const isBold = currentLayout === 'bold';
     const isEpure = isBold;
-    const navyCls = isDark ? 'bpb-navy' : '';
+    const navyCls = '';
 
     // Transit bar
     if (isTransit) {
@@ -2481,7 +2356,7 @@ function renderEtape(e, state, idx, autoIdx, done, total, isPast, targetId) {
 
   // ===== HOTEL CARD =====
   else if (e.type === 'hotel') {
-    const isDark = currentColor === 'dark' || currentColor === 'contrast';
+    const isDark = currentColor === 'contrast';
     const isBold = currentLayout === 'bold';
     const isEpure = isBold;
     const stars = e.starsText || '';
@@ -2550,7 +2425,7 @@ function renderEtape(e, state, idx, autoIdx, done, total, isPast, targetId) {
 
   // ===== CAR CARD =====
   else if (e.type === 'car') {
-    const isDark = currentColor === 'dark' || currentColor === 'contrast';
+    const isDark = currentColor === 'contrast';
     const isBold = currentLayout === 'bold';
     const isEpure = isBold;
     const oj = e.pickup.location !== e.dropoff.location;
@@ -2755,16 +2630,23 @@ function selectEtape(tripKey, idx) {
 let _sheetEtape = null;
 function openSheet(etapeData) {
   _sheetEtape = etapeData;
-  _renderSheet(etapeData);
-  // Show float drawer
-  renderFloatDrawer();
-  document.getElementById('float-drawer').classList.add('visible');
+  const patched = (currentTab === 'timeline') ? _applyFdOverrides(etapeData) : etapeData;
+  _renderSheet(patched);
+  // Show float drawer (only in timeline tab)
+  if (currentTab === 'timeline') {
+    renderFloatDrawer();
+    document.getElementById('float-drawer').classList.add('visible');
+    document.getElementById('float-drawer').classList.add('open');
+  }
 }
 function switchSheetPlatform(p) {
   currentPlatform = p;
-  if (_sheetEtape) _renderSheet(_sheetEtape);
+  if (_sheetEtape) {
+    const patched = (currentTab === 'timeline') ? _applyFdOverrides(_sheetEtape) : _sheetEtape;
+    _renderSheet(patched);
+  }
   renderFloatDrawer();
-  updateShowcase();
+  if (currentTab === 'ticket') updateShowcase();
 }
 function _renderSheet(etapeData) {
   const overlay = document.getElementById('sheet-overlay');
@@ -2816,15 +2698,94 @@ function closeSheet() {
 function sheetEscHandler(e) { if (e.key === 'Escape') closeSheet(); }
 
 // ===== Float Drawer =====
+// Float drawer state for ticket overrides
+const _fdState = {
+  ticket: 'qr-wallet',  // 'qr-wallet' | 'qr' | 'pdf' | 'differe'
+  multi: false,
+};
+
 function toggleFloatDrawer() {
   document.getElementById('float-drawer').classList.toggle('open');
 }
+function fdSet(key, val) {
+  _fdState[key] = val;
+  if (_sheetEtape) {
+    const patched = _applyFdOverrides(_sheetEtape);
+    _renderSheet(patched);
+  }
+  renderFloatDrawer();
+}
+function _applyFdOverrides(etape) {
+  // Deep-ish clone to avoid mutating POOL data
+  const e = JSON.parse(JSON.stringify(etape));
+  const st = _fdState;
+
+  if (e.type === 'train' || e.type === 'flight') {
+    // Ticket facility
+    if (st.ticket === 'differe') {
+      e.ticket = { available: false };
+      delete e.voucherPdf;
+      if (e.segments) e.segments.forEach(s => { s.ticket = { available: false }; });
+    } else if (st.ticket === 'pdf') {
+      e.ticket = { available: true, hasQR: false, wallet: false };
+      e.voucherPdf = e.type === 'flight' ? 'voucher-flight.pdf' : 'billet.pdf';
+      if (e.segments) e.segments.forEach(s => { s.ticket = null; });
+    } else if (st.ticket === 'qr') {
+      e.ticket = { available: true, hasQR: true, wallet: false };
+      delete e.voucherPdf;
+      if (e.segments && st.multi) e.segments.forEach(s => { s.ticket = { available: true, hasQR: true, wallet: false }; });
+      else if (e.segments) e.segments.forEach(s => { s.ticket = null; });
+    } else {
+      // qr-wallet
+      e.ticket = { available: true, hasQR: true, wallet: true };
+      delete e.voucherPdf;
+      if (e.segments && st.multi) e.segments.forEach(s => { s.ticket = { available: true, hasQR: true, wallet: true }; });
+      else if (e.segments) e.segments.forEach(s => { s.ticket = null; });
+    }
+
+    // Multi-supplier: give each segment its own ticket
+    if (st.multi && e.segments && e.segments.length > 1) {
+      e.segments.forEach(s => {
+        if (!s.ticket) s.ticket = e.ticket ? {...e.ticket} : { available: true, hasQR: true, wallet: true };
+      });
+    } else if (!st.multi && e.segments) {
+      e.segments.forEach(s => { s.ticket = null; });
+    }
+  }
+  return e;
+}
 function renderFloatDrawer() {
   const body = document.getElementById('float-drawer-body');
-  body.innerHTML = ['desktop', 'ios', 'android'].map(p => {
+  const e = _sheetEtape;
+  const isTransport = e && (e.type === 'train' || e.type === 'flight');
+  const hasSegs = e && e.segments && e.segments.length > 1;
+  const st = _fdState;
+
+  let h = '';
+
+  // Platform row
+  h += '<div class="fd-row"><span class="fd-label">Plat.</span>';
+  ['desktop', 'ios', 'android'].forEach(p => {
     const lbl = p === 'desktop' ? 'Desktop' : p === 'ios' ? 'iOS' : 'Android';
-    return `<button class="fd-pill${p === currentPlatform ? ' active' : ''}" onclick="switchSheetPlatform('${p}')">${lbl}</button>`;
-  }).join('');
+    h += `<button class="fd-pill${p === currentPlatform ? ' active' : ''}" onclick="switchSheetPlatform('${p}')">${lbl}</button>`;
+  });
+  h += '</div>';
+
+  if (isTransport) {
+    // Ticket row
+    h += '<div class="fd-row"><span class="fd-label">Ticket</span>';
+    [['qr-wallet','QR+W'],['qr','QR'],['pdf','PDF'],['differe','Diff.']].forEach(([k, l]) => {
+      h += `<button class="fd-pill${st.ticket === k ? ' active' : ''}" onclick="fdSet('ticket','${k}')">${l}</button>`;
+    });
+    h += '</div>';
+
+    // Multi-supplier row (only if multi-segment)
+    if (hasSegs) {
+      h += `<div class="fd-row"><span class="fd-label">Multi</span><button class="fd-toggle${st.multi ? ' on' : ''}" onclick="fdSet('multi',${!st.multi})"></button><span style="font-size:10px;color:var(--grey-500);margin-left:2px">${st.multi ? 'Multi-billets' : 'Mono'}</span></div>`;
+    }
+  }
+
+  body.innerHTML = h;
 }
 
 // Official wallet badge SVGs
