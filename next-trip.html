@@ -2038,9 +2038,9 @@ function renderEtape(e, state, idx, autoIdx, done, total, isPast, targetId) {
         const st = seatTag(); if (st) g1.push(st);
       }
 
-      // Ticket action badge (classic mode only, not slim/bold)
+      // Ticket action badge (classic mode only, not slim/bold) — flights excluded
       let ticketTag = '';
-      if (!slim && ticket && etapeData) {
+      if (!slim && ticket && etapeData && type !== 'flight') {
         const tIdx = sheetTargets.length;
         sheetTargets.push(etapeData);
         const sheetCall = `event.stopPropagation();openSheet(sheetTargets[${tIdx}])`;
@@ -2131,7 +2131,7 @@ function renderEtape(e, state, idx, autoIdx, done, total, isPast, targetId) {
       const pillIdx = etapeData ? sheetTargets.length : -1;
       if (etapeData) sheetTargets.push(etapeData);
       let actionPill = '';
-      if (ticket) {
+      if (ticket && !isFl) {
         const pillClick = pillIdx >= 0 ? ` onclick="event.stopPropagation();openSheet(sheetTargets[${pillIdx}])"` : '';
         if (ticket.available) {
           const tIcon = ticket.hasQR ? qrSvg : '<span class="material-symbols-rounded">confirmation_number</span>';
@@ -2152,8 +2152,8 @@ function renderEtape(e, state, idx, autoIdx, done, total, isPast, targetId) {
       // Always render tags row (even empty) so nav chevrons have a line to sit on
       const tags = infoTags(seat, fareData, null, type, true);
       h += tags || '<div class="bp-tags"></div>';
-      // Card: tappable only on mobile, pill handles desktop click
-      const tapAttr = etapeData ? ` tappable" onclick="if(window.innerWidth<641)openSheet(sheetTargets[${pillIdx}])"` : '"';
+      // Card: tappable only on mobile, pill handles desktop click — flights are not tappable
+      const tapAttr = (etapeData && !isFl) ? ` tappable" onclick="if(window.innerWidth<641)openSheet(sheetTargets[${pillIdx}])"` : '"';
       return `<div class="bpb${extraCls ? ' ' + extraCls : ''}${tapAttr}>${h}</div>`;
     }
 
@@ -2224,19 +2224,21 @@ function renderEtape(e, state, idx, autoIdx, done, total, isPast, targetId) {
           h += `<div class="leg-conn-bar"><span class="leg-conn-chip"><span class="material-symbols-rounded" style="font-size:12px">schedule</span> ${conn.dur} · ${conn.loc}</span></div>`;
         }
       });
-      // Action pill — floating on bottom edge, only this is clickable
+      // Action pill — floating on bottom edge, only this is clickable — flights have no pill
       const tIdx = sheetTargets.length;
       sheetTargets.push(etape);
-      const legTicket = firstSeg.ticket || etape.ticket;
-      if (legTicket) {
-        if (legTicket.available) {
-          const tIcon = legTicket.hasQR ? qrSvg : '<span class="material-symbols-rounded">confirmation_number</span>';
-          h += `<div class="leg-action-center"><div class="bpb-action-pill" onclick="event.stopPropagation();openSheet(sheetTargets[${tIdx}])">${tIcon} Voir mon billet</div></div>`;
-        } else {
-          h += `<div class="leg-action-center"><div class="bpb-action-pill deferred" onclick="event.stopPropagation();openSheet(sheetTargets[${tIdx}])"><span class="material-symbols-rounded">event</span> Billet dispo. le ${legTicket.availableDate || '—'}</div></div>`;
+      if (!isFl) {
+        const legTicket = firstSeg.ticket || etape.ticket;
+        if (legTicket) {
+          if (legTicket.available) {
+            const tIcon = legTicket.hasQR ? qrSvg : '<span class="material-symbols-rounded">confirmation_number</span>';
+            h += `<div class="leg-action-center"><div class="bpb-action-pill" onclick="event.stopPropagation();openSheet(sheetTargets[${tIdx}])">${tIcon} Voir mon billet</div></div>`;
+          } else {
+            h += `<div class="leg-action-center"><div class="bpb-action-pill deferred" onclick="event.stopPropagation();openSheet(sheetTargets[${tIdx}])"><span class="material-symbols-rounded">event</span> Billet dispo. le ${legTicket.availableDate || '—'}</div></div>`;
+          }
         }
       }
-      const legTap = tIdx >= 0 ? ` tappable" onclick="if(window.innerWidth<641)openSheet(sheetTargets[${tIdx}])"` : '"';
+      const legTap = (tIdx >= 0 && !isFl) ? ` tappable" onclick="if(window.innerWidth<641)openSheet(sheetTargets[${tIdx}])"` : '"';
       return `<div class="bpb bpb-leg${extraCls ? ' ' + extraCls : ''}${legTap}>${h}</div>`;
     }
 
@@ -2515,7 +2517,7 @@ function buildTransportSheet(e, platform) {
       if (ticket.available !== false && ticket.hasQR) {
         h += `<div class="sheet-qr">${qrPlaceholderSvg}<div class="sheet-qr-label">Pr\u00e9sentez au contr\u00f4leur</div></div>`;
       } else if (ticket.available !== false && e.voucherPdf) {
-        const docName = isFl ? 'E-ticket' : 'Billet';
+        const docName = isFl ? 'Confirmation' : 'Billet';
         h += `<a href="${e.voucherPdf}" target="_blank" class="sheet-pdf"><iframe src="${e.voucherPdf}#toolbar=0&view=Fit&page=1" title="${docName}"></iframe></a>`;
       }
       h += buildFederalActions(e, platform);
@@ -2540,7 +2542,7 @@ function buildTransportSheet(e, platform) {
         if (ticket.hasQR) {
           h += `<div class="sheet-qr">${qrPlaceholderSvg}<div class="sheet-qr-label">Pr\u00e9sentez au contr\u00f4leur</div></div>`;
         } else if (seg.voucherPdf) {
-          const docName = isFl ? 'E-ticket' : 'Billet';
+          const docName = isFl ? 'Confirmation' : 'Billet';
           h += `<a href="${seg.voucherPdf}" target="_blank" class="sheet-pdf"><iframe src="${seg.voucherPdf}#toolbar=0&view=Fit&page=1" title="${docName}"></iframe></a>`;
         }
       }
@@ -2580,7 +2582,7 @@ function buildFederalActions(e, platform, multipleTickets) {
   const hasWallet = isMobile && ticket.wallet;
   const segs = e.segments || [];
   const nums = segs.length > 1 ? segs.map(s => s.num || '').filter(Boolean).join(', ') : (e.num || '');
-  const docName = multipleTickets ? 'Tous les billets' : (isFl ? 'E-ticket' : 'Billet') + ' ' + (e.carrier || '') + (nums ? ' ' + nums : '');
+  const docName = multipleTickets ? 'Tous les billets' : (isFl ? 'Confirmation' : 'Billet') + ' ' + (e.carrier || '') + (nums ? ' ' + nums : '');
   const dlMeta = (e._travelerName || '') + (e._travelerName && e.pnr ? ' \u00b7 ' : '') + (e.pnr || '');
   let h = '<div class="sheet-divider"></div>';
   h += '<div class="sheet-dl-row">';
@@ -2612,7 +2614,7 @@ function buildSingleTicketSection(e, platform) {
   if (ticket.hasQR) {
     h += `<div class="sheet-qr">${qrPlaceholderSvg}<div class="sheet-qr-label">Présentez au contrôleur</div></div>`;
   } else {
-    const docName = isFl ? 'E-ticket' : 'Billet';
+    const docName = isFl ? 'Confirmation' : 'Billet';
     const carrier = e.carrier || '';
     const num = e.num || '';
     const paxMeta = (e._travelerName || '') + (e._travelerName && e.pnr ? ' \u00b7 ' : '') + (e.pnr || '');
@@ -2630,7 +2632,7 @@ function buildSingleTicketSection(e, platform) {
   // Actions — always show ticket info dl-row, wallet below if available
   const hasWallet = isMobile && ticket.wallet;
   if (ticket.hasQR) {
-    const docName = isFl ? 'E-ticket' : 'Billet';
+    const docName = isFl ? 'Confirmation' : 'Billet';
     const dlMeta = (e._travelerName || '') + (e._travelerName && e.pnr ? ' \u00b7 ' : '') + (e.pnr || '');
     h += '<div class="sheet-dl-row">';
     h += `<div class="sheet-dl-info"><div class="sheet-dl-name">${docName} ${e.carrier || ''} ${e.num || ''}</div><div class="sheet-dl-meta">${dlMeta || 'PDF'}</div></div>`;
@@ -2643,7 +2645,7 @@ function buildSingleTicketSection(e, platform) {
     h += '</div>';
   }
   if (isFl && !hasWallet && !ticket.hasQR) {
-    h += `<div class="sheet-info" style="margin-top:8px;margin-bottom:0"><span class="sheet-info-icon">&#9432;</span><div>Ceci est votre e-ticket. Enregistrez-vous aupr\u00e8s de la compagnie.</div></div>`;
+    h += `<div class="sheet-info" style="margin-top:8px;margin-bottom:0"><span class="sheet-info-icon">&#9432;</span><div>Confirmation de r\u00e9servation. Enregistrez-vous aupr\u00e8s de la compagnie pour obtenir votre carte d\u2019embarquement.</div></div>`;
   }
 
   return h;
@@ -2862,7 +2864,7 @@ function renderShowcase() {
       nights: 3, roomName: 'Chambre Deluxe Double', bookingRef: 'MRR-482910',
       address: '15 Rue du Temple, 33000 Bordeaux',
       freeTextConditions: 'R\u00e9cup\u00e9rez votre cl\u00e9 \u00e0 la r\u00e9ception. Check-in \u00e0 partir de 15h. R\u00e9ception ouverte 24h/24.',
-      voucherPdf: 'voucherhotel.pdf', docAvailable: true,
+      voucherPdf: 'voucherhotel221-2173826_1679135161643.pdf', docAvailable: true,
       shortLabel: 'H\u00f4tel Renaissance Bordeaux', title: 'H\u00f4tel Renaissance Bordeaux',
     };
     headerTitle = dateIcon('Vendredi 9 F\u00e9vrier') + '<span>H\u00f4tel Renaissance Bordeaux</span>';
@@ -2873,7 +2875,7 @@ function renderShowcase() {
       pickup: { time: '14:00', date: 'Mardi 17 F\u00e9vrier', location: 'Gare Saint-Jean, Bordeaux' },
       dropoff: { time: '18:00', date: 'Mardi 17 F\u00e9vrier', location: 'Gare Saint-Jean, Bordeaux' },
       carrier: 'Avis', title: 'Avis \u2013 Cat. B Compacte', bookingRef: 'AVIS-84729',
-      driverName: 'Stella Smith', voucherPdf: 'vouchercar.pdf', docAvailable: true,
+      driverName: 'Stella Smith', voucherPdf: 'voucherhotel221-2173826_1679135161643.pdf', docAvailable: true,
     };
     headerTitle = dateIcon('Mardi 17 F\u00e9vrier') + '<span>Avis \u2014 Voiture</span>';
     content = buildCarSheet(me);
