@@ -268,8 +268,6 @@
     .bold-nav-btn:disabled { opacity: 0.2; pointer-events: none; }
     .bold-nav-btn .material-symbols-rounded { font-size: 16px; line-height: 1; }
     .bold-nav-label { font-size: 10px; font-weight: 600; color: rgba(255,255,255,0.35); min-width: 24px; text-align: center; }
-    /* Ensure nav doesn't overlap card content */
-    .bpb:has(.bold-nav) { padding-bottom: 38px; }
   }
   @keyframes bold-transit-v { 0% { background-position: 0 100%; } 100% { background-position: 0 0%; } }
 
@@ -793,8 +791,9 @@
     .bpb.tappable:active { transform: scale(0.985); transition-duration: 0.1s; }
     /* Hide prev/next nav on mobile (swipe replaces it) */
     .bold-nav { display: none; }
-    /* Hide inline voucher pill on mobile (card is tappable instead) */
+    /* Hide voucher pills on mobile (card is tappable instead) */
     .card-voucher-row { display: none; }
+    .htd-nights-sep > .bpb-action-pill { display: none; }
     .stepper.stepper-bold .stepper-step.active { width: 140px; }
     .stepper.stepper-bold .stepper-step.active .stepper-dot { width: 34px; height: 34px; }
     .stepper.stepper-bold .stepper-step.active .stepper-dot .material-symbols-rounded { font-size: 17px; }
@@ -2245,18 +2244,15 @@ function renderEtape(e, state, idx, autoIdx, done, total, isPast, targetId) {
       const cout = parseFullDate(e.checkout.date);
       h += '<div class="htd-dates-bold">';
       h += `<div class="htd-block"><div class="htd-block-event">Check-in</div><div class="htd-block-dow">${cin.dow} ${cin.rest}</div><div class="htd-block-time">dès ${e.checkin.time}</div></div>`;
-      h += `<div class="htd-nights-sep"><div class="htd-nights-sep-line"></div><div class="bpb-mid-badge">${midBadge('hotel', nightsLabel)}</div><div class="htd-nights-sep-line"></div></div>`;
+      const htIdx = sheetTargets.length;
+      sheetTargets.push(e);
+      const htVoucherPill = e.docAvailable ? `<div class="bpb-action-pill" onclick="event.stopPropagation();openSheet(sheetTargets[${htIdx}])"><span class="material-symbols-rounded">description</span> Voir mon voucher</div>` : '';
+      h += `<div class="htd-nights-sep"><div class="htd-nights-sep-line"></div><div class="bpb-mid-badge">${midBadge('hotel', nightsLabel)}</div><div class="htd-nights-sep-line"></div>${htVoucherPill}</div>`;
       h += `<div class="htd-block arr"><div class="htd-block-event">Check-out</div><div class="htd-block-dow">${cout.dow} ${cout.rest}</div><div class="htd-block-time">avant ${e.checkout.time}</div></div>`;
       h += '</div>';
       // Free-text arrival conditions (unstructured, from supplier)
       if (e.freeTextConditions) {
         h += `<div class="htd-logistics"><div class="htd-log-item">${e.freeTextConditions}</div></div>`;
-      }
-      const htIdx = sheetTargets.length;
-      sheetTargets.push(e);
-      // Inline voucher pill — centered in card (hidden on mobile, card is tappable)
-      if (e.docAvailable) {
-        h += `<div class="card-voucher-row"><div class="bpb-action-pill" onclick="event.stopPropagation();openSheet(sheetTargets[${htIdx}])"><span class="material-symbols-rounded">description</span> Voir mon voucher</div></div>`;
       }
       bodyH = `<div class="bpb tappable${navyCls}" onclick="if(window.innerWidth<641)openSheet(sheetTargets[${htIdx}])">${h}</div>`;
     } else {
