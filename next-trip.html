@@ -2584,7 +2584,9 @@ function buildFederalActions(e, platform, multipleTickets) {
   const isFl = e.type === 'flight';
   const isMobile = platform === 'ios' || platform === 'android';
   const hasWallet = isMobile && ticket.wallet;
-  const docName = multipleTickets ? 'Tous les billets' : (isFl ? 'E-ticket' : 'Billet') + ' ' + (e.carrier || '');
+  const segs = e.segments || [];
+  const nums = segs.length > 1 ? segs.map(s => s.num || '').filter(Boolean).join(', ') : (e.num || '');
+  const docName = multipleTickets ? 'Tous les billets' : (isFl ? 'E-ticket' : 'Billet') + ' ' + (e.carrier || '') + (nums ? ' ' + nums : '');
   const dlMeta = (e._travelerName || '') + (e._travelerName && e.pnr ? ' \u00b7 ' : '') + (e.pnr || '');
   let h = '<div class="sheet-divider"></div>';
   h += '<div class="sheet-dl-row">';
