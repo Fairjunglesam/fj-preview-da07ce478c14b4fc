@@ -173,7 +173,7 @@
     }
     .card-inner:has(.stepper-bold) > .card-header { grid-column: 1 / -1; margin-bottom: 6px; }
     .card-inner:has(.stepper-bold) > .stepper { grid-row: 2; grid-column: 1; align-self: center; }
-    .card-inner:has(.stepper-bold) > [id^="etape-"] { grid-row: 2; grid-column: 2; }
+    .card-inner:has(.stepper-bold) > [id^="etape-"] { grid-row: 2; grid-column: 2; position: relative; }
 
     /* Stepper becomes vertical column */
     .stepper.stepper-bold {
@@ -257,19 +257,19 @@
     }
 
     /* Bold desktop: minimal prev/next chevrons */
-    .bold-nav { display: flex; align-items: center; justify-content: flex-end; gap: 6px; margin-top: 8px; padding: 4px 0; }
-    .bold-nav-btn { display: inline-flex; align-items: center; justify-content: center; width: 28px; height: 28px; border-radius: 50%; border: 1.5px solid var(--grey-200); background: transparent; color: var(--grey-500); cursor: pointer; transition: all 0.15s; font-family: var(--font); padding: 0; }
-    .bold-nav-btn:hover { background: var(--grey-50); border-color: var(--grey-400); color: var(--black); }
+    .bold-nav { display: flex; align-items: center; justify-content: flex-end; gap: 5px; position: absolute; bottom: 6px; right: 6px; z-index: 2; }
+    .bold-nav-btn { display: inline-flex; align-items: center; justify-content: center; width: 24px; height: 24px; border-radius: 50%; border: 1px solid var(--grey-100); background: var(--white); color: var(--grey-400); cursor: pointer; transition: all 0.15s; font-family: var(--font); padding: 0; box-shadow: 0 1px 3px rgba(0,0,0,0.06); }
+    .bold-nav-btn:hover { background: var(--grey-50); border-color: var(--grey-300); color: var(--grey-700); }
     .bold-nav-btn:disabled { opacity: 0.25; pointer-events: none; }
-    .bold-nav-btn .material-symbols-rounded { font-size: 18px; line-height: 1; }
-    .bold-nav-label { font-size: 11px; font-weight: 600; color: var(--grey-400); min-width: 32px; text-align: center; }
+    .bold-nav-btn .material-symbols-rounded { font-size: 16px; line-height: 1; }
+    .bold-nav-label { font-size: 10px; font-weight: 600; color: var(--grey-400); min-width: 24px; text-align: center; }
     /* Dark mode nav */
-    .trip-card.dark-mode .bold-nav-btn { border-color: rgba(255,255,255,0.15); color: rgba(255,255,255,0.45); }
-    .trip-card.dark-mode .bold-nav-btn:hover { background: rgba(255,255,255,0.07); border-color: rgba(255,255,255,0.3); color: rgba(255,255,255,0.85); }
+    .trip-card.dark-mode .bold-nav-btn { border-color: rgba(255,255,255,0.12); background: rgba(255,255,255,0.05); color: rgba(255,255,255,0.4); box-shadow: 0 1px 3px rgba(0,0,0,0.2); }
+    .trip-card.dark-mode .bold-nav-btn:hover { background: rgba(255,255,255,0.1); border-color: rgba(255,255,255,0.25); color: rgba(255,255,255,0.8); }
     .trip-card.dark-mode .bold-nav-label { color: rgba(255,255,255,0.3); }
     /* Contrast mode nav */
-    .trip-card.contrast-mode .bold-nav-btn { border-color: rgba(255,255,255,0.15); color: rgba(255,255,255,0.45); }
-    .trip-card.contrast-mode .bold-nav-btn:hover { background: rgba(255,255,255,0.07); border-color: rgba(255,255,255,0.3); color: rgba(255,255,255,0.85); }
+    .trip-card.contrast-mode .bold-nav-btn { border-color: rgba(255,255,255,0.12); background: rgba(255,255,255,0.05); color: rgba(255,255,255,0.4); box-shadow: 0 1px 3px rgba(0,0,0,0.2); }
+    .trip-card.contrast-mode .bold-nav-btn:hover { background: rgba(255,255,255,0.1); border-color: rgba(255,255,255,0.25); color: rgba(255,255,255,0.8); }
     .trip-card.contrast-mode .bold-nav-label { color: rgba(255,255,255,0.3); }
   }
   @keyframes bold-transit-v { 0% { background-position: 0 100%; } 100% { background-position: 0 0%; } }
@@ -1480,6 +1480,74 @@ const TRIPS = {
       }
     ]
   },
+  escale3: {
+    destination: 'Bangkok',
+    travelers: ['Stella Smith'],
+    etapes: [
+      {
+        type: 'flight', icon: '✈️',
+        title: 'Paris CDG → Bangkok BKK',
+        shortLabel: 'CDG → BKK', dateShort: 'Lun 09 · 10:15',
+        departure: { time: '10:15', name: 'Paris', code: 'CDG', terminal: 'T1', date: 'Lun. 09 Fév' },
+        arrival: { time: '14:30', name: 'Bangkok', code: 'BKK', terminal: null, date: 'Mar. 10 Fév', dayOffset: 1 },
+        duration: '22h15',
+        carrier: 'Lufthansa', details: ['Economy', '3 escales'],
+        segments: [
+          { dep: { time: '10:15', name: 'Paris', code: 'CDG', terminal: 'T1' }, arr: { time: '11:25', name: 'Francfort', code: 'FRA', terminal: 'T1' }, dur: '1h10', num: 'LH 1035', pnr: 'BKK901', seat: { place: '34A' }, carrier: 'Lufthansa', ticket: { available: true, hasQR: true, wallet: true }, fareName: 'Economy Light', fareExch: false, fareRefund: false, amenities: ['meal'] },
+          { dep: { time: '13:00', name: 'Francfort', code: 'FRA', terminal: 'T1' }, arr: { time: '18:40', name: 'Istanbul', code: 'IST' }, dur: '2h40', num: 'TK 1592', pnr: 'BKK901', seat: { place: '18C' }, carrier: 'Turkish Airlines', ticket: { available: true, hasQR: true, wallet: true }, fareName: 'Economy', fareExch: false, fareRefund: false, amenities: ['meal', 'entertainment'] },
+          { dep: { time: '20:45', name: 'Istanbul', code: 'IST' }, arr: { time: '03:00', name: 'Doha', code: 'DOH', dayOffset: 1 }, dur: '3h15', num: 'QR 246', pnr: 'BKK901', seat: { place: '25K' }, carrier: 'Qatar Airways', ticket: { available: true, hasQR: true, wallet: true }, fareName: 'Economy', fareExch: false, fareRefund: false, amenities: ['meal', 'entertainment'] },
+          { dep: { time: '05:10', name: 'Doha', code: 'DOH' }, arr: { time: '14:30', name: 'Bangkok', code: 'BKK' }, dur: '6h20', num: 'QR 836', pnr: 'BKK901', seat: { place: '31F' }, carrier: 'Qatar Airways', ticket: { available: true, hasQR: true, wallet: true }, fareName: 'Economy', fareExch: false, fareRefund: false, amenities: ['meal', 'entertainment'] },
+        ],
+        connections: [
+          { loc: 'Francfort FRA', dur: '1h35' },
+          { loc: 'Istanbul IST', dur: '2h05' },
+          { loc: 'Doha DOH', dur: '2h10' },
+        ],
+        luggage: '1 cabine + 1 soute 23 kg · Bagages jusqu\'à BKK',
+        seat: { place: '34A' },
+        ticket: { available: true, hasQR: true, wallet: true },
+        pnr: 'BKK901',
+        fareName: 'Economy Light', fareExch: false, fareRefund: false, amenities: ['meal'],
+        docLabel: 'Voir mon billet', docIcon: '🎫', docAvailable: true,
+        locLabel: "Itinéraire vers l'aéroport", locIcon: '📍', locUrl: '#',
+      },
+      {
+        type: 'hotel', icon: '🏨',
+        title: 'Mandarin Oriental Bangkok',
+        shortLabel: 'Mandarin Oriental', dateShort: 'Mar 10 – Sam 14',
+        checkin: { date: 'Mardi 10 Février', time: '14:00' },
+        checkout: { date: 'Samedi 14 Février', time: '12:00' },
+        nights: 4, starsText: '★★★★★',
+        roomName: 'Authors Suite River View',
+        inclusions: ['Petit-déjeuner inclus', 'Spa access'],
+        cancellation: { type: 'free', freeUntil: '5 Février 2026' },
+        freeTextConditions: 'Check-in dès 14h. Shuttle bateau gratuit depuis Saphan Taksin BTS. Contact : +66 2 659 9000',
+        bookingRef: 'BKK-773820',
+        address: '48 Oriental Avenue, Bangkok 10500',
+        photos: [
+          'https://images.unsplash.com/photo-1566073771259-6a8506099945?w=600&h=300&fit=crop',
+          'https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?w=300&h=300&fit=crop',
+        ],
+        docLabel: 'Voir mon voucher', docIcon: '📄', docAvailable: true,
+        locLabel: "Itinéraire vers l'hôtel", locIcon: '📍', locUrl: '#',
+      },
+      {
+        type: 'flight', icon: '✈️',
+        title: 'Bangkok BKK → Paris CDG',
+        shortLabel: 'BKK → CDG', dateShort: 'Sam 14 · 23:45',
+        departure: { time: '23:45', name: 'Bangkok', code: 'BKK', terminal: null, date: 'Sam. 14 Fév' },
+        arrival: { time: '06:15', name: 'Paris', code: 'CDG', terminal: 'T1', date: 'Dim. 15 Fév', dayOffset: 1 },
+        duration: '12h30', carrier: 'Thai Airways', details: ['Economy', 'Direct'],
+        luggage: '1 cabine + 1 soute 23 kg',
+        seat: null,
+        ticket: { available: false, hasQR: false, wallet: false, availableDate: '12 Fév' },
+        num: 'TG 930', pnr: 'BKK901',
+        fareName: 'Economy Flex', fareExch: true, fareRefund: 'with_fee', amenities: ['meal', 'entertainment'],
+        docLabel: 'Voir mon billet', docIcon: '🎫', docAvailable: false,
+        locLabel: "Itinéraire vers l'aéroport", locIcon: '📍', locUrl: '#',
+      }
+    ]
+  },
   simple: {
     destination: 'Bordeaux',
     travelers: ['Stella Smith'],
@@ -1610,6 +1678,7 @@ const TRIP_LABELS = {
   openjaw: '4 étapes — Vol + Hôtel + Car open jaw + Vol',
   correspondance: '3 étapes — Train 2 segments + Hôtel + Train',
   escale: '3 étapes — Vol avec escale + Hôtel + Vol',
+  escale3: '3 étapes — Vol 3 escales (CDG→FRA→IST→DOH→BKK) + Hôtel + Vol',
   simple: '2 étapes — Aller-retour Train',
   flight: '1 étape — Vol direct',
   hotelonly: '1 étape — Hôtel seul'
