@@ -672,6 +672,9 @@
   .sheet-footer { display: flex; justify-content: center; margin-top: 18px; padding-top: 14px; border-top: 1px solid var(--grey-100); }
   .sheet-footer a { font-size: 13px; font-weight: 600; color: var(--grey-600); text-decoration: none; display: flex; align-items: center; gap: 4px; transition: color 0.15s; }
   .sheet-footer a:hover { color: var(--blue-500); }
+  .sheet-nav-btn { display: inline-flex; align-items: center; gap: 4px; margin-top: 4px; padding: 5px 10px; border-radius: 8px; background: var(--blue-50); color: var(--blue-600); font-size: 11px; font-weight: 700; text-decoration: none; border: 1px solid var(--blue-100); transition: all 0.15s; cursor: pointer; }
+  .sheet-nav-btn:hover { background: var(--blue-100); color: var(--blue-700); }
+  .sheet-nav-btn .material-symbols-rounded { font-size: 14px; }
   .wallet-badge { display: flex; align-items: center; justify-content: center; gap: 8px; width: 100%; height: 44px; border-radius: 10px; padding: 0 16px; cursor: pointer; border: none; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; text-decoration: none; transition: opacity 0.15s; box-sizing: border-box; }
   .wallet-badge:hover { opacity: 0.85; }
   .wallet-badge-apple { background: #000; color: #fff; }
@@ -701,14 +704,17 @@
   .sheet-overlay[data-color="contrast"] .sheet-doc-meta { color: rgba(255,255,255,0.55); }
   .sheet-overlay[data-color="contrast"] .sheet-pax { color: rgba(255,255,255,0.65); }
   .sheet-overlay[data-color="contrast"] .sheet-pax strong { color: rgba(255,255,255,0.95); }
-  .sheet-overlay[data-color="contrast"] .sheet-pdf { border-color: rgba(255,255,255,0.12); background: rgba(255,255,255,0.04); }
+  .sheet-overlay[data-color="contrast"] .sheet-pdf { border-color: rgba(255,255,255,0.18); background: #fff; }
   .sheet-overlay[data-color="contrast"] .sheet-dl-name { color: #fff; }
   .sheet-overlay[data-color="contrast"] .sheet-dl-meta { color: rgba(255,255,255,0.45); }
+  .sheet-overlay[data-color="contrast"] .sheet-dl-btn { background: rgba(255,255,255,0.12); color: #fff; }
   .sheet-overlay[data-color="contrast"] .sheet-detail-label { color: rgba(255,255,255,0.4); }
   .sheet-overlay[data-color="contrast"] .sheet-detail-value { color: #fff; }
   .sheet-overlay[data-color="contrast"] .sheet-detail-sub { color: rgba(255,255,255,0.5); }
   .sheet-overlay[data-color="contrast"] .sheet-conditions { background: rgba(255,255,255,0.06); color: rgba(255,255,255,0.65); }
   .sheet-overlay[data-color="contrast"] .sheet-conditions strong { color: rgba(255,255,255,0.85); }
+  .sheet-overlay[data-color="contrast"] .sheet-nav-btn { background: rgba(0,169,252,0.15); color: var(--blue-200); border-color: rgba(0,169,252,0.25); }
+  .sheet-overlay[data-color="contrast"] .sheet-nav-btn:hover { background: rgba(0,169,252,0.25); }
   .sheet-overlay[data-color="contrast"] .sheet-footer { border-color: rgba(255,255,255,0.12); }
   .sheet-overlay[data-color="contrast"] .sheet-footer a { color: rgba(255,255,255,0.7); }
   .sheet-overlay[data-color="contrast"] .sheet-footer a:hover { color: var(--blue-200); }
@@ -747,14 +753,17 @@
   .sheet-overlay[data-color="dark"] .sheet-doc-meta { color: rgba(255,255,255,0.4); }
   .sheet-overlay[data-color="dark"] .sheet-pax { color: rgba(255,255,255,0.4); }
   .sheet-overlay[data-color="dark"] .sheet-pax strong { color: rgba(255,255,255,0.6); }
-  .sheet-overlay[data-color="dark"] .sheet-pdf { border-color: rgba(255,255,255,0.1); background: rgba(255,255,255,0.03); }
+  .sheet-overlay[data-color="dark"] .sheet-pdf { border-color: rgba(255,255,255,0.15); background: #fff; }
   .sheet-overlay[data-color="dark"] .sheet-dl-name { color: #fff; }
   .sheet-overlay[data-color="dark"] .sheet-dl-meta { color: rgba(255,255,255,0.4); }
+  .sheet-overlay[data-color="dark"] .sheet-dl-btn { background: rgba(255,255,255,0.1); color: #fff; }
   .sheet-overlay[data-color="dark"] .sheet-detail-label { color: rgba(255,255,255,0.35); }
   .sheet-overlay[data-color="dark"] .sheet-detail-value { color: #fff; }
   .sheet-overlay[data-color="dark"] .sheet-detail-sub { color: rgba(255,255,255,0.45); }
   .sheet-overlay[data-color="dark"] .sheet-conditions { background: rgba(255,255,255,0.05); color: rgba(255,255,255,0.6); }
   .sheet-overlay[data-color="dark"] .sheet-conditions strong { color: rgba(255,255,255,0.8); }
+  .sheet-overlay[data-color="dark"] .sheet-nav-btn { background: rgba(0,169,252,0.12); color: var(--blue-300); border-color: rgba(0,169,252,0.2); }
+  .sheet-overlay[data-color="dark"] .sheet-nav-btn:hover { background: rgba(0,169,252,0.2); }
   .sheet-overlay[data-color="dark"] .sheet-footer { border-color: rgba(255,255,255,0.06); }
   .sheet-overlay[data-color="dark"] .sheet-footer a { color: rgba(255,255,255,0.4); }
   .sheet-overlay[data-color="dark"] .sheet-footer a:hover { color: var(--blue-300); }
@@ -788,7 +797,8 @@
   @media (max-width: 640px) {
     /* Sheet → bottom sheet on mobile */
     .sheet-overlay { align-items: flex-end; justify-content: stretch; }
-    .sheet-panel { width: 100%; max-width: 100%; border-radius: 20px 20px 0 0; height: 92vh; transform: translateY(100%); }
+    .sheet-panel { width: 100%; max-width: 100%; border-radius: 20px 20px 0 0; height: 92vh; transform: translateY(100%); overflow-y: auto; -webkit-overflow-scrolling: touch; }
+    .sheet-body { padding-bottom: max(40px, env(safe-area-inset-bottom, 34px)); }
     .sheet-overlay.open .sheet-panel { transform: translateY(0); }
     .sheet-handle { display: block; }
     body { padding: 8px; }
@@ -1250,6 +1260,15 @@
   #showcase-container[data-color="contrast"] .sheet-doc-meta { color: rgba(255,255,255,0.45); }
   #showcase-container[data-color="contrast"] .sheet-pax { color: rgba(255,255,255,0.45); }
   #showcase-container[data-color="contrast"] .sheet-pax strong { color: rgba(255,255,255,0.7); }
+  #showcase-container[data-color="contrast"] .sheet-pdf { border-color: rgba(255,255,255,0.18); background: #fff; }
+  #showcase-container[data-color="contrast"] .sheet-dl-name { color: #fff; }
+  #showcase-container[data-color="contrast"] .sheet-dl-meta { color: rgba(255,255,255,0.45); }
+  #showcase-container[data-color="contrast"] .sheet-dl-btn { background: rgba(255,255,255,0.12); color: #fff; }
+  #showcase-container[data-color="contrast"] .sheet-detail-label { color: rgba(255,255,255,0.4); }
+  #showcase-container[data-color="contrast"] .sheet-detail-value { color: #fff; }
+  #showcase-container[data-color="contrast"] .sheet-detail-sub { color: rgba(255,255,255,0.5); }
+  #showcase-container[data-color="contrast"] .sheet-conditions { background: rgba(255,255,255,0.06); color: rgba(255,255,255,0.65); }
+  #showcase-container[data-color="contrast"] .sheet-nav-btn { background: rgba(0,169,252,0.15); color: var(--blue-200); border-color: rgba(0,169,252,0.25); }
   #showcase-container[data-color="contrast"] .sheet-footer { border-color: rgba(255,255,255,0.08); }
   #showcase-container[data-color="contrast"] .sheet-footer a { color: rgba(255,255,255,0.45); }
   #showcase-container[data-color="contrast"] .sheet-actions .cta-pri { background: #fff; color: #1a2747; font-weight: 800; }
@@ -1272,6 +1291,15 @@
   #showcase-container[data-color="dark"] .sheet-doc-meta { color: rgba(255,255,255,0.4); }
   #showcase-container[data-color="dark"] .sheet-pax { color: rgba(255,255,255,0.4); }
   #showcase-container[data-color="dark"] .sheet-pax strong { color: rgba(255,255,255,0.6); }
+  #showcase-container[data-color="dark"] .sheet-pdf { border-color: rgba(255,255,255,0.15); background: #fff; }
+  #showcase-container[data-color="dark"] .sheet-dl-name { color: #fff; }
+  #showcase-container[data-color="dark"] .sheet-dl-meta { color: rgba(255,255,255,0.4); }
+  #showcase-container[data-color="dark"] .sheet-dl-btn { background: rgba(255,255,255,0.1); color: #fff; }
+  #showcase-container[data-color="dark"] .sheet-detail-label { color: rgba(255,255,255,0.35); }
+  #showcase-container[data-color="dark"] .sheet-detail-value { color: #fff; }
+  #showcase-container[data-color="dark"] .sheet-detail-sub { color: rgba(255,255,255,0.45); }
+  #showcase-container[data-color="dark"] .sheet-conditions { background: rgba(255,255,255,0.05); color: rgba(255,255,255,0.55); }
+  #showcase-container[data-color="dark"] .sheet-nav-btn { background: rgba(0,169,252,0.12); color: var(--blue-300); border-color: rgba(0,169,252,0.2); }
   #showcase-container[data-color="dark"] .sheet-footer { border-color: rgba(255,255,255,0.06); }
   #showcase-container[data-color="dark"] .sheet-footer a { color: rgba(255,255,255,0.4); }
   #showcase-container[data-color="dark"] .sheet-actions .cta-pri { background: #fff; color: #252540; font-weight: 800; }
@@ -2511,11 +2539,11 @@ function buildTransportSheet(e, platform) {
     h += `<div class="sheet-info" style="margin-top:8px;margin-bottom:0"><span class="sheet-info-icon">&#9432;</span><div>Ceci est votre e-ticket. Enregistrez-vous auprès de la compagnie.</div></div>`;
   }
   h += '</div>';
-  // Itinéraire — specific to departure location
+  // Itinéraire — inline nav button
   if (e.locUrl && e.departure) {
     const depName = e.departure.name || '';
     const lieu = isFl ? "l'aéroport " + depName : 'la gare ' + depName;
-    h += `<div class="sheet-footer"><a href="${e.locUrl}" onclick="event.preventDefault()">&#128205; Itinéraire vers ${lieu}</a></div>`;
+    h += `<div style="margin-top:10px"><a href="${e.locUrl}" class="sheet-nav-btn" onclick="event.preventDefault()"><span class="material-symbols-rounded">near_me</span> S'y rendre · ${lieu}</a></div>`;
   }
 
   return h;
@@ -2550,17 +2578,16 @@ function buildHotelSheet(e) {
     h += `<div><div class="sheet-detail-label">Référence</div><div class="sheet-detail-value">${e.bookingRef}</div></div>`;
   }
   if (e.address) {
-    h += `<div class="sheet-detail-full"><div class="sheet-detail-label">Adresse</div><div class="sheet-detail-sub">${e.address}</div></div>`;
+    h += `<div class="sheet-detail-full"><div class="sheet-detail-label">Adresse</div><div class="sheet-detail-sub">${e.address}</div>`;
+    if (e.locUrl) {
+      h += `<a href="${e.locUrl}" class="sheet-nav-btn" onclick="event.preventDefault()"><span class="material-symbols-rounded">near_me</span> S'y rendre</a>`;
+    }
+    h += '</div>';
   }
   h += '</div>';
   // Free-text conditions
   if (e.freeTextConditions) {
     h += `<div class="sheet-conditions">${e.freeTextConditions}</div>`;
-  }
-  // Itinerary
-  if (e.locUrl) {
-    const hotelName = e.shortLabel || e.title || "l'h\u00f4tel";
-    h += `<div class="sheet-footer"><a href="${e.locUrl}" onclick="event.preventDefault()">&#128205; Itin\u00e9raire vers ${hotelName}</a></div>`;
   }
   return h;
 }
@@ -2583,7 +2610,9 @@ function buildCarSheet(e) {
   // Booking details grid
   h += '<div class="sheet-detail-grid">';
   if (e.pickup) {
-    h += `<div><div class="sheet-detail-label">Prise en charge</div><div class="sheet-detail-value">${e.pickup.time}</div><div class="sheet-detail-sub">${e.pickup.date}</div><div class="sheet-detail-sub">${e.pickup.location}</div></div>`;
+    h += `<div><div class="sheet-detail-label">Prise en charge</div><div class="sheet-detail-value">${e.pickup.time}</div><div class="sheet-detail-sub">${e.pickup.date}</div><div class="sheet-detail-sub">${e.pickup.location}</div>`;
+    if (e.locUrl && !isOJ) h += `<a href="${e.locUrl}" class="sheet-nav-btn" onclick="event.preventDefault()"><span class="material-symbols-rounded">near_me</span> S'y rendre</a>`;
+    h += '</div>';
   }
   if (e.dropoff) {
     h += `<div><div class="sheet-detail-label">Restitution${isOJ ? ' · Open jaw' : ''}</div><div class="sheet-detail-value">${e.dropoff.time}</div><div class="sheet-detail-sub">${e.dropoff.date}</div><div class="sheet-detail-sub">${e.dropoff.location}</div></div>`;
@@ -2598,11 +2627,6 @@ function buildCarSheet(e) {
     h += `<div class="sheet-detail-full"><div class="sheet-detail-label">Conducteur</div><div class="sheet-detail-sub">🪪 Permis + CB au nom de <strong>${e.driverName}</strong></div></div>`;
   }
   h += '</div>';
-  // Itinerary
-  if (e.locUrl && !isOJ) {
-    const agencyName = e.carrier ? "l'agence " + e.carrier : "l'agence de location";
-    h += `<div class="sheet-footer"><a href="${e.locUrl}" onclick="event.preventDefault()">&#128205; Itin\u00e9raire vers ${agencyName}</a></div>`;
-  }
   return h;
 }
 
