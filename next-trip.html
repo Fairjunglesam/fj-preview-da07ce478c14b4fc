@@ -607,6 +607,25 @@
   .sheet-doc-meta { font-size: 11px; color: var(--grey-500); margin-top: 2px; font-weight: 500; }
   .sheet-pax { font-size: 11px; color: var(--grey-500); margin-top: 4px; font-weight: 500; text-align: center; }
   .sheet-pax strong { font-weight: 700; color: var(--grey-600); }
+  /* Sheet: segment breakdown for multi-segment legs */
+  .sheet-segments { margin-bottom: 14px; }
+  .sheet-seg { padding: 10px 0; }
+  .sheet-seg + .sheet-seg { border-top: 1px solid var(--grey-75); }
+  .sheet-seg-head { display: flex; align-items: center; gap: 6px; font-size: 11px; font-weight: 700; color: var(--grey-700); margin-bottom: 6px; }
+  .sheet-seg-head .seg-icon { font-size: 13px; opacity: 0.6; }
+  .sheet-seg-head .seg-num { color: var(--grey-400); font-weight: 600; }
+  .sheet-seg-route { display: flex; align-items: baseline; gap: 6px; font-size: 13px; font-weight: 600; color: var(--black); }
+  .sheet-seg-route .seg-arrow { color: var(--grey-300); font-size: 11px; }
+  .sheet-seg-times { font-size: 11px; color: var(--grey-500); margin-top: 2px; }
+  .sheet-seg-meta { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 5px; }
+  .sheet-seg-chip { font-size: 10px; font-weight: 700; padding: 2px 8px; border-radius: 5px; }
+  .sheet-seg-chip.seat { background: var(--blue-50); color: var(--blue-700); border: 1px solid var(--blue-100); }
+  .sheet-seg-chip.gate { background: var(--orange-50); color: var(--orange-700); border: 1px solid var(--orange-100); }
+  .sheet-seg-chip.none { background: var(--grey-50); color: var(--grey-400); border: 1px solid var(--grey-100); }
+  .sheet-conn { display: flex; align-items: center; gap: 6px; padding: 6px 12px; background: rgba(255,141,84,0.06); border-radius: 8px; margin: 4px 0; }
+  .sheet-conn-icon { font-size: 12px; color: var(--orange-500); }
+  .sheet-conn-text { font-size: 10px; font-weight: 700; color: var(--orange-600); }
+  .sheet-divider { height: 1px; background: var(--grey-100); margin: 14px 0; }
   .sheet-footer { display: flex; justify-content: center; margin-top: 14px; padding-top: 10px; border-top: 1px solid var(--grey-100); }
   .sheet-footer a { font-size: 12px; font-weight: 600; color: var(--grey-500); text-decoration: none; display: flex; align-items: center; gap: 4px; transition: color 0.15s; }
   .sheet-footer a:hover { color: var(--blue-500); }
@@ -646,6 +665,18 @@
   .sheet-overlay[data-color="contrast"] .sheet-actions .cta-pri:hover { background: rgba(255,255,255,0.9); }
   .sheet-overlay[data-color="contrast"] .sheet-actions .cta-sec { border-color: rgba(255,255,255,0.18); color: #fff; background: rgba(255,255,255,0.08); }
   .sheet-overlay[data-color="contrast"] .sheet-actions .cta-sec:hover { background: rgba(255,255,255,0.14); }
+  .sheet-overlay[data-color="contrast"] .sheet-seg + .sheet-seg { border-color: rgba(255,255,255,0.06); }
+  .sheet-overlay[data-color="contrast"] .sheet-seg-head { color: rgba(255,255,255,0.7); }
+  .sheet-overlay[data-color="contrast"] .sheet-seg-head .seg-num { color: rgba(255,255,255,0.4); }
+  .sheet-overlay[data-color="contrast"] .sheet-seg-route { color: #fff; }
+  .sheet-overlay[data-color="contrast"] .sheet-seg-route .seg-arrow { color: rgba(255,255,255,0.3); }
+  .sheet-overlay[data-color="contrast"] .sheet-seg-times { color: rgba(255,255,255,0.45); }
+  .sheet-overlay[data-color="contrast"] .sheet-seg-chip.seat { background: rgba(0,169,252,0.12); color: var(--blue-300); border-color: rgba(0,169,252,0.2); }
+  .sheet-overlay[data-color="contrast"] .sheet-seg-chip.gate { background: rgba(255,141,84,0.1); color: var(--orange-300); border-color: rgba(255,141,84,0.18); }
+  .sheet-overlay[data-color="contrast"] .sheet-seg-chip.none { background: rgba(255,255,255,0.05); color: rgba(255,255,255,0.3); border-color: rgba(255,255,255,0.08); }
+  .sheet-overlay[data-color="contrast"] .sheet-conn { background: rgba(255,141,84,0.08); }
+  .sheet-overlay[data-color="contrast"] .sheet-conn-text { color: var(--orange-300); }
+  .sheet-overlay[data-color="contrast"] .sheet-divider { background: rgba(255,255,255,0.06); }
   /* Dark contrast mode sheet */
   .sheet-overlay[data-color="dark"] .sheet-panel { background: #252540; border: 1px solid rgba(255,255,255,0.06); box-shadow: 0 8px 40px rgba(0,0,0,0.5); }
   .sheet-overlay[data-color="dark"] .sheet-handle { background: rgba(255,255,255,0.15); }
@@ -672,6 +703,18 @@
   .sheet-overlay[data-color="dark"] .sheet-actions .cta-pri:hover { background: rgba(255,255,255,0.9); }
   .sheet-overlay[data-color="dark"] .sheet-actions .cta-sec { border-color: rgba(255,255,255,0.15); color: #fff; background: rgba(255,255,255,0.08); }
   .sheet-overlay[data-color="dark"] .sheet-actions .cta-sec:hover { background: rgba(255,255,255,0.14); }
+  .sheet-overlay[data-color="dark"] .sheet-seg + .sheet-seg { border-color: rgba(255,255,255,0.06); }
+  .sheet-overlay[data-color="dark"] .sheet-seg-head { color: rgba(255,255,255,0.65); }
+  .sheet-overlay[data-color="dark"] .sheet-seg-head .seg-num { color: rgba(255,255,255,0.35); }
+  .sheet-overlay[data-color="dark"] .sheet-seg-route { color: #fff; }
+  .sheet-overlay[data-color="dark"] .sheet-seg-route .seg-arrow { color: rgba(255,255,255,0.25); }
+  .sheet-overlay[data-color="dark"] .sheet-seg-times { color: rgba(255,255,255,0.4); }
+  .sheet-overlay[data-color="dark"] .sheet-seg-chip.seat { background: rgba(0,169,252,0.1); color: var(--blue-300); border-color: rgba(0,169,252,0.18); }
+  .sheet-overlay[data-color="dark"] .sheet-seg-chip.gate { background: rgba(255,141,84,0.08); color: var(--orange-300); border-color: rgba(255,141,84,0.15); }
+  .sheet-overlay[data-color="dark"] .sheet-seg-chip.none { background: rgba(255,255,255,0.04); color: rgba(255,255,255,0.25); border-color: rgba(255,255,255,0.06); }
+  .sheet-overlay[data-color="dark"] .sheet-conn { background: rgba(255,141,84,0.06); }
+  .sheet-overlay[data-color="dark"] .sheet-conn-text { color: var(--orange-300); }
+  .sheet-overlay[data-color="dark"] .sheet-divider { background: rgba(255,255,255,0.06); }
   /* Bold card tappable */
   .bpb.tappable { cursor: pointer; transition: transform 0.2s var(--ease), box-shadow 0.2s var(--ease); }
   .bpb.tappable:hover { transform: translateY(-2px); box-shadow: 0 6px 24px rgba(0,0,0,0.12); }
@@ -2335,6 +2378,47 @@ function buildTransportSheet(e, platform) {
   const isMobile = platform === 'ios' || platform === 'android';
   const paxLine = (e._travelerName || e.pnr) ? `<div class="sheet-pax">${e._travelerName ? '<strong>' + e._travelerName + '</strong>' : ''}${e._travelerName && e.pnr ? ' \u00b7 ' : ''}${e.pnr || ''}</div>` : '';
   let h = '';
+
+  // ── Multi-segment: segment-by-segment breakdown ──
+  if (e.segments && e.segments.length > 1) {
+    h += '<div class="sheet-segments">';
+    e.segments.forEach((seg, si) => {
+      const carrier = seg.carrier || e.carrier || '';
+      const num = seg.num || e.num || '';
+      const segIcon = isFl ? '✈️' : '🚄';
+      h += '<div class="sheet-seg">';
+      h += `<div class="sheet-seg-head"><span class="seg-icon">${segIcon}</span>${carrier}<span class="seg-num"> · ${num}</span></div>`;
+      // Route
+      const depLabel = (isFl && seg.dep.code) ? seg.dep.code : seg.dep.name;
+      const arrLabel = (isFl && seg.arr.code) ? seg.arr.code : seg.arr.name;
+      h += `<div class="sheet-seg-route">${depLabel} <span class="seg-arrow">→</span> ${arrLabel}</div>`;
+      // Times + duration
+      const arrOffset = seg.arr.dayOffset ? ` (+${seg.arr.dayOffset}j)` : '';
+      h += `<div class="sheet-seg-times">${seg.dep.time} → ${seg.arr.time}${arrOffset} · ${seg.dur}</div>`;
+      // Chips: gate/platform + seat
+      const chips = [];
+      if (isFl && seg.gate) chips.push(`<span class="sheet-seg-chip gate">Porte ${seg.gate}</span>`);
+      if (!isFl && seg.platform) chips.push(`<span class="sheet-seg-chip gate">Voie ${seg.platform}</span>`);
+      // Seat logic per spec
+      const seat = seg.seat || null;
+      if (seat) {
+        if (seat.wagon) chips.push(`<span class="sheet-seg-chip seat">V.${seat.wagon} P.${seat.place}</span>`);
+        else if (seat.place) chips.push(`<span class="sheet-seg-chip seat">Siège ${seat.place}</span>`);
+      } else {
+        chips.push(`<span class="sheet-seg-chip none">Placement libre</span>`);
+      }
+      if (chips.length) h += `<div class="sheet-seg-meta">${chips.join('')}</div>`;
+      h += '</div>';
+      // Connection row between segments
+      if (si < e.segments.length - 1 && e.connections && e.connections[si]) {
+        const conn = e.connections[si];
+        h += `<div class="sheet-conn"><span class="sheet-conn-icon">⏱</span><span class="sheet-conn-text">Escale ${conn.loc} · ${conn.dur}</span></div>`;
+      }
+    });
+    h += '</div>';
+    h += paxLine;
+    h += '<div class="sheet-divider"></div>';
+  }
 
   // Deferred ticket
   if (!ticket.available) {
