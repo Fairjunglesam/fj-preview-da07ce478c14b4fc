@@ -420,6 +420,25 @@
   /* Leg card — escale info lines in mid zone */
   .leg-escale-line { font-size: 9px; font-weight: 600; color: rgba(255,180,100,0.8); text-align: center; margin-top: 1px; white-space: nowrap; }
   .trip-card:not(.contrast-mode):not(.dark-mode) .leg-escale-line { color: var(--orange-600); }
+  /* Leg card — compact segment rows */
+  .leg-seg-rows { padding: 4px 14px 6px; border-top: 1px solid rgba(255,255,255,0.06); }
+  .leg-seg-row { display: flex; align-items: baseline; gap: 8px; padding: 3px 0; font-size: 10px; color: rgba(255,255,255,0.7); }
+  .leg-seg-num { font-weight: 700; color: rgba(255,255,255,0.5); min-width: 62px; white-space: nowrap; letter-spacing: -0.2px; }
+  .leg-seg-times { font-weight: 600; color: rgba(255,255,255,0.85); white-space: nowrap; }
+  .leg-seg-times .day-offset { font-size: 8px; font-weight: 700; color: rgba(255,141,84,0.8); vertical-align: super; }
+  .leg-seg-chips { display: flex; gap: 4px; margin-left: auto; }
+  .leg-seg-chip { font-size: 9px; font-weight: 700; padding: 1px 5px; border-radius: 4px; white-space: nowrap; }
+  .leg-seg-chip.gate { background: rgba(255,141,84,0.12); color: rgba(255,180,120,0.9); }
+  .leg-seg-chip.seat { background: rgba(0,169,252,0.12); color: rgba(120,200,255,0.9); }
+  .leg-seg-chip.none { color: rgba(255,255,255,0.25); }
+  /* Light mode overrides */
+  .trip-card:not(.contrast-mode):not(.dark-mode) .leg-seg-rows { border-top-color: var(--grey-100); }
+  .trip-card:not(.contrast-mode):not(.dark-mode) .leg-seg-row { color: var(--grey-500); }
+  .trip-card:not(.contrast-mode):not(.dark-mode) .leg-seg-num { color: var(--grey-400); }
+  .trip-card:not(.contrast-mode):not(.dark-mode) .leg-seg-times { color: var(--grey-700); }
+  .trip-card:not(.contrast-mode):not(.dark-mode) .leg-seg-chip.gate { background: var(--orange-50); color: var(--orange-700); }
+  .trip-card:not(.contrast-mode):not(.dark-mode) .leg-seg-chip.seat { background: var(--blue-50); color: var(--blue-700); }
+  .trip-card:not(.contrast-mode):not(.dark-mode) .leg-seg-chip.none { color: var(--grey-300); }
   /* Hotel dark card */
   .htd-title { font-size: 15px; font-weight: 700; color: #fff; line-height: 1.3; }
   .htd-title .stars { color: var(--yellow-500); font-size: 12px; margin-left: 2px; }
@@ -790,8 +809,11 @@
     .bp-scroll { flex-wrap: wrap; overflow-x: visible; scroll-snap-type: none; }
     .bp-scroll .bp, .bp-scroll .bpb { min-width: 100% !important; max-width: 100% !important; flex-shrink: 1; }
     .bp-scroll .bp-conn-between { width: 100%; padding: 6px 0; }
-    /* Bold mobile — hide mid section to save space */
+    /* Bold mobile — hide mid section to save space (except leg cards with escales) */
     .bpb-mid { display: none; }
+    .bpb-leg .bpb-mid { display: flex; min-width: 60px; }
+    .bpb-leg .bpb-mid-badge .mid-label { font-size: 10px; }
+    .bpb-leg .leg-escale-line { font-size: 8px; }
     .bpb-code { font-size: 28px; }
     .bpb-route { padding: 12px 12px 6px; }
     .bpb-head { padding: 10px 12px 0; }
@@ -2110,12 +2132,32 @@ function renderEtape(e, state, idx, autoIdx, done, total, isPast, targetId) {
         h += `<div class="bpb-hero arr"><div class="bpb-code">${arr.time}${boldArrOffset}</div><div class="bpb-name">${arr.name}</div></div>`;
       }
       h += '</div>';
-      // Multi-segment leg: no luggage, no individual seats/gates (shown in detail sheet)
+      // Compact segment rows: num + times + gate/voie + seat per segment
+      h += '<div class="leg-seg-rows">';
+      etape.segments.forEach(seg => {
+        const sNum = seg.num || '';
+        const sCarrier = seg.carrier || etape.carrier || '';
+        const arrOff = seg.arr.dayOffset ? `<span class="day-offset">+${seg.arr.dayOffset}</span>` : '';
+        let chips = '';
+        // Gate / platform
+        if (isFl && seg.gate) chips += `<span class="leg-seg-chip gate">Pte ${seg.gate}</span>`;
+        if (!isFl && seg.platform) chips += `<span class="leg-seg-chip gate">V.${seg.platform}</span>`;
+        // Seat
+        const seat = seg.seat || null;
+        if (seat) {
+          if (seat.wagon) chips += `<span class="leg-seg-chip seat">V.${seat.wagon} P.${seat.place}</span>`;
+          else if (seat.place) chips += `<span class="leg-seg-chip seat">${seat.place}</span>`;
+        } else {
+          chips += `<span class="leg-seg-chip none">—</span>`;
+        }
+        h += `<div class="leg-seg-row"><span class="leg-seg-num">${sNum}</span><span class="leg-seg-times">${seg.dep.time} → ${seg.arr.time}${arrOff}</span><span class="leg-seg-chips">${chips}</span></div>`;
+      });
+      h += '</div>';
       // Tappable
       const tIdx = sheetTargets.length;
       sheetTargets.push(etape);
       const tapAttr = ` tappable" onclick="openSheet(sheetTargets[${tIdx}])"`;
-      return `<div class="bpb${extraCls ? ' ' + extraCls : ''}${tapAttr}>${h}</div>`;
+      return `<div class="bpb bpb-leg${extraCls ? ' ' + extraCls : ''}${tapAttr}>${h}</div>`;
     }
 
     let allH = '';
@@ -2378,47 +2420,6 @@ function buildTransportSheet(e, platform) {
   const isMobile = platform === 'ios' || platform === 'android';
   const paxLine = (e._travelerName || e.pnr) ? `<div class="sheet-pax">${e._travelerName ? '<strong>' + e._travelerName + '</strong>' : ''}${e._travelerName && e.pnr ? ' \u00b7 ' : ''}${e.pnr || ''}</div>` : '';
   let h = '';
-
-  // ── Multi-segment: segment-by-segment breakdown ──
-  if (e.segments && e.segments.length > 1) {
-    h += '<div class="sheet-segments">';
-    e.segments.forEach((seg, si) => {
-      const carrier = seg.carrier || e.carrier || '';
-      const num = seg.num || e.num || '';
-      const segIcon = isFl ? '✈️' : '🚄';
-      h += '<div class="sheet-seg">';
-      h += `<div class="sheet-seg-head"><span class="seg-icon">${segIcon}</span>${carrier}<span class="seg-num"> · ${num}</span></div>`;
-      // Route
-      const depLabel = (isFl && seg.dep.code) ? seg.dep.code : seg.dep.name;
-      const arrLabel = (isFl && seg.arr.code) ? seg.arr.code : seg.arr.name;
-      h += `<div class="sheet-seg-route">${depLabel} <span class="seg-arrow">→</span> ${arrLabel}</div>`;
-      // Times + duration
-      const arrOffset = seg.arr.dayOffset ? ` (+${seg.arr.dayOffset}j)` : '';
-      h += `<div class="sheet-seg-times">${seg.dep.time} → ${seg.arr.time}${arrOffset} · ${seg.dur}</div>`;
-      // Chips: gate/platform + seat
-      const chips = [];
-      if (isFl && seg.gate) chips.push(`<span class="sheet-seg-chip gate">Porte ${seg.gate}</span>`);
-      if (!isFl && seg.platform) chips.push(`<span class="sheet-seg-chip gate">Voie ${seg.platform}</span>`);
-      // Seat logic per spec
-      const seat = seg.seat || null;
-      if (seat) {
-        if (seat.wagon) chips.push(`<span class="sheet-seg-chip seat">V.${seat.wagon} P.${seat.place}</span>`);
-        else if (seat.place) chips.push(`<span class="sheet-seg-chip seat">Siège ${seat.place}</span>`);
-      } else {
-        chips.push(`<span class="sheet-seg-chip none">Placement libre</span>`);
-      }
-      if (chips.length) h += `<div class="sheet-seg-meta">${chips.join('')}</div>`;
-      h += '</div>';
-      // Connection row between segments
-      if (si < e.segments.length - 1 && e.connections && e.connections[si]) {
-        const conn = e.connections[si];
-        h += `<div class="sheet-conn"><span class="sheet-conn-icon">⏱</span><span class="sheet-conn-text">Escale ${conn.loc} · ${conn.dur}</span></div>`;
-      }
-    });
-    h += '</div>';
-    h += paxLine;
-    h += '<div class="sheet-divider"></div>';
-  }
 
   // Deferred ticket
   if (!ticket.available) {
