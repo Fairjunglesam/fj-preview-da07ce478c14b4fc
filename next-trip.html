@@ -2115,27 +2115,30 @@ function renderEtape(e, state, idx, autoIdx, done, total, isPast, targetId) {
         const numOnly = segNum.replace(/^[A-Z]{2,3}\s*/, '');
         const midLabel = [carrier + (numOnly ? ' ' + numOnly : ''), seg.dur].filter(Boolean).join(' · ');
         // Seat/gate as compact text in mid zone
-        let midSeatLine = '';
+        // Seat info (mid zone) — relative to the segment
         const segSeat = seg.seat || null;
+        let midSeatLine = '';
         if (isFl) {
-          const parts = [];
-          if (seg.gate) parts.push('Porte ' + seg.gate);
-          if (segSeat && segSeat.place) parts.push('Siège ' + segSeat.place);
-          if (parts.length) midSeatLine = `<div class="leg-mid-seat">${parts.join(' · ')}</div>`;
+          if (segSeat && segSeat.place) midSeatLine = `<div class="leg-mid-seat">Siège ${segSeat.place}</div>`;
         } else {
-          const parts = [];
-          if (seg.platform) parts.push('Voie ' + seg.platform);
-          if (segSeat && segSeat.wagon) parts.push('Voit. ' + segSeat.wagon + ' Place ' + segSeat.place);
-          else if (segSeat && segSeat.place) parts.push('Place ' + segSeat.place);
-          if (parts.length) midSeatLine = `<div class="leg-mid-seat">${parts.join(' · ')}</div>`;
+          if (segSeat && segSeat.wagon) midSeatLine = `<div class="leg-mid-seat">Voit. ${segSeat.wagon} Place ${segSeat.place}</div>`;
+          else if (segSeat && segSeat.place) midSeatLine = `<div class="leg-mid-seat">Place ${segSeat.place}</div>`;
+        }
+        // Dep name with gate/voie (relative to departure station)
+        let depName = dep.name;
+        if (isFl) {
+          if (dep.terminal) depName += ' · T' + dep.terminal;
+          if (seg.gate) depName += ' · Porte ' + seg.gate;
+        } else {
+          if (seg.platform) depName += ' · Voie ' + seg.platform;
         }
         // Route row
         const routeCls = si === 0 ? ' leg-route-first' : '';
         h += `<div class="bpb-route${routeCls}">`;
         if (isFl && dep.code) {
-          h += `<div class="bpb-hero"><div class="bpb-code">${dep.code}</div><div class="bpb-time">${dep.time}</div><div class="bpb-name">${dep.name}${dep.terminal ? ' · T' + dep.terminal : ''}</div></div>`;
+          h += `<div class="bpb-hero"><div class="bpb-code">${dep.code}</div><div class="bpb-time">${dep.time}</div><div class="bpb-name">${depName}</div></div>`;
         } else {
-          h += `<div class="bpb-hero"><div class="bpb-code">${dep.time}</div><div class="bpb-name">${dep.name}</div></div>`;
+          h += `<div class="bpb-hero"><div class="bpb-code">${dep.time}</div><div class="bpb-name">${depName}</div></div>`;
         }
         h += `<div class="bpb-mid"><div class="bpb-mid-row"><div class="bpb-mid-line"></div><div class="bpb-mid-badge">${midBadge(etape.type, midLabel)}</div><div class="bpb-mid-line"></div></div>${midSeatLine}</div>`;
         if (isFl && arr.code) {
