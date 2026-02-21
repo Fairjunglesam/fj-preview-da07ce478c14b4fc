@@ -757,7 +757,7 @@
   @media (max-width: 640px) {
     /* Sheet → bottom sheet on mobile */
     .sheet-overlay { align-items: flex-end; justify-content: stretch; }
-    .sheet-panel { width: 100%; max-width: 100%; border-radius: 20px 20px 0 0; max-height: 70vh; transform: translateY(100%); }
+    .sheet-panel { width: 100%; max-width: 100%; border-radius: 20px 20px 0 0; max-height: 85vh; transform: translateY(100%); }
     .sheet-overlay.open .sheet-panel { transform: translateY(0); }
     .sheet-handle { display: block; }
     body { padding: 8px; }
@@ -829,7 +829,7 @@
     .bpb-leg .bpb-mid { display: flex; min-width: 50px; }
     .bpb-leg .bpb-mid-badge .mid-label { font-size: 11px; }
     .bpb-leg .bpb-code { font-size: 18px; }
-    .bpb-leg .bpb-route { padding: 3px 12px 3px; }
+    .bpb-leg .bpb-route { padding: 6px 12px; }
     .bpb-leg .bpb-time { font-size: 10px; }
     .bpb-leg .bpb-name { font-size: 9px; }
     .bpb-leg .bp-tags { padding: 0 12px 2px; }
@@ -2476,39 +2476,6 @@ function buildTransportSheet(e, platform) {
     h += `<div class="sheet-footer"><a href="${e.locUrl}" onclick="event.preventDefault()">&#128205; Itinéraire vers ${lieu}</a></div>`;
   }
 
-  // ── Multi-segment: collapsible segment details (AFTER ticket) ──
-  if (e.segments && e.segments.length > 1) {
-    const toggleId = 'seg-toggle-' + Math.random().toString(36).slice(2, 8);
-    h += `<div class="sheet-seg-toggle" onclick="document.getElementById('${toggleId}').classList.toggle('open');this.classList.toggle('open')"><span class="material-symbols-rounded sheet-seg-chevron">expand_more</span> Détails des ${e.segments.length} ${isFl ? 'vols' : 'trains'}</div>`;
-    h += `<div class="sheet-segments" id="${toggleId}">`;
-    e.segments.forEach((seg, si) => {
-      const carrier = seg.carrier || e.carrier || '';
-      const num = seg.num || e.num || '';
-      const segIcon = isFl ? '✈️' : '🚄';
-      h += '<div class="sheet-seg">';
-      h += `<div class="sheet-seg-head"><span class="seg-icon">${segIcon}</span>${carrier}<span class="seg-num"> · ${num}</span></div>`;
-      const depLabel = (isFl && seg.dep.code) ? seg.dep.code : seg.dep.name;
-      const arrLabel = (isFl && seg.arr.code) ? seg.arr.code : seg.arr.name;
-      h += `<div class="sheet-seg-route">${depLabel} <span class="seg-arrow">→</span> ${arrLabel}</div>`;
-      const arrOffset = seg.arr.dayOffset ? ` (+${seg.arr.dayOffset}j)` : '';
-      h += `<div class="sheet-seg-times">${seg.dep.time} → ${seg.arr.time}${arrOffset} · ${seg.dur}</div>`;
-      const chips = [];
-      if (isFl && seg.gate) chips.push(`<span class="sheet-seg-chip gate">Porte ${seg.gate}</span>`);
-      if (!isFl && seg.platform) chips.push(`<span class="sheet-seg-chip gate">Voie ${seg.platform}</span>`);
-      const seat = seg.seat || null;
-      if (seat) {
-        if (seat.wagon) chips.push(`<span class="sheet-seg-chip seat">V.${seat.wagon} P.${seat.place}</span>`);
-        else if (seat.place) chips.push(`<span class="sheet-seg-chip seat">Siège ${seat.place}</span>`);
-      }
-      if (chips.length) h += `<div class="sheet-seg-meta">${chips.join('')}</div>`;
-      h += '</div>';
-      if (si < e.segments.length - 1 && e.connections && e.connections[si]) {
-        const conn = e.connections[si];
-        h += `<div class="sheet-conn"><span class="sheet-conn-icon">⏱</span><span class="sheet-conn-text">Correspondance ${conn.loc} · ${conn.dur}</span></div>`;
-      }
-    });
-    h += '</div>';
-  }
   return h;
 }
 
