@@ -2771,10 +2771,14 @@ function renderFloatDrawer() {
 
   let h = '';
 
+  const isFlight = e && e.type === 'flight';
   if (isTransport) {
-    // Ticket row — first
+    // Ticket row — options depend on type (flights: PDF/Diff only, trains: all)
+    const ticketOpts = isFlight
+      ? [['pdf','PDF'],['differe','Diff.']]
+      : [['qr-wallet','QR+W'],['qr','QR'],['pdf','PDF'],['differe','Diff.']];
     h += '<div class="fd-row"><span class="fd-label">Ticket</span>';
-    [['qr-wallet','QR+W'],['qr','QR'],['pdf','PDF'],['differe','Diff.']].forEach(([k, l]) => {
+    ticketOpts.forEach(([k, l]) => {
       h += `<button class="fd-pill${st.ticket === k ? ' active' : ''}" onclick="fdSet('ticket','${k}')">${l}</button>`;
     });
     h += '</div>';
