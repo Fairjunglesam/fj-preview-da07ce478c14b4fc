@@ -178,7 +178,7 @@
   .etape-tag.future { background: var(--grey-75); color: var(--grey-600); }
 
   /* ===== Shared étape card container ===== */
-  .ecard { border: 1px solid rgba(195,200,212,0.45); border-radius: 12px; overflow: hidden; margin-bottom: 8px; background: linear-gradient(165deg, #f1f2f6 0%, #e9ebf0 45%, #f0f1f5 100%); box-shadow: inset 0 1px 0 rgba(255,255,255,0.65), 0 1px 3px rgba(0,0,0,0.04); }
+  .ecard { border: 1px solid rgba(195,200,212,0.45); border-radius: 12px; overflow: hidden; margin-bottom: 8px; background: linear-gradient(165deg, #f1f2f6 0%, #e9ebf0 45%, #f0f1f5 100%); box-shadow: inset 0 1px 0 rgba(255,255,255,0.65), 0 1px 3px rgba(0,0,0,0.04); max-width: 540px; }
 
   /* ===== Transport — Boarding Pass ===== */
   .bp { position: relative; border: 1px solid rgba(195,200,212,0.45); border-radius: 14px; background: linear-gradient(165deg, #f1f2f6 0%, #e9ebf0 45%, #f0f1f5 100%); margin-bottom: 6px; overflow: visible; box-shadow: inset 0 1px 0 rgba(255,255,255,0.65), 0 1px 3px rgba(0,0,0,0.04); }
@@ -237,7 +237,7 @@
   .bp-tag.warm .bp-tag-value { color: var(--orange-600); }
 
   /* ===== DARK + BOLD shared base (both use .bpb) ===== */
-  .bpb { position: relative; border-radius: 16px; background: linear-gradient(145deg, #1E2330 0%, #262D3F 100%); margin-bottom: 6px; overflow: hidden; border: 1px solid rgba(255,255,255,0.06); }
+  .bpb { position: relative; border-radius: 16px; background: linear-gradient(145deg, #1E2330 0%, #262D3F 100%); margin-bottom: 6px; overflow: hidden; border: 1px solid rgba(255,255,255,0.06); max-width: 540px; }
   .bpb.bpb-navy { background: linear-gradient(145deg, #141B2D 0%, #1C2541 100%); }
   .bpb-head { display: flex; justify-content: space-between; align-items: flex-start; padding: 10px 14px 0; gap: 8px; }
   .bpb-carrier { display: flex; align-items: center; gap: 5px; font-size: 12px; font-weight: 700; color: rgba(255,255,255,0.9); min-width: 0; flex: 1; }
@@ -248,7 +248,8 @@
   .bpb .date-icon-month { color: rgba(255,255,255,0.7); }
   .bpb-head-right { text-align: right; flex-shrink: 0; }
   .bpb-date { font-size: 11px; font-weight: 700; color: rgba(255,255,255,0.85); margin-right: 6px; }
-  .bpb-ref { font-size: 10px; font-weight: 700; color: rgba(255,255,255,0.7); display: block; margin-top: 1px; }
+  .bpb-num { font-size: 12px; font-weight: 800; color: rgba(255,255,255,0.9); display: block; letter-spacing: -0.2px; }
+  .bpb-ref { font-size: 9px; font-weight: 600; color: rgba(255,255,255,0.45); display: block; margin-top: 2px; }
   .bpb-route { display: flex; align-items: center; padding: 8px 14px 10px; gap: 6px; }
   .bpb-hero { flex: 1; min-width: 0; }
   .bpb-hero.arr { text-align: right; }
@@ -554,7 +555,11 @@
     .stepper.stepper-dark .stepper-step.active .stepper-dot { width: 32px; height: 32px; }
     .stepper.stepper-dark .stepper-step.active .stepper-dot .material-symbols-rounded { font-size: 16px; }
     .stepper.stepper-dark .stepper-step.active .stepper-label { font-size: 11px; }
-    /* Bold stepper mobile — smaller dots, tighter layout */
+    /* Bold stepper mobile — horizontal scroll carousel */
+    .stepper.stepper-bold { overflow-x: auto; scrollbar-width: none; padding: 0 8px; }
+    .stepper.stepper-bold::-webkit-scrollbar { display: none; }
+    .stepper.stepper-bold .stepper-step { flex: none; width: 80px; }
+    .stepper.stepper-bold .stepper-step.active { width: 140px; }
     .stepper.stepper-bold .stepper-step.active .stepper-dot { width: 34px; height: 34px; }
     .stepper.stepper-bold .stepper-step.active .stepper-dot .material-symbols-rounded { font-size: 17px; }
     .stepper.stepper-bold .stepper-step.active .stepper-dot-row { height: 38px; }
@@ -649,7 +654,8 @@
   .trip-card:not(.contrast-mode) .bpb .date-icon { background: rgba(0,0,0,0.04); border-color: rgba(0,0,0,0.08); }
   .trip-card:not(.contrast-mode) .bpb .date-icon-day { color: var(--black); }
   .trip-card:not(.contrast-mode) .bpb .date-icon-month { color: var(--blue-600); }
-  .trip-card:not(.contrast-mode) .bpb-ref { color: var(--grey-500); }
+  .trip-card:not(.contrast-mode) .bpb-num { color: var(--grey-800); }
+  .trip-card:not(.contrast-mode) .bpb-ref { color: var(--grey-400); }
   .trip-card:not(.contrast-mode) .bpb-code { color: var(--black); }
   .trip-card:not(.contrast-mode) .bpb-code .day-offset { color: var(--orange-500); }
   .trip-card:not(.contrast-mode) .bp-time .day-offset { color: var(--orange-500); }
@@ -839,7 +845,8 @@
   .trip-card.dark-mode .date-icon { background: rgba(255,255,255,0.50); border-color: rgba(255,255,255,0.35); }
   .trip-card.dark-mode .date-icon-day { color: #0a0a20; }
   .trip-card.dark-mode .date-icon-month { color: rgba(30,30,60,0.55); }
-  .trip-card.dark-mode .bpb-ref { color: rgba(30,30,60,0.55); }
+  .trip-card.dark-mode .bpb-num { color: rgba(10,10,30,0.85); }
+  .trip-card.dark-mode .bpb-ref { color: rgba(30,30,60,0.4); }
   .trip-card.dark-mode .bpb-code { color: #0a0a20; font-weight: 800; }
   .trip-card.dark-mode .bpb-time { color: #1a1a2e; }
   .trip-card.dark-mode .bpb-name { color: rgba(20,20,50,0.85); }
@@ -1521,6 +1528,17 @@ function renderAll() {
     }
   });
 
+  // Bold stepper: auto-scroll active step into view on mobile
+  if (isBold) {
+    requestAnimationFrame(() => {
+      document.querySelectorAll('.stepper-bold').forEach(s => {
+        if (s.scrollWidth > s.clientWidth + 4) {
+          const a = s.querySelector('.stepper-step.active');
+          if (a) a.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+        }
+      });
+    });
+  }
 }
 
 // Calendar date icon (éphéméride) — parses "Ven. 09 Fév" or "Vendredi 9 Février"
@@ -1661,7 +1679,8 @@ function renderEtape(e, state, idx, autoIdx, done, total, isPast, targetId) {
       let h = '';
       // Header: date + carrier + fare class | PNR
       const fareCls = fareData && fareData.fareName ? '<span class="bp-carrier-sub"> · ' + fareData.fareName + '</span>' : '';
-      h += `<div class="bpb-head"><div class="bpb-carrier"><span class="bpb-date">${dateStr}</span><span class="bp-carrier-icon">${icon}</span>${carrier}${fareCls}</div>${pnr ? '<div class="bpb-head-right"><span class="bpb-ref">Réf. ' + pnr + '</span></div>' : ''}</div>`;
+      const headRight = (num || pnr) ? `<div class="bpb-head-right">${num ? '<span class="bpb-num">' + num + '</span>' : ''}${pnr ? '<span class="bpb-ref">Réf. ' + pnr + '</span>' : ''}</div>` : '';
+      h += `<div class="bpb-head"><div class="bpb-carrier"><span class="bpb-date">${dateStr}</span><span class="bp-carrier-icon">${icon}</span>${carrier}${fareCls}</div>${headRight}</div>`;
       // Route: big codes (flights) or big times (trains)
       h += '<div class="bpb-route">';
       if (isFl && dep.code) {
@@ -1669,7 +1688,7 @@ function renderEtape(e, state, idx, autoIdx, done, total, isPast, targetId) {
       } else {
         h += `<div class="bpb-hero"><div class="bpb-code">${dep.time}</div><div class="bpb-name">${dep.name}</div></div>`;
       }
-      const midPillLabel = (num ? num + ' · ' : '') + midLabel;
+      const midPillLabel = midLabel;
       // Build action pill for mid zone
       let actionPill = '';
       if (ticket) {
