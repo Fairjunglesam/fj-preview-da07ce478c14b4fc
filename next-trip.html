@@ -1492,7 +1492,7 @@ const TRIPS = {
         ticket: { available: true, hasQR: false, wallet: false },
         num: 'AF 7695', pnr: 'ABC123',
         fareName: 'Economy Standard', fareExch: 'with_fee', fareRefund: false, amenities: ['meal', 'wifi'],
-        voucherPdf: 'transport-voucher.pdf',
+        voucherPdf: 'voucher-flight.pdf',
         docLabel: 'Voir mon billet', docIcon: '🎫', docAvailable: true,
         locLabel: "Itinéraire vers l'aéroport", locIcon: '📍', locUrl: '#',
       }
@@ -1616,7 +1616,7 @@ const TRIPS = {
         ticket: { available: true, hasQR: false, wallet: false },
         num: 'A3 621', pnr: 'KLM456',
         fareName: 'Economy Flex', fareExch: true, fareRefund: 'with_fee', amenities: ['meal'],
-        voucherPdf: 'transport-voucher.pdf',
+        voucherPdf: 'voucher-flight.pdf',
         docLabel: 'Voir mon billet', docIcon: '🎫', docAvailable: true,
         locLabel: "Itinéraire vers l'aéroport", locIcon: '📍', locUrl: '#',
       }
@@ -2882,7 +2882,7 @@ function renderShowcase() {
     // Avion — toujours PDF confirmation, un par leg, pas de QR/wallet
     const me = { ...base, type: 'flight', carrier: 'Air France', num: 'AF 1234', pnr: 'ABC123',
       ticket: { available: true, hasQR: false, wallet: false },
-      departure: flightDep, arrival: flightArr, voucherPdf: 'transport-voucher.pdf' };
+      departure: flightDep, arrival: flightArr, voucherPdf: 'voucher-flight.pdf' };
     headerTitle = dateIcon('Ven. 09 F\u00e9v') + '<span>CDG \u2192 NCE</span>';
     content = buildTransportSheet(me, 'desktop');
     panelLabel = 'Confirmation de r\u00e9servation \u00b7 Air France AF 1234';
@@ -2919,7 +2919,7 @@ function renderShowcase() {
         panelLabel = 'QR seul \u00b7 ' + carrier + ' ' + num;
       } else if (st.ticket === 'pdf') {
         ticket = { available: true, hasQR: false, wallet: false };
-        voucherPdf = 'transport-voucher.pdf';
+        voucherPdf = 'voucher-train.pdf';
         panelLabel = 'PDF \u00b7 ' + carrier + ' ' + num;
       } else {
         ticket = { available: false, availableDate: '15 mars 2026' };
