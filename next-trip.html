@@ -444,25 +444,24 @@
   .htd-logistics { padding: 6px 14px 10px; border-top: 1px solid rgba(255,255,255,0.06); }
   .htd-log-item { font-size: 11px; color: rgba(255,255,255,0.7); line-height: 1.7; display: flex; align-items: center; gap: 6px; }
   .htd-log-item strong { color: rgba(255,255,255,0.85); font-weight: 700; }
-  /* Hotel bold — redesigned vertical date layout */
-  .htd-dates-bold { display: flex; flex-direction: column; gap: 0; padding: 8px 14px 4px; border-top: 1px solid rgba(255,255,255,0.06); }
+  /* Hotel bold — compact horizontal date layout (check-in | nights | check-out) */
+  .htd-dates-bold { display: flex; align-items: stretch; gap: 0; padding: 6px 14px 4px; border-top: 1px solid rgba(255,255,255,0.06); }
   .trip-card:not(.contrast-mode):not(.dark-mode) .htd-dates-bold { border-top-color: var(--grey-100); }
-  .htd-block { display: flex; align-items: center; gap: 14px; padding: 8px 0; }
-  .htd-block-label-col { display: flex; flex-direction: column; gap: 2px; min-width: 80px; flex-shrink: 0; }
-  .htd-block-event { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; color: rgba(255,255,255,0.5); }
-  .trip-card:not(.contrast-mode):not(.dark-mode) .htd-block-event { color: var(--grey-500); }
-  .htd-block-time { font-size: 22px; font-weight: 800; color: #fff; letter-spacing: -0.5px; line-height: 1; margin-top: 3px; }
-  .trip-card:not(.contrast-mode):not(.dark-mode) .htd-block-time { color: var(--black); }
-  .htd-block-date-col { flex: 1; min-width: 0; }
-  .htd-block-dow { font-size: 15px; font-weight: 700; color: rgba(255,255,255,0.85); line-height: 1.2; }
+  .htd-block { flex: 1; display: flex; flex-direction: column; justify-content: center; padding: 6px 0; min-width: 0; }
+  .htd-block.arr { align-items: flex-end; text-align: right; }
+  .htd-block-event { font-size: 9px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.4px; color: rgba(255,255,255,0.45); }
+  .trip-card:not(.contrast-mode):not(.dark-mode) .htd-block-event { color: var(--grey-400); }
+  .htd-block-dow { font-size: 13px; font-weight: 700; color: rgba(255,255,255,0.85); line-height: 1.2; margin-top: 2px; }
   .trip-card:not(.contrast-mode):not(.dark-mode) .htd-block-dow { color: var(--black); }
-  .htd-block-date { font-size: 13px; font-weight: 500; color: rgba(255,255,255,0.55); margin-top: 2px; }
+  .htd-block-date { font-size: 11px; font-weight: 500; color: rgba(255,255,255,0.5); margin-top: 1px; }
   .trip-card:not(.contrast-mode):not(.dark-mode) .htd-block-date { color: var(--grey-500); }
-  /* Nights separator */
-  .htd-nights-sep { display: flex; align-items: center; gap: 8px; padding: 4px 0; }
-  .htd-nights-sep-line { flex: 1; height: 1px; background: rgba(255,255,255,0.06); }
+  .htd-block-time { font-size: 10px; font-weight: 600; color: rgba(255,255,255,0.4); margin-top: 2px; }
+  .trip-card:not(.contrast-mode):not(.dark-mode) .htd-block-time { color: var(--grey-400); }
+  /* Nights separator (vertical divider between check-in/check-out) */
+  .htd-nights-sep { display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 0 10px; flex-shrink: 0; }
+  .htd-nights-sep-line { width: 1px; flex: 1; background: rgba(255,255,255,0.06); }
   .trip-card:not(.contrast-mode):not(.dark-mode) .htd-nights-sep-line { background: var(--grey-100); }
-  .htd-nights-sep .bpb-mid-badge { white-space: nowrap; }
+  .htd-nights-sep .bpb-mid-badge { white-space: nowrap; margin: 4px 0; }
   /* Car driver row — matches htd-logistics style */
   .bpb-driver { padding: 6px 14px 10px; border-top: 1px solid rgba(255,255,255,0.06); }
   .bpb-driver-item { font-size: 11px; color: rgba(255,255,255,0.7); line-height: 1.7; display: flex; align-items: center; gap: 6px; }
@@ -1946,28 +1945,46 @@ function renderEtape(e, state, idx, autoIdx, done, total, isPast, targetId) {
       const lastSeg = etape.segments[etape.segments.length - 1];
       const dep = firstSeg.dep;
       const arr = lastSeg.arr;
+      const stopCount = etape.segments.length - 1;
+      const MAX_STOP_DOTS = 2; // show individual dots up to this, then trim
       let h = '';
-      // Header
+      // Header — collect unique carriers across segments
+      const carriers = [];
+      const seenCarriers = new Set();
+      etape.segments.forEach(seg => {
+        const c = seg.carrier || etape.carrier;
+        if (!seenCarriers.has(c)) { seenCarriers.add(c); carriers.push(c); }
+      });
+      const carrierStr = carriers.join(' + ');
       const fareData = firstSeg.fareName ? firstSeg : etape;
       const fareCls = fareData.fareName ? '<span class="bp-carrier-sub"> · ' + fareData.fareName + '</span>' : '';
-      const num = firstSeg.num || etape.num || '';
       const pnr = firstSeg.pnr || etape.pnr || '';
-      const headRight = (num || pnr) ? `<div class="bpb-head-right">${num ? '<span class="bpb-num">' + num + '</span>' : ''}${pnr ? '<span class="bpb-ref">Réf. ' + pnr + '</span>' : ''}</div>` : '';
-      h += `<div class="bpb-head"><div class="bpb-carrier"><span class="bpb-date">${etape.departure.date}</span><span class="bp-carrier-icon">${etape.icon}</span>${etape.carrier}${fareCls}</div>${headRight}</div>`;
-      // Route with stop dots
+      // Stop count badge in header
+      const stopBadge = stopCount === 1 ? '<span class="bp-carrier-sub"> · 1 escale</span>' : `<span class="bp-carrier-sub"> · ${stopCount} escales</span>`;
+      const headRight = pnr ? `<div class="bpb-head-right"><span class="bpb-ref">Réf. ${pnr}</span></div>` : '';
+      h += `<div class="bpb-head"><div class="bpb-carrier"><span class="bpb-date">${etape.departure.date}</span><span class="bp-carrier-icon">${etape.icon}</span>${carrierStr}${fareCls}${stopBadge}</div>${headRight}</div>`;
+      // Route with stop dots (trimmed if > MAX_STOP_DOTS)
       h += '<div class="bpb-route">';
       if (isFl && dep.code) {
         h += `<div class="bpb-hero"><div class="bpb-code">${dep.code}</div><div class="bpb-time">${dep.time}</div><div class="bpb-name">${dep.name}${dep.terminal ? ' · T' + dep.terminal : ''}</div></div>`;
       } else {
         h += `<div class="bpb-hero"><div class="bpb-code">${dep.time}</div><div class="bpb-name">${dep.name}</div></div>`;
       }
-      // Mid: timeline with stop dots
+      // Mid: timeline with stop dots (trim at MAX_STOP_DOTS)
       let stopDots = '';
-      etape.segments.forEach((seg, si) => {
-        if (si === 0) return;
-        const code = seg.dep.code || seg.dep.name.split(' ')[0] || '';
-        stopDots += `<div class="leg-stop-dot"><div class="leg-stop-dot-circle"></div><div class="leg-stop-dot-label">${code}</div></div>`;
-      });
+      if (stopCount <= MAX_STOP_DOTS) {
+        etape.segments.forEach((seg, si) => {
+          if (si === 0) return;
+          const code = seg.dep.code || seg.dep.name.split(' ')[0] || '';
+          stopDots += `<div class="leg-stop-dot"><div class="leg-stop-dot-circle"></div><div class="leg-stop-dot-label">${code}</div></div>`;
+        });
+      } else {
+        // Show first stop dot + "..." trimmed indicator
+        const first = etape.segments[1];
+        const firstCode = first.dep.code || first.dep.name.split(' ')[0] || '';
+        stopDots += `<div class="leg-stop-dot"><div class="leg-stop-dot-circle"></div><div class="leg-stop-dot-label">${firstCode}</div></div>`;
+        stopDots += `<div class="leg-stop-dot"><div class="leg-stop-dot-label" style="font-size:10px;opacity:0.6">+${stopCount - 1}</div></div>`;
+      }
       // Ticket action pill (use first segment's ticket)
       let actionPill = '';
       const legTicket = firstSeg.ticket || etape.ticket;
@@ -1988,12 +2005,16 @@ function renderEtape(e, state, idx, autoIdx, done, total, isPast, targetId) {
         h += `<div class="bpb-hero arr"><div class="bpb-code">${arr.time}${boldArrOffset}</div><div class="bpb-name">${arr.name}</div></div>`;
       }
       h += '</div>';
-      // Connection details bar
+      // Connection details (compact: show max 2, trim the rest)
       if (etape.connections && etape.connections.length) {
         h += '<div class="leg-conn-bar">';
-        etape.connections.forEach(conn => {
+        const showConns = etape.connections.slice(0, 2);
+        showConns.forEach(conn => {
           h += `<div class="leg-conn-chip"><span class="material-symbols-rounded">transfer_within_a_station</span>${conn.loc} · ${conn.dur}</div>`;
         });
+        if (etape.connections.length > 2) {
+          h += `<div class="leg-conn-chip" style="opacity:0.6">+${etape.connections.length - 2}</div>`;
+        }
         h += '</div>';
       }
       // Luggage
@@ -2086,11 +2107,11 @@ function renderEtape(e, state, idx, autoIdx, done, total, isPast, targetId) {
       const cin = parseFullDate(e.checkin.date);
       const cout = parseFullDate(e.checkout.date);
       h += '<div class="htd-dates-bold">';
-      h += `<div class="htd-block"><div class="htd-block-label-col"><div class="htd-block-event">Check-in</div><div class="htd-block-time">${e.checkin.time}</div></div><div class="htd-block-date-col"><div class="htd-block-dow">${cin.dow}</div><div class="htd-block-date">${cin.rest}</div></div></div>`;
+      h += `<div class="htd-block"><div class="htd-block-event">Check-in</div><div class="htd-block-dow">${cin.dow} ${cin.rest}</div><div class="htd-block-time">dès ${e.checkin.time}</div></div>`;
       h += `<div class="htd-nights-sep"><div class="htd-nights-sep-line"></div><div class="bpb-mid-badge">${midBadge('hotel', nightsLabel)}</div><div class="htd-nights-sep-line"></div></div>`;
-      h += `<div class="htd-block"><div class="htd-block-label-col"><div class="htd-block-event">Check-out</div><div class="htd-block-time">${e.checkout.time}</div></div><div class="htd-block-date-col"><div class="htd-block-dow">${cout.dow}</div><div class="htd-block-date">${cout.rest}</div></div></div>`;
-      if (e.docAvailable) { h += `<div style="padding:6px 0 2px">${voucherPill}</div>`; }
+      h += `<div class="htd-block arr"><div class="htd-block-event">Check-out</div><div class="htd-block-dow">${cout.dow} ${cout.rest}</div><div class="htd-block-time">avant ${e.checkout.time}</div></div>`;
       h += '</div>';
+      if (e.docAvailable) { h += `<div style="padding:4px 14px 2px">${voucherPill}</div>`; }
       // Free-text arrival conditions (unstructured, from supplier)
       if (e.freeTextConditions) {
         h += `<div class="htd-logistics"><div class="htd-log-item">${e.freeTextConditions}</div></div>`;
