@@ -120,7 +120,7 @@
   .stepper-step.completed .stepper-status { color: var(--green-500); }
 
   /* ===== Bold Stepper — expanded active, graceful rest ===== */
-  .stepper.stepper-bold { gap: 2px; align-items: flex-start; }
+  .stepper.stepper-bold { gap: 0; align-items: flex-start; }
   .stepper.stepper-bold .stepper-step { flex: 0.85; transition: flex 0.4s cubic-bezier(0.4,0,0.2,1), opacity 0.3s; min-width: 0; }
   .stepper.stepper-bold .stepper-step.active { flex: 1.4; }
   /* Inactive: readable but quieter */
@@ -135,15 +135,35 @@
   .stepper.stepper-bold .stepper-step.active .stepper-dot-row { height: 46px; }
   .stepper.stepper-bold .stepper-step.active .stepper-label { font-size: 13px; font-weight: 800; }
   .stepper.stepper-bold .stepper-step.active .stepper-date { font-size: 10px; font-weight: 700; }
-  /* Bold line offsets — accommodate 42px active dot + unequal flex widths */
-  .stepper.stepper-bold .stepper-line { left: calc(50% + 14px); right: calc(-80% + 14px); }
-  .stepper.stepper-bold .stepper-step.active .stepper-line { left: calc(50% + 22px); right: calc(-55% + 14px); }
   /* Completed inactive: softer */
   .stepper.stepper-bold .stepper-step.completed:not(.active) { opacity: 0.38; }
   .stepper.stepper-bold .stepper-step.completed:not(.active):hover { opacity: 0.7; }
-  /* Bold zone — wraps stepper + content with shared tint */
-  .bold-zone { background: rgba(0,169,252,0.05); border-radius: 14px; padding: 6px; margin-top: 4px; }
-  .bold-zone .stepper { margin-bottom: 4px; }
+  /* Bold lines — each step draws its own half-segments (no cross-step overflow) */
+  .stepper.stepper-bold .stepper-line { display: none; }
+  .stepper.stepper-bold .stepper-step::before,
+  .stepper.stepper-bold .stepper-step::after {
+    content: ''; position: absolute;
+    top: 22px; /* 3px pad + 19px (center of 38px inactive dot-row) */
+    height: 2px; background: var(--grey-100);
+    transform: translateY(-50%); z-index: 0; pointer-events: none;
+  }
+  .stepper.stepper-bold .stepper-step::before { left: 0; right: calc(50% + 14px); }
+  .stepper.stepper-bold .stepper-step::after { left: calc(50% + 14px); right: 0; }
+  .stepper.stepper-bold .stepper-step:first-child::before { display: none; }
+  .stepper.stepper-bold .stepper-step:last-child::after { display: none; }
+  /* Active step: bigger dot → adjust line gap */
+  .stepper.stepper-bold .stepper-step.active::before { right: calc(50% + 22px); }
+  .stepper.stepper-bold .stepper-step.active::after { left: calc(50% + 22px); }
+  /* Completed step: green lines */
+  .stepper.stepper-bold .stepper-step.completed::before,
+  .stepper.stepper-bold .stepper-step.completed::after { background: var(--green-200); }
+  .stepper.stepper-bold .stepper-step.completed + .stepper-step::before { background: var(--green-200); }
+  /* Transit animation on active right segment */
+  .stepper.stepper-bold .stepper-step.active.transit::after {
+    background: linear-gradient(90deg, var(--blue-500) 40%, var(--grey-100) 60%);
+    background-size: 250% 100%; animation: bold-transit 2.5s ease-in-out infinite;
+  }
+  @keyframes bold-transit { 0% { background-position: 100% 0; } 100% { background-position: 0% 0; } }
 
   /* ===== Étape wrapper ===== */
   .etape-content { transition: all 0.3s var(--ease); }
@@ -546,6 +566,13 @@
     .stepper.stepper-bold .stepper-step:not(.active) .stepper-dot { width: 22px; height: 22px; }
     .stepper.stepper-bold .stepper-step:not(.active) .stepper-dot .material-symbols-rounded { font-size: 12px; }
     .stepper.stepper-bold .stepper-step:not(.active) .stepper-dot-row { height: 28px; }
+    /* Mobile bold line positions — adjusted for smaller dots */
+    .stepper.stepper-bold .stepper-step::before,
+    .stepper.stepper-bold .stepper-step::after { top: 17px; }
+    .stepper.stepper-bold .stepper-step::before { right: calc(50% + 12px); }
+    .stepper.stepper-bold .stepper-step::after { left: calc(50% + 12px); }
+    .stepper.stepper-bold .stepper-step.active::before { right: calc(50% + 18px); }
+    .stepper.stepper-bold .stepper-step.active::after { left: calc(50% + 18px); }
     .bp-time { font-size: 22px; }
     .bp-route { padding: 8px 10px 4px; }
     .bp-head { padding: 6px 10px 4px; }
@@ -688,9 +715,11 @@
   .trip-card.dark-mode .stepper-bold .stepper-step:not(.active):hover { opacity: 0.7; }
   .trip-card.dark-mode .stepper-bold .stepper-step.completed:not(.active) { opacity: 0.28; }
   .trip-card.dark-mode .stepper-bold .stepper-step.active .stepper-dot { box-shadow: 0 0 0 5px rgba(0,169,252,0.18), 0 2px 12px rgba(0,169,252,0.25); }
-  .trip-card.dark-mode .bold-zone { background: rgba(0,169,252,0.08); }
-  /* Contrast mode bold stepper overrides */
-  .trip-card.contrast-mode .bold-zone { background: rgba(0,169,252,0.06); }
+  .trip-card.dark-mode .stepper-bold .stepper-step::before,
+  .trip-card.dark-mode .stepper-bold .stepper-step::after { background: rgba(255,255,255,0.08); }
+  .trip-card.dark-mode .stepper-bold .stepper-step.completed::before,
+  .trip-card.dark-mode .stepper-bold .stepper-step.completed::after { background: rgba(34,215,161,0.2); }
+  .trip-card.dark-mode .stepper-bold .stepper-step.completed + .stepper-step::before { background: rgba(34,215,161,0.2); }
 
   /* ===== Dark Mode — Full dark trip card ===== */
   .trip-card.dark-mode { background: #252540; border-color: rgba(255,255,255,0.06); box-shadow: 0 4px 20px rgba(0,0,0,0.25); backdrop-filter: none; -webkit-backdrop-filter: none; }
@@ -1475,9 +1504,7 @@ function renderAll() {
     const stepperH = buildStepperHTML(trip, state, selIdx, autoIdx, done, isDark, isBold, key);
 
     const colorCls = isContrast ? ' contrast-mode' : (currentColor === 'dark' ? ' dark-mode' : '');
-    const zoneOpen = isBold ? '<div class="bold-zone">' : '';
-    const zoneClose = isBold ? '</div>' : '';
-    const cardHTML = `<div class="scenario-section" id="scenario-${key}"><div class="scenario-label">${label}</div><div class="trip-card state-${state}${colorCls}"><div class="card-inner"><div class="card-header"><div class="header-left"><div class="headline-row"><div class="state-dot"></div><div class="headline">${headline}</div></div>${travelers}</div><a href="#" class="header-link" onclick="event.preventDefault()">Voir le voyage →</a></div>${zoneOpen}${stepperH}<div id="etape-${key}"></div>${zoneClose}</div></div></div>`;
+    const cardHTML = `<div class="scenario-section" id="scenario-${key}"><div class="scenario-label">${label}</div><div class="trip-card state-${state}${colorCls}"><div class="card-inner"><div class="card-header"><div class="header-left"><div class="headline-row"><div class="state-dot"></div><div class="headline">${headline}</div></div>${travelers}</div><a href="#" class="header-link" onclick="event.preventDefault()">Voir le voyage →</a></div>${stepperH}<div id="etape-${key}"></div></div></div></div>`;
     container.insertAdjacentHTML('beforeend', cardHTML);
     // Inject traveler name into etape for sheet display
     if (trip.travelers && trip.travelers.length) etape._travelerName = trip.travelers[0];
