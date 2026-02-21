@@ -2711,6 +2711,7 @@ function renderShowcase() {
         icon: icon,
         shortLabel: s.hotelName || '',
         title: s.hotelName || '',
+        ...(s.voucherPdf ? { voucherPdf: s.voucherPdf } : {}),
         ...(s.hotelData || {}),
         ...(s.carData || {}),
       };
