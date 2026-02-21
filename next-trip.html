@@ -609,10 +609,6 @@
   .sheet-close { width: 28px; height: 28px; border-radius: 50%; border: none; background: var(--grey-75); color: var(--grey-600); font-size: 14px; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.15s; font-family: var(--font); line-height: 1; }
   .sheet-close:hover { background: var(--grey-100); color: var(--black); }
   .sheet-body { padding: 20px 20px 28px; }
-  .sheet-plat-bar { display: flex; gap: 4px; margin-bottom: 14px; }
-  .sheet-plat-pill { padding: 3px 10px; border-radius: 7px; font-size: 10px; font-weight: 600; border: 1.5px solid var(--grey-100); background: var(--white); color: var(--grey-600); cursor: pointer; font-family: var(--font); transition: all 0.15s; }
-  .sheet-plat-pill:hover { background: var(--grey-50); border-color: var(--grey-200); color: var(--black); }
-  .sheet-plat-pill.active { background: var(--black); color: var(--white); border-color: var(--black); }
   .sheet-panel .sheet-body { flex: 1; overflow-y: auto; -webkit-overflow-scrolling: touch; }
   .sheet-actions { display: flex; flex-direction: column; gap: 8px; }
   .sheet-actions .cta-pri { width: 100%; justify-content: center; padding: 11px 18px; font-size: 14px; border-radius: 10px; }
@@ -698,9 +694,6 @@
   .sheet-overlay[data-color="contrast"] .sheet-close { background: rgba(255,255,255,0.08); color: rgba(255,255,255,0.7); }
   .sheet-overlay[data-color="contrast"] .sheet-close:hover { background: rgba(255,255,255,0.15); color: #fff; }
   .sheet-overlay[data-color="contrast"] .sheet-body { color: rgba(255,255,255,0.85); }
-  .sheet-overlay[data-color="contrast"] .sheet-plat-pill { background: rgba(255,255,255,0.06); border-color: rgba(255,255,255,0.12); color: rgba(255,255,255,0.6); }
-  .sheet-overlay[data-color="contrast"] .sheet-plat-pill:hover { background: rgba(255,255,255,0.1); color: #fff; }
-  .sheet-overlay[data-color="contrast"] .sheet-plat-pill.active { background: #fff; color: #1a2747; border-color: #fff; }
   .sheet-overlay[data-color="contrast"] .sheet-info { background: rgba(0,169,252,0.12); border-color: rgba(0,169,252,0.2); color: var(--blue-300); }
   .sheet-overlay[data-color="contrast"] .sheet-qr { background: rgba(255,255,255,0.06); border-color: rgba(255,255,255,0.14); color: rgba(255,255,255,0.55); }
   .sheet-overlay[data-color="contrast"] .sheet-qr-label { color: rgba(255,255,255,0.7); }
@@ -747,9 +740,6 @@
   .sheet-overlay[data-color="dark"] .sheet-close { background: rgba(255,255,255,0.08); color: rgba(255,255,255,0.6); }
   .sheet-overlay[data-color="dark"] .sheet-close:hover { background: rgba(255,255,255,0.12); color: #fff; }
   .sheet-overlay[data-color="dark"] .sheet-body { color: rgba(255,255,255,0.85); }
-  .sheet-overlay[data-color="dark"] .sheet-plat-pill { background: rgba(255,255,255,0.06); border-color: rgba(255,255,255,0.1); color: rgba(255,255,255,0.5); }
-  .sheet-overlay[data-color="dark"] .sheet-plat-pill:hover { background: rgba(255,255,255,0.1); color: rgba(255,255,255,0.8); }
-  .sheet-overlay[data-color="dark"] .sheet-plat-pill.active { background: rgba(255,255,255,0.9); color: #1a1a2e; border-color: rgba(255,255,255,0.9); }
   .sheet-overlay[data-color="dark"] .sheet-info { background: rgba(0,169,252,0.1); border-color: rgba(0,169,252,0.18); color: var(--blue-300); }
   .sheet-overlay[data-color="dark"] .sheet-qr { background: rgba(255,255,255,0.05); border-color: rgba(255,255,255,0.12); color: rgba(255,255,255,0.4); }
   .sheet-overlay[data-color="dark"] .sheet-qr-label { color: rgba(255,255,255,0.35); }
@@ -914,22 +904,39 @@
     .car-photo { width: 64px; height: 48px; }
   }
 
-  /* ===== Sticky Nav ===== */
-  .sticky-nav { position: sticky; top: 0; z-index: 100; background: rgba(248,250,255,0.95); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border-bottom: 1px solid var(--grey-100); padding: 8px 16px; }
-  .sticky-nav .nav-row { display: flex; flex-wrap: wrap; gap: 5px; align-items: center; }
-  .sticky-nav label { font-size: 10px; font-weight: 700; color: var(--grey-500); text-transform: uppercase; letter-spacing: 0.5px; }
-  .sticky-nav button { padding: 3px 9px; border: var(--stroke-md) solid var(--grey-100); border-radius: 7px; background: var(--white); font-size: 10px; font-weight: 600; cursor: pointer; transition: all 0.15s; color: var(--grey-700); font-family: var(--font); }
-  .sticky-nav button:hover { background: var(--grey-50); border-color: var(--grey-200); }
-  .sticky-nav button.active { background: var(--black); color: var(--white); border-color: var(--black); }
-  .sticky-nav .sep { width: 1px; height: 18px; background: var(--grey-100); margin: 0 3px; }
-  #nav-context { display: contents; }
-  #nav-context.hidden { display: none; }
-  .nav-scenarios { margin-top: 6px; padding-bottom: 2px; }
-  .nav-scenarios .sc-config-row { flex-wrap: wrap; }
-  .nav-scenarios .sc-config-label { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; color: var(--grey-400); min-width: 64px; }
-  .nav-scenarios .sc-config-pill { padding: 3px 9px; border-radius: 7px; font-size: 10px; font-weight: 600; border: 1.5px solid var(--grey-100); background: var(--white); color: var(--grey-600); cursor: pointer; font-family: var(--font); transition: all 0.15s; }
-  .nav-scenarios .sc-config-pill:hover { background: var(--grey-50); border-color: var(--grey-200); color: var(--black); }
-  .nav-scenarios .sc-config-pill.active { background: var(--black); color: var(--white); border-color: var(--black); }
+  /* ===== Proto Header ===== */
+  .proto-header { position: sticky; top: 0; z-index: 100; background: rgba(255,255,255,0.97); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border-bottom: 1px solid var(--grey-100); }
+  .proto-tabs { display: flex; align-items: center; padding: 0 16px; border-bottom: 1px solid var(--grey-100); position: relative; }
+  .proto-tab { padding: 10px 18px; font-size: 12px; font-weight: 700; color: var(--grey-400); cursor: pointer; border: none; background: none; border-bottom: 2px solid transparent; font-family: var(--font); transition: all 0.15s; margin-bottom: -1px; }
+  .proto-tab:hover { color: var(--grey-600); }
+  .proto-tab.active { color: var(--black); border-bottom-color: var(--black); }
+  .proto-globals { margin-left: auto; display: flex; gap: 3px; align-items: center; padding: 6px 0; }
+  .proto-globals .sep { width: 1px; height: 16px; background: var(--grey-100); margin: 0 4px; }
+  .proto-globals button { padding: 3px 8px; border: 1.5px solid var(--grey-100); border-radius: 6px; background: var(--white); font-size: 10px; font-weight: 600; cursor: pointer; transition: all 0.15s; color: var(--grey-500); font-family: var(--font); line-height: 1.2; }
+  .proto-globals button:hover { background: var(--grey-50); border-color: var(--grey-200); color: var(--grey-700); }
+  .proto-globals button.active { background: var(--black); color: var(--white); border-color: var(--black); }
+  .proto-panel { padding: 10px 16px 12px; display: flex; flex-wrap: wrap; gap: 6px 16px; align-items: flex-start; }
+  .proto-section { display: flex; align-items: center; gap: 5px; }
+  .proto-section-label { font-size: 9px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; color: var(--grey-400); min-width: 52px; font-family: var(--font); }
+  .proto-section .sc-config-pill { padding: 3px 9px; border-radius: 7px; font-size: 10px; font-weight: 600; border: 1.5px solid var(--grey-100); background: var(--white); color: var(--grey-600); cursor: pointer; font-family: var(--font); transition: all 0.15s; }
+  .proto-section .sc-config-pill:hover { background: var(--grey-50); border-color: var(--grey-200); color: var(--black); }
+  .proto-section .sc-config-pill.active { background: var(--black); color: var(--white); border-color: var(--black); }
+  .proto-section .sc-toggle { position: relative; width: 32px; height: 18px; border-radius: 9px; background: var(--grey-200); border: none; cursor: pointer; transition: background 0.2s; flex-shrink: 0; }
+  .proto-section .sc-toggle.on { background: var(--blue-500); }
+  .proto-section .sc-toggle::after { content: ''; position: absolute; top: 2px; left: 2px; width: 14px; height: 14px; border-radius: 50%; background: #fff; box-shadow: 0 1px 2px rgba(0,0,0,0.2); transition: transform 0.2s; }
+  .proto-section .sc-toggle.on::after { transform: translateX(14px); }
+  .proto-section .sc-toggle-label { font-size: 10px; font-weight: 600; color: var(--grey-500); font-family: var(--font); }
+  .proto-divider { width: 100%; height: 0; border-top: 1px solid var(--grey-100); margin: 2px 0; }
+  /* Float drawer */
+  .float-drawer { position: fixed; bottom: 20px; right: 20px; z-index: 200; display: none; }
+  .float-drawer.visible { display: flex; flex-direction: column; align-items: flex-end; gap: 6px; }
+  .float-drawer-toggle { width: 36px; height: 36px; border-radius: 50%; border: none; background: var(--black); color: #fff; font-size: 16px; cursor: pointer; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 8px rgba(0,0,0,0.2); transition: all 0.15s; font-family: var(--font); }
+  .float-drawer-toggle:hover { transform: scale(1.05); box-shadow: 0 4px 12px rgba(0,0,0,0.25); }
+  .float-drawer-body { background: #fff; border-radius: 10px; box-shadow: 0 4px 20px rgba(0,0,0,0.12); padding: 8px 10px; display: none; }
+  .float-drawer.open .float-drawer-body { display: flex; gap: 4px; align-items: center; }
+  .float-drawer .fd-pill { padding: 3px 9px; border-radius: 7px; font-size: 10px; font-weight: 600; border: 1.5px solid var(--grey-100); background: var(--white); color: var(--grey-600); cursor: pointer; font-family: var(--font); transition: all 0.15s; }
+  .float-drawer .fd-pill:hover { background: var(--grey-50); border-color: var(--grey-200); }
+  .float-drawer .fd-pill.active { background: var(--black); color: var(--white); border-color: var(--black); }
 
   /* ===== Scenario Sections ===== */
   .scenario-section { max-width: 960px; margin: 24px auto; scroll-margin-top: 90px; }
@@ -1332,33 +1339,29 @@
 </head>
 <body>
 
-<div class="sticky-nav" id="sticky-nav">
-  <div class="nav-row">
-    <label>Couleur</label>
-    <button onclick="setColor('light')" id="btn-color-light">Light</button>
-    <button onclick="setColor('contrast')" id="btn-color-contrast" class="active">Contrast</button>
-    <div class="sep"></div>
-    <label>Layout</label>
-    <button onclick="setLayout('classic')" id="btn-layout-classic">Classic</button>
-    <button onclick="setLayout('bold')" id="btn-layout-bold" class="active">Bold</button>
-    <span id="nav-context">
-    <div class="sep"></div>
-    <label>État</label>
-    <button onclick="setState('upcoming')" id="btn-upcoming" class="active">upcoming</button>
-    <button onclick="setState('imminent')" id="btn-imminent">imminent</button>
-    <button onclick="setState('in_transit')" id="btn-in_transit">in_transit</button>
-    <button onclick="setState('between_segments')" id="btn-between_segments">between</button>
-    <button onclick="setState('trip_ending')" id="btn-trip_ending">ending</button>
-    </span>
+<div class="proto-header" id="proto-header">
+  <div class="proto-tabs">
+    <button class="proto-tab active" data-tab="timeline" onclick="setTab('timeline')">Timeline</button>
+    <button class="proto-tab" data-tab="ticket" onclick="setTab('ticket')">Ticket modal</button>
+    <div class="proto-globals">
+      <button onclick="setColor('light')" id="btn-color-light">Light</button>
+      <button onclick="setColor('contrast')" id="btn-color-contrast" class="active">Contrast</button>
+      <button onclick="setColor('dark')" id="btn-color-dark">Dark</button>
+      <div class="sep"></div>
+      <button onclick="setLayout('classic')" id="btn-layout-classic">Classic</button>
+      <button onclick="setLayout('bold')" id="btn-layout-bold" class="active">Bold</button>
+    </div>
   </div>
-  <div class="nav-scenarios" id="nav-scenarios"></div>
-  <div class="nav-row" style="border-top:1px solid #e5e7eb;padding-top:6px;margin-top:4px">
-    <button onclick="toggleShowcase()" id="btn-showcase" style="background:#7c3aed;color:#fff;font-weight:700">Ticket modal</button>
-  </div>
+  <div class="proto-panel" id="proto-panel"></div>
 </div>
 
 <div id="showcase-container" style="display:none"></div>
 <div id="cards-container"></div>
+
+<div class="float-drawer" id="float-drawer">
+  <div class="float-drawer-body" id="float-drawer-body"></div>
+  <button class="float-drawer-toggle" onclick="toggleFloatDrawer()">&#9881;</button>
+</div>
 
 <div class="sheet-overlay" id="sheet-overlay" onclick="if(event.target===this)closeSheet()">
   <div class="sheet-panel">
@@ -1796,12 +1799,22 @@ const TRIPS = {
 let currentState = 'upcoming';
 let currentContext = 'home';
 let autoResetTimer = null;
-let currentColor = 'contrast';   // light | contrast
+let currentColor = 'contrast';   // light | contrast | dark
 let currentLayout = 'bold'; // classic | bold
 let currentPlatform = 'desktop'; // desktop | ios | android
-let currentScenario = 'full';  // selected scenario key
+let currentTab = 'timeline';    // timeline | ticket
 let selectedEtapes = {};       // per-card selected étape index
 let sheetTargets = [];         // etape data refs for sheet onclick
+
+// Timeline configurator state
+const _tlState = {
+  type: 'transport',  // 'transport' | 'hotel' | 'car'
+  direction: 'ar',    // 'ar' | 'as'
+  mode: 'train',      // 'train' | 'vol'
+  hotel: true,        // toggle
+  car: false,         // toggle
+  legs: 'direct',     // 'direct' | '1-stop' | 'multi'
+};
 
 const HEADLINES = {
   upcoming: t => `Voyage à ${t.destination} dans 2 jours`,
@@ -1836,28 +1849,57 @@ function getTag(idx, autoIdx, done, state) {
 }
 
 const STEPPER_ICONS = { train: 'train', flight: 'flight', hotel: 'hotel', car: 'directions_car' };
-const TRIP_LABELS = {
-  full: '4 étapes — Train + Hôtel + Voiture + Train',
-  openjaw: '4 étapes — Vol + Hôtel + Car open jaw + Vol',
-  correspondance: '3 étapes — Train 2 segments + Hôtel + Train',
-  escale: '3 étapes — Vol avec escale + Hôtel + Vol',
-  escale3: '3 étapes — Vol 3 escales (CDG→FRA→IST→DOH→BKK) + Hôtel + Vol',
-  simple: '2 étapes — Aller-retour Train',
-  flight: '1 étape — Vol direct',
-  hotelonly: '1 étape — Hôtel seul'
+// Etape pool — references into existing TRIPS data
+const POOL = {
+  trainDirect:     TRIPS.full.etapes[0],
+  trainRetour:     TRIPS.full.etapes[3],
+  trainCorr:       TRIPS.correspondance.etapes[0],
+  trainCorrRetour: TRIPS.correspondance.etapes[2],
+  volDirect:       TRIPS.openjaw.etapes[0],
+  volRetour:       TRIPS.openjaw.etapes[3],
+  vol1escale:      TRIPS.escale.etapes[0],
+  vol1escRetour:   TRIPS.escale.etapes[2],
+  volMulti:        TRIPS.escale3.etapes[0],
+  volMultiRetour:  TRIPS.escale3.etapes[2],
+  hotel:           TRIPS.full.etapes[1],
+  car:             TRIPS.full.etapes[2],
 };
-const SCENARIO_PILLS = {
-  full: 'Complet',
-  openjaw: 'Open jaw',
-  correspondance: 'Correspondance',
-  escale: '1 escale',
-  escale3: '3 escales',
-  simple: 'Aller-retour',
-  flight: 'Vol direct',
-  hotelonly: 'Hôtel seul'
-};
-function setScenario(key) {
-  currentScenario = key;
+
+function buildComposedTrip(cfg) {
+  if (cfg.type === 'hotel') return { destination: 'Bordeaux', travelers: ['Donnie Schmidt'], etapes: [POOL.hotel] };
+  if (cfg.type === 'car')   return { destination: 'Bordeaux', travelers: ['Stella Smith'], etapes: [POOL.car] };
+
+  const isVol = cfg.mode === 'vol';
+  let etapes = [], destination = '';
+
+  if (cfg.legs === 'direct') {
+    etapes.push(isVol ? POOL.volDirect : POOL.trainDirect);
+    destination = isVol ? 'Nice' : 'Aix-en-Provence';
+  } else if (cfg.legs === '1-stop') {
+    etapes.push(isVol ? POOL.vol1escale : POOL.trainCorr);
+    destination = isVol ? 'Athènes' : 'Bordeaux';
+  } else {
+    etapes.push(POOL.volMulti);
+    destination = 'Bangkok';
+  }
+
+  if (cfg.direction === 'ar') {
+    if (cfg.hotel) etapes.push(POOL.hotel);
+    if (cfg.car) etapes.push(POOL.car);
+    if (cfg.legs === 'direct')      etapes.push(isVol ? POOL.volRetour : POOL.trainRetour);
+    else if (cfg.legs === '1-stop') etapes.push(isVol ? POOL.vol1escRetour : POOL.trainCorrRetour);
+    else                            etapes.push(POOL.volMultiRetour);
+  }
+
+  return { destination, travelers: ['Stella Smith'], etapes };
+}
+
+function tlSet(key, val) {
+  _tlState[key] = val;
+  // Resets
+  if (key === 'type' && val !== 'transport') { /* nothing else matters */ }
+  if (key === 'direction' && val === 'as') { _tlState.hotel = false; _tlState.car = false; }
+  if (key === 'mode' && val === 'train' && _tlState.legs === 'multi') { _tlState.legs = 'direct'; }
   selectedEtapes = {};
   renderAll();
 }
@@ -1903,19 +1945,12 @@ function renderAll() {
   const container = document.getElementById('cards-container');
   container.innerHTML = '';
 
-  // Build scenario configurator pills
-  const navEl = document.getElementById('nav-scenarios');
-  navEl.innerHTML = '<div class="sc-config-row"><label class="sc-config-label">Scénario</label>' +
-    Object.entries(SCENARIO_PILLS).map(([key, label]) =>
-      `<button class="sc-config-pill${key === currentScenario ? ' active' : ''}" onclick="setScenario('${key}')">${label}</button>`
-    ).join('') + '</div>';
-
   const isMobileCarousel = isBold && window.innerWidth <= 640;
 
-  // Render only selected scenario
-  const scenarioEntries = [[currentScenario, TRIP_LABELS[currentScenario]]];
-  scenarioEntries.forEach(([key, label]) => {
-    const trip = TRIPS[key];
+  // Build trip from configurator
+  const trip = buildComposedTrip(_tlState);
+  const key = 'composed';
+  {
     const autoIdx = getAutoIdx(state, trip);
     const done = getCompleted(state, trip);
     const selIdx = selectedEtapes[key] != null ? selectedEtapes[key] : autoIdx;
@@ -1994,20 +2029,7 @@ function renderAll() {
         else document.getElementById('etape-' + key).insertAdjacentHTML('beforeend', navH);
       }
     }
-  });
-
-  // Update button states
-  document.querySelectorAll('.sticky-nav button[id]').forEach(b => {
-    const id = b.id;
-    if (id.startsWith('btn-color-')) {
-      b.classList.toggle('active', id === 'btn-color-' + currentColor);
-    } else if (id.startsWith('btn-layout-')) {
-      b.classList.toggle('active', id === 'btn-layout-' + currentLayout);
-    } else {
-      const s = id.replace('btn-', '');
-      b.classList.toggle('active', s === state);
-    }
-  });
+  }
 }
 
 // Calendar date icon (éphéméride) — parses "Ven. 09 Fév" or "Vendredi 9 Février"
@@ -2452,12 +2474,127 @@ function renderEtape(e, state, idx, autoIdx, done, total, isPast, targetId) {
   ct.innerHTML = `<div class="etape-content ${isPast ? 'is-past' : ''}">${bodyH}</div>`;
 }
 
-function setState(s) { currentState = s; selectedEtapes = {}; renderAll(); }
-function setColor(c) { currentColor = c; closeSheet(); renderAll(); updateShowcase(); }
-function setLayout(l) { currentLayout = l; closeSheet(); renderAll(); }
+function setState(s) {
+  currentState = s;
+  selectedEtapes = {};
+  renderPanel();
+  renderAll();
+}
+function setColor(c) {
+  currentColor = c;
+  document.querySelectorAll('[id^="btn-color-"]').forEach(b => b.classList.toggle('active', b.id === 'btn-color-' + c));
+  closeSheet();
+  if (currentTab === 'timeline') renderAll();
+  else updateShowcase();
+}
+function setLayout(l) {
+  currentLayout = l;
+  document.querySelectorAll('[id^="btn-layout-"]').forEach(b => b.classList.toggle('active', b.id === 'btn-layout-' + l));
+  closeSheet();
+  if (currentTab === 'timeline') renderAll();
+  else updateShowcase();
+}
 function setPlatform(p) {
   currentPlatform = p;
   updateShowcase();
+}
+
+// ===== Tabs =====
+function setTab(tab) {
+  currentTab = tab;
+  document.querySelectorAll('.proto-tab').forEach(t => t.classList.toggle('active', t.dataset.tab === tab));
+  renderPanel();
+  if (tab === 'timeline') {
+    document.getElementById('showcase-container').style.display = 'none';
+    document.getElementById('cards-container').style.display = '';
+    renderAll();
+  } else {
+    document.getElementById('showcase-container').style.display = 'block';
+    document.getElementById('cards-container').style.display = 'none';
+    renderShowcase();
+  }
+}
+
+function renderPanel() {
+  const panel = document.getElementById('proto-panel');
+  if (currentTab === 'timeline') {
+    const st = _tlState;
+    const isTransport = st.type === 'transport';
+    const isAR = st.direction === 'ar';
+    const isVol = st.mode === 'vol';
+    const pill = (key, val, label) => `<button class="sc-config-pill${st[key] === val ? ' active' : ''}" onclick="tlSet('${key}','${val}')">${label}</button>`;
+
+    let h = '<div class="proto-section"><span class="proto-section-label">Type</span>' +
+      pill('type','transport','Transport') + pill('type','hotel','Hôtel') + pill('type','car','Voiture') + '</div>';
+
+    if (isTransport) {
+      h += '<div class="proto-section"><span class="proto-section-label">Direction</span>' +
+        pill('direction','ar','Aller-retour') + pill('direction','as','Aller simple') + '</div>';
+
+      h += '<div class="proto-section"><span class="proto-section-label">Mode</span>' +
+        pill('mode','train','Train') + pill('mode','vol','Avion') + '</div>';
+
+      if (isAR) {
+        const htlCls = st.hotel ? ' on' : '';
+        const carCls = st.car ? ' on' : '';
+        h += '<div class="proto-section"><span class="proto-section-label">Extras</span>' +
+          `<span class="sc-toggle-label">Hôtel</span><button class="sc-toggle${htlCls}" onclick="tlSet('hotel',${!st.hotel})"></button>` +
+          `<span class="sc-toggle-label" style="margin-left:8px">Voiture</span><button class="sc-toggle${carCls}" onclick="tlSet('car',${!st.car})"></button>` +
+          '</div>';
+      }
+
+      if (isVol) {
+        h += '<div class="proto-section"><span class="proto-section-label">Legs</span>' +
+          pill('legs','direct','Direct') + pill('legs','1-stop','1 escale') + pill('legs','multi','Multi-escale') + '</div>';
+      } else {
+        h += '<div class="proto-section"><span class="proto-section-label">Legs</span>' +
+          pill('legs','direct','Direct') + pill('legs','1-stop','Correspondance') + '</div>';
+      }
+    }
+
+    h += '<div class="proto-divider"></div>';
+    h += '<div class="proto-section"><span class="proto-section-label">État</span>';
+    ['upcoming','imminent','in_transit','between_segments','trip_ending'].forEach(s => {
+      const label = { upcoming:'upcoming', imminent:'imminent', in_transit:'in_transit', between_segments:'between', trip_ending:'ending' }[s];
+      h += `<button class="sc-config-pill${currentState === s ? ' active' : ''}" onclick="setState('${s}')">${label}</button>`;
+    });
+    h += '</div>';
+
+    panel.innerHTML = h;
+  } else {
+    // Ticket modal panel
+    if (!window._scState) window._scState = { type: 'train', ticket: 'qr-wallet', multi: false, platform: 'ios' };
+    const st = window._scState;
+    const isTrain = st.type === 'train';
+    const isDiffere = st.ticket === 'differe';
+    const showMulti = isTrain && !isDiffere;
+    const showPlatform = isTrain && st.ticket === 'qr-wallet' && !isDiffere;
+
+    let h = '<div class="proto-section"><span class="proto-section-label">Type</span>';
+    [['train','Train'],['flight','Avion'],['hotel','Hôtel'],['car','Voiture']].forEach(([k,l]) => {
+      h += `<button class="sc-config-pill${st.type === k ? ' active' : ''}" onclick="scSet('type','${k}')">${l}</button>`;
+    });
+    h += '</div>';
+
+    if (isTrain) {
+      h += '<div class="proto-section"><span class="proto-section-label">Billet</span>';
+      [['qr-wallet','QR + Wallet'],['qr','QR seul'],['pdf','PDF'],['differe','Différé']].forEach(([k,l]) => {
+        h += `<button class="sc-config-pill${st.ticket === k ? ' active' : ''}" onclick="scSet('ticket','${k}')">${l}</button>`;
+      });
+      h += '</div>';
+    }
+    if (showMulti) {
+      h += `<div class="proto-section"><span class="proto-section-label">Suppliers</span><button class="sc-toggle${st.multi ? ' on' : ''}" onclick="scSet('multi',${!st.multi})"></button><span class="sc-toggle-label">${st.multi ? 'Multi-billets' : 'Mono-supplier'}</span></div>`;
+    }
+    if (showPlatform) {
+      h += '<div class="proto-section"><span class="proto-section-label">Plateforme</span>';
+      [['ios','iOS'],['android','Android']].forEach(([k,l]) => {
+        h += `<button class="sc-config-pill${st.platform === k ? ' active' : ''}" onclick="scSet('platform','${k}')">${l}</button>`;
+      });
+      h += '</div>';
+    }
+    panel.innerHTML = h;
+  }
 }
 function selectEtape(tripKey, idx) {
   // If mobile carousel exists, scroll to slide (no re-render)
@@ -2478,10 +2615,14 @@ let _sheetEtape = null;
 function openSheet(etapeData) {
   _sheetEtape = etapeData;
   _renderSheet(etapeData);
+  // Show float drawer
+  renderFloatDrawer();
+  document.getElementById('float-drawer').classList.add('visible');
 }
 function switchSheetPlatform(p) {
   currentPlatform = p;
   if (_sheetEtape) _renderSheet(_sheetEtape);
+  renderFloatDrawer();
   updateShowcase();
 }
 function _renderSheet(etapeData) {
@@ -2490,7 +2631,6 @@ function _renderSheet(etapeData) {
   const bodyEl = document.getElementById('sheet-body');
   overlay.setAttribute('data-color', currentColor);
 
-  // Title: date icon + origin → destination for transport, label for others
   let startDate = '';
   if (etapeData.type === 'train' || etapeData.type === 'flight') {
     startDate = etapeData.departure && etapeData.departure.date || '';
@@ -2507,13 +2647,6 @@ function _renderSheet(etapeData) {
   }
   titleEl.innerHTML = `${dateIcon(startDate)}<span>${titleText}</span>`;
 
-  // Platform selector bar
-  const platBar = '<div class="sheet-plat-bar">' +
-    ['desktop', 'ios', 'android'].map(p => {
-      const lbl = p === 'desktop' ? 'Desktop' : p === 'ios' ? 'iOS' : 'Android';
-      return `<button class="sheet-plat-pill${p === currentPlatform ? ' active' : ''}" onclick="switchSheetPlatform('${p}')">${lbl}</button>`;
-    }).join('') + '</div>';
-
   let content = '';
   if (etapeData.type === 'train' || etapeData.type === 'flight') {
     content = buildTransportSheet(etapeData, currentPlatform);
@@ -2522,7 +2655,7 @@ function _renderSheet(etapeData) {
   } else if (etapeData.type === 'car') {
     content = buildCarSheet(etapeData);
   }
-  bodyEl.innerHTML = platBar + content;
+  bodyEl.innerHTML = content;
 
   overlay.classList.add('open');
   document.body.style.overflow = 'hidden';
@@ -2534,9 +2667,24 @@ function closeSheet() {
   overlay.classList.remove('open');
   document.body.style.overflow = '';
   document.removeEventListener('keydown', sheetEscHandler);
+  // Hide float drawer
+  const fd = document.getElementById('float-drawer');
+  fd.classList.remove('visible', 'open');
 }
 
 function sheetEscHandler(e) { if (e.key === 'Escape') closeSheet(); }
+
+// ===== Float Drawer =====
+function toggleFloatDrawer() {
+  document.getElementById('float-drawer').classList.toggle('open');
+}
+function renderFloatDrawer() {
+  const body = document.getElementById('float-drawer-body');
+  body.innerHTML = ['desktop', 'ios', 'android'].map(p => {
+    const lbl = p === 'desktop' ? 'Desktop' : p === 'ios' ? 'iOS' : 'Android';
+    return `<button class="fd-pill${p === currentPlatform ? ' active' : ''}" onclick="switchSheetPlatform('${p}')">${lbl}</button>`;
+  }).join('');
+}
 
 // Official wallet badge SVGs
 const appleWalletBadge = `<a href="#" class="wallet-badge wallet-badge-apple" onclick="event.preventDefault()"><svg viewBox="0 0 20 24" fill="none"><path d="M15.5 12.6c-.02-2.1 1.72-3.12 1.8-3.17-.98-1.43-2.5-1.63-3.05-1.65-1.3-.13-2.53.76-3.19.76-.66 0-1.67-.75-2.75-.73-1.41.02-2.72.82-3.44 2.09-1.47 2.55-.38 6.32 1.06 8.39.7 1.02 1.53 2.15 2.63 2.11 1.05-.04 1.45-.68 2.73-.68s1.64.68 2.76.66c1.13-.02 1.86-1.04 2.54-2.06.8-1.18 1.13-2.32 1.15-2.38-.03-.01-2.21-.85-2.24-3.34zM13.38 5.66c.58-.71.97-1.68.86-2.66-.83.03-1.84.55-2.44 1.26-.53.62-1 1.6-.88 2.55.93.07 1.88-.47 2.46-1.15z" fill="white"/></svg><div class="wb-text">Add to<strong>Apple Wallet</strong></div></a>`;
@@ -2830,29 +2978,7 @@ function buildCarSheet(e) {
   });
 })();
 
-// ===== Showcase =====
-function toggleShowcase() {
-  const sc = document.getElementById('showcase-container');
-  const cards = document.getElementById('cards-container');
-  const btn = document.getElementById('btn-showcase');
-  const ctx = document.getElementById('nav-context');
-  const scn = document.getElementById('nav-scenarios');
-  if (sc.style.display === 'none' || !sc.style.display) {
-    renderShowcase();
-    sc.style.display = 'block';
-    cards.style.display = 'none';
-    ctx.classList.add('hidden');
-    scn.style.display = 'none';
-    btn.textContent = 'Timeline';
-  } else {
-    sc.style.display = 'none';
-    cards.style.display = '';
-    ctx.classList.remove('hidden');
-    scn.style.display = '';
-    btn.textContent = 'Ticket modal';
-  }
-}
-
+// ===== Showcase (Ticket modal) =====
 function updateShowcase() {
   const sc = document.getElementById('showcase-container');
   if (sc.style.display === 'block') renderShowcase();
@@ -2864,53 +2990,11 @@ function renderShowcase() {
   if (!window._scState) window._scState = { type: 'train', ticket: 'qr-wallet', multi: false, platform: 'ios' };
   const st = window._scState;
 
-  const types = [
-    { key: 'train', label: 'Train' },
-    { key: 'flight', label: 'Avion' },
-    { key: 'hotel', label: 'H\u00f4tel' },
-    { key: 'car', label: 'Voiture' },
-  ];
-  const tickets = [
-    { key: 'qr-wallet', label: 'QR + Wallet' },
-    { key: 'qr', label: 'QR seul' },
-    { key: 'pdf', label: 'PDF' },
-    { key: 'differe', label: 'Diff\u00e9r\u00e9' },
-  ];
-  const platforms = [
-    { key: 'ios', label: 'iOS (Apple Wallet)' },
-    { key: 'android', label: 'Android (Google Wallet)' },
-  ];
-
   const isTrain = st.type === 'train';
   const isDiffere = st.ticket === 'differe';
-  const showMulti = isTrain && !isDiffere;
   const showPlatform = isTrain && st.ticket === 'qr-wallet' && !isDiffere;
 
-  // Configurator
-  let html = '<div class="sc-config">';
-  html += '<div class="sc-config-row"><span class="sc-config-label">Type</span>';
-  types.forEach(t => {
-    html += `<button class="sc-config-pill${st.type === t.key ? ' active' : ''}" onclick="scSet('type','${t.key}')">${t.label}</button>`;
-  });
-  html += '</div>';
-  if (isTrain) {
-    html += '<div class="sc-config-row"><span class="sc-config-label">Billet</span>';
-    tickets.forEach(t => {
-      html += `<button class="sc-config-pill${st.ticket === t.key ? ' active' : ''}" onclick="scSet('ticket','${t.key}')">${t.label}</button>`;
-    });
-    html += '</div>';
-  }
-  if (showMulti) {
-    html += `<div class="sc-config-row"><span class="sc-config-label">Suppliers</span><button class="sc-toggle${st.multi ? ' on' : ''}" onclick="scSet('multi',${!st.multi})"></button><span class="sc-toggle-label">${st.multi ? 'Multi-billets' : 'Mono-supplier'}</span></div>`;
-  }
-  if (showPlatform) {
-    html += '<div class="sc-config-row"><span class="sc-config-label">Plateforme</span>';
-    platforms.forEach(p => {
-      html += `<button class="sc-config-pill${st.platform === p.key ? ' active' : ''}" onclick="scSet('platform','${p.key}')">${p.label}</button>`;
-    });
-    html += '</div>';
-  }
-  html += '</div>';
+  let html = '';
 
   // Build mock data
   const base = { _travelerName: 'Stella Smith', locUrl: '#' };
@@ -3022,13 +3106,14 @@ function scSet(key, val) {
       window._scState.ticket = 'qr-wallet';
     }
   }
-  // Différé désactive multi
   if (window._scState.ticket === 'differe') {
     window._scState.multi = false;
   }
+  renderPanel();
   renderShowcase();
 }
 
+renderPanel();
 renderAll();
 </script>
 </body>
