@@ -171,13 +171,14 @@
     /* Grid: header full-width, stepper left, etape right */
     .card-inner:has(.stepper-bold) {
       display: grid;
-      grid-template-columns: 240px 1fr;
+      grid-template-columns: 220px 1fr;
       grid-template-rows: auto 1fr;
-      gap: 0 20px;
+      gap: 0 12px;
+      padding: 14px 16px 10px;
     }
-    .card-inner:has(.stepper-bold) > .card-header { grid-column: 1 / -1; }
+    .card-inner:has(.stepper-bold) > .card-header { grid-column: 1 / -1; margin-bottom: 6px; }
     .card-inner:has(.stepper-bold) > .stepper { grid-row: 2; grid-column: 1; align-self: center; }
-    .card-inner:has(.stepper-bold) > [id^="etape-"] { grid-row: 2; grid-column: 2; min-height: 320px; display: flex; flex-direction: column; justify-content: center; }
+    .card-inner:has(.stepper-bold) > [id^="etape-"] { grid-row: 2; grid-column: 2; }
 
     /* Stepper becomes vertical column */
     .stepper.stepper-bold {
@@ -277,6 +278,17 @@
     .trip-card.contrast-mode .bold-nav-label { color: rgba(255,255,255,0.35); }
   }
   @keyframes bold-transit-v { 0% { background-position: 0 100%; } 100% { background-position: 0 0%; } }
+
+  /* ===== Mobile carousel (native scroll-snap) ===== */
+  .etape-carousel {
+    display: flex; overflow-x: auto; scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch; overscroll-behavior-x: contain;
+    scrollbar-width: none; gap: 0; margin: 0 -16px; padding: 0 16px;
+  }
+  .etape-carousel::-webkit-scrollbar { display: none; }
+  .etape-carousel .etape-slide {
+    flex: 0 0 100%; scroll-snap-align: start; min-width: 0;
+  }
 
   /* ===== Étape wrapper ===== */
   .etape-content { transition: all 0.3s var(--ease); }
@@ -668,11 +680,11 @@
     .stepper.stepper-dark .stepper-step.active .stepper-dot { width: 32px; height: 32px; }
     .stepper.stepper-dark .stepper-step.active .stepper-dot .material-symbols-rounded { font-size: 16px; }
     .stepper.stepper-dark .stepper-step.active .stepper-label { font-size: 11px; }
-    /* Bold stepper mobile — horizontal scroll carousel */
-    .stepper.stepper-bold { overflow-x: auto; scrollbar-width: none; padding: 0 8px; -webkit-overflow-scrolling: touch; touch-action: pan-x; scroll-snap-type: x proximity; }
-    .stepper.stepper-bold::-webkit-scrollbar { display: none; }
-    .stepper.stepper-bold .stepper-step { flex: none; width: 80px; scroll-snap-align: center; }
-    /* Hide prev/next nav on mobile */
+    /* Bold stepper mobile — compact, no scroll (swipe on card area instead) */
+    .stepper.stepper-bold { padding: 0 4px; gap: 0; }
+    .stepper.stepper-bold .stepper-step { flex: 0.7; min-width: 0; }
+    .stepper.stepper-bold .stepper-step.active { flex: 1.3; }
+    /* Hide prev/next nav on mobile (swipe replaces it) */
     .bold-nav { display: none; }
     .stepper.stepper-bold .stepper-step.active { width: 140px; }
     .stepper.stepper-bold .stepper-step.active .stepper-dot { width: 34px; height: 34px; }
@@ -1610,6 +1622,8 @@ function renderAll() {
     `<a href="#scenario-${key}" onclick="event.preventDefault(); document.getElementById('scenario-${key}').scrollIntoView({behavior:'smooth'})">${label}</a>`
   ).join('');
 
+  const isMobileCarousel = isBold && window.innerWidth <= 640;
+
   Object.entries(TRIP_LABELS).forEach(([key, label]) => {
     const trip = TRIPS[key];
     const autoIdx = getAutoIdx(state, trip);
@@ -1623,20 +1637,69 @@ function renderAll() {
     const stepperH = buildStepperHTML(trip, state, selIdx, autoIdx, done, isDark, isBold, key);
 
     const colorCls = isContrast ? ' contrast-mode' : (currentColor === 'dark' ? ' dark-mode' : '');
-    const cardHTML = `<div class="scenario-section" id="scenario-${key}"><div class="scenario-label">${label}</div><div class="trip-card state-${state}${colorCls}"><div class="card-inner"><div class="card-header"><div class="header-left"><div class="headline-row"><div class="state-dot"></div><div class="headline">${headline}</div></div>${travelers}</div><a href="#" class="header-link" onclick="event.preventDefault()">Voir le voyage →</a></div>${stepperH}<div id="etape-${key}"></div></div></div></div>`;
+    const cardHTML = `<div id="scenario-${key}"><div class="trip-card state-${state}${colorCls}"><div class="card-inner"><div class="card-header"><div class="header-left"><div class="headline-row"><div class="state-dot"></div><div class="headline">${headline}</div></div>${travelers}</div><a href="#" class="header-link" onclick="event.preventDefault()">Voir le voyage →</a></div>${stepperH}<div id="etape-${key}"></div></div></div></div>`;
     container.insertAdjacentHTML('beforeend', cardHTML);
-    // Inject traveler name into etape for sheet display
-    if (trip.travelers && trip.travelers.length) etape._travelerName = trip.travelers[0];
-    renderEtape(etape, state, selIdx, autoIdx, done, trip.etapes.length, isPast, `etape-${key}`);
 
-    // Bold desktop: prev/next navigation
-    if (isBold && trip.etapes.length > 1) {
-      const total = trip.etapes.length;
-      const prevDis = selIdx <= 0 ? ' disabled' : '';
-      const nextDis = selIdx >= total - 1 ? ' disabled' : '';
-      const navH = `<div class="bold-nav"><button class="bold-nav-btn"${prevDis} onclick="selectEtape('${key}',${selIdx - 1})"><span class="material-symbols-rounded">chevron_left</span>Préc.</button><span class="bold-nav-label">${selIdx + 1} / ${total}</span><button class="bold-nav-btn"${nextDis} onclick="selectEtape('${key}',${selIdx + 1})">Suiv.<span class="material-symbols-rounded">chevron_right</span></button></div>`;
-      const etapeCt = document.getElementById(`etape-${key}`);
-      etapeCt.insertAdjacentHTML('afterbegin', navH);
+    if (isMobileCarousel && trip.etapes.length > 1) {
+      // === Mobile bold: native scroll-snap carousel with ALL etapes ===
+      let carouselH = '<div class="etape-carousel" data-trip="' + key + '">';
+      trip.etapes.forEach((_, i) => {
+        carouselH += '<div class="etape-slide" data-idx="' + i + '" id="slide-' + key + '-' + i + '"></div>';
+      });
+      carouselH += '</div>';
+      document.getElementById('etape-' + key).innerHTML = carouselH;
+      // Render each etape into its slide
+      trip.etapes.forEach((et, i) => {
+        if (et && trip.travelers && trip.travelers.length) et._travelerName = trip.travelers[0];
+        const isPastI = done.includes(i) && state !== 'trip_ending';
+        renderEtape(et, state, i, autoIdx, done, trip.etapes.length, isPastI, 'slide-' + key + '-' + i);
+      });
+      // Scroll to active slide (instant, no animation on initial render)
+      requestAnimationFrame(() => {
+        const slide = document.getElementById('slide-' + key + '-' + selIdx);
+        if (slide) slide.scrollIntoView({ behavior: 'instant', inline: 'start', block: 'nearest' });
+      });
+      // On scroll snap: update stepper active step
+      const carousel = document.querySelector('#etape-' + key + ' .etape-carousel');
+      if (carousel) {
+        let scrollTimer;
+        carousel.addEventListener('scroll', () => {
+          clearTimeout(scrollTimer);
+          scrollTimer = setTimeout(() => {
+            const cRect = carousel.getBoundingClientRect();
+            const center = cRect.left + cRect.width / 2;
+            let bestIdx = 0, minDist = Infinity;
+            carousel.querySelectorAll('.etape-slide').forEach((s, i) => {
+              const r = s.getBoundingClientRect();
+              const dist = Math.abs((r.left + r.width / 2) - center);
+              if (dist < minDist) { minDist = dist; bestIdx = i; }
+            });
+            selectedEtapes[key] = bestIdx;
+            // Update stepper visually without re-render
+            const stepper = document.querySelector('#scenario-' + key + ' .stepper-bold');
+            if (stepper) {
+              stepper.querySelectorAll('.stepper-step').forEach((step, i) => {
+                const wasActive = step.classList.contains('active');
+                step.classList.toggle('active', i === bestIdx);
+                if (i === bestIdx && !wasActive) step.classList.add('viewing');
+              });
+            }
+          }, 80);
+        }, { passive: true });
+      }
+    } else {
+      // === Desktop bold or classic: single etape ===
+      if (trip.travelers && trip.travelers.length) etape._travelerName = trip.travelers[0];
+      renderEtape(etape, state, selIdx, autoIdx, done, trip.etapes.length, isPast, 'etape-' + key);
+
+      // Bold desktop: prev/next navigation
+      if (isBold && trip.etapes.length > 1) {
+        const total = trip.etapes.length;
+        const prevDis = selIdx <= 0 ? ' disabled' : '';
+        const nextDis = selIdx >= total - 1 ? ' disabled' : '';
+        const navH = '<div class="bold-nav"><button class="bold-nav-btn"' + prevDis + ' onclick="selectEtape(\'' + key + '\',' + (selIdx - 1) + ')"><span class="material-symbols-rounded">chevron_left</span>Préc.</button><span class="bold-nav-label">' + (selIdx + 1) + ' / ' + total + '</span><button class="bold-nav-btn"' + nextDis + ' onclick="selectEtape(\'' + key + '\',' + (selIdx + 1) + ')">Suiv.<span class="material-symbols-rounded">chevron_right</span></button></div>';
+        document.getElementById('etape-' + key).insertAdjacentHTML('afterbegin', navH);
+      }
     }
   });
 
@@ -1652,18 +1715,6 @@ function renderAll() {
       b.classList.toggle('active', s === state);
     }
   });
-
-  // Bold stepper: auto-scroll active step into view on mobile
-  if (isBold) {
-    requestAnimationFrame(() => {
-      document.querySelectorAll('.stepper-bold').forEach(s => {
-        if (s.scrollWidth > s.clientWidth + 4) {
-          const a = s.querySelector('.stepper-step.active');
-          if (a) a.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
-        }
-      });
-    });
-  }
 }
 
 // Calendar date icon (éphéméride) — parses "Ven. 09 Fév" or "Vendredi 9 Février"
@@ -2022,7 +2073,19 @@ function setPlatform(p) {
   closeSheet();
   updateShowcase();
 }
-function selectEtape(tripKey, idx) { selectedEtapes[tripKey] = idx; renderAll(); }
+function selectEtape(tripKey, idx) {
+  // If mobile carousel exists, scroll to slide (no re-render)
+  const carousel = document.querySelector('#etape-' + tripKey + ' .etape-carousel');
+  if (carousel) {
+    const slide = document.getElementById('slide-' + tripKey + '-' + idx);
+    if (slide) slide.scrollIntoView({ behavior: 'smooth', inline: 'start', block: 'nearest' });
+    selectedEtapes[tripKey] = idx;
+    return;
+  }
+  // Desktop: re-render
+  selectedEtapes[tripKey] = idx;
+  renderAll();
+}
 
 // ===== Bottom Sheet =====
 function openSheet(etapeData) {
