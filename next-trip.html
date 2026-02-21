@@ -2513,7 +2513,6 @@ function buildTransportSheet(e, platform) {
   // Visual: QR code or clickable PDF document
   if (ticket.hasQR) {
     h += `<div class="sheet-qr">${qrPlaceholderSvg}<div class="sheet-qr-label">Présentez au contrôleur</div></div>`;
-    h += paxLine;
   } else {
     const docName = isFl ? 'E-ticket' : 'Billet';
     const carrier = e.carrier || '';
@@ -2533,10 +2532,10 @@ function buildTransportSheet(e, platform) {
   // Actions
   const hasWallet = isMobile && ticket.wallet;
   if (hasWallet && ticket.hasQR) {
-    // Wallet + compact PDF side by side
+    // Wallet + download icon side by side
     h += '<div class="sheet-actions-row">';
     h += (platform === 'ios') ? appleWalletBadge : googleWalletBadge;
-    h += `<button class="sheet-pdf-link" onclick="event.preventDefault()"><span class="material-symbols-rounded">download</span> PDF</button>`;
+    h += `<button class="sheet-dl-btn" onclick="event.preventDefault()" title="Télécharger le PDF"><span class="material-symbols-rounded">download</span></button>`;
     h += '</div>';
   } else if (ticket.hasQR && !hasWallet) {
     // No wallet → dl-row with doc info + download icon button
