@@ -256,11 +256,14 @@
       animation: bold-transit-v 2.5s ease-in-out infinite;
     }
 
-    /* Desktop: card not clickable, only pill + nav buttons */
+    /* Desktop: card not clickable, no bounce — only pill + nav buttons */
     .bpb.tappable { cursor: default; }
-    .bpb.tappable .bpb-action-pill { cursor: pointer; }
-    .bpb-leg { cursor: default; }
-    .bpb-leg .bpb-action-pill { cursor: pointer; }
+    .bpb.tappable:hover { transform: none; box-shadow: none; }
+    .bpb.tappable:active { transform: none; }
+    .bpb.tappable .bpb-action-pill,
+    .bpb .leg-action-center .bpb-action-pill { cursor: pointer; }
+    .bpb .bpb-action-pill:hover { transform: translateY(-1px); box-shadow: 0 3px 12px rgba(0,0,0,0.15); }
+    .bpb .bpb-action-pill:active { transform: scale(0.97); }
     /* Bold desktop: minimal prev/next chevrons — always inside .bpb (dark card) */
     .bold-nav { display: flex; align-items: center; justify-content: flex-end; gap: 5px; position: absolute; bottom: 8px; right: 10px; z-index: 2; }
     .bold-nav-btn { display: inline-flex; align-items: center; justify-content: center; width: 24px; height: 24px; border-radius: 50%; border: 1px solid rgba(255,255,255,0.15); background: rgba(255,255,255,0.08); color: rgba(255,255,255,0.45); cursor: pointer; transition: all 0.15s; font-family: var(--font); padding: 0; }
@@ -386,7 +389,7 @@
   .bpb-mid-badge .mid-label { font-size: 12px; font-weight: 700; color: rgba(255,255,255,0.55); letter-spacing: -0.2px; }
   .bpb-dur { font-size: 10px; font-weight: 700; color: rgba(255,200,120,0.85); padding: 4px 14px 2px; display: flex; align-items: center; gap: 4px; }
   .bpb-dur .material-symbols-rounded { font-size: 14px; color: rgba(255,180,80,0.9); }
-  .bpb-action-pill { display: inline-flex; align-items: center; gap: 4px; padding: 3px 10px; margin-top: 3px; border-radius: 6px; font-size: 9px; font-weight: 800; background: rgba(255,255,255,0.20); color: rgba(255,255,255,0.85); border: 1px solid rgba(255,255,255,0.25); letter-spacing: 0.6px; text-transform: uppercase; font-family: var(--font); white-space: nowrap; }
+  .bpb-action-pill { display: inline-flex; align-items: center; gap: 4px; padding: 3px 10px; margin-top: 3px; border-radius: 6px; font-size: 9px; font-weight: 800; background: rgba(255,255,255,0.20); color: rgba(255,255,255,0.85); border: 1px solid rgba(255,255,255,0.25); letter-spacing: 0.6px; text-transform: uppercase; font-family: var(--font); white-space: nowrap; transition: transform 0.15s, box-shadow 0.15s; }
   .bpb-action-pill svg { width: 10px; height: 10px; fill: currentColor; }
   .bpb-action-pill .material-symbols-rounded { font-size: 12px; line-height: 1; }
   .bpb-action-pill.deferred { opacity: 0.7; font-size: 8px; text-transform: none; letter-spacing: 0; }
@@ -436,8 +439,8 @@
   .bpb-navy .leg-conn-chip { background: #1a2138; }
   .trip-card:not(.contrast-mode):not(.dark-mode) .bpb-leg .leg-conn-bar::before { background: var(--grey-200); }
   .trip-card:not(.contrast-mode):not(.dark-mode) .bpb-leg .leg-conn-chip { background: #edeef2; }
-  /* Leg card — action pill floating on bottom edge */
-  .bpb-leg { overflow: visible; padding-bottom: 14px; margin-bottom: 18px; }
+  /* Floating action pill on bottom edge — any card with .leg-action-center */
+  .bpb:has(.leg-action-center) { overflow: visible; padding-bottom: 14px; margin-bottom: 18px; }
   .leg-action-center { position: absolute; bottom: 0; left: 50%; transform: translate(-50%, 50%); z-index: 3; }
   .leg-action-center .bpb-action-pill { background: #3a4258; color: rgba(255,255,255,0.9); border: 1px solid rgba(255,255,255,0.15); box-shadow: 0 2px 8px rgba(0,0,0,0.25); }
   .bpb-navy .leg-action-center .bpb-action-pill { background: #2a3452; }
@@ -2234,7 +2237,6 @@ function renderEtape(e, state, idx, autoIdx, done, total, isPast, targetId) {
       h += `<div class="htd-sub-row"><div class="htd-sub">📍 ${e.address}${phoneStr}</div></div>`;
       // Dates: vertical layout — time big, day-of-week prominent, date medium
       const nightsLabel = e.nights + ' nuit' + (e.nights > 1 ? 's' : '');
-      const voucherPill = e.docAvailable ? '<div class="bpb-action-pill"><span class="material-symbols-rounded">description</span> Voir mon voucher</div>' : '';
       const cin = parseFullDate(e.checkin.date);
       const cout = parseFullDate(e.checkout.date);
       h += '<div class="htd-dates-bold">';
@@ -2242,14 +2244,17 @@ function renderEtape(e, state, idx, autoIdx, done, total, isPast, targetId) {
       h += `<div class="htd-nights-sep"><div class="htd-nights-sep-line"></div><div class="bpb-mid-badge">${midBadge('hotel', nightsLabel)}</div><div class="htd-nights-sep-line"></div></div>`;
       h += `<div class="htd-block arr"><div class="htd-block-event">Check-out</div><div class="htd-block-dow">${cout.dow} ${cout.rest}</div><div class="htd-block-time">avant ${e.checkout.time}</div></div>`;
       h += '</div>';
-      if (e.docAvailable) { h += `<div style="padding:4px 14px 2px">${voucherPill}</div>`; }
       // Free-text arrival conditions (unstructured, from supplier)
       if (e.freeTextConditions) {
         h += `<div class="htd-logistics"><div class="htd-log-item">${e.freeTextConditions}</div></div>`;
       }
       const htIdx = sheetTargets.length;
       sheetTargets.push(e);
-      bodyH = `<div class="bpb tappable${navyCls}" onclick="openSheet(sheetTargets[${htIdx}])">${h}</div>`;
+      // Floating pill — same style as transport leg cards
+      if (e.docAvailable) {
+        h += `<div class="leg-action-center"><div class="bpb-action-pill" onclick="event.stopPropagation();openSheet(sheetTargets[${htIdx}])"><span class="material-symbols-rounded">description</span> Voir mon voucher</div></div>`;
+      }
+      bodyH = `<div class="bpb tappable${navyCls}" onclick="if(window.innerWidth<641)openSheet(sheetTargets[${htIdx}])">${h}</div>`;
     } else {
       // ── Classic hotel card ──
       let galleryH = '';
@@ -2304,18 +2309,19 @@ function renderEtape(e, state, idx, autoIdx, done, total, isPast, targetId) {
       // Route: pickup → dropoff (times as hero, like trains)
       h += '<div class="bpb-route">';
       h += `<div class="bpb-hero"><div class="bpb-code">${e.pickup.time}</div><div class="bpb-time">${e.pickup.date}</div><div class="bpb-name">${e.pickup.location}</div></div>`;
-      const carVoucherPill = e.docAvailable ? '<div class="bpb-action-pill"><span class="material-symbols-rounded">description</span> Voir mon voucher</div>' : '';
-      h += `<div class="bpb-mid"><div class="bpb-mid-row"><div class="bpb-mid-line"></div><div class="bpb-mid-badge">${midBadge('car', carDetails)}</div><div class="bpb-mid-line"></div></div>${carVoucherPill}</div>`;
+      h += `<div class="bpb-mid"><div class="bpb-mid-row"><div class="bpb-mid-line"></div><div class="bpb-mid-badge">${midBadge('car', carDetails)}</div><div class="bpb-mid-line"></div></div></div>`;
       h += `<div class="bpb-hero arr"><div class="bpb-code">${e.dropoff.time}</div><div class="bpb-time">${e.dropoff.date}</div><div class="bpb-name">${e.dropoff.location}</div></div>`;
       h += '</div>';
       if (oj) h += `<div class="bpb-dur"><span class="material-symbols-rounded">warning</span> Restitution dans une agence différente (open jaw)</div>`;
-      // Driver — warm amber tinted row
       if (e.driverName) {
         h += `<div class="bpb-driver"><div class="bpb-driver-item">🪪 Permis + CB au nom du conducteur : <strong>${e.driverName}</strong></div></div>`;
       }
       const carIdx = sheetTargets.length;
       sheetTargets.push(e);
-      bodyH = `<div class="bpb tappable${navyCls}" onclick="openSheet(sheetTargets[${carIdx}])">${h}</div>`;
+      if (e.docAvailable) {
+        h += `<div class="leg-action-center"><div class="bpb-action-pill" onclick="event.stopPropagation();openSheet(sheetTargets[${carIdx}])"><span class="material-symbols-rounded">description</span> Voir mon voucher</div></div>`;
+      }
+      bodyH = `<div class="bpb tappable${navyCls}" onclick="if(window.innerWidth<641)openSheet(sheetTargets[${carIdx}])">${h}</div>`;
     } else {
       // ── Classic car card ──
       const detailsStr = e.details.map(d => `<span>${d}</span>`).join('<span class="sep">·</span>');
