@@ -171,13 +171,13 @@
     /* Grid: header full-width, stepper left, etape right */
     .card-inner:has(.stepper-bold) {
       display: grid;
-      grid-template-columns: 180px 1fr;
+      grid-template-columns: 240px 1fr;
       grid-template-rows: auto 1fr;
-      gap: 0 16px;
+      gap: 0 20px;
     }
     .card-inner:has(.stepper-bold) > .card-header { grid-column: 1 / -1; }
-    .card-inner:has(.stepper-bold) > .stepper { grid-row: 2; grid-column: 1; align-self: start; }
-    .card-inner:has(.stepper-bold) > [id^="etape-"] { grid-row: 2; grid-column: 2; }
+    .card-inner:has(.stepper-bold) > .stepper { grid-row: 2; grid-column: 1; align-self: center; }
+    .card-inner:has(.stepper-bold) > [id^="etape-"] { grid-row: 2; grid-column: 2; min-height: 320px; display: flex; flex-direction: column; justify-content: center; }
 
     /* Stepper becomes vertical column */
     .stepper.stepper-bold {
@@ -207,11 +207,16 @@
     .stepper.stepper-bold .stepper-label {
       grid-column: 2; grid-row: 1;
       text-align: left; margin-top: 0; padding: 0;
+      font-size: 12px; font-weight: 700; -webkit-line-clamp: 2;
     }
+    .stepper.stepper-bold .stepper-step.active .stepper-label { font-size: 13px; font-weight: 800; }
     .stepper.stepper-bold .stepper-date {
       grid-column: 2; grid-row: 2;
-      text-align: left; margin-top: 0;
+      text-align: left; margin-top: 1px;
+      font-size: 11px; font-weight: 600; opacity: 1; color: var(--grey-500);
     }
+    .stepper.stepper-bold .stepper-step.active .stepper-date { font-size: 11px; font-weight: 700; color: var(--blue-500); }
+    .stepper.stepper-bold .stepper-step:not(.active) .stepper-date { font-size: 11px; opacity: 0.85; }
     .stepper.stepper-bold .stepper-status {
       grid-column: 2; grid-row: 3;
       text-align: left;
@@ -254,6 +259,22 @@
       background-size: 100% 250%;
       animation: bold-transit-v 2.5s ease-in-out infinite;
     }
+
+    /* Bold desktop: prev/next etape nav */
+    .bold-nav { display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; }
+    .bold-nav-btn { display: inline-flex; align-items: center; gap: 3px; padding: 5px 12px; border-radius: 8px; border: 1.5px solid var(--grey-100); background: var(--white); font-size: 11px; font-weight: 700; color: var(--grey-600); cursor: pointer; transition: all 0.15s; font-family: var(--font); }
+    .bold-nav-btn:hover { background: var(--grey-50); border-color: var(--grey-200); color: var(--black); }
+    .bold-nav-btn:disabled { opacity: 0.3; pointer-events: none; }
+    .bold-nav-btn .material-symbols-rounded { font-size: 16px; line-height: 1; }
+    .bold-nav-label { font-size: 11px; font-weight: 700; color: var(--grey-400); }
+    /* Dark mode nav buttons */
+    .trip-card.dark-mode .bold-nav-btn { background: rgba(255,255,255,0.06); border-color: rgba(255,255,255,0.1); color: rgba(255,255,255,0.6); }
+    .trip-card.dark-mode .bold-nav-btn:hover { background: rgba(255,255,255,0.1); color: rgba(255,255,255,0.9); }
+    .trip-card.dark-mode .bold-nav-label { color: rgba(255,255,255,0.35); }
+    /* Contrast mode nav buttons */
+    .trip-card.contrast-mode .bold-nav-btn { background: rgba(255,255,255,0.06); border-color: rgba(255,255,255,0.1); color: rgba(255,255,255,0.6); }
+    .trip-card.contrast-mode .bold-nav-btn:hover { background: rgba(255,255,255,0.1); color: rgba(255,255,255,0.9); }
+    .trip-card.contrast-mode .bold-nav-label { color: rgba(255,255,255,0.35); }
   }
   @keyframes bold-transit-v { 0% { background-position: 0 100%; } 100% { background-position: 0 0%; } }
 
@@ -648,9 +669,11 @@
     .stepper.stepper-dark .stepper-step.active .stepper-dot .material-symbols-rounded { font-size: 16px; }
     .stepper.stepper-dark .stepper-step.active .stepper-label { font-size: 11px; }
     /* Bold stepper mobile — horizontal scroll carousel */
-    .stepper.stepper-bold { overflow-x: auto; scrollbar-width: none; padding: 0 8px; }
+    .stepper.stepper-bold { overflow-x: auto; scrollbar-width: none; padding: 0 8px; -webkit-overflow-scrolling: touch; touch-action: pan-x; scroll-snap-type: x proximity; }
     .stepper.stepper-bold::-webkit-scrollbar { display: none; }
-    .stepper.stepper-bold .stepper-step { flex: none; width: 80px; }
+    .stepper.stepper-bold .stepper-step { flex: none; width: 80px; scroll-snap-align: center; }
+    /* Hide prev/next nav on mobile */
+    .bold-nav { display: none; }
     .stepper.stepper-bold .stepper-step.active { width: 140px; }
     .stepper.stepper-bold .stepper-step.active .stepper-dot { width: 34px; height: 34px; }
     .stepper.stepper-bold .stepper-step.active .stepper-dot .material-symbols-rounded { font-size: 17px; }
@@ -1605,6 +1628,16 @@ function renderAll() {
     // Inject traveler name into etape for sheet display
     if (trip.travelers && trip.travelers.length) etape._travelerName = trip.travelers[0];
     renderEtape(etape, state, selIdx, autoIdx, done, trip.etapes.length, isPast, `etape-${key}`);
+
+    // Bold desktop: prev/next navigation
+    if (isBold && trip.etapes.length > 1) {
+      const total = trip.etapes.length;
+      const prevDis = selIdx <= 0 ? ' disabled' : '';
+      const nextDis = selIdx >= total - 1 ? ' disabled' : '';
+      const navH = `<div class="bold-nav"><button class="bold-nav-btn"${prevDis} onclick="selectEtape('${key}',${selIdx - 1})"><span class="material-symbols-rounded">chevron_left</span>Préc.</button><span class="bold-nav-label">${selIdx + 1} / ${total}</span><button class="bold-nav-btn"${nextDis} onclick="selectEtape('${key}',${selIdx + 1})">Suiv.<span class="material-symbols-rounded">chevron_right</span></button></div>`;
+      const etapeCt = document.getElementById(`etape-${key}`);
+      etapeCt.insertAdjacentHTML('afterbegin', navH);
+    }
   });
 
   // Update button states
