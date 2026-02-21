@@ -609,6 +609,10 @@
   .sheet-close { width: 28px; height: 28px; border-radius: 50%; border: none; background: var(--grey-75); color: var(--grey-600); font-size: 14px; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.15s; font-family: var(--font); line-height: 1; }
   .sheet-close:hover { background: var(--grey-100); color: var(--black); }
   .sheet-body { padding: 20px 20px 28px; }
+  .sheet-plat-bar { display: flex; gap: 4px; margin-bottom: 14px; }
+  .sheet-plat-pill { padding: 3px 10px; border-radius: 7px; font-size: 10px; font-weight: 600; border: 1.5px solid var(--grey-100); background: var(--white); color: var(--grey-600); cursor: pointer; font-family: var(--font); transition: all 0.15s; }
+  .sheet-plat-pill:hover { background: var(--grey-50); border-color: var(--grey-200); color: var(--black); }
+  .sheet-plat-pill.active { background: var(--black); color: var(--white); border-color: var(--black); }
   .sheet-panel .sheet-body { flex: 1; overflow-y: auto; -webkit-overflow-scrolling: touch; }
   .sheet-actions { display: flex; flex-direction: column; gap: 8px; }
   .sheet-actions .cta-pri { width: 100%; justify-content: center; padding: 11px 18px; font-size: 14px; border-radius: 10px; }
@@ -694,6 +698,9 @@
   .sheet-overlay[data-color="contrast"] .sheet-close { background: rgba(255,255,255,0.08); color: rgba(255,255,255,0.7); }
   .sheet-overlay[data-color="contrast"] .sheet-close:hover { background: rgba(255,255,255,0.15); color: #fff; }
   .sheet-overlay[data-color="contrast"] .sheet-body { color: rgba(255,255,255,0.85); }
+  .sheet-overlay[data-color="contrast"] .sheet-plat-pill { background: rgba(255,255,255,0.06); border-color: rgba(255,255,255,0.12); color: rgba(255,255,255,0.6); }
+  .sheet-overlay[data-color="contrast"] .sheet-plat-pill:hover { background: rgba(255,255,255,0.1); color: #fff; }
+  .sheet-overlay[data-color="contrast"] .sheet-plat-pill.active { background: #fff; color: #1a2747; border-color: #fff; }
   .sheet-overlay[data-color="contrast"] .sheet-info { background: rgba(0,169,252,0.12); border-color: rgba(0,169,252,0.2); color: var(--blue-300); }
   .sheet-overlay[data-color="contrast"] .sheet-qr { background: rgba(255,255,255,0.06); border-color: rgba(255,255,255,0.14); color: rgba(255,255,255,0.55); }
   .sheet-overlay[data-color="contrast"] .sheet-qr-label { color: rgba(255,255,255,0.7); }
@@ -740,6 +747,9 @@
   .sheet-overlay[data-color="dark"] .sheet-close { background: rgba(255,255,255,0.08); color: rgba(255,255,255,0.6); }
   .sheet-overlay[data-color="dark"] .sheet-close:hover { background: rgba(255,255,255,0.12); color: #fff; }
   .sheet-overlay[data-color="dark"] .sheet-body { color: rgba(255,255,255,0.85); }
+  .sheet-overlay[data-color="dark"] .sheet-plat-pill { background: rgba(255,255,255,0.06); border-color: rgba(255,255,255,0.1); color: rgba(255,255,255,0.5); }
+  .sheet-overlay[data-color="dark"] .sheet-plat-pill:hover { background: rgba(255,255,255,0.1); color: rgba(255,255,255,0.8); }
+  .sheet-overlay[data-color="dark"] .sheet-plat-pill.active { background: rgba(255,255,255,0.9); color: #1a1a2e; border-color: rgba(255,255,255,0.9); }
   .sheet-overlay[data-color="dark"] .sheet-info { background: rgba(0,169,252,0.1); border-color: rgba(0,169,252,0.18); color: var(--blue-300); }
   .sheet-overlay[data-color="dark"] .sheet-qr { background: rgba(255,255,255,0.05); border-color: rgba(255,255,255,0.12); color: rgba(255,255,255,0.4); }
   .sheet-overlay[data-color="dark"] .sheet-qr-label { color: rgba(255,255,255,0.35); }
@@ -912,10 +922,14 @@
   .sticky-nav button:hover { background: var(--grey-50); border-color: var(--grey-200); }
   .sticky-nav button.active { background: var(--black); color: var(--white); border-color: var(--black); }
   .sticky-nav .sep { width: 1px; height: 18px; background: var(--grey-100); margin: 0 3px; }
-  .nav-scenarios { display: flex; gap: 4px; margin-top: 6px; overflow-x: auto; padding-bottom: 2px; scrollbar-width: none; }
-  .nav-scenarios::-webkit-scrollbar { display: none; }
-  .nav-scenarios a { padding: 4px 10px; border-radius: 7px; font-size: 10px; font-weight: 600; text-decoration: none; color: var(--grey-600); background: var(--white); border: 1px solid var(--grey-100); white-space: nowrap; transition: all 0.15s; font-family: var(--font); scroll-snap-align: start; }
-  .nav-scenarios a:hover { background: var(--grey-50); border-color: var(--grey-200); color: var(--black); }
+  #nav-context { display: contents; }
+  #nav-context.hidden { display: none; }
+  .nav-scenarios { margin-top: 6px; padding-bottom: 2px; }
+  .nav-scenarios .sc-config-row { flex-wrap: wrap; }
+  .nav-scenarios .sc-config-label { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; color: var(--grey-400); min-width: 64px; }
+  .nav-scenarios .sc-config-pill { padding: 3px 9px; border-radius: 7px; font-size: 10px; font-weight: 600; border: 1.5px solid var(--grey-100); background: var(--white); color: var(--grey-600); cursor: pointer; font-family: var(--font); transition: all 0.15s; }
+  .nav-scenarios .sc-config-pill:hover { background: var(--grey-50); border-color: var(--grey-200); color: var(--black); }
+  .nav-scenarios .sc-config-pill.active { background: var(--black); color: var(--white); border-color: var(--black); }
 
   /* ===== Scenario Sections ===== */
   .scenario-section { max-width: 960px; margin: 24px auto; scroll-margin-top: 90px; }
@@ -1329,11 +1343,6 @@
     <button onclick="setLayout('bold')" id="btn-layout-bold" class="active">Bold</button>
     <span id="nav-context">
     <div class="sep"></div>
-    <label>Plateforme</label>
-    <button onclick="setPlatform('desktop')" id="btn-plat-desktop" class="active">Desktop</button>
-    <button onclick="setPlatform('ios')" id="btn-plat-ios">iOS</button>
-    <button onclick="setPlatform('android')" id="btn-plat-android">Android</button>
-    <div class="sep"></div>
     <label>État</label>
     <button onclick="setState('upcoming')" id="btn-upcoming" class="active">upcoming</button>
     <button onclick="setState('imminent')" id="btn-imminent">imminent</button>
@@ -1344,7 +1353,7 @@
   </div>
   <div class="nav-scenarios" id="nav-scenarios"></div>
   <div class="nav-row" style="border-top:1px solid #e5e7eb;padding-top:6px;margin-top:4px">
-    <button onclick="toggleShowcase()" id="btn-showcase" style="background:#7c3aed;color:#fff;font-weight:700">Showcase sheets</button>
+    <button onclick="toggleShowcase()" id="btn-showcase" style="background:#7c3aed;color:#fff;font-weight:700">Ticket modal</button>
   </div>
 </div>
 
@@ -1790,6 +1799,7 @@ let autoResetTimer = null;
 let currentColor = 'contrast';   // light | contrast
 let currentLayout = 'bold'; // classic | bold
 let currentPlatform = 'desktop'; // desktop | ios | android
+let currentScenario = 'full';  // selected scenario key
 let selectedEtapes = {};       // per-card selected étape index
 let sheetTargets = [];         // etape data refs for sheet onclick
 
@@ -1836,6 +1846,21 @@ const TRIP_LABELS = {
   flight: '1 étape — Vol direct',
   hotelonly: '1 étape — Hôtel seul'
 };
+const SCENARIO_PILLS = {
+  full: 'Complet',
+  openjaw: 'Open jaw',
+  correspondance: 'Correspondance',
+  escale: '1 escale',
+  escale3: '3 escales',
+  simple: 'Aller-retour',
+  flight: 'Vol direct',
+  hotelonly: 'Hôtel seul'
+};
+function setScenario(key) {
+  currentScenario = key;
+  selectedEtapes = {};
+  renderAll();
+}
 
 function buildStepperHTML(trip, state, activeIdx, autoIdx, done, isDark, isBold, tripKey) {
   if (trip.etapes.length <= 2) return '';
@@ -1878,15 +1903,18 @@ function renderAll() {
   const container = document.getElementById('cards-container');
   container.innerHTML = '';
 
-  // Build nav scenario links
+  // Build scenario configurator pills
   const navEl = document.getElementById('nav-scenarios');
-  navEl.innerHTML = Object.entries(TRIP_LABELS).map(([key, label]) =>
-    `<a href="#scenario-${key}" onclick="event.preventDefault(); document.getElementById('scenario-${key}').scrollIntoView({behavior:'smooth'})">${label}</a>`
-  ).join('');
+  navEl.innerHTML = '<div class="sc-config-row"><label class="sc-config-label">Scénario</label>' +
+    Object.entries(SCENARIO_PILLS).map(([key, label]) =>
+      `<button class="sc-config-pill${key === currentScenario ? ' active' : ''}" onclick="setScenario('${key}')">${label}</button>`
+    ).join('') + '</div>';
 
   const isMobileCarousel = isBold && window.innerWidth <= 640;
 
-  Object.entries(TRIP_LABELS).forEach(([key, label]) => {
+  // Render only selected scenario
+  const scenarioEntries = [[currentScenario, TRIP_LABELS[currentScenario]]];
+  scenarioEntries.forEach(([key, label]) => {
     const trip = TRIPS[key];
     const autoIdx = getAutoIdx(state, trip);
     const done = getCompleted(state, trip);
@@ -2429,9 +2457,6 @@ function setColor(c) { currentColor = c; closeSheet(); renderAll(); updateShowca
 function setLayout(l) { currentLayout = l; closeSheet(); renderAll(); }
 function setPlatform(p) {
   currentPlatform = p;
-  document.querySelectorAll('[id^="btn-plat-"]').forEach(b => b.classList.remove('active'));
-  document.getElementById('btn-plat-' + p).classList.add('active');
-  closeSheet();
   updateShowcase();
 }
 function selectEtape(tripKey, idx) {
@@ -2449,7 +2474,17 @@ function selectEtape(tripKey, idx) {
 }
 
 // ===== Bottom Sheet =====
+let _sheetEtape = null;
 function openSheet(etapeData) {
+  _sheetEtape = etapeData;
+  _renderSheet(etapeData);
+}
+function switchSheetPlatform(p) {
+  currentPlatform = p;
+  if (_sheetEtape) _renderSheet(_sheetEtape);
+  updateShowcase();
+}
+function _renderSheet(etapeData) {
   const overlay = document.getElementById('sheet-overlay');
   const titleEl = document.getElementById('sheet-title');
   const bodyEl = document.getElementById('sheet-body');
@@ -2472,6 +2507,13 @@ function openSheet(etapeData) {
   }
   titleEl.innerHTML = `${dateIcon(startDate)}<span>${titleText}</span>`;
 
+  // Platform selector bar
+  const platBar = '<div class="sheet-plat-bar">' +
+    ['desktop', 'ios', 'android'].map(p => {
+      const lbl = p === 'desktop' ? 'Desktop' : p === 'ios' ? 'iOS' : 'Android';
+      return `<button class="sheet-plat-pill${p === currentPlatform ? ' active' : ''}" onclick="switchSheetPlatform('${p}')">${lbl}</button>`;
+    }).join('') + '</div>';
+
   let content = '';
   if (etapeData.type === 'train' || etapeData.type === 'flight') {
     content = buildTransportSheet(etapeData, currentPlatform);
@@ -2480,7 +2522,7 @@ function openSheet(etapeData) {
   } else if (etapeData.type === 'car') {
     content = buildCarSheet(etapeData);
   }
-  bodyEl.innerHTML = content;
+  bodyEl.innerHTML = platBar + content;
 
   overlay.classList.add('open');
   document.body.style.overflow = 'hidden';
@@ -2799,15 +2841,15 @@ function toggleShowcase() {
     renderShowcase();
     sc.style.display = 'block';
     cards.style.display = 'none';
-    ctx.style.display = 'none';
+    ctx.classList.add('hidden');
     scn.style.display = 'none';
-    btn.textContent = 'Masquer showcase';
+    btn.textContent = 'Timeline';
   } else {
     sc.style.display = 'none';
     cards.style.display = '';
-    ctx.style.display = '';
+    ctx.classList.remove('hidden');
     scn.style.display = '';
-    btn.textContent = 'Showcase sheets';
+    btn.textContent = 'Ticket modal';
   }
 }
 
