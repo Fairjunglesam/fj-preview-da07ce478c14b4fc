@@ -2501,9 +2501,6 @@ function buildTransportSheet(e, platform) {
     return h;
   }
 
-  const depName = e.departure ? e.departure.name || '' : '';
-  const mUrl = depName ? mapsLink(isFl ? depName + ' airport' : 'gare ' + depName) : e.locUrl;
-
   // Visual: QR code or clickable PDF document
   if (ticket.hasQR) {
     h += `<div class="sheet-qr">${qrPlaceholderSvg}<div class="sheet-qr-label">Présentez au contrôleur</div></div>`;
@@ -2517,7 +2514,6 @@ function buildTransportSheet(e, platform) {
       h += `<a href="${e.voucherPdf}" target="_blank" class="sheet-pdf"><iframe src="${e.voucherPdf}#toolbar=0&view=Fit&page=1" title="${docName}"></iframe></a>`;
       h += '<div class="sheet-dl-row">';
       h += `<div class="sheet-dl-info"><div class="sheet-dl-name">${docName} ${carrier} ${num}</div><div class="sheet-dl-meta">${paxMeta || 'PDF'}</div></div>`;
-      if (mUrl) h += mapBtn(mUrl);
       h += `<a href="${e.voucherPdf}" target="_blank" download class="sheet-dl-btn" title="Télécharger"><span class="material-symbols-rounded">download</span></a>`;
       h += '</div>';
     } else {
