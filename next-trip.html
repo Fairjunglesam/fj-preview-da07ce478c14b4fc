@@ -2530,26 +2530,25 @@ function buildTransportSheet(e, platform) {
     }
   }
 
-  // Actions: wallet + PDF side by side
-  if (isMobile && ticket.wallet && ticket.hasQR) {
+  // Actions
+  const hasWallet = isMobile && ticket.wallet;
+  if (hasWallet && ticket.hasQR) {
+    // Wallet + compact PDF side by side
     h += '<div class="sheet-actions-row">';
-    if (platform === 'ios') h += appleWalletBadge;
-    else h += googleWalletBadge;
+    h += (platform === 'ios') ? appleWalletBadge : googleWalletBadge;
     h += `<button class="sheet-pdf-link" onclick="event.preventDefault()"><span class="material-symbols-rounded">download</span> PDF</button>`;
     h += '</div>';
-  } else {
-    h += '<div class="sheet-actions">';
-    if (isMobile && ticket.wallet) {
-      if (platform === 'ios') h += appleWalletBadge;
-      else h += googleWalletBadge;
-    }
-    if (ticket.hasQR) {
-      h += `<button class="sheet-pdf-link" onclick="event.preventDefault()"><span class="material-symbols-rounded">download</span> PDF</button>`;
-    }
-    if (isFl && !ticket.wallet && !ticket.hasQR) {
-      h += `<div class="sheet-info" style="margin-top:8px;margin-bottom:0"><span class="sheet-info-icon">&#9432;</span><div>Ceci est votre e-ticket. Enregistrez-vous auprès de la compagnie.</div></div>`;
-    }
+  } else if (ticket.hasQR && !hasWallet) {
+    // No wallet → dl-row with doc info + download icon button
+    const docName = isFl ? 'E-ticket' : 'Billet';
+    const dlMeta = (e._travelerName || '') + (e._travelerName && e.pnr ? ' \u00b7 ' : '') + (e.pnr || '');
+    h += '<div class="sheet-dl-row">';
+    h += `<div class="sheet-dl-info"><div class="sheet-dl-name">${docName} ${e.carrier || ''} ${e.num || ''}</div><div class="sheet-dl-meta">${dlMeta || 'PDF'}</div></div>`;
+    h += `<button class="sheet-dl-btn" onclick="event.preventDefault()" title="Télécharger le PDF"><span class="material-symbols-rounded">download</span></button>`;
     h += '</div>';
+  }
+  if (isFl && !hasWallet && !ticket.hasQR) {
+    h += `<div class="sheet-info" style="margin-top:8px;margin-bottom:0"><span class="sheet-info-icon">&#9432;</span><div>Ceci est votre e-ticket. Enregistrez-vous auprès de la compagnie.</div></div>`;
   }
 
   return h;
