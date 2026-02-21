@@ -41,12 +41,12 @@
   .demo-controls select { padding: 3px 7px; border: var(--stroke-md) solid var(--grey-100); border-radius: 7px; font-size: 10px; background: var(--white); color: var(--grey-700); font-family: var(--font); }
 
   /* ===== Trip Card shell ===== */
-  .trip-card { max-width: 960px; margin: 0 auto; background: var(--white); border-radius: 18px; border: var(--stroke-lg) solid transparent; overflow: hidden; transition: all 0.3s var(--ease); box-shadow: var(--shadow-card); }
-  .trip-card.state-upcoming { border-color: var(--grey-100); }
-  .trip-card.state-imminent { border-color: var(--blue-200); background: linear-gradient(160deg, var(--blue-50) 0%, var(--white) 35%); box-shadow: var(--shadow-accent); }
-  .trip-card.state-in_transit { border-color: var(--blue-300); background: linear-gradient(160deg, var(--blue-75) 0%, var(--white) 45%); box-shadow: var(--shadow-accent); }
-  .trip-card.state-between_segments { border-color: var(--grey-100); }
-  .trip-card.state-trip_ending { border-color: var(--green-200); background: linear-gradient(160deg, var(--green-50) 0%, var(--white) 35%); }
+  .trip-card { max-width: 960px; margin: 0 auto; background: rgba(255,255,255,0.55); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border-radius: 18px; border: var(--stroke-lg) solid rgba(255,255,255,0.35); overflow: hidden; transition: all 0.3s var(--ease); box-shadow: 0 2px 16px rgba(0,0,0,0.04), 0 0 0 1px rgba(0,0,0,0.03); }
+  .trip-card.state-upcoming { border-color: rgba(230,233,240,0.6); }
+  .trip-card.state-imminent { border-color: rgba(0,169,252,0.18); background: linear-gradient(160deg, rgba(0,169,252,0.06) 0%, rgba(255,255,255,0.55) 35%); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); box-shadow: 0 2px 20px rgba(0,169,252,0.08), 0 0 0 1px rgba(0,169,252,0.06); }
+  .trip-card.state-in_transit { border-color: rgba(0,169,252,0.22); background: linear-gradient(160deg, rgba(0,169,252,0.08) 0%, rgba(255,255,255,0.55) 45%); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); box-shadow: 0 2px 20px rgba(0,169,252,0.1), 0 0 0 1px rgba(0,169,252,0.08); }
+  .trip-card.state-between_segments { border-color: rgba(230,233,240,0.6); }
+  .trip-card.state-trip_ending { border-color: rgba(34,215,161,0.18); background: linear-gradient(160deg, rgba(34,215,161,0.06) 0%, rgba(255,255,255,0.55) 35%); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); }
   .card-inner { padding: 18px 22px 14px; }
 
   /* ===== Header ===== */
@@ -116,6 +116,8 @@
   .stepper.stepper-dark .stepper-step.active .stepper-date { color: var(--blue-500); }
   .stepper.stepper-dark .stepper-step.completed .stepper-label { color: var(--grey-400); }
   .stepper.stepper-dark .stepper-step.completed .stepper-date { color: var(--grey-300); }
+  .stepper-status { font-size: 8px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.4px; color: var(--blue-500); text-align: center; margin-top: 1px; opacity: 0.8; }
+  .stepper-step.completed .stepper-status { color: var(--green-500); }
 
   /* ===== Étape wrapper ===== */
   .etape-content { transition: all 0.3s var(--ease); }
@@ -130,48 +132,55 @@
   .etape-tag.future { background: var(--grey-75); color: var(--grey-600); }
 
   /* ===== Shared étape card container ===== */
-  .ecard { border: 1.5px solid var(--grey-200); border-radius: 12px; overflow: hidden; margin-bottom: 8px; background: var(--white); }
+  .ecard { border: 1px solid rgba(195,200,212,0.45); border-radius: 12px; overflow: hidden; margin-bottom: 8px; background: linear-gradient(165deg, #f1f2f6 0%, #e9ebf0 45%, #f0f1f5 100%); box-shadow: inset 0 1px 0 rgba(255,255,255,0.65), 0 1px 3px rgba(0,0,0,0.04); }
 
   /* ===== Transport — Boarding Pass ===== */
-  .bp { position: relative; border: 1.5px solid var(--grey-200); border-radius: 14px; background: var(--white); margin-bottom: 6px; overflow: visible; }
+  .bp { position: relative; border: 1px solid rgba(195,200,212,0.45); border-radius: 14px; background: linear-gradient(165deg, #f1f2f6 0%, #e9ebf0 45%, #f0f1f5 100%); margin-bottom: 6px; overflow: visible; box-shadow: inset 0 1px 0 rgba(255,255,255,0.65), 0 1px 3px rgba(0,0,0,0.04); }
   .bp-head { display: flex; justify-content: space-between; align-items: center; padding: 8px 14px 6px; }
   .bp-carrier { display: flex; align-items: center; gap: 5px; font-size: 12px; font-weight: 700; color: var(--black); }
   .bp-carrier-icon { font-size: 15px; }
   .bp-carrier-sub { font-size: 11px; font-weight: 500; color: var(--grey-500); }
   .bp-date { font-size: 11px; font-weight: 600; color: var(--grey-500); }
+  /* Calendar date icon (éphéméride) */
+  .date-icon { display: inline-flex; flex-direction: column; align-items: center; justify-content: center; width: 36px; height: 36px; border-radius: 8px; background: var(--grey-75); border: 1.5px solid var(--grey-200); flex-shrink: 0; }
+  .date-icon-day { font-size: 16px; font-weight: 800; color: var(--black); line-height: 1; }
+  .date-icon-month { font-size: 8px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; color: var(--blue-600); line-height: 1; margin-top: 1px; }
   /* Tear line + poinçons */
   .bp-tear { position: relative; border-top: 1.5px dashed var(--grey-200); margin: 0 12px; }
-  .bp-tear::before, .bp-tear::after { content: ''; position: absolute; top: -10px; width: 20px; height: 20px; border-radius: 50%; background: var(--white); border: 1.5px solid var(--grey-200); z-index: 2; }
+  .bp-tear::before, .bp-tear::after { content: ''; position: absolute; top: -10px; width: 20px; height: 20px; border-radius: 50%; background: var(--grey-50); border: 1.5px solid var(--grey-50); z-index: 2; }
   .bp-tear::before { left: -23px; }
   .bp-tear::after { right: -23px; }
-  .state-imminent .bp-tear::before, .state-imminent .bp-tear::after { background: linear-gradient(135deg, var(--blue-50), var(--white)); }
-  .state-in_transit .bp-tear::before, .state-in_transit .bp-tear::after { background: linear-gradient(135deg, var(--blue-75), var(--white)); }
-  .state-trip_ending .bp-tear::before, .state-trip_ending .bp-tear::after { background: linear-gradient(135deg, var(--green-50), var(--white)); }
+  .state-imminent .bp-tear::before, .state-imminent .bp-tear::after { background: var(--grey-50); border-color: var(--grey-50); }
+  .state-in_transit .bp-tear::before, .state-in_transit .bp-tear::after { background: var(--grey-50); border-color: var(--grey-50); }
+  .state-trip_ending .bp-tear::before, .state-trip_ending .bp-tear::after { background: var(--grey-50); border-color: var(--grey-50); }
   /* Route row */
   .bp-route { display: flex; align-items: flex-start; padding: 10px 14px 6px; gap: 8px; }
   .bp-point { flex: 1; min-width: 0; }
   .bp-point.arr { text-align: right; }
   .bp-time { font-size: 26px; font-weight: 800; color: var(--black); letter-spacing: -1px; line-height: 1; }
+  .bp-time .day-offset { font-size: 11px; font-weight: 700; color: var(--orange-500); vertical-align: super; margin-left: 1px; letter-spacing: 0; }
   .is-past .bp-time { color: var(--grey-400); }
-  .bp-loc { font-size: 11px; font-weight: 700; color: var(--grey-800); margin-top: 3px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-  .bp-sub { font-size: 10px; color: var(--grey-400); margin-top: 1px; }
+  .bp-loc { font-size: 11px; font-weight: 700; color: var(--black); margin-top: 3px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .bp-sub { font-size: 10px; color: var(--grey-600); margin-top: 1px; }
   /* Arrow center */
   .bp-mid { flex-shrink: 0; display: flex; flex-direction: column; align-items: center; padding-top: 8px; min-width: 60px; }
-  .bp-arrow-line { width: 100%; height: 1.5px; background: var(--grey-200); position: relative; }
-  .bp-arrow-line::after { content: ''; position: absolute; right: -1px; top: -3.5px; width: 0; height: 0; border-top: 3.5px solid transparent; border-bottom: 3.5px solid transparent; border-left: 6px solid var(--grey-300); }
-  .bp-dur { font-size: 10px; font-weight: 600; color: var(--grey-400); white-space: nowrap; margin-top: 3px; }
+  .bp-arrow-line { width: 100%; height: 2px; background: var(--grey-200); position: relative; border-radius: 1px; }
+  .bp-arrow-line::before, .bp-arrow-line::after { content: ''; position: absolute; top: 50%; width: 6px; height: 6px; border-radius: 50%; background: var(--grey-300); transform: translateY(-50%); }
+  .bp-arrow-line::before { left: 0; }
+  .bp-arrow-line::after { right: 0; }
+  .bp-dur { font-size: 10px; font-weight: 600; color: var(--grey-500); white-space: nowrap; margin-top: 3px; }
   /* (info row replaced by .bp-tags above) */
   /* Connection badge (between separate boarding passes) */
   .bp-conn-between { display: flex; align-items: center; justify-content: center; flex-shrink: 0; align-self: center; }
   .bp-conn-chip { display: flex; align-items: center; gap: 3px; padding: 4px 10px; background: var(--orange-50); border: 1px solid var(--orange-100); border-radius: 8px; font-size: 10px; font-weight: 700; color: var(--orange-600); white-space: nowrap; }
-  .bp-conn-where { font-size: 9px; font-weight: 500; color: var(--grey-400); white-space: nowrap; text-align: center; }
+  .bp-conn-where { font-size: 9px; font-weight: 500; color: var(--grey-600); white-space: nowrap; text-align: center; }
   .bp-luggage { font-size: 11px; color: var(--grey-500); padding: 2px 0 4px; }
   /* (seat badge styles merged into .bp-tag above) */
   /* Info tags (unified card-style badges: seat, train#, platform, fare, PNR) */
   .bp-tags { display: flex; flex-wrap: wrap; gap: 12px; padding: 4px 14px 8px; align-items: center; }
   .bp-tag-group { display: inline-flex; flex-wrap: wrap; gap: 5px; align-items: center; }
   .bp-tag { display: inline-flex; align-items: center; gap: 6px; padding: 4px 10px; background: var(--grey-50); border: 1px solid var(--grey-100); border-radius: 8px; font-size: 11px; color: var(--grey-700); }
-  .bp-tag-label { font-size: 9px; font-weight: 600; color: var(--grey-400); text-transform: uppercase; letter-spacing: 0.3px; }
+  .bp-tag-label { font-size: 9px; font-weight: 600; color: var(--grey-500); text-transform: uppercase; letter-spacing: 0.3px; }
   .bp-tag-value { font-size: 14px; font-weight: 800; color: var(--black); letter-spacing: -0.3px; }
   .bp-tag-value.sm { font-size: 11px; font-weight: 700; letter-spacing: 0; }
   .bp-tag.accent { background: var(--blue-50); border-color: var(--blue-100); }
@@ -188,25 +197,38 @@
   .bpb-carrier { display: flex; align-items: center; gap: 5px; font-size: 12px; font-weight: 700; color: rgba(255,255,255,0.9); min-width: 0; flex: 1; }
   .bpb-carrier .bp-carrier-icon { font-size: 14px; }
   .bpb-carrier .bp-carrier-sub { color: rgba(255,255,255,0.7); font-size: 10px; font-weight: 500; }
+  .bpb .date-icon { background: rgba(255,255,255,0.12); border-color: rgba(255,255,255,0.15); }
+  .bpb .date-icon-day { color: #fff; }
+  .bpb .date-icon-month { color: rgba(255,255,255,0.7); }
   .bpb-head-right { text-align: right; flex-shrink: 0; }
   .bpb-date { font-size: 11px; font-weight: 700; color: rgba(255,255,255,0.85); margin-right: 6px; }
   .bpb-ref { font-size: 10px; font-weight: 700; color: rgba(255,255,255,0.7); display: block; margin-top: 1px; }
   .bpb-route { display: flex; align-items: center; padding: 8px 14px 4px; gap: 6px; }
   .bpb-hero { flex: 1; min-width: 0; }
   .bpb-hero.arr { text-align: right; }
-  .bpb-code { font-size: 30px; font-weight: 800; color: #FFFFFF; letter-spacing: -1px; line-height: 1; }
+  .bpb-code { font-size: 34px; font-weight: 800; color: #FFFFFF; letter-spacing: -1px; line-height: 1; }
+  .bpb-code .day-offset { font-size: 13px; font-weight: 700; color: rgba(255,141,84,0.8); vertical-align: super; margin-left: 1px; letter-spacing: 0; }
   .bpb-time { font-size: 12px; font-weight: 700; color: rgba(255,255,255,0.8); margin-top: 3px; }
-  .bpb-name { font-size: 11px; color: rgba(255,255,255,0.8); margin-top: 2px; font-weight: 500; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .bpb-name { font-size: 12px; color: rgba(255,255,255,0.8); margin-top: 2px; font-weight: 500; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
   .bpb-mid { flex-shrink: 0; display: flex; flex-direction: column; align-items: center; gap: 2px; min-width: 70px; }
-  .bpb-mid-row { display: flex; align-items: center; width: 100%; }
-  .bpb-mid-line { flex: 1; height: 1px; background: rgba(255,255,255,0.18); }
-  .bpb-mid-badge { width: 36px; height: 36px; border-radius: 50%; background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.14); display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin: 0 4px; }
-  .bpb-mid-badge .material-symbols-rounded { font-size: 18px; color: rgba(255,255,255,0.6); line-height: 1; }
+  .bpb-mid-row { display: flex; align-items: center; width: calc(100% + 24px); margin: 0 -12px; }
+  .bpb-mid-line { flex: 1; height: 2px; background: rgba(255,255,255,0.25); position: relative; border-radius: 1px; }
+  .bpb-mid-line:first-child::before, .bpb-mid-line:last-child::after { content: ''; position: absolute; top: 50%; width: 6px; height: 6px; border-radius: 50%; background: rgba(255,255,255,0.35); transform: translateY(-50%); }
+  .bpb-mid-line:first-child::before { left: 0; }
+  .bpb-mid-line:last-child::after { right: 0; }
+  .bpb-mid-badge { display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin: 0 6px; gap: 4px; white-space: nowrap; background: none; border: none; }
+  .bpb-mid-badge .material-symbols-rounded { font-size: 15px; color: rgba(255,255,255,0.45); line-height: 1; }
+  .bpb-mid-badge .mid-label { font-size: 11px; font-weight: 700; color: rgba(255,255,255,0.50); letter-spacing: -0.2px; }
   .bpb-dur { font-size: 9px; font-weight: 600; color: rgba(255,255,255,0.5); white-space: nowrap; }
-  .bpb .bp-tags { padding: 2px 14px 6px; justify-content: space-between; }
-  .bpb .bp-tag { background: rgba(255,255,255,0.07); border-color: rgba(255,255,255,0.12); }
-  .bpb .bp-tag-label { color: rgba(255,255,255,0.65); }
-  .bpb .bp-tag-value { color: #fff; }
+  .bpb-action-pill { display: inline-flex; align-items: center; gap: 4px; padding: 3px 10px; margin-top: 3px; border-radius: 6px; font-size: 9px; font-weight: 800; background: rgba(255,255,255,0.20); color: rgba(255,255,255,0.85); border: 1px solid rgba(255,255,255,0.25); letter-spacing: 0.6px; text-transform: uppercase; font-family: var(--font); white-space: nowrap; }
+  .bpb-action-pill svg { width: 10px; height: 10px; fill: currentColor; }
+  .bpb-action-pill .material-symbols-rounded { font-size: 12px; line-height: 1; }
+  .bpb-action-pill.deferred { opacity: 0.7; font-size: 8px; text-transform: none; letter-spacing: 0; }
+  .bpb .bp-tags { padding: 2px 14px 12px; justify-content: space-between; }
+  .bpb .bp-tag { background: rgba(255,255,255,0.07); border-color: rgba(255,255,255,0.12); padding: 3px 10px; border-radius: 6px; gap: 8px; }
+  .bpb .bp-tag > div { display: flex; align-items: baseline; gap: 4px; }
+  .bpb .bp-tag-label { color: rgba(255,255,255,0.65); font-size: 8px; }
+  .bpb .bp-tag-value { color: #fff; font-size: 13px; }
   .bpb .bp-tag.accent { background: rgba(0,169,252,0.15); border-color: rgba(0,169,252,0.22); }
   .bpb .bp-tag.accent .bp-tag-label { color: var(--blue-400); }
   .bpb .bp-tag.accent .bp-tag-value { color: var(--blue-200); }
@@ -224,19 +246,21 @@
   .bp-transit.dark-transit strong, .bp-transit.bold-transit strong { color: var(--blue-200); }
   .bp-luggage.luggage-dark { color: rgba(255,255,255,0.45); }
   /* Hotel dark card */
-  .htd-head { padding: 10px 14px 4px; }
   .htd-title { font-size: 15px; font-weight: 700; color: #fff; line-height: 1.3; }
   .htd-title .stars { color: var(--yellow-500); font-size: 12px; margin-left: 2px; }
-  .htd-sub { font-size: 11px; color: rgba(255,255,255,0.6); margin-top: 4px; line-height: 1.4; }
+  .htd-sub-row { padding: 2px 14px 4px; }
+  .htd-sub { font-size: 11px; color: rgba(255,255,255,0.6); line-height: 1.4; }
   .htd-dates { display: flex; align-items: flex-start; padding: 8px 14px; border-top: 1px solid rgba(255,255,255,0.06); }
   .htd-date { flex: 1; }
   .htd-date.arr { text-align: right; }
-  .htd-date-label { font-size: 9px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; color: rgba(255,255,255,0.55); }
-  .htd-date-time { font-size: 24px; font-weight: 800; color: #fff; letter-spacing: -0.8px; line-height: 1; margin-top: 3px; }
-  .htd-date-day { font-size: 11px; color: rgba(255,255,255,0.65); margin-top: 4px; font-weight: 600; }
-  .htd-mid { flex-shrink: 0; display: flex; align-items: center; padding: 12px 8px 0; min-width: 50px; }
-  .htd-mid-sep { color: rgba(255,255,255,0.35); font-size: 16px; }
-  .htd-nights { font-size: 10px; font-weight: 700; color: rgba(255,255,255,0.5); margin-left: 4px; }
+  .htd-date-label { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; color: rgba(255,255,255,0.55); }
+  .htd-date-time { font-size: 30px; font-weight: 800; color: #fff; letter-spacing: -0.8px; line-height: 1; margin-top: 3px; }
+  .htd-date-day { font-size: 12px; color: rgba(255,255,255,0.65); margin-top: 4px; font-weight: 600; }
+  .htd-hero { display: flex; flex-direction: column; }
+  .htd-hero .bpb-name { order: -1; margin-top: 0; margin-bottom: 2px; font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.3px; white-space: normal; }
+  .htd-hero.arr { align-items: flex-end; }
+  .htd-code { font-size: 24px !important; letter-spacing: -0.5px !important; }
+  .htd-mid { flex-shrink: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 12px 4px 0; min-width: 80px; }
   .htd-logistics { padding: 6px 14px 10px; border-top: 1px solid rgba(255,255,255,0.06); }
   .htd-log-item { font-size: 11px; color: rgba(255,255,255,0.7); line-height: 1.7; display: flex; align-items: center; gap: 6px; }
   .htd-log-item strong { color: rgba(255,255,255,0.85); font-weight: 700; }
@@ -258,11 +282,19 @@
   @media (max-width: 640px) {
     .bp-doc-wallet { display: inline-flex; align-items: center; gap: 3px; padding: 3px 8px; border-radius: 6px; font-size: 9px; font-weight: 600; color: var(--black); background: var(--grey-50); border: 1px solid var(--grey-100); cursor: pointer; font-family: var(--font); }
   }
+  /* Ticket action tag (inline on badges row, classic mode) */
+  .bp-ticket-tag { display: inline-flex; align-items: center; gap: 7px; padding: 12px 18px; border-radius: 10px; font-size: 13px; font-weight: 700; cursor: pointer; border: 1.5px solid var(--grey-200); font-family: var(--font); transition: all 0.15s; margin-left: auto; background: var(--grey-50); color: var(--grey-700); }
+  .bp-ticket-tag:hover { background: var(--white); border-color: var(--grey-300); transform: translateY(-1px); box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+  .bp-ticket-tag:active { transform: scale(0.97); box-shadow: none; }
+  .bp-ticket-tag svg { width: 18px; height: 18px; flex-shrink: 0; fill: var(--grey-400); }
+  .bp-ticket-tag .material-symbols-rounded { font-size: 20px; color: var(--grey-400); line-height: 1; }
+  .bp-ticket-tag.deferred { background: var(--grey-50); color: var(--grey-400); border-color: var(--grey-100); font-weight: 600; }
+  .bp-ticket-tag.deferred:hover { background: var(--grey-75); border-color: var(--grey-200); transform: none; box-shadow: none; }
   /* Transit bar */
   .bp-transit { display: flex; align-items: center; gap: 6px; padding: 6px 14px; background: var(--blue-50); font-size: 11px; font-weight: 600; color: var(--blue-700); border-radius: 8px; margin-bottom: 6px; }
   /* Pair layout: 2 segments side by side, fill width */
   .bp-pair { display: flex; align-items: stretch; gap: 0; margin-bottom: 6px; }
-  .bp-pair .bp { flex: 1; min-width: 0; margin-bottom: 0; }
+  .bp-pair .bp, .bp-pair .bpb { flex: 1; min-width: 0; margin-bottom: 0; }
   .bp-pair .bp-time { font-size: 22px; }
   .bp-pair .bp-mid { min-width: 50px; }
   .bp-pair .bp-conn-between { flex-direction: column; gap: 2px; padding: 0 6px; }
@@ -271,7 +303,7 @@
   .bp-scroll::-webkit-scrollbar { height: 3px; }
   .bp-scroll::-webkit-scrollbar-track { background: transparent; }
   .bp-scroll::-webkit-scrollbar-thumb { background: var(--grey-200); border-radius: 2px; }
-  .bp-scroll .bp { min-width: 260px; max-width: 320px; flex-shrink: 0; scroll-snap-align: start; margin-bottom: 0; }
+  .bp-scroll .bp, .bp-scroll .bpb { min-width: 260px; max-width: 320px; flex-shrink: 0; scroll-snap-align: start; margin-bottom: 0; }
   .bp-scroll .bp-time { font-size: 22px; }
   .bp-scroll .bp-mid { min-width: 50px; }
   .bp-scroll .bp-conn-between { flex-direction: column; gap: 2px; padding: 0 6px; }
@@ -292,7 +324,7 @@
   .ht-badge.cancel-restricted { background: var(--orange-50); color: var(--orange-600); border: 1px solid var(--orange-100); }
   .ht-badge.cancel-none { background: var(--red-50); color: var(--red-400); border: 1px solid var(--red-100); }
   .ht-dates { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; padding: 6px 10px; background: var(--grey-50); border-radius: 8px; margin-top: 8px; font-size: 12px; }
-  .ht-date-label { font-size: 9px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.3px; color: var(--grey-400); }
+  .ht-date-label { font-size: 9px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.3px; color: var(--grey-500); }
   .ht-date-value { font-weight: 700; color: var(--black); }
   .ht-date-sep { color: var(--grey-300); font-size: 11px; }
   .ht-nights { font-size: 11px; font-weight: 600; color: var(--grey-500); margin-left: auto; }
@@ -310,9 +342,10 @@
   .car-title { font-size: 14px; font-weight: 700; color: var(--black); line-height: 1.2; }
   .car-details { font-size: 11px; color: var(--grey-500); margin-top: 3px; display: flex; align-items: center; gap: 4px; flex-wrap: wrap; }
   .car-details .sep { color: var(--grey-300); }
-  .car-schedule { display: flex; gap: 0; padding: 0 14px 8px; }
+  .car-schedule { display: flex; gap: 0; padding: 0 14px 8px; align-items: center; }
   .car-sched-block { flex: 1; }
-  .car-sched-label { font-size: 9px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; color: var(--grey-400); margin-bottom: 3px; }
+  .car-schedule .bp-ticket-tag { flex: 0 0 auto; margin-left: auto; }
+  .car-sched-label { font-size: 9px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; color: var(--grey-500); margin-bottom: 3px; }
   .car-sched-time { font-size: 18px; font-weight: 800; color: var(--black); line-height: 1; }
   .is-past .car-sched-time { color: var(--grey-400); }
   .car-sched-date { font-size: 11px; font-weight: 600; color: var(--grey-700); margin-top: 2px; }
@@ -321,7 +354,7 @@
   .car-driver { display: flex; align-items: center; gap: 10px; padding: 8px 14px; background: var(--grey-50); border-top: 1px solid var(--grey-100); }
   .car-driver-badge { width: 36px; height: 36px; border-radius: 8px; background: var(--blue-50); display: flex; align-items: center; justify-content: center; font-size: 18px; flex-shrink: 0; border: 1px solid var(--blue-100); }
   .car-driver-text { flex: 1; }
-  .car-driver-label { font-size: 9px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; color: var(--grey-400); }
+  .car-driver-label { font-size: 9px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; color: var(--grey-500); }
   .car-driver-name { font-size: 13px; font-weight: 700; color: var(--black); }
   .car-driver-docs { font-size: 10px; color: var(--grey-500); margin-top: 1px; }
 
@@ -337,6 +370,110 @@
   .cta-sec { display: inline-flex; align-items: center; gap: 5px; padding: 6px 12px; border-radius: 8px; font-size: 11px; font-weight: 600; border: var(--stroke-md) solid var(--grey-100); background: var(--white); color: var(--grey-600); cursor: pointer; transition: all 0.15s; text-decoration: none; font-family: var(--font); }
   .cta-sec:hover { background: var(--grey-50); border-color: var(--grey-200); color: var(--black); }
 
+  /* ===== Bottom Sheet / Modal ===== */
+  .sheet-overlay { position: fixed; inset: 0; z-index: 1000; background: rgba(0,5,10,0.4); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); display: flex; align-items: center; justify-content: center; opacity: 0; visibility: hidden; transition: opacity 0.3s var(--ease), visibility 0.3s; }
+  .sheet-overlay.open { opacity: 1; visibility: visible; }
+  .sheet-panel { background: var(--white); border-radius: 16px; width: 90%; max-width: 420px; max-height: 80vh; overflow-y: auto; box-shadow: 0 8px 40px rgba(0,0,0,0.15), 0 0 0 1px rgba(0,0,0,0.05); transform: scale(0.95) translateY(10px); transition: transform 0.3s var(--ease); position: relative; }
+  .sheet-overlay.open .sheet-panel { transform: scale(1) translateY(0); }
+  .sheet-handle { display: none; width: 36px; height: 4px; background: var(--grey-200); border-radius: 2px; margin: 10px auto 0; }
+  .sheet-header { display: flex; align-items: flex-start; justify-content: space-between; padding: 14px 18px 10px; border-bottom: 1px solid var(--grey-100); gap: 10px; }
+  .sheet-title { display: flex; align-items: center; gap: 10px; font-size: 15px; font-weight: 700; color: var(--black); flex: 1; min-width: 0; line-height: 1.3; }
+  .sheet-title .date-icon { width: 40px; height: 40px; border-radius: 10px; }
+  .sheet-title .date-icon-day { font-size: 17px; }
+  .sheet-title .date-icon-month { font-size: 9px; }
+  .sheet-close { width: 28px; height: 28px; border-radius: 50%; border: none; background: var(--grey-75); color: var(--grey-600); font-size: 14px; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.15s; font-family: var(--font); line-height: 1; }
+  .sheet-close:hover { background: var(--grey-100); color: var(--black); }
+  .sheet-body { padding: 16px 18px 20px; }
+  .sheet-actions { display: flex; flex-direction: column; gap: 8px; }
+  .sheet-actions .cta-pri { width: 100%; justify-content: center; padding: 11px 18px; font-size: 14px; border-radius: 10px; }
+  .sheet-actions .cta-sec { width: 100%; justify-content: center; padding: 8px 14px; }
+  .sheet-info { display: flex; align-items: flex-start; gap: 8px; padding: 10px 12px; background: var(--blue-50); border: 1px solid var(--blue-100); border-radius: 10px; font-size: 12px; color: var(--blue-700); line-height: 1.4; margin-bottom: 12px; }
+  .sheet-info-icon { font-size: 16px; flex-shrink: 0; }
+  .sheet-qr { width: 180px; height: 180px; margin: 8px auto 12px; background: var(--grey-50); border: 1px solid var(--grey-100); border-radius: 12px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; padding: 16px; }
+  .sheet-qr svg { width: 120px; height: 120px; opacity: 0.2; }
+  .sheet-qr-label { font-size: 11px; font-weight: 600; color: var(--grey-500); }
+  .sheet-doc { width: 100%; margin: 4px auto 14px; background: var(--grey-50); border: 1px solid var(--grey-100); border-radius: 12px; display: flex; align-items: center; gap: 14px; padding: 18px 20px; cursor: pointer; transition: background 0.15s, border-color 0.15s, transform 0.15s; text-decoration: none; }
+  .sheet-doc:hover { background: var(--grey-75); border-color: var(--grey-200); transform: translateY(-1px); }
+  .sheet-doc:active { transform: scale(0.99); }
+  .sheet-doc-icon { width: 44px; height: 52px; flex-shrink: 0; border-radius: 6px; background: #e53935; display: flex; align-items: center; justify-content: center; }
+  .sheet-doc-icon svg { width: 24px; height: 28px; }
+  .sheet-doc-info { flex: 1; min-width: 0; }
+  .sheet-doc-name { font-size: 13px; font-weight: 700; color: var(--black); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .sheet-doc-meta { font-size: 11px; color: var(--grey-500); margin-top: 2px; font-weight: 500; }
+  .sheet-pax { font-size: 11px; color: var(--grey-500); margin-top: 4px; font-weight: 500; text-align: center; }
+  .sheet-pax strong { font-weight: 700; color: var(--grey-600); }
+  .sheet-footer { display: flex; justify-content: center; margin-top: 14px; padding-top: 10px; border-top: 1px solid var(--grey-100); }
+  .sheet-footer a { font-size: 12px; font-weight: 600; color: var(--grey-500); text-decoration: none; display: flex; align-items: center; gap: 4px; transition: color 0.15s; }
+  .sheet-footer a:hover { color: var(--blue-500); }
+  .wallet-badge { display: flex; align-items: center; justify-content: center; gap: 8px; width: 100%; height: 44px; border-radius: 10px; padding: 0 16px; cursor: pointer; border: none; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; text-decoration: none; transition: opacity 0.15s; box-sizing: border-box; }
+  .wallet-badge:hover { opacity: 0.85; }
+  .wallet-badge-apple { background: #000; color: #fff; }
+  .wallet-badge-apple svg { width: 20px; height: 24px; flex-shrink: 0; }
+  .wallet-badge-apple .wb-text { font-size: 12px; font-weight: 500; line-height: 1.2; letter-spacing: 0.2px; }
+  .wallet-badge-apple .wb-text strong { font-weight: 600; font-size: 14px; display: block; }
+  .wallet-badge-google { background: #000; color: #fff; }
+  .wallet-badge-google svg { width: 20px; height: 20px; flex-shrink: 0; }
+  .wallet-badge-google .wb-text { font-size: 12px; font-weight: 500; line-height: 1.2; letter-spacing: 0.2px; }
+  .wallet-badge-google .wb-text strong { font-weight: 600; font-size: 14px; display: block; }
+  /* Contrast mode sheet */
+  .sheet-overlay[data-color="contrast"] .sheet-panel { background: #1a2747; border: 1px solid rgba(255,255,255,0.08); box-shadow: 0 8px 40px rgba(0,0,0,0.4); }
+  .sheet-overlay[data-color="contrast"] .sheet-handle { background: rgba(255,255,255,0.2); }
+  .sheet-overlay[data-color="contrast"] .sheet-header { border-color: rgba(255,255,255,0.08); }
+  .sheet-overlay[data-color="contrast"] .sheet-title { color: #fff; }
+  .sheet-overlay[data-color="contrast"] .date-icon { background: rgba(255,255,255,0.10); border-color: rgba(255,255,255,0.15); }
+  .sheet-overlay[data-color="contrast"] .date-icon-day { color: #fff; }
+  .sheet-overlay[data-color="contrast"] .date-icon-month { color: rgba(255,255,255,0.6); }
+  .sheet-overlay[data-color="contrast"] .sheet-close { background: rgba(255,255,255,0.08); color: rgba(255,255,255,0.7); }
+  .sheet-overlay[data-color="contrast"] .sheet-close:hover { background: rgba(255,255,255,0.15); color: #fff; }
+  .sheet-overlay[data-color="contrast"] .sheet-body { color: rgba(255,255,255,0.85); }
+  .sheet-overlay[data-color="contrast"] .sheet-info { background: rgba(0,169,252,0.12); border-color: rgba(0,169,252,0.2); color: var(--blue-300); }
+  .sheet-overlay[data-color="contrast"] .sheet-qr { background: rgba(255,255,255,0.06); border-color: rgba(255,255,255,0.14); color: rgba(255,255,255,0.45); }
+  .sheet-overlay[data-color="contrast"] .sheet-qr-label { color: rgba(255,255,255,0.4); }
+  .sheet-overlay[data-color="contrast"] .sheet-doc { background: rgba(255,255,255,0.06); border-color: rgba(255,255,255,0.1); }
+  .sheet-overlay[data-color="contrast"] .sheet-doc-name { color: #fff; }
+  .sheet-overlay[data-color="contrast"] .sheet-doc-meta { color: rgba(255,255,255,0.45); }
+  .sheet-overlay[data-color="contrast"] .sheet-pax { color: rgba(255,255,255,0.45); }
+  .sheet-overlay[data-color="contrast"] .sheet-pax strong { color: rgba(255,255,255,0.7); }
+  .sheet-overlay[data-color="contrast"] .sheet-footer { border-color: rgba(255,255,255,0.08); }
+  .sheet-overlay[data-color="contrast"] .sheet-footer a { color: rgba(255,255,255,0.45); }
+  .sheet-overlay[data-color="contrast"] .sheet-footer a:hover { color: var(--blue-300); }
+  .sheet-overlay[data-color="contrast"] .sheet-actions .cta-pri { background: #fff; color: #1a2747; font-weight: 800; }
+  .sheet-overlay[data-color="contrast"] .sheet-actions .cta-pri:hover { background: rgba(255,255,255,0.9); }
+  .sheet-overlay[data-color="contrast"] .sheet-actions .cta-sec { border-color: rgba(255,255,255,0.18); color: #fff; background: rgba(255,255,255,0.08); }
+  .sheet-overlay[data-color="contrast"] .sheet-actions .cta-sec:hover { background: rgba(255,255,255,0.14); }
+  /* Dark contrast mode sheet */
+  .sheet-overlay[data-color="dark"] .sheet-panel { background: #252540; border: 1px solid rgba(255,255,255,0.06); box-shadow: 0 8px 40px rgba(0,0,0,0.5); }
+  .sheet-overlay[data-color="dark"] .sheet-handle { background: rgba(255,255,255,0.15); }
+  .sheet-overlay[data-color="dark"] .sheet-header { border-color: rgba(255,255,255,0.06); }
+  .sheet-overlay[data-color="dark"] .sheet-title { color: #fff; }
+  .sheet-overlay[data-color="dark"] .date-icon { background: rgba(255,255,255,0.10); border-color: rgba(255,255,255,0.12); }
+  .sheet-overlay[data-color="dark"] .date-icon-day { color: #fff; }
+  .sheet-overlay[data-color="dark"] .date-icon-month { color: rgba(255,255,255,0.55); }
+  .sheet-overlay[data-color="dark"] .sheet-close { background: rgba(255,255,255,0.08); color: rgba(255,255,255,0.6); }
+  .sheet-overlay[data-color="dark"] .sheet-close:hover { background: rgba(255,255,255,0.12); color: #fff; }
+  .sheet-overlay[data-color="dark"] .sheet-body { color: rgba(255,255,255,0.85); }
+  .sheet-overlay[data-color="dark"] .sheet-info { background: rgba(0,169,252,0.1); border-color: rgba(0,169,252,0.18); color: var(--blue-300); }
+  .sheet-overlay[data-color="dark"] .sheet-qr { background: rgba(255,255,255,0.05); border-color: rgba(255,255,255,0.12); color: rgba(255,255,255,0.4); }
+  .sheet-overlay[data-color="dark"] .sheet-qr-label { color: rgba(255,255,255,0.35); }
+  .sheet-overlay[data-color="dark"] .sheet-doc { background: rgba(255,255,255,0.05); border-color: rgba(255,255,255,0.1); }
+  .sheet-overlay[data-color="dark"] .sheet-doc-name { color: #fff; }
+  .sheet-overlay[data-color="dark"] .sheet-doc-meta { color: rgba(255,255,255,0.4); }
+  .sheet-overlay[data-color="dark"] .sheet-pax { color: rgba(255,255,255,0.4); }
+  .sheet-overlay[data-color="dark"] .sheet-pax strong { color: rgba(255,255,255,0.6); }
+  .sheet-overlay[data-color="dark"] .sheet-footer { border-color: rgba(255,255,255,0.06); }
+  .sheet-overlay[data-color="dark"] .sheet-footer a { color: rgba(255,255,255,0.4); }
+  .sheet-overlay[data-color="dark"] .sheet-footer a:hover { color: var(--blue-300); }
+  .sheet-overlay[data-color="dark"] .sheet-actions .cta-pri { background: #fff; color: #252540; font-weight: 800; }
+  .sheet-overlay[data-color="dark"] .sheet-actions .cta-pri:hover { background: rgba(255,255,255,0.9); }
+  .sheet-overlay[data-color="dark"] .sheet-actions .cta-sec { border-color: rgba(255,255,255,0.15); color: #fff; background: rgba(255,255,255,0.08); }
+  .sheet-overlay[data-color="dark"] .sheet-actions .cta-sec:hover { background: rgba(255,255,255,0.14); }
+  /* Bold card tappable */
+  .bpb.tappable { cursor: pointer; transition: transform 0.2s var(--ease), box-shadow 0.2s var(--ease); }
+  .bpb.tappable:hover { transform: translateY(-2px); box-shadow: 0 6px 24px rgba(0,0,0,0.12); }
+  .bpb.tappable:active { transform: scale(0.985); transition-duration: 0.1s; }
+  /* Deferred button clickable */
+  .bp-doc-btn.deferred { cursor: pointer; }
+
   /* Footer */
   .card-footer { display: none; }
   .card-footer a { font-size: 11px; font-weight: 600; color: var(--blue-600); text-decoration: none; display: inline-flex; align-items: center; gap: 3px; padding: 2px 5px; border-radius: 5px; transition: all 0.15s; }
@@ -344,6 +481,11 @@
 
   /* ===== Mobile ===== */
   @media (max-width: 640px) {
+    /* Sheet → bottom sheet on mobile */
+    .sheet-overlay { align-items: flex-end; justify-content: stretch; }
+    .sheet-panel { width: 100%; max-width: 100%; border-radius: 20px 20px 0 0; max-height: 70vh; transform: translateY(100%); }
+    .sheet-overlay.open .sheet-panel { transform: translateY(0); }
+    .sheet-handle { display: block; }
     body { padding: 8px; }
     .card-inner { padding: 14px 12px 10px; }
     .card-header { margin-bottom: 10px; flex-direction: column; gap: 6px; }
@@ -371,6 +513,7 @@
     .bp-tags { padding: 4px 10px 6px; gap: 8px; }
     .bp-tag-group { gap: 4px; }
     .bp-pair { flex-direction: column; }
+    .bp-pair .bp, .bp-pair .bpb { width: 100%; }
     .bp-pair .bp-conn-between { flex-direction: row; gap: 6px; padding: 6px 0; }
     .bp-scroll .bp { min-width: 220px; max-width: 260px; }
     .bp-scroll .bp-time { font-size: 20px; }
@@ -394,7 +537,8 @@
     .car-top { padding: 8px 10px 6px; }
     .car-photo { width: 80px; height: 60px; }
     .car-title { font-size: 13px; }
-    .car-schedule { padding: 0 10px 8px; }
+    .car-schedule { padding: 0 10px 8px; flex-wrap: wrap; }
+    .car-schedule .bp-ticket-tag { margin-top: 8px; width: 100%; justify-content: center; }
     .car-sched-time { font-size: 16px; }
     .car-driver { padding: 6px 10px; }
     .cta-row { flex-direction: column; gap: 5px; }
@@ -433,16 +577,367 @@
   /* ===== Scenario Sections ===== */
   .scenario-section { max-width: 960px; margin: 24px auto; scroll-margin-top: 90px; }
   .scenario-label { font-size: 11px; font-weight: 700; color: var(--grey-400); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 8px; padding-left: 4px; }
+
+  /* ===== Light+Bold — Override bpb dark colors to light ===== */
+  .trip-card:not(.contrast-mode) .bpb { background: linear-gradient(135deg, #f4f5f9 0%, #eceef3 25%, #f6f7fa 50%, #e9ebf1 75%, #f2f3f7 100%); border: 1px solid rgba(195,200,215,0.4); box-shadow: inset 0 1px 0 rgba(255,255,255,0.8), inset 0 -1px 2px rgba(0,0,0,0.02), 0 2px 8px rgba(0,0,0,0.04); }
+  .trip-card:not(.contrast-mode) .bpb-carrier { color: var(--black); }
+  .trip-card:not(.contrast-mode) .bpb-carrier .bp-carrier-sub { color: var(--grey-500); }
+  .trip-card:not(.contrast-mode) .bpb-date { color: var(--grey-600); }
+  .trip-card:not(.contrast-mode) .bpb .date-icon { background: rgba(0,0,0,0.04); border-color: rgba(0,0,0,0.08); }
+  .trip-card:not(.contrast-mode) .bpb .date-icon-day { color: var(--black); }
+  .trip-card:not(.contrast-mode) .bpb .date-icon-month { color: var(--blue-600); }
+  .trip-card:not(.contrast-mode) .bpb-ref { color: var(--grey-500); }
+  .trip-card:not(.contrast-mode) .bpb-code { color: var(--black); }
+  .trip-card:not(.contrast-mode) .bpb-code .day-offset { color: var(--orange-500); }
+  .trip-card:not(.contrast-mode) .bp-time .day-offset { color: var(--orange-500); }
+  .trip-card:not(.contrast-mode) .bpb-time { color: var(--grey-700); }
+  .trip-card:not(.contrast-mode) .bpb-name { color: var(--grey-700); }
+  .trip-card:not(.contrast-mode) .bpb-mid-line { background: var(--grey-200); }
+  .trip-card:not(.contrast-mode) .bpb-mid-line:first-child::before, .trip-card:not(.contrast-mode) .bpb-mid-line:last-child::after { background: var(--grey-300); }
+  .trip-card:not(.contrast-mode) .bpb-mid-badge .material-symbols-rounded { color: var(--grey-400); }
+  .trip-card:not(.contrast-mode) .bpb-mid-badge .mid-label { color: var(--grey-400); }
+  .trip-card:not(.contrast-mode) .bpb-dur { color: var(--grey-400); }
+  .trip-card:not(.contrast-mode) .bpb .bp-tag { background: rgba(255,255,255,0.82); border-color: rgba(180,185,200,0.45); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); box-shadow: 0 1px 3px rgba(0,0,0,0.06); }
+  .trip-card:not(.contrast-mode) .bpb .bp-tag-label { color: var(--grey-600); font-weight: 700; }
+  .trip-card:not(.contrast-mode) .bpb .bp-tag-value { color: var(--black); font-weight: 800; }
+  .trip-card:not(.contrast-mode) .bpb .bp-tag.accent { background: rgba(0,169,252,0.10); border-color: rgba(0,169,252,0.25); }
+  .trip-card:not(.contrast-mode) .bpb .bp-tag.accent .bp-tag-label { color: var(--blue-600); font-weight: 700; }
+  .trip-card:not(.contrast-mode) .bpb .bp-tag.accent .bp-tag-value { color: var(--blue-800); }
+  .trip-card:not(.contrast-mode) .bpb .bp-tag.warm { background: rgba(255,141,84,0.10); border-color: rgba(255,141,84,0.25); }
+  .trip-card:not(.contrast-mode) .bpb .bp-tag.warm .bp-tag-label { color: var(--orange-600); font-weight: 700; }
+  .trip-card:not(.contrast-mode) .bpb .bp-tag.warm .bp-tag-value { color: #b34700; }
+  .trip-card:not(.contrast-mode) .bpb .bp-doc { border-color: var(--grey-100); }
+  .trip-card:not(.contrast-mode) .bpb .bp-doc-loc { color: var(--grey-600); border-color: var(--grey-200); }
+  .trip-card:not(.contrast-mode) .bpb .bp-doc-btn.deferred { background: var(--grey-50); color: var(--grey-500); }
+  .trip-card:not(.contrast-mode) .bpb .bp-doc-wallet { color: var(--black); background: var(--grey-50); border-color: var(--grey-200); }
+  .trip-card:not(.contrast-mode) .bpb-action-pill { background: rgba(0,0,0,0.06); color: var(--grey-700); border-color: rgba(0,0,0,0.10); }
+  .trip-card:not(.contrast-mode) .bpb-action-pill svg { fill: var(--grey-500); }
+  .trip-card:not(.contrast-mode) .bpb-action-pill .material-symbols-rounded { color: var(--grey-500); }
+  .trip-card:not(.contrast-mode) .bpb-driver { border-top-color: rgba(255,176,88,0.2); background: linear-gradient(135deg, rgba(255,176,88,0.05) 0%, rgba(255,141,84,0.02) 100%); }
+  .trip-card:not(.contrast-mode) .bpb-driver-item { color: #b87333; }
+  .trip-card:not(.contrast-mode) .bpb-driver-item strong { color: #8b5e3c; }
+  /* Light+Bold: transit & connection bars */
+  .trip-card:not(.contrast-mode):not(.dark-mode) .bp-transit.bold-transit { background: rgba(0,169,252,0.06); color: var(--blue-700); }
+  .trip-card:not(.contrast-mode):not(.dark-mode) .bp-transit.bold-transit strong { color: var(--blue-800); }
+  .trip-card:not(.contrast-mode):not(.dark-mode) .bold-conn .bp-conn-chip { background: rgba(255,141,84,0.08); border-color: rgba(255,141,84,0.15); color: #cc5500; }
+  .trip-card:not(.contrast-mode):not(.dark-mode) .bold-conn .bp-conn-where { color: var(--grey-500); }
+  .trip-card:not(.contrast-mode):not(.dark-mode) .bp-luggage.luggage-dark { color: var(--grey-500); }
+  /* Light+Bold: hotel card */
+  .trip-card:not(.contrast-mode) .htd-title { color: var(--black); }
+  .trip-card:not(.contrast-mode) .htd-sub { color: var(--grey-500); }
+  .trip-card:not(.contrast-mode) .htd-date-label { color: var(--grey-500); }
+  .trip-card:not(.contrast-mode) .htd-date-time { color: var(--black); }
+  .trip-card:not(.contrast-mode) .htd-date-day { color: var(--grey-600); }
+  .trip-card:not(.contrast-mode) .htd-mid-room { color: var(--grey-400); }
+  .trip-card:not(.contrast-mode) .htd-logistics { border-color: var(--grey-100); }
+  .trip-card:not(.contrast-mode) .htd-log-item { color: var(--grey-600); }
+  .trip-card:not(.contrast-mode) .htd-log-item strong { color: var(--black); }
+
+  /* ===== Dark Mode — Stepper inside dark card ===== */
+  .trip-card.dark-mode .stepper-dark .stepper-step:hover { background: rgba(255,255,255,0.04); }
+  .trip-card.dark-mode .stepper-dark .stepper-step.active:hover { background: rgba(0,169,252,0.08); }
+  .trip-card.dark-mode .stepper-dark .stepper-line { background: rgba(255,255,255,0.1); }
+  .trip-card.dark-mode .stepper-dark .stepper-label { color: rgba(255,255,255,0.5); }
+  .trip-card.dark-mode .stepper-dark .stepper-step.active .stepper-label { color: var(--blue-300, #5bc0fa); }
+  .trip-card.dark-mode .stepper-dark .stepper-date { color: rgba(255,255,255,0.3); }
+  .trip-card.dark-mode .stepper-dark .stepper-step.active .stepper-date { color: var(--blue-400, #5bc0fa); }
+  .trip-card.dark-mode .stepper-dark .stepper-step.completed .stepper-label { color: rgba(255,255,255,0.3); }
+  .trip-card.dark-mode .stepper-dark .stepper-step.completed .stepper-line { background: rgba(34,215,161,0.2); }
+
+  /* ===== Dark Mode — Full dark trip card ===== */
+  .trip-card.dark-mode { background: #252540; border-color: rgba(255,255,255,0.06); box-shadow: 0 4px 20px rgba(0,0,0,0.25); backdrop-filter: none; -webkit-backdrop-filter: none; }
+  .trip-card.dark-mode.state-imminent { background: linear-gradient(160deg, #213557 0%, #252540 35%); border-color: rgba(0,169,252,0.2); box-shadow: 0 4px 20px rgba(0,0,0,0.25), 0 0 24px rgba(0,169,252,0.08); backdrop-filter: none; -webkit-backdrop-filter: none; }
+  .trip-card.dark-mode.state-in_transit { background: linear-gradient(160deg, #20395c 0%, #252540 45%); border-color: rgba(0,169,252,0.25); box-shadow: 0 4px 20px rgba(0,0,0,0.25), 0 0 24px rgba(0,169,252,0.12); backdrop-filter: none; -webkit-backdrop-filter: none; }
+  .trip-card.dark-mode.state-between_segments { border-color: rgba(34,215,161,0.12); }
+  .trip-card.dark-mode.state-trip_ending { background: linear-gradient(160deg, #25374a 0%, #252540 35%); border-color: rgba(34,215,161,0.2); box-shadow: 0 4px 20px rgba(0,0,0,0.25), 0 0 20px rgba(34,215,161,0.06); backdrop-filter: none; -webkit-backdrop-filter: none; }
+  .trip-card.dark-mode .card-inner { color: rgba(255,255,255,0.9); }
+  .trip-card.dark-mode .headline { color: #fff; }
+  .trip-card.dark-mode.state-imminent .headline,
+  .trip-card.dark-mode.state-in_transit .headline { color: var(--blue-200); }
+  .trip-card.dark-mode.state-trip_ending .headline { color: var(--green-200); }
+  .trip-card.dark-mode .co-travelers { color: rgba(255,255,255,0.5); }
+  .trip-card.dark-mode .header-link { color: var(--black); background: rgba(255,255,255,0.85); border-color: rgba(255,255,255,0.6); }
+  .trip-card.dark-mode .header-link:hover { background: rgba(255,255,255,0.95); border-color: rgba(255,255,255,0.8); }
+  .trip-card.dark-mode .etape-tag { opacity: 0.9; }
+  /* ===== Contrast-mode — outer card state overrides (stronger signals for high-contrast) ===== */
+  .trip-card.contrast-mode.state-imminent { border-color: rgba(0,169,252,0.28); background: linear-gradient(160deg, rgba(0,169,252,0.10) 0%, rgba(255,255,255,0.55) 35%); box-shadow: 0 2px 20px rgba(0,169,252,0.14), 0 0 0 1px rgba(0,169,252,0.10); }
+  .trip-card.contrast-mode.state-in_transit { border-color: rgba(0,169,252,0.35); background: linear-gradient(160deg, rgba(0,169,252,0.14) 0%, rgba(255,255,255,0.55) 45%); box-shadow: 0 2px 20px rgba(0,169,252,0.18), 0 0 0 1px rgba(0,169,252,0.12); }
+  .trip-card.contrast-mode.state-between_segments { border-color: rgba(34,215,161,0.18); }
+  .trip-card.contrast-mode.state-trip_ending { border-color: rgba(34,215,161,0.28); background: linear-gradient(160deg, rgba(34,215,161,0.10) 0%, rgba(255,255,255,0.55) 35%); box-shadow: 0 2px 16px rgba(34,215,161,0.10); }
+  .trip-card.contrast-mode.state-imminent .headline,
+  .trip-card.contrast-mode.state-in_transit .headline { color: var(--blue-700); }
+  .trip-card.contrast-mode.state-trip_ending .headline { color: var(--green-700); }
+  /* ===== Contrast-mode — inner cards: dark bg, white text ===== */
+  .trip-card.contrast-mode .bp *, .trip-card.contrast-mode .ecard * { color: rgba(255,255,255,0.88); }
+  .trip-card.contrast-mode .bp { background: #1a2747; border-color: rgba(255,255,255,0.08); border-radius: 14px; }
+  .trip-card.contrast-mode .ecard { background: #1a2747; border-color: rgba(255,255,255,0.08); }
+  .trip-card.contrast-mode .ecard strong { color: #fff; }
+  .trip-card.contrast-mode .bp-head { border-color: rgba(255,255,255,0.08); }
+  .trip-card.contrast-mode .bp-carrier { color: #fff; }
+  .trip-card.contrast-mode .bp-carrier-sub { color: rgba(255,255,255,0.55); }
+  .trip-card.contrast-mode .bp-date { color: rgba(255,255,255,0.6); }
+  .trip-card.contrast-mode .date-icon { background: rgba(255,255,255,0.08); border-color: rgba(255,255,255,0.12); }
+  .trip-card.contrast-mode .date-icon-day { color: #fff; }
+  .trip-card.contrast-mode .date-icon-month { color: rgba(255,255,255,0.55); }
+  .trip-card.contrast-mode .bp-tear { border-top-color: rgba(255,255,255,0.12); }
+  .trip-card.contrast-mode .bp-tear::before, .trip-card.contrast-mode .bp-tear::after { background: var(--grey-50); border-color: var(--grey-50); }
+  .trip-card.contrast-mode .bp-time { color: #fff; }
+  .trip-card.contrast-mode .bp-loc { color: rgba(255,255,255,0.85); }
+  .trip-card.contrast-mode .bp-sub { color: rgba(255,255,255,0.5); }
+  .trip-card.contrast-mode .bp-arrow-line { background: rgba(255,255,255,0.15); }
+  .trip-card.contrast-mode .bp-arrow-line::before, .trip-card.contrast-mode .bp-arrow-line::after { background: rgba(255,255,255,0.25); }
+  .trip-card.contrast-mode .bp-ticket-tag { background: rgba(255,255,255,0.10); color: rgba(255,255,255,0.9); border-color: rgba(255,255,255,0.18); }
+  .trip-card.contrast-mode .bp-ticket-tag:hover { background: rgba(255,255,255,0.18); border-color: rgba(255,255,255,0.30); }
+  .trip-card.contrast-mode .bp-ticket-tag svg { fill: rgba(255,255,255,0.6); }
+  .trip-card.contrast-mode .bp-ticket-tag .material-symbols-rounded { color: rgba(255,255,255,0.6); }
+  .trip-card.contrast-mode .bp-mid { color: rgba(255,255,255,0.55); }
+  .trip-card.contrast-mode .bp-dur { color: rgba(255,255,255,0.5); }
+  .trip-card.contrast-mode .bp-meta { border-color: rgba(255,255,255,0.08); }
+  .trip-card.contrast-mode .bp-tag { background: rgba(255,255,255,0.08); border-color: rgba(255,255,255,0.06); }
+  .trip-card.contrast-mode .bp-tag-label { color: rgba(255,255,255,0.5); }
+  .trip-card.contrast-mode .bp-tag-value { color: #fff; }
+  .trip-card.contrast-mode .bp-doc { border-color: rgba(255,255,255,0.06); }
+  .trip-card.contrast-mode .bp-doc-btn { background: rgba(255,255,255,0.08); color: rgba(255,255,255,0.8); border-color: rgba(255,255,255,0.1); }
+  .trip-card.contrast-mode .bp-doc-loc { color: rgba(255,255,255,0.6); border-color: rgba(255,255,255,0.1); }
+  .trip-card.contrast-mode .bp-doc-wallet { color: rgba(255,255,255,0.85); background: rgba(255,255,255,0.06); border-color: rgba(255,255,255,0.1); }
+  /* Contrast: conn chip is on light outer card — keep default dark-on-light colors */
+  .trip-card.contrast-mode .bold-conn .bp-conn-chip { background: rgba(255,141,84,0.08); border-color: rgba(255,141,84,0.15); color: #cc5500; }
+  .trip-card.contrast-mode .bold-conn .bp-conn-where { color: var(--grey-500); }
+  .trip-card.contrast-mode .bp-luggage { background: rgba(255,255,255,0.06); color: rgba(255,255,255,0.65); }
+  .trip-card.contrast-mode .bp-transit { background: rgba(0,169,252,0.10); color: var(--blue-800); border: 1px solid rgba(0,169,252,0.15); }
+  .trip-card.contrast-mode .bp-transit strong { color: var(--blue-700); }
+  .trip-card.contrast-mode .ht-name { color: #fff; }
+  .trip-card.contrast-mode .ht-sub { color: rgba(255,255,255,0.6); }
+  .trip-card.contrast-mode .ht-badge { background: rgba(255,255,255,0.06); color: rgba(255,255,255,0.8); border-color: rgba(255,255,255,0.08); }
+  .trip-card.contrast-mode .ht-dates { background: rgba(255,255,255,0.04); color: rgba(255,255,255,0.8); }
+  .trip-card.contrast-mode .ht-date-label { color: rgba(255,255,255,0.5); }
+  .trip-card.contrast-mode .ht-date-value { color: #fff; }
+  .trip-card.contrast-mode .ht-date-sep { color: rgba(255,255,255,0.3); }
+  .trip-card.contrast-mode .ht-nights { color: rgba(255,255,255,0.55); }
+  .trip-card.contrast-mode .ht-logistics { background: rgba(255,255,255,0.05); border-color: rgba(255,255,255,0.06); }
+  .trip-card.contrast-mode .ht-logistics-title { color: rgba(255,255,255,0.65); }
+  .trip-card.contrast-mode .ht-logistics-item { color: rgba(255,255,255,0.7); }
+  .trip-card.contrast-mode .ht-logistics-item strong { color: #fff; }
+  .trip-card.contrast-mode .ht-until { color: var(--orange-400, #ffaa66); }
+  .trip-card.contrast-mode .car-title { color: #fff; }
+  .trip-card.contrast-mode .car-details { color: rgba(255,255,255,0.6); }
+  .trip-card.contrast-mode .car-details .sep { color: rgba(255,255,255,0.3); }
+  .trip-card.contrast-mode .car-sched-label { color: rgba(255,255,255,0.5); }
+  .trip-card.contrast-mode .car-sched-time { color: #fff; }
+  .trip-card.contrast-mode .car-sched-date { color: rgba(255,255,255,0.65); }
+  .trip-card.contrast-mode .car-sched-loc { color: rgba(255,255,255,0.55); }
+  .trip-card.contrast-mode .car-sched-block.oj .car-sched-label { color: var(--orange-400, #ffaa66); }
+  .trip-card.contrast-mode .car-driver { background: rgba(255,255,255,0.05); border-color: rgba(255,255,255,0.06); }
+  .trip-card.contrast-mode .car-driver-badge { background: rgba(255,255,255,0.08); border-color: rgba(255,255,255,0.1); }
+  .trip-card.contrast-mode .car-driver-label { color: rgba(255,255,255,0.5); }
+  .trip-card.contrast-mode .car-driver-name { color: #fff; }
+  .trip-card.contrast-mode .car-driver-docs { color: rgba(255,255,255,0.55); }
+  /* Dark liquid glass gradient — bpb in contrast-mode only (deep dark inner) */
+  .trip-card.contrast-mode .bpb { background: linear-gradient(135deg, #162040 0%, #1e2d52 20%, #1a2748 40%, #243562 55%, #182344 75%, #1f2c50 100%); border: 1px solid rgba(100,140,255,0.12); box-shadow: inset 0 1px 0 rgba(100,140,255,0.06), inset 0 -1px 2px rgba(0,0,0,0.15), 0 4px 16px rgba(0,0,0,0.2); }
+  .trip-card.contrast-mode .bpb-mid-badge .material-symbols-rounded { color: rgba(255,255,255,0.4); }
+  .trip-card.contrast-mode .bpb-mid-badge .mid-label { color: rgba(255,255,255,0.45); }
+  /* ===== Dark-contrast mode — dark outer, premium metallic glass inner cards ===== */
+  .trip-card.dark-mode .bp {
+    background: linear-gradient(165deg, rgba(215,222,242,0.92) 0%, rgba(205,215,238,0.87) 25%, rgba(222,228,248,0.90) 50%, rgba(210,218,240,0.85) 75%, rgba(218,225,244,0.88) 100%);
+    backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(255,255,255,0.55);
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.65), inset 0 -1px 0 rgba(0,0,0,0.02), 0 4px 20px rgba(0,0,0,0.10);
+  }
+  .trip-card.dark-mode .ecard {
+    background: linear-gradient(165deg, rgba(215,222,242,0.92) 0%, rgba(205,215,238,0.87) 25%, rgba(222,228,248,0.90) 50%, rgba(210,218,240,0.85) 75%, rgba(218,225,244,0.88) 100%);
+    backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(255,255,255,0.55);
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.65), inset 0 -1px 0 rgba(0,0,0,0.02), 0 4px 20px rgba(0,0,0,0.10);
+  }
+  .trip-card.dark-mode .bpb {
+    background: linear-gradient(135deg, rgba(210,220,245,0.88) 0%, rgba(200,212,240,0.82) 20%, rgba(220,228,250,0.86) 40%, rgba(205,215,242,0.80) 60%, rgba(215,224,248,0.85) 80%, rgba(210,220,244,0.83) 100%);
+    backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(255,255,255,0.50);
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.60), inset 0 -1px 2px rgba(0,0,0,0.03), 0 4px 20px rgba(0,0,0,0.10);
+  }
+  /* Dark-contrast bold card text & badge overrides for glass bg */
+  .trip-card.dark-mode .bpb-carrier { color: #1a1a2e; }
+  .trip-card.dark-mode .bpb-carrier .bp-carrier-sub { color: rgba(30,30,60,0.6); }
+  .trip-card.dark-mode .bpb-date { color: rgba(30,30,60,0.7); }
+  .trip-card.dark-mode .bpb .date-icon { background: rgba(30,30,70,0.06); border-color: rgba(30,30,70,0.12); }
+  .trip-card.dark-mode .bpb .date-icon-day { color: #1a1a2e; }
+  .trip-card.dark-mode .bpb .date-icon-month { color: rgba(30,30,60,0.55); }
+  .trip-card.dark-mode .date-icon { background: rgba(255,255,255,0.50); border-color: rgba(255,255,255,0.35); }
+  .trip-card.dark-mode .date-icon-day { color: #0a0a20; }
+  .trip-card.dark-mode .date-icon-month { color: rgba(30,30,60,0.55); }
+  .trip-card.dark-mode .bpb-ref { color: rgba(30,30,60,0.55); }
+  .trip-card.dark-mode .bpb-code { color: #0a0a20; font-weight: 800; }
+  .trip-card.dark-mode .bpb-time { color: #1a1a2e; }
+  .trip-card.dark-mode .bpb-name { color: rgba(20,20,50,0.85); }
+  .trip-card.dark-mode .bpb-mid-line { background: rgba(30,30,70,0.22); }
+  .trip-card.dark-mode .bpb-mid-line:first-child::before, .trip-card.dark-mode .bpb-mid-line:last-child::after { background: rgba(30,30,70,0.30); }
+  .trip-card.dark-mode .bpb-mid-badge .material-symbols-rounded { color: rgba(30,30,60,0.40); }
+  .trip-card.dark-mode .bpb-mid-badge .mid-label { color: rgba(30,30,60,0.45); }
+  .trip-card.dark-mode .bpb-dur { color: rgba(30,30,60,0.5); }
+  .trip-card.dark-mode .bpb .bp-tag { background: rgba(255,255,255,0.55); border-color: rgba(255,255,255,0.40); box-shadow: 0 1px 3px rgba(0,0,0,0.06); }
+  .trip-card.dark-mode .bpb .bp-tag-label { color: rgba(30,30,60,0.6); }
+  .trip-card.dark-mode .bpb .bp-tag-value { color: #0a0a20; font-weight: 700; }
+  .trip-card.dark-mode .bpb .bp-tag.accent { background: rgba(0,169,252,0.15); border-color: rgba(0,169,252,0.25); }
+  .trip-card.dark-mode .bpb .bp-tag.accent .bp-tag-label { color: #006aaa; }
+  .trip-card.dark-mode .bpb .bp-tag.accent .bp-tag-value { color: #004d80; }
+  .trip-card.dark-mode .bpb .bp-tag.warm { background: rgba(230,100,30,0.12); border-color: rgba(230,100,30,0.22); }
+  .trip-card.dark-mode .bpb .bp-tag.warm .bp-tag-label { color: #b34700; }
+  .trip-card.dark-mode .bpb .bp-tag.warm .bp-tag-value { color: #8a3800; }
+  .trip-card.dark-mode .bpb .bp-doc { border-color: rgba(30,30,70,0.10); }
+  .trip-card.dark-mode .bpb .bp-doc-loc { color: rgba(30,30,60,0.65); border-color: rgba(30,30,70,0.12); }
+  .trip-card.dark-mode .bpb .bp-doc-wallet { color: #1a1a2e; background: rgba(255,255,255,0.45); border-color: rgba(255,255,255,0.30); }
+  .trip-card.dark-mode .bpb-driver { border-top-color: rgba(200,120,40,0.25); background: rgba(255,200,120,0.12); }
+  .trip-card.dark-mode .bpb-driver-item { color: #7a4a10; }
+  .trip-card.dark-mode .bpb-driver-item strong { color: #5a3808; }
+  /* Dark-contrast classic card text overrides for glass bg */
+  .trip-card.dark-mode .bp-carrier { color: #1a1a2e; }
+  .trip-card.dark-mode .bp-carrier-sub { color: rgba(30,30,60,0.55); }
+  .trip-card.dark-mode .bp-date { color: rgba(30,30,60,0.65); }
+  .trip-card.dark-mode .bp-time { color: #0a0a20; }
+  .trip-card.dark-mode .bp-loc { color: rgba(20,20,50,0.85); }
+  .trip-card.dark-mode .bp-sub { color: rgba(30,30,60,0.5); }
+  .trip-card.dark-mode .bp-dur { color: rgba(30,30,60,0.5); }
+  .trip-card.dark-mode .bp-arrow-line { background: rgba(30,30,70,0.15); }
+  .trip-card.dark-mode .bp-arrow-line::before, .trip-card.dark-mode .bp-arrow-line::after { background: rgba(30,30,70,0.25); }
+  .trip-card.dark-mode .bp-ticket-tag { background: rgba(255,255,255,0.45); color: #1a1a2e; border-color: rgba(255,255,255,0.35); }
+  .trip-card.dark-mode .bp-ticket-tag:hover { background: rgba(255,255,255,0.6); border-color: rgba(255,255,255,0.5); }
+  .trip-card.dark-mode .bp-ticket-tag svg { fill: rgba(30,30,60,0.45); }
+  .trip-card.dark-mode .bp-ticket-tag .material-symbols-rounded { color: rgba(30,30,60,0.45); }
+  .trip-card.dark-mode .bp-ticket-tag.deferred { background: rgba(255,255,255,0.3); color: rgba(30,30,60,0.5); border-color: rgba(255,255,255,0.2); }
+  .trip-card.dark-mode .bpb-action-pill { background: rgba(30,30,70,0.12); color: rgba(30,30,60,0.70); border-color: rgba(30,30,70,0.14); }
+  .trip-card.dark-mode .bpb-action-pill svg { fill: rgba(30,30,60,0.55); }
+  .trip-card.dark-mode .bpb-action-pill .material-symbols-rounded { color: rgba(30,30,60,0.55); }
+  .trip-card.dark-mode .bp-tag { background: rgba(255,255,255,0.50); border-color: rgba(255,255,255,0.35); box-shadow: 0 1px 3px rgba(0,0,0,0.05); }
+  .trip-card.dark-mode .bp-tag-label { color: rgba(30,30,60,0.6); }
+  .trip-card.dark-mode .bp-tag-value { color: #0a0a20; font-weight: 700; }
+  .trip-card.dark-mode .bp-tag.accent { background: rgba(0,169,252,0.15); border-color: rgba(0,169,252,0.25); }
+  .trip-card.dark-mode .bp-tag.accent .bp-tag-label { color: #006aaa; }
+  .trip-card.dark-mode .bp-tag.accent .bp-tag-value { color: #004d80; }
+  .trip-card.dark-mode .bp-tag.warm { background: rgba(230,100,30,0.12); border-color: rgba(230,100,30,0.22); }
+  .trip-card.dark-mode .bp-tag.warm .bp-tag-label { color: #b34700; }
+  .trip-card.dark-mode .bp-tag.warm .bp-tag-value { color: #8a3800; }
+  .trip-card.dark-mode .bp-head { border-color: rgba(30,30,70,0.08); }
+  .trip-card.dark-mode .bp-tear { border-top-color: rgba(30,30,70,0.10); }
+  .trip-card.dark-mode .bp-doc { border-color: rgba(30,30,70,0.08); }
+  .trip-card.dark-mode .bp-doc-btn { background: rgba(255,255,255,0.45); color: #1a1a2e; border-color: rgba(255,255,255,0.30); }
+  .trip-card.dark-mode .bp-doc-loc { color: rgba(30,30,60,0.65); border-color: rgba(30,30,70,0.12); }
+  .trip-card.dark-mode .bp-doc-wallet { color: #1a1a2e; background: rgba(255,255,255,0.45); border-color: rgba(255,255,255,0.30); }
+  /* Dark-contrast hotel bold (.htd-*) text overrides for glass bg */
+  .trip-card.dark-mode .htd-title { color: #0a0a20; }
+  .trip-card.dark-mode .htd-sub { color: rgba(20,20,50,0.7); }
+  .trip-card.dark-mode .htd-date-label { color: rgba(20,20,50,0.65); }
+  .trip-card.dark-mode .htd-date-time { color: #0a0a20; }
+  .trip-card.dark-mode .htd-date-day { color: rgba(20,20,50,0.75); }
+  .trip-card.dark-mode .htd-mid-room { color: rgba(20,20,50,0.45); }
+  .trip-card.dark-mode .htd-dates { border-color: rgba(30,30,60,0.08); }
+  .trip-card.dark-mode .htd-logistics { background: rgba(30,30,60,0.06); border-color: rgba(30,30,60,0.08); }
+  .trip-card.dark-mode .htd-log-item { color: rgba(20,20,50,0.75); }
+  .trip-card.dark-mode .htd-log-item strong { color: #0a0a20; }
+  /* Dark-contrast hotel classic (.ht-*) text overrides for glass bg */
+  .trip-card.dark-mode .ht-name { color: #0a0a20; }
+  .trip-card.dark-mode .ht-sub { color: rgba(20,20,50,0.65); }
+  .trip-card.dark-mode .ht-badge { background: rgba(255,255,255,0.50); color: rgba(20,20,50,0.8); border-color: rgba(255,255,255,0.35); }
+  .trip-card.dark-mode .ht-dates { background: rgba(30,30,60,0.05); color: rgba(20,20,50,0.8); }
+  .trip-card.dark-mode .ht-date-label { color: rgba(20,20,50,0.6); }
+  .trip-card.dark-mode .ht-date-value { color: #0a0a20; }
+  .trip-card.dark-mode .ht-date-sep { color: rgba(20,20,50,0.35); }
+  .trip-card.dark-mode .ht-nights { color: rgba(20,20,50,0.55); }
+  .trip-card.dark-mode .ht-logistics { background: rgba(255,255,255,0.15); border-color: rgba(30,30,60,0.08); }
+  .trip-card.dark-mode .ht-logistics-title { color: rgba(20,20,50,0.6); }
+  .trip-card.dark-mode .ht-logistics-item { color: rgba(20,20,50,0.75); }
+  .trip-card.dark-mode .ht-logistics-item strong { color: #0a0a20; }
+  /* Dark-contrast car classic (.car-*) text overrides for glass bg */
+  .trip-card.dark-mode .car-title { color: #0a0a20; }
+  .trip-card.dark-mode .car-details { color: rgba(20,20,50,0.6); }
+  .trip-card.dark-mode .car-details .sep { color: rgba(20,20,50,0.3); }
+  .trip-card.dark-mode .car-sched-label { color: rgba(20,20,50,0.6); }
+  .trip-card.dark-mode .car-sched-time { color: #0a0a20; }
+  .trip-card.dark-mode .car-sched-date { color: rgba(20,20,50,0.7); }
+  .trip-card.dark-mode .car-sched-loc { color: rgba(20,20,50,0.6); }
+  .trip-card.dark-mode .car-sched-block.oj .car-sched-label { color: #cc5500; }
+  .trip-card.dark-mode .car-schedule { border-color: rgba(30,30,60,0.08); }
+  .trip-card.dark-mode .car-driver { border-color: rgba(30,30,60,0.08); }
+  .trip-card.dark-mode .car-driver-label { color: rgba(20,20,50,0.55); }
+  .trip-card.dark-mode .car-driver-name { color: #0a0a20; }
+  .trip-card.dark-mode .car-driver-docs { color: rgba(20,20,50,0.6); }
+  .trip-card.dark-mode .bp-transit { background: rgba(0,169,252,0.15); color: var(--blue-200); border: 1px solid rgba(0,169,252,0.12); }
+  .trip-card.dark-mode .bp-transit strong { color: var(--blue-100); }
+  .trip-card.dark-mode .bp-tear::before, .trip-card.dark-mode .bp-tear::after { background: #252540; border-color: #252540; }
+  .trip-card.dark-mode .cta-row .cta-sec, .trip-card.contrast-mode .cta-row .cta-sec { border-color: rgba(255,255,255,0.12); color: rgba(255,255,255,0.8); background: rgba(255,255,255,0.06); }
+  .trip-card.dark-mode .cta-row .cta-pri, .trip-card.contrast-mode .cta-row .cta-pri { background: var(--blue-500); color: #fff; border-color: var(--blue-500); }
+
+  /* Showcase grid */
+  #showcase-container { padding: 20px; max-width: 1200px; margin: 0 auto; }
+  .showcase-section { margin-bottom: 28px; }
+  .showcase-section-title { font-size: 13px; font-weight: 800; text-transform: uppercase; letter-spacing: 1px; color: var(--grey-400); margin-bottom: 12px; padding-bottom: 6px; border-bottom: 2px solid var(--grey-100); font-family: var(--font); }
+  .showcase-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 16px; }
+  .showcase-item { border-radius: 14px; overflow: hidden; box-shadow: 0 1px 6px rgba(0,0,0,0.08); }
+  .showcase-label { padding: 8px 14px; font-size: 11px; font-weight: 700; font-family: var(--font); letter-spacing: 0.3px; background: var(--grey-50); color: var(--grey-600); border-bottom: 1px solid var(--grey-100); }
+  .showcase-panel { padding: 0; background: var(--white); }
+  /* Showcase color overrides */
+  #showcase-container[data-color="contrast"] .showcase-item { box-shadow: 0 1px 6px rgba(0,0,0,0.3); }
+  #showcase-container[data-color="contrast"] .showcase-label { background: #0f1a30; color: rgba(255,255,255,0.5); border-color: rgba(255,255,255,0.06); }
+  #showcase-container[data-color="contrast"] .showcase-panel { background: #1a2747; color: rgba(255,255,255,0.85); }
+  #showcase-container[data-color="contrast"] .showcase-section-title { color: rgba(255,255,255,0.3); border-color: rgba(255,255,255,0.08); }
+  #showcase-container[data-color="contrast"] .sheet-header { border-color: rgba(255,255,255,0.08); }
+  #showcase-container[data-color="contrast"] .sheet-title { color: #fff; }
+  #showcase-container[data-color="contrast"] .date-icon { background: rgba(255,255,255,0.10); border-color: rgba(255,255,255,0.15); }
+  #showcase-container[data-color="contrast"] .date-icon-day { color: #fff; }
+  #showcase-container[data-color="contrast"] .date-icon-month { color: rgba(255,255,255,0.6); }
+  #showcase-container[data-color="contrast"] .sheet-close { background: rgba(255,255,255,0.08); color: rgba(255,255,255,0.7); }
+  #showcase-container[data-color="contrast"] .sheet-info { background: rgba(0,169,252,0.12); border-color: rgba(0,169,252,0.2); color: var(--blue-300); }
+  #showcase-container[data-color="contrast"] .sheet-qr { background: rgba(255,255,255,0.06); border-color: rgba(255,255,255,0.14); color: rgba(255,255,255,0.45); }
+  #showcase-container[data-color="contrast"] .sheet-qr-label { color: rgba(255,255,255,0.4); }
+  #showcase-container[data-color="contrast"] .sheet-doc { background: rgba(255,255,255,0.06); border-color: rgba(255,255,255,0.1); }
+  #showcase-container[data-color="contrast"] .sheet-doc-name { color: #fff; }
+  #showcase-container[data-color="contrast"] .sheet-doc-meta { color: rgba(255,255,255,0.45); }
+  #showcase-container[data-color="contrast"] .sheet-pax { color: rgba(255,255,255,0.45); }
+  #showcase-container[data-color="contrast"] .sheet-pax strong { color: rgba(255,255,255,0.7); }
+  #showcase-container[data-color="contrast"] .sheet-footer { border-color: rgba(255,255,255,0.08); }
+  #showcase-container[data-color="contrast"] .sheet-footer a { color: rgba(255,255,255,0.45); }
+  #showcase-container[data-color="contrast"] .sheet-actions .cta-pri { background: #fff; color: #1a2747; font-weight: 800; }
+  #showcase-container[data-color="contrast"] .sheet-actions .cta-sec { border-color: rgba(255,255,255,0.18); color: #fff; background: rgba(255,255,255,0.08); }
+  #showcase-container[data-color="dark"] .showcase-item { box-shadow: 0 1px 6px rgba(0,0,0,0.4); }
+  #showcase-container[data-color="dark"] .showcase-label { background: #1a1a35; color: rgba(255,255,255,0.4); border-color: rgba(255,255,255,0.05); }
+  #showcase-container[data-color="dark"] .showcase-panel { background: #252540; color: rgba(255,255,255,0.85); }
+  #showcase-container[data-color="dark"] .showcase-section-title { color: rgba(255,255,255,0.25); border-color: rgba(255,255,255,0.06); }
+  #showcase-container[data-color="dark"] .sheet-header { border-color: rgba(255,255,255,0.06); }
+  #showcase-container[data-color="dark"] .sheet-title { color: #fff; }
+  #showcase-container[data-color="dark"] .date-icon { background: rgba(255,255,255,0.10); border-color: rgba(255,255,255,0.12); }
+  #showcase-container[data-color="dark"] .date-icon-day { color: #fff; }
+  #showcase-container[data-color="dark"] .date-icon-month { color: rgba(255,255,255,0.55); }
+  #showcase-container[data-color="dark"] .sheet-close { background: rgba(255,255,255,0.08); color: rgba(255,255,255,0.6); }
+  #showcase-container[data-color="dark"] .sheet-info { background: rgba(0,169,252,0.1); border-color: rgba(0,169,252,0.18); color: var(--blue-300); }
+  #showcase-container[data-color="dark"] .sheet-qr { background: rgba(255,255,255,0.05); border-color: rgba(255,255,255,0.12); color: rgba(255,255,255,0.4); }
+  #showcase-container[data-color="dark"] .sheet-qr-label { color: rgba(255,255,255,0.35); }
+  #showcase-container[data-color="dark"] .sheet-doc { background: rgba(255,255,255,0.05); border-color: rgba(255,255,255,0.1); }
+  #showcase-container[data-color="dark"] .sheet-doc-name { color: #fff; }
+  #showcase-container[data-color="dark"] .sheet-doc-meta { color: rgba(255,255,255,0.4); }
+  #showcase-container[data-color="dark"] .sheet-pax { color: rgba(255,255,255,0.4); }
+  #showcase-container[data-color="dark"] .sheet-pax strong { color: rgba(255,255,255,0.6); }
+  #showcase-container[data-color="dark"] .sheet-footer { border-color: rgba(255,255,255,0.06); }
+  #showcase-container[data-color="dark"] .sheet-footer a { color: rgba(255,255,255,0.4); }
+  #showcase-container[data-color="dark"] .sheet-actions .cta-pri { background: #fff; color: #252540; font-weight: 800; }
+  #showcase-container[data-color="dark"] .sheet-actions .cta-sec { border-color: rgba(255,255,255,0.15); color: #fff; background: rgba(255,255,255,0.08); }
 </style>
 </head>
 <body>
 
 <div class="sticky-nav" id="sticky-nav">
   <div class="nav-row">
-    <label>Style</label>
-    <button onclick="setStyle('classic')" id="btn-classic" class="active">Classic</button>
-    <button onclick="setStyle('dark')" id="btn-dark">Dark</button>
-    <button onclick="setStyle('bold')" id="btn-bold">Bold</button>
+    <label>Couleur</label>
+    <button onclick="setColor('light')" id="btn-color-light" class="active">Light</button>
+    <button onclick="setColor('contrast')" id="btn-color-contrast">Contrast</button>
+    <button onclick="setColor('dark')" id="btn-color-dark">Dark contrast</button>
+    <div class="sep"></div>
+    <label>Layout</label>
+    <button onclick="setLayout('classic')" id="btn-layout-classic" class="active">Classic</button>
+    <button onclick="setLayout('bold')" id="btn-layout-bold">Bold</button>
+    <div class="sep"></div>
+    <label>Plateforme</label>
+    <button onclick="setPlatform('desktop')" id="btn-plat-desktop" class="active">Desktop</button>
+    <button onclick="setPlatform('ios')" id="btn-plat-ios">iOS</button>
+    <button onclick="setPlatform('android')" id="btn-plat-android">Android</button>
     <div class="sep"></div>
     <label>État</label>
     <button onclick="setState('upcoming')" id="btn-upcoming" class="active">upcoming</button>
@@ -452,26 +947,41 @@
     <button onclick="setState('trip_ending')" id="btn-trip_ending">ending</button>
   </div>
   <div class="nav-scenarios" id="nav-scenarios"></div>
+  <div class="nav-row" style="border-top:1px solid #e5e7eb;padding-top:6px;margin-top:4px">
+    <button onclick="toggleShowcase()" id="btn-showcase" style="background:#7c3aed;color:#fff;font-weight:700">Showcase sheets</button>
+  </div>
 </div>
 
+<div id="showcase-container" style="display:none"></div>
 <div id="cards-container"></div>
+
+<div class="sheet-overlay" id="sheet-overlay" onclick="if(event.target===this)closeSheet()">
+  <div class="sheet-panel">
+    <div class="sheet-handle"></div>
+    <div class="sheet-header">
+      <div class="sheet-title" id="sheet-title"></div>
+      <button class="sheet-close" onclick="closeSheet()">&#10005;</button>
+    </div>
+    <div class="sheet-body" id="sheet-body"></div>
+  </div>
+</div>
 
 <script>
 const TRIPS = {
   full: {
-    destination: 'Bordeaux',
+    destination: 'Aix-en-Provence',
     travelers: ['Stella Smith', 'Donnie Schmidt'],
     etapes: [
       {
         type: 'train', icon: '🚄',
-        title: 'Paris Montparnasse → Bordeaux Saint-Jean',
-        shortLabel: 'Paris → Bordeaux', dateShort: 'Ven 09 · 12:30',
-        departure: { time: '12:30', name: 'Paris Montparnasse', date: 'Ven. 09 Fév' },
-        arrival: { time: '16:32', name: 'Bordeaux Saint-Jean', date: 'Ven. 09 Fév' },
+        title: 'Aéroport Charles-de-Gaulle TGV → Aix-en-Provence TGV',
+        shortLabel: 'CDG TGV → Aix TGV', dateShort: 'Ven 09 · 12:30',
+        departure: { time: '12:30', name: 'Aéroport Charles-de-Gaulle TGV', date: 'Ven. 09 Fév' },
+        arrival: { time: '16:32', name: 'Aix-en-Provence TGV', date: 'Ven. 09 Fév' },
         duration: '2h02',
         carrier: 'Ouigo', details: ['2nde classe', 'Direct'],
         seat: { wagon: '12', place: '45' },
-        ticket: { available: true, hasQR: true, wallet: false },
+        ticket: { available: true, hasQR: true, wallet: true },
         num: 'OUIGO 7641', pnr: 'HJKL42', platform: '3',
         fareName: 'Prem\'s', fareExch: false, fareRefund: false, amenities: ['wifi', 'power'],
         docLabel: 'Voir mon billet', docIcon: '🎫', docAvailable: true,
@@ -481,13 +991,13 @@ const TRIPS = {
         type: 'hotel', icon: '🏨',
         title: 'Hôtel Renaissance Bordeaux Centre Historique',
         shortLabel: 'Hôtel Renaissance Bordeaux', dateShort: 'Ven 09 – Dim 11',
-        checkin: { date: 'Ven. 09 Fév', time: '15:00' },
-        checkout: { date: 'Dim. 11 Fév', time: '11:00' },
+        checkin: { date: 'Vendredi 9 Février', time: '15:00' },
+        checkout: { date: 'Dimanche 11 Février', time: '11:00' },
         nights: 3, starsText: '★★★★',
         roomName: 'Chambre Deluxe Double',
         inclusions: ['Petit-déjeuner inclus'],
-        cancellation: { type: 'free', freeUntil: '7 Fév 2026' },
-        checkinInstructions: { methodLabel: 'Récupérez votre clé à la réception', pinCode: null, phone: '+33 5 56 48 88 88', checkinFrom: '15h', checkinUntil: null, reception24: true },
+        cancellation: { type: 'free', freeUntil: '7 Février 2026' },
+        freeTextConditions: 'Récupérez votre clé à la réception. Check-in à partir de 15h. Réception ouverte 24h/24. Contact : +33 5 56 48 88 88',
         bookingRef: 'MRR-482910',
         address: '15 Rue du Temple, 33000 Bordeaux',
         photos: [
@@ -502,8 +1012,8 @@ const TRIPS = {
         type: 'car', icon: '🚗',
         title: 'Avis – Location de véhicule',
         shortLabel: 'Avis Bordeaux', dateShort: 'Mar 17',
-        pickup: { time: '14:00', date: 'Mar. 17 Fév', location: 'Gare Saint-Jean, 33800 Bordeaux' },
-        dropoff: { time: '18:00', date: 'Mar. 17 Fév', location: 'Gare Saint-Jean, 33800 Bordeaux' },
+        pickup: { time: '14:00', date: 'Mardi 17 Février', location: 'Gare Saint-Jean, 33800 Bordeaux' },
+        dropoff: { time: '18:00', date: 'Mardi 17 Février', location: 'Gare Saint-Jean, 33800 Bordeaux' },
         carrier: 'Avis', details: ['Cat. B', '1 jour'],
         bookingRef: 'AVIS-84729',
         driverName: 'Stella Smith',
@@ -552,13 +1062,13 @@ const TRIPS = {
         type: 'hotel', icon: '🏨',
         title: 'Hyatt Regency Nice Palais de la Méditerranée',
         shortLabel: 'Hyatt Nice', dateShort: 'Lun 09 – Jeu 12',
-        checkin: { date: 'Lun. 09 Fév', time: '14:00' },
-        checkout: { date: 'Jeu. 12 Fév', time: '12:00' },
+        checkin: { date: 'Lundi 9 Février', time: '14:00' },
+        checkout: { date: 'Jeudi 12 Février', time: '12:00' },
         nights: 3, starsText: '★★★★★',
         roomName: 'Suite Méditerranée Vue Mer',
         inclusions: ['Petit-déjeuner inclus', 'Demi-pension'],
-        cancellation: { type: 'restricted', freeUntil: '5 Fév 2026' },
-        checkinInstructions: { methodLabel: 'Récupérez votre clé à la réception', pinCode: null, phone: '+33 4 93 27 12 34', checkinFrom: '14h', checkinUntil: '23h', reception24: false, notes: 'Late check-out possible sur demande' },
+        cancellation: { type: 'restricted', freeUntil: '5 Février 2026' },
+        freeTextConditions: 'Récupérez votre clé à la réception. Check-in de 14h à 23h. Late check-out possible sur demande. Contact : +33 4 93 27 12 34',
         bookingRef: 'HYT-556271',
         address: '13 Promenade des Anglais, 06000 Nice',
         photos: [
@@ -573,8 +1083,8 @@ const TRIPS = {
         type: 'car', icon: '🚗',
         title: 'Europcar – Nice → Marseille',
         shortLabel: 'Europcar OJ', dateShort: 'Jeu 12 – Ven 13',
-        pickup: { time: '12:00', date: 'Jeu. 12 Fév', location: 'Aéroport Nice NCE, T1' },
-        dropoff: { time: '09:00', date: 'Ven. 13 Fév', location: 'Aéroport Marseille MRS, T1' },
+        pickup: { time: '12:00', date: 'Jeudi 12 Février', location: 'Aéroport Nice NCE, T1' },
+        dropoff: { time: '09:00', date: 'Vendredi 13 Février', location: 'Aéroport Marseille MRS, T1' },
         carrier: 'Europcar', details: ['Cat. C', '1 jour'],
         bookingRef: 'EUR-19384',
         driverName: 'Stella Smith',
@@ -626,13 +1136,13 @@ const TRIPS = {
         type: 'hotel', icon: '🏨',
         title: 'Hôtel Renaissance Bordeaux Centre Historique',
         shortLabel: 'Hôtel Renaissance Bordeaux', dateShort: 'Ven 09 – Dim 11',
-        checkin: { date: 'Ven. 09 Fév', time: '15:00' },
-        checkout: { date: 'Dim. 11 Fév', time: '11:00' },
+        checkin: { date: 'Vendredi 9 Février', time: '15:00' },
+        checkout: { date: 'Dimanche 11 Février', time: '11:00' },
         nights: 2, starsText: '★★★★',
         roomName: 'Chambre Deluxe Double',
         inclusions: ['Petit-déjeuner inclus'],
-        cancellation: { type: 'free', freeUntil: '7 Fév 2026' },
-        checkinInstructions: { methodLabel: 'Récupérez votre clé à la réception', pinCode: null, phone: '+33 5 56 48 88 88', checkinFrom: '15h', checkinUntil: null, reception24: true },
+        cancellation: { type: 'free', freeUntil: '7 Février 2026' },
+        freeTextConditions: 'Récupérez votre clé à la réception. Check-in à partir de 15h. Réception ouverte 24h/24. Contact : +33 5 56 48 88 88',
         bookingRef: 'MRR-482910',
         address: '15 Rue du Temple, 33000 Bordeaux',
         photos: [
@@ -688,13 +1198,13 @@ const TRIPS = {
         type: 'hotel', icon: '🏨',
         title: 'Hotel Grande Bretagne, a Luxury Collection Hotel, Athens',
         shortLabel: 'Hotel Grande Bretagne Athens', dateShort: 'Lun 09 – Jeu 12',
-        checkin: { date: 'Lun. 09 Fév', time: '15:00' },
-        checkout: { date: 'Jeu. 12 Fév', time: '12:00' },
+        checkin: { date: 'Lundi 9 Février', time: '15:00' },
+        checkout: { date: 'Jeudi 12 Février', time: '12:00' },
         nights: 3, starsText: '★★★★★',
         roomName: 'Grand Deluxe Suite vue Acropole',
         inclusions: ['Petit-déjeuner buffet inclus', 'Wifi premium'],
-        cancellation: { type: 'free', freeUntil: '3 Fév 2026' },
-        checkinInstructions: { methodLabel: 'Récupérez votre clé à la réception', pinCode: null, phone: '+30 210 333 0000', checkinFrom: '15h', checkinUntil: null, reception24: true, notes: 'Late check-out 14h disponible' },
+        cancellation: { type: 'free', freeUntil: '3 Février 2026' },
+        freeTextConditions: 'Récupérez votre clé à la réception. Check-in à partir de 15h. Réception ouverte 24h/24. Late check-out 14h disponible. Contact : +30 210 333 0000',
         bookingRef: 'ATH-556271',
         address: '1 Vasileos Georgiou A\', Syntagma, 105 64 Athènes',
         photos: [
@@ -708,9 +1218,9 @@ const TRIPS = {
       {
         type: 'flight', icon: '✈️',
         title: 'Athènes ATH → Paris CDG',
-        shortLabel: 'ATH → CDG', dateShort: 'Jeu 12 · 14:20',
-        departure: { time: '14:20', name: 'Athènes', code: 'ATH', terminal: null, date: 'Jeu. 12 Fév' },
-        arrival: { time: '17:05', name: 'Paris', code: 'CDG', terminal: 'T1', date: 'Jeu. 12 Fév' },
+        shortLabel: 'ATH → CDG', dateShort: 'Jeu 12 · 22:50',
+        departure: { time: '22:50', name: 'Athènes', code: 'ATH', terminal: null, date: 'Jeu. 12 Fév' },
+        arrival: { time: '01:35', name: 'Paris', code: 'CDG', terminal: 'T1', date: 'Ven. 13 Fév', dayOffset: 1 },
         duration: '3h45', carrier: 'Aegean', details: ['Economy', 'Direct'],
         luggage: '1 cabine + 1 soute 23 kg', seat: null,
         ticket: { available: true, hasQR: true, wallet: false },
@@ -727,10 +1237,10 @@ const TRIPS = {
     etapes: [
       {
         type: 'train', icon: '🚄',
-        title: 'Paris Montparnasse → Bordeaux Saint-Jean',
-        shortLabel: 'Paris → Bordeaux', dateShort: 'Ven 09 · 12:30',
-        departure: { time: '12:30', name: 'Paris Montparnasse', date: 'Ven. 09 Fév' },
-        arrival: { time: '16:32', name: 'Bordeaux Saint-Jean', date: 'Ven. 09 Fév' },
+        title: 'Marne-la-Vallée Chessy TGV → Marseille Saint-Charles',
+        shortLabel: 'MLV Chessy → Marseille St-Ch.', dateShort: 'Ven 09 · 12:30',
+        departure: { time: '12:30', name: 'Marne-la-Vallée Chessy TGV', date: 'Ven. 09 Fév' },
+        arrival: { time: '16:32', name: 'Marseille Saint-Charles', date: 'Ven. 09 Fév' },
         duration: '2h02', carrier: 'Ouigo', details: ['2nde classe', 'Direct'],
         seat: { wagon: '12', place: '45' },
         ticket: { available: true, hasQR: true, wallet: false },
@@ -784,13 +1294,13 @@ const TRIPS = {
         type: 'hotel', icon: '🏨',
         title: 'Intercontinental Bordeaux – Le Grand Hôtel',
         shortLabel: 'Grand Hôtel', dateShort: 'Lun 16 – Mer 18',
-        checkin: { date: 'Lun. 16 Fév', time: '15:00' },
-        checkout: { date: 'Mer. 18 Fév', time: '12:00' },
+        checkin: { date: 'Lundi 16 Février', time: '15:00' },
+        checkout: { date: 'Mercredi 18 Février', time: '12:00' },
         nights: 2, starsText: '★★★★★',
         roomName: 'Chambre Premium Vue Opéra',
         inclusions: [],
         cancellation: { type: 'non_refundable' },
-        checkinInstructions: { methodLabel: 'Accès par code d\'entrée', pinCode: '4829', phone: '+33 5 57 30 44 44', checkinFrom: '15h', checkinUntil: '22h', reception24: false, notes: 'Parking souterrain (25€/nuit)' },
+        freeTextConditions: 'Accès par code d\'entrée (code fourni 24h avant). Check-in de 15h à 22h. Parking souterrain disponible (25\u20AC/nuit). Contact : +33 5 57 30 44 44',
         bookingRef: 'BDX-928471',
         address: '2-5 Place de la Comédie, 33000 Bordeaux',
         photos: [
@@ -805,11 +1315,13 @@ const TRIPS = {
 };
 
 let currentState = 'upcoming';
-let currentTrip = 'full';
 let currentContext = 'home';
-let selectedEtapeIndex = null;
 let autoResetTimer = null;
-let currentStyle = 'classic';
+let currentColor = 'light';   // light | dark
+let currentLayout = 'classic'; // classic | bold
+let currentPlatform = 'desktop'; // desktop | ios | android
+let selectedEtapes = {};       // per-card selected étape index
+let sheetTargets = [];         // etape data refs for sheet onclick
 
 const HEADLINES = {
   upcoming: t => `Voyage à ${t.destination} dans 2 jours`,
@@ -854,9 +1366,11 @@ const TRIP_LABELS = {
   hotelonly: '1 étape — Hôtel seul'
 };
 
-function buildStepperHTML(trip, state, activeIdx, autoIdx, done, isDark) {
+function buildStepperHTML(trip, state, activeIdx, autoIdx, done, isDark, isBold, tripKey) {
   if (trip.etapes.length <= 2) return '';
   let h = '';
+  const useIcons = isBold; // Material Symbols icons = Bold layout feature
+  const useDarkDots = isDark || isBold; // Dark dots = dark color OR bold layout
   trip.etapes.forEach((e, i) => {
     let cls = 'stepper-step';
     if (done.includes(i)) cls += ' completed';
@@ -867,19 +1381,29 @@ function buildStepperHTML(trip, state, activeIdx, autoIdx, done, isDark) {
     }
     let dotContent;
     if (done.includes(i)) {
-      dotContent = isDark ? '<span class="material-symbols-rounded">check</span>' : '<span class="stepper-check">✓</span>';
+      dotContent = useIcons ? '<span class="material-symbols-rounded">check</span>' : '<span class="stepper-check">✓</span>';
     } else {
-      dotContent = isDark ? `<span class="material-symbols-rounded">${STEPPER_ICONS[e.type] || 'trip'}</span>` : e.icon;
+      dotContent = useIcons ? `<span class="material-symbols-rounded">${STEPPER_ICONS[e.type] || 'trip'}</span>` : e.icon;
     }
-    h += `<div class="${cls}"><div class="stepper-dot-row"><div class="stepper-dot">${dotContent}</div><div class="stepper-line"></div></div><div class="stepper-label">${e.shortLabel}</div><div class="stepper-date">${e.dateShort}</div></div>`;
+    let statusHint = '';
+    if (i === activeIdx && i === autoIdx) {
+      if (state === 'in_transit') statusHint = '<div class="stepper-status">En cours</div>';
+      else if (state === 'imminent') statusHint = '<div class="stepper-status">Imminent</div>';
+      else if (state === 'trip_ending' && done.includes(i)) statusHint = '<div class="stepper-status">Terminé</div>';
+    }
+    h += `<div class="${cls}" onclick="selectEtape('${tripKey}',${i})" style="cursor:pointer"><div class="stepper-dot-row"><div class="stepper-dot">${dotContent}</div><div class="stepper-line"></div></div><div class="stepper-label">${e.shortLabel}</div><div class="stepper-date">${e.dateShort}</div>${statusHint}</div>`;
   });
-  const stepperCls = 'stepper' + (isDark ? ' stepper-dark' : '');
+  const stepperCls = 'stepper' + (useDarkDots ? ' stepper-dark' : '');
   return `<div class="${stepperCls}">${h}</div>`;
 }
 
 function renderAll() {
+  sheetTargets = [];
   const state = currentState;
-  const isEpure = currentStyle === 'dark' || currentStyle === 'bold';
+  const isDark = currentColor === 'dark' || currentColor === 'contrast';
+  const isContrast = currentColor === 'contrast';
+  const isBold = currentLayout === 'bold';
+  const isEpure = isBold;
   const container = document.getElementById('cards-container');
   container.innerHTML = '';
 
@@ -893,23 +1417,48 @@ function renderAll() {
     const trip = TRIPS[key];
     const autoIdx = getAutoIdx(state, trip);
     const done = getCompleted(state, trip);
-    const etape = trip.etapes[autoIdx];
-    const isPast = done.includes(autoIdx) && state !== 'trip_ending';
+    const selIdx = selectedEtapes[key] != null ? selectedEtapes[key] : autoIdx;
+    const etape = trip.etapes[selIdx];
+    const isPast = done.includes(selIdx) && state !== 'trip_ending';
 
     const headline = HEADLINES[state](trip);
     const travelers = trip.travelers.length ? `<div class="co-travelers">avec ${trip.travelers.join(' et ')}</div>` : '';
-    const stepperH = buildStepperHTML(trip, state, autoIdx, autoIdx, done, isEpure);
+    const stepperH = buildStepperHTML(trip, state, selIdx, autoIdx, done, isDark, isBold, key);
 
-    const cardHTML = `<div class="scenario-section" id="scenario-${key}"><div class="scenario-label">${label}</div><div class="trip-card state-${state}"><div class="card-inner"><div class="card-header"><div class="header-left"><div class="headline-row"><div class="state-dot"></div><div class="headline">${headline}</div></div>${travelers}</div><a href="#" class="header-link" onclick="event.preventDefault()">Voir le voyage →</a></div>${stepperH}<div id="etape-${key}"></div></div></div></div>`;
+    const colorCls = isContrast ? ' contrast-mode' : (currentColor === 'dark' ? ' dark-mode' : '');
+    const cardHTML = `<div class="scenario-section" id="scenario-${key}"><div class="scenario-label">${label}</div><div class="trip-card state-${state}${colorCls}"><div class="card-inner"><div class="card-header"><div class="header-left"><div class="headline-row"><div class="state-dot"></div><div class="headline">${headline}</div></div>${travelers}</div><a href="#" class="header-link" onclick="event.preventDefault()">Voir le voyage →</a></div>${stepperH}<div id="etape-${key}"></div></div></div></div>`;
     container.insertAdjacentHTML('beforeend', cardHTML);
-    renderEtape(etape, state, autoIdx, autoIdx, done, trip.etapes.length, isPast, `etape-${key}`);
+    // Inject traveler name into etape for sheet display
+    if (trip.travelers && trip.travelers.length) etape._travelerName = trip.travelers[0];
+    renderEtape(etape, state, selIdx, autoIdx, done, trip.etapes.length, isPast, `etape-${key}`);
   });
 
   // Update button states
   document.querySelectorAll('.sticky-nav button[id]').forEach(b => {
-    const s = b.id.replace('btn-', '');
-    b.classList.toggle('active', s === state || s === currentStyle);
+    const id = b.id;
+    if (id.startsWith('btn-color-')) {
+      b.classList.toggle('active', id === 'btn-color-' + currentColor);
+    } else if (id.startsWith('btn-layout-')) {
+      b.classList.toggle('active', id === 'btn-layout-' + currentLayout);
+    } else {
+      const s = id.replace('btn-', '');
+      b.classList.toggle('active', s === state);
+    }
   });
+}
+
+// Calendar date icon (éphéméride) — parses "Ven. 09 Fév" or "Vendredi 9 Février"
+function dateIcon(dateStr) {
+  if (!dateStr) return '';
+  const parts = dateStr.trim().split(/\s+/);
+  let day, monthRaw;
+  if (parts.length >= 3) { day = parts[parts.length - 2]; monthRaw = parts[parts.length - 1]; }
+  else if (parts.length === 2) { day = parts[0]; monthRaw = parts[1]; }
+  else return '';
+  const dayNum = parseInt(day, 10);
+  const mMap = { 'Janvier':'JAN','Février':'FÉV','Mars':'MAR','Avril':'AVR','Mai':'MAI','Juin':'JUN','Juillet':'JUL','Août':'AOÛ','Septembre':'SEP','Octobre':'OCT','Novembre':'NOV','Décembre':'DÉC','Jan':'JAN','Fév':'FÉV','Mar':'MAR','Avr':'AVR','Sep':'SEP','Oct':'OCT','Nov':'NOV','Déc':'DÉC' };
+  const month = mMap[monthRaw] || monthRaw.substring(0, 3).toUpperCase();
+  return `<div class="date-icon"><div class="date-icon-day">${dayNum}</div><div class="date-icon-month">${month}</div></div>`;
 }
 
 function renderEtape(e, state, idx, autoIdx, done, total, isPast, targetId) {
@@ -920,18 +1469,15 @@ function renderEtape(e, state, idx, autoIdx, done, total, isPast, targetId) {
   const hasSeg = e.segments && e.segments.length > 1;
   const isFlight = e.type === 'flight';
 
-  // CTA
-  let cta;
-  if (e.docAvailable) {
-    const cls = isHero ? 'cta-pri hero' : (state === 'trip_ending' ? 'cta-pri green' : 'cta-pri');
-    cta = `<a href="#" class="${cls}" onclick="event.preventDefault()">${e.docIcon} ${e.docLabel}</a>`;
-  } else {
-    const cls = isHero ? 'cta-pri disabled hero' : 'cta-pri disabled';
-    cta = `<span class="${cls}">${e.docIcon} ${e.docDisabledText || 'Non disponible'}</span>`;
-  }
-  const secCta = `<a href="${e.locUrl || '#'}" class="cta-sec" onclick="event.preventDefault()">${e.locIcon || '📍'} ${e.locLabel || 'Itinéraire'}</a>`;
+  // Sheet target index for hotel/car ticket tags
+  const ctaIdx = sheetTargets.length;
+  sheetTargets.push(e);
 
   let bodyH = '';
+
+  // Material Symbols icon mapping for mid badge (shared by transport + car bold)
+  const ICON_MAP = { train: 'train', flight: 'flight', car: 'directions_car', hotel: 'hotel' };
+  function midBadge(type, label) { return `<span class="material-symbols-rounded">${ICON_MAP[type] || 'trip'}</span>${label ? '<span class="mid-label">' + label + '</span>' : ''}`; }
 
   // ===== TRANSPORT — BOARDING PASS =====
   if (e.type === 'train' || e.type === 'flight') {
@@ -940,9 +1486,8 @@ function renderEtape(e, state, idx, autoIdx, done, total, isPast, targetId) {
     // Helper: build unified info tags with logical grouping
     // Train: [num → voie → voiture/place] | [tarif → réf]
     // Flight: [vol → porte → siège] | [réf → tarif → bagages]
-    function infoTags(seat, data, extras, type, slim) {
-      const g1 = []; // transport identity
-      const g2 = []; // booking info
+    function infoTags(seat, data, extras, type, slim, ticket, etapeData) {
+      const g1 = []; // transport identity (voie/porte + siège only)
 
       // Seat tag — accent (blue) to stand out
       function seatTag() {
@@ -952,28 +1497,33 @@ function renderEtape(e, state, idx, autoIdx, done, total, isPast, targetId) {
       }
 
       if (type === 'flight') {
-        // Group 1: Vol → Porte → Siège (slim: only porte + siège)
-        if (!slim && data && data.num) g1.push(`<div class="bp-tag"><div><div class="bp-tag-label">Vol</div><div class="bp-tag-value sm">${data.num}</div></div></div>`);
+        // Porte → Siège (slim: same)
         if (data && data.gate) g1.push(`<div class="bp-tag warm"><div><div class="bp-tag-label">Porte</div><div class="bp-tag-value">${data.gate}</div></div></div>`);
         const st = seatTag(); if (st) g1.push(st);
-        // Group 2: Réf → Tarif → Bagages (slim: skip all)
-        if (!slim && data && data.pnr) g2.push(`<div class="bp-tag"><div><div class="bp-tag-label">Réf.</div><div class="bp-tag-value sm">${data.pnr}</div></div></div>`);
-        if (!slim && data && data.fareName) g2.push(`<div class="bp-tag"><div><div class="bp-tag-label">Tarif</div><div class="bp-tag-value sm">${data.fareName}</div></div></div>`);
-        if (!slim && extras) g2.push(`<div class="bp-tag"><div><div class="bp-tag-label">Bagages</div><div class="bp-tag-value sm">${extras}</div></div></div>`);
       } else {
-        // Group 1: Train → Voie → Voiture/Place (slim: only voie + voiture/place)
-        if (!slim && data && data.num) g1.push(`<div class="bp-tag"><div><div class="bp-tag-label">Train</div><div class="bp-tag-value sm">${data.num}</div></div></div>`);
+        // Voie → Voiture/Place (slim: same)
         if (data && data.platform) g1.push(`<div class="bp-tag warm"><div><div class="bp-tag-label">Voie</div><div class="bp-tag-value">${data.platform}</div></div></div>`);
         const st = seatTag(); if (st) g1.push(st);
-        // Group 2: Tarif → Réf (slim: skip all)
-        if (!slim && data && data.fareName) g2.push(`<div class="bp-tag"><div><div class="bp-tag-label">Tarif</div><div class="bp-tag-value sm">${data.fareName}</div></div></div>`);
-        if (!slim && data && data.pnr) g2.push(`<div class="bp-tag"><div><div class="bp-tag-label">Réf.</div><div class="bp-tag-value sm">${data.pnr}</div></div></div>`);
       }
 
-      if (!g1.length && !g2.length) return '';
+      // Ticket action badge (classic mode only, not slim/bold)
+      let ticketTag = '';
+      if (!slim && ticket && etapeData) {
+        const tIdx = sheetTargets.length;
+        sheetTargets.push(etapeData);
+        const sheetCall = `event.stopPropagation();openSheet(sheetTargets[${tIdx}])`;
+        if (ticket.available) {
+          const tIcon = ticket.hasQR ? qrSvg : '<span class="material-symbols-rounded">confirmation_number</span>';
+          ticketTag = `<button class="bp-ticket-tag" onclick="${sheetCall}">${tIcon} Voir mon billet</button>`;
+        } else {
+          ticketTag = `<button class="bp-ticket-tag deferred" onclick="${sheetCall}"><span class="material-symbols-rounded">event</span> Dispo le ${ticket.availableDate || '—'}</button>`;
+        }
+      }
+
+      if (!g1.length && !ticketTag) return '';
       let h = '';
       if (g1.length) h += `<div class="bp-tag-group">${g1.join('')}</div>`;
-      if (g2.length) h += `<div class="bp-tag-group">${g2.join('')}</div>`;
+      h += ticketTag;
       return `<div class="bp-tags">${h}</div>`;
     }
 
@@ -992,18 +1542,23 @@ function renderEtape(e, state, idx, autoIdx, done, total, isPast, targetId) {
     const qrSvg = `<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3 11h8V3H3v8zm2-6h4v4H5V5zm8-2v8h8V3h-8zm6 6h-4V5h4v4zM3 21h8v-8H3v8zm2-6h4v4H5v-4zm13-2h-2v3h-3v2h3v3h2v-3h3v-2h-3v-3zm0 5v3h2v-3h-2zm-5 3h2v-5h-2v5z"/></svg>`;
 
     // Helper: build actions row (ticket + itinerary) for a boarding pass
-    function ticketDoc(ticket, locUrl) {
+    function ticketDoc(ticket, locUrl, etapeData) {
+      // Bold mode: no inline CTAs — card is tappable
+      if (currentLayout === 'bold') return '';
+      const tIdx = sheetTargets.length;
+      if (etapeData) sheetTargets.push(etapeData);
       let h = '<div class="bp-doc">';
       h += `<a href="${locUrl || '#'}" class="bp-doc-loc" onclick="event.preventDefault()">📍 Itinéraire</a>`;
       if (ticket) {
+        const sheetCall = etapeData ? `event.preventDefault();openSheet(sheetTargets[${tIdx}])` : 'event.preventDefault()';
         if (ticket.available) {
           const icon = ticket.hasQR ? qrSvg : '🎫';
-          h += `<button class="bp-doc-btn available" onclick="event.preventDefault()">${icon} Voir mon billet</button>`;
+          h += `<button class="bp-doc-btn available" onclick="${sheetCall}">${icon} Voir mon billet</button>`;
         } else {
-          h += `<button class="bp-doc-btn deferred">📅 Dispo le ${ticket.availableDate || '—'}</button>`;
+          h += `<button class="bp-doc-btn deferred" onclick="${sheetCall}">📅 Dispo le ${ticket.availableDate || '—'}</button>`;
         }
         if (ticket.available && ticket.wallet) {
-          h += `<button class="bp-doc-wallet" onclick="event.preventDefault()"> Wallet</button>`;
+          h += `<button class="bp-doc-wallet" onclick="${sheetCall}"> Wallet</button>`;
         }
       }
       h += '</div>';
@@ -1011,27 +1566,26 @@ function renderEtape(e, state, idx, autoIdx, done, total, isPast, targetId) {
     }
 
     // Helper: build one boarding pass card
-    function bpCard(headerLeft, headerRight, dep, arr, midLabel, seat, extras, ticket, locUrl, fareData, type) {
+    function bpCard(headerLeft, headerRight, dep, arr, midLabel, seat, extras, ticket, locUrl, fareData, type, etapeData) {
       let h = '';
       h += `<div class="bp-head"><div class="bp-carrier">${headerLeft}</div><span class="bp-date">${headerRight}</span></div>`;
       h += '<div class="bp-tear"></div>';
-      h += `<div class="bp-route"><div class="bp-point"><div class="bp-time">${dep.time}</div>${locH(dep)}</div><div class="bp-mid"><div class="bp-arrow-line"></div><div class="bp-dur">${midLabel}</div></div><div class="bp-point arr"><div class="bp-time">${arr.time}</div>${locH(arr)}</div></div>`;
-      h += infoTags(seat, fareData, extras, type);
-      h += ticketDoc(ticket, locUrl);
+      const arrOffset = arr.dayOffset ? `<span class="day-offset">+${arr.dayOffset}</span>` : '';
+      const depDate = dep.date && arr.dayOffset ? `<div class="bp-sub">${dep.date}</div>` : '';
+      const arrDate = arr.date && arr.dayOffset ? `<div class="bp-sub">${arr.date}</div>` : '';
+      h += `<div class="bp-route"><div class="bp-point"><div class="bp-time">${dep.time}</div>${depDate}${locH(dep)}</div><div class="bp-mid"><div class="bp-arrow-line"></div><div class="bp-dur">${midLabel}</div></div><div class="bp-point arr"><div class="bp-time">${arr.time}${arrOffset}</div>${arrDate}${locH(arr)}</div></div>`;
+      h += infoTags(seat, fareData, extras, type, false, ticket, etapeData);
       return `<div class="bp">${h}</div>`;
     }
 
-    // Material Symbols icon mapping for mid badge
-    const ICON_MAP = { train: 'train', flight: 'flight', car: 'directions_car', hotel: 'hotel' };
-    function midBadge(type) { return `<span class="material-symbols-rounded">${ICON_MAP[type] || 'trip'}</span>`; }
-
     // Helper: build one bold-style boarding pass card (iOS widget inspired)
     // extraCls: 'bpb-navy' for dark variant; pnr: shown in header right
-    function bpCardBold(carrier, num, pnr, dateStr, dep, arr, midLabel, seat, ticket, locUrl, fareData, type, icon, extraCls) {
+    function bpCardBold(carrier, num, pnr, dateStr, dep, arr, midLabel, seat, ticket, locUrl, fareData, type, icon, extraCls, etapeData) {
       const isFl = type === 'flight';
       let h = '';
-      // Header: date + carrier + num | PNR
-      h += `<div class="bpb-head"><div class="bpb-carrier"><span class="bpb-date">${dateStr}</span><span class="bp-carrier-icon">${icon}</span>${carrier}${num ? '<span class="bp-carrier-sub">· ' + num + '</span>' : ''}</div>${pnr ? '<div class="bpb-head-right"><span class="bpb-ref">Réf. ' + pnr + '</span></div>' : ''}</div>`;
+      // Header: date + carrier + fare class | PNR
+      const fareCls = fareData && fareData.fareName ? '<span class="bp-carrier-sub"> · ' + fareData.fareName + '</span>' : '';
+      h += `<div class="bpb-head"><div class="bpb-carrier"><span class="bpb-date">${dateStr}</span><span class="bp-carrier-icon">${icon}</span>${carrier}${fareCls}</div>${pnr ? '<div class="bpb-head-right"><span class="bpb-ref">Réf. ' + pnr + '</span></div>' : ''}</div>`;
       // Route: big codes (flights) or big times (trains)
       h += '<div class="bpb-route">';
       if (isFl && dep.code) {
@@ -1039,25 +1593,40 @@ function renderEtape(e, state, idx, autoIdx, done, total, isPast, targetId) {
       } else {
         h += `<div class="bpb-hero"><div class="bpb-code">${dep.time}</div><div class="bpb-name">${dep.name}</div></div>`;
       }
-      h += `<div class="bpb-mid"><div class="bpb-mid-row"><div class="bpb-mid-line"></div><div class="bpb-mid-badge">${midBadge(type)}</div><div class="bpb-mid-line"></div></div><div class="bpb-dur">${midLabel}</div></div>`;
+      const midPillLabel = (num ? num + ' · ' : '') + midLabel;
+      // Build action pill for mid zone
+      let actionPill = '';
+      if (ticket) {
+        if (ticket.available) {
+          const tIcon = ticket.hasQR ? qrSvg : '<span class="material-symbols-rounded">confirmation_number</span>';
+          actionPill = `<div class="bpb-action-pill">${tIcon} Voir mon billet</div>`;
+        } else {
+          actionPill = `<div class="bpb-action-pill deferred"><span class="material-symbols-rounded">event</span> Dispo le ${ticket.availableDate || '—'}</div>`;
+        }
+      }
+      h += `<div class="bpb-mid"><div class="bpb-mid-row"><div class="bpb-mid-line"></div><div class="bpb-mid-badge">${midBadge(type, midPillLabel)}</div><div class="bpb-mid-line"></div></div>${actionPill}</div>`;
+      const boldArrOffset = arr.dayOffset ? `<span class="day-offset">+${arr.dayOffset}</span>` : '';
       if (isFl && arr.code) {
-        h += `<div class="bpb-hero arr"><div class="bpb-code">${arr.code}</div><div class="bpb-time">${arr.time}</div><div class="bpb-name">${arr.name}${arr.terminal ? ' · T' + arr.terminal : ''}</div></div>`;
+        h += `<div class="bpb-hero arr"><div class="bpb-code">${arr.code}${boldArrOffset}</div><div class="bpb-time">${arr.time}${arr.date && arr.dayOffset ? ' · ' + arr.date : ''}</div><div class="bpb-name">${arr.name}${arr.terminal ? ' · T' + arr.terminal : ''}</div></div>`;
       } else {
-        h += `<div class="bpb-hero arr"><div class="bpb-code">${arr.time}</div><div class="bpb-name">${arr.name}</div></div>`;
+        h += `<div class="bpb-hero arr"><div class="bpb-code">${arr.time}${boldArrOffset}</div>${arr.date && arr.dayOffset ? '<div class="bpb-time">' + arr.date + '</div>' : ''}<div class="bpb-name">${arr.name}</div></div>`;
       }
       h += '</div>';
       // Slim tags: only porte/siège (flight) or voie/voiture (train)
       h += infoTags(seat, fareData, null, type, true);
-      h += ticketDoc(ticket, locUrl);
-      return `<div class="bpb${extraCls ? ' ' + extraCls : ''}">${h}</div>`;
+      // Bold: tappable card → sheet
+      const tIdx = sheetTargets.length;
+      if (etapeData) sheetTargets.push(etapeData);
+      const tapAttr = etapeData ? ` tappable" onclick="openSheet(sheetTargets[${tIdx}])"` : '"';
+      return `<div class="bpb${extraCls ? ' ' + extraCls : ''}${tapAttr}>${h}</div>`;
     }
 
     let allH = '';
 
     // Style flags
-    const isDark = currentStyle === 'dark';
-    const isBold = currentStyle === 'bold';
-    const isEpure = isDark || isBold;
+    const isDark = currentColor === 'dark';
+    const isBold = currentLayout === 'bold';
+    const isEpure = isBold;
     const navyCls = isDark ? 'bpb-navy' : '';
 
     // Transit bar
@@ -1073,10 +1642,13 @@ function renderEtape(e, state, idx, autoIdx, done, total, isPast, targetId) {
         const isLast = si === e.segments.length - 1;
         const segData = seg.fareName ? seg : e;
         if (isEpure) {
-          scrollH += bpCardBold(e.carrier, seg.num, seg.pnr || e.pnr, e.departure.date, seg.dep, seg.arr, seg.dur, seg.seat, seg.ticket || e.ticket, e.locUrl, segData, e.type, e.icon, navyCls);
+          scrollH += bpCardBold(e.carrier, seg.num, seg.pnr || e.pnr, e.departure.date, seg.dep, seg.arr, seg.dur, seg.seat, seg.ticket || e.ticket, e.locUrl, segData, e.type, e.icon, navyCls, e);
         } else {
-          const headerLeft = `<span class="bp-carrier-icon">${e.icon}</span>${e.carrier}<span class="bp-carrier-sub">· ${seg.num}</span>`;
-          scrollH += bpCard(headerLeft, e.departure.date, seg.dep, seg.arr, seg.dur, seg.seat, null, seg.ticket || e.ticket, e.locUrl, segData, e.type);
+          const segFare = segData.fareName || '';
+          const segRef = seg.pnr || e.pnr || '';
+          const headerSub = [seg.num, segFare, segRef ? 'Réf. ' + segRef : ''].filter(Boolean).join(' · ');
+          const headerLeft = `<span class="bp-carrier-icon">${e.icon}</span>${e.carrier}<span class="bp-carrier-sub">· ${headerSub}</span>`;
+          scrollH += bpCard(headerLeft, e.departure.date, seg.dep, seg.arr, seg.dur, seg.seat, null, seg.ticket || e.ticket, e.locUrl, segData, e.type, e);
         }
         if (!isLast && e.connections && e.connections[si]) {
           const conn = e.connections[si];
@@ -1093,11 +1665,11 @@ function renderEtape(e, state, idx, autoIdx, done, total, isPast, targetId) {
     } else {
       // ── Direct: single boarding pass ──
       if (isEpure) {
-        allH += bpCardBold(e.carrier, e.num, e.pnr, e.departure.date, e.departure, e.arrival, e.duration, e.seat, e.ticket, e.locUrl, e, e.type, e.icon, navyCls);
+        allH += bpCardBold(e.carrier, e.num, e.pnr, e.departure.date, e.departure, e.arrival, e.duration, e.seat, e.ticket, e.locUrl, e, e.type, e.icon, navyCls, e);
       } else {
-        const headerLeft = `<span class="bp-carrier-icon">${e.icon}</span>${e.carrier}<span class="bp-carrier-sub">· ${detailsStr}</span>`;
-        const extras = (isFlight && e.luggage) ? e.luggage : null;
-        allH += bpCard(headerLeft, e.departure.date, e.departure, e.arrival, e.duration, e.seat, extras, e.ticket, e.locUrl, e, e.type);
+        const directSub = [detailsStr, e.fareName || '', e.pnr ? 'Réf. ' + e.pnr : ''].filter(Boolean).join(' · ');
+        const headerLeft = `<span class="bp-carrier-icon">${e.icon}</span>${e.carrier}<span class="bp-carrier-sub">· ${directSub}</span>`;
+        allH += bpCard(headerLeft, e.departure.date, e.departure, e.arrival, e.duration, e.seat, null, e.ticket, e.locUrl, e, e.type, e);
       }
     }
 
@@ -1106,36 +1678,34 @@ function renderEtape(e, state, idx, autoIdx, done, total, isPast, targetId) {
 
   // ===== HOTEL CARD =====
   else if (e.type === 'hotel') {
-    const isDark = currentStyle === 'dark';
-    const isBold = currentStyle === 'bold';
-    const isEpure = isDark || isBold;
+    const isDark = currentColor === 'dark' || currentColor === 'contrast';
+    const isBold = currentLayout === 'bold';
+    const isEpure = isBold;
     const stars = e.starsText || '';
 
     if (isEpure) {
       // ── Épuré hotel: dark card with essentials only ──
       const navyCls = isDark ? ' bpb-navy' : '';
       let h = '';
-      // Header: name + ref
-      h += `<div class="htd-head"><div class="htd-title">${e.title}${stars ? ' <span class="stars">' + stars + '</span>' : ''}</div><div class="htd-sub">${e.roomName ? '🛏 ' + e.roomName + ' · ' : ''}📍 ${e.address}</div></div>`;
-      // Dates: check-in → check-out (big times)
-      h += `<div class="htd-dates"><div class="htd-date"><div class="htd-date-label">Check-in</div><div class="htd-date-time">${e.checkin.time}</div><div class="htd-date-day">${e.checkin.date}</div></div><div class="htd-mid"><div class="htd-mid-sep">→</div><div class="htd-nights">${e.nights} nuit${e.nights > 1 ? 's' : ''}</div></div><div class="htd-date arr"><div class="htd-date-label">Check-out</div><div class="htd-date-time">${e.checkout.time}</div><div class="htd-date-day">${e.checkout.date}</div></div></div>`;
-      // Logistics
-      if (e.checkinInstructions) {
-        const ci = e.checkinInstructions;
-        let items = '';
-        if (ci.methodLabel) items += `<div class="htd-log-item">🔑 ${ci.methodLabel}</div>`;
-        if (ci.reception24) {
-          items += `<div class="htd-log-item">🕐 Réception <strong>24h/24</strong></div>`;
-        } else if (ci.checkinUntil) {
-          items += `<div class="htd-log-item">⚠️ Check-in ${ci.checkinFrom ? ci.checkinFrom + ' – ' : ''}<strong>${ci.checkinUntil}</strong></div>`;
-        } else if (ci.checkinFrom) {
-          items += `<div class="htd-log-item">🕐 Check-in à partir de <strong>${ci.checkinFrom}</strong></div>`;
-        }
-        if (ci.pinCode) items += `<div class="htd-log-item">🔢 Code : <strong>${ci.pinCode}</strong></div>`;
-        if (ci.phone) items += `<div class="htd-log-item">📞 ${ci.phone}${e.bookingRef ? ' · Réf. <strong>' + e.bookingRef + '</strong>' : ''}</div>`;
-        if (items) h += `<div class="htd-logistics">${items}</div>`;
+      // Header: name + ref top-right
+      const phoneStr = '';
+      h += `<div class="bpb-head"><div class="bpb-carrier"><div class="htd-title">${e.title}${stars ? ' <span class="stars">' + stars + '</span>' : ''}</div></div>${e.bookingRef ? '<div class="bpb-head-right"><span class="bpb-ref">Réf. ' + e.bookingRef + '</span></div>' : ''}</div>`;
+      h += `<div class="htd-sub-row"><div class="htd-sub">📍 ${e.address}${phoneStr}</div></div>`;
+      // Dates: check-in → mid info → check-out
+      const nightsLabel = e.nights + ' nuit' + (e.nights > 1 ? 's' : '');
+      const voucherPill = e.docAvailable ? '<div class="bpb-action-pill"><span class="material-symbols-rounded">description</span> Voir mon voucher</div>' : '';
+      h += '<div class="bpb-route">';
+      h += `<div class="bpb-hero htd-hero"><div class="bpb-name">Check-in · à partir de</div><div class="bpb-code htd-code">${e.checkin.time}</div><div class="bpb-time">${e.checkin.date}</div></div>`;
+      h += `<div class="htd-mid"><div class="bpb-mid-row"><div class="bpb-mid-line"></div><div class="bpb-mid-badge">${midBadge('hotel', nightsLabel)}</div><div class="bpb-mid-line"></div></div>${voucherPill}</div>`;
+      h += `<div class="bpb-hero htd-hero arr"><div class="bpb-name">Check-out · jusqu'à</div><div class="bpb-code htd-code">${e.checkout.time}</div><div class="bpb-time">${e.checkout.date}</div></div>`;
+      h += '</div>';
+      // Free-text arrival conditions (unstructured, from supplier)
+      if (e.freeTextConditions) {
+        h += `<div class="htd-logistics"><div class="htd-log-item">${e.freeTextConditions}</div></div>`;
       }
-      bodyH = `<div class="bpb${navyCls}">${h}</div>`;
+      const htIdx = sheetTargets.length;
+      sheetTargets.push(e);
+      bodyH = `<div class="bpb tappable${navyCls}" onclick="openSheet(sheetTargets[${htIdx}])">${h}</div>`;
     } else {
       // ── Classic hotel card ──
       let galleryH = '';
@@ -1159,46 +1729,39 @@ function renderEtape(e, state, idx, autoIdx, done, total, isPast, targetId) {
         else if (e.cancellation.type === 'non_refundable') badges.push(`<span class="ht-badge cancel-none">✕ Non remboursable</span>`);
       }
       if (badges.length) infoH += '<div class="ht-badges">' + badges.join('') + '</div>';
-      infoH += `<div class="ht-dates"><span class="ht-date-label">Check-in</span><span class="ht-date-value">${e.checkin.date} · ${e.checkin.time}</span><span class="ht-date-sep">→</span><span class="ht-date-label">Check-out</span><span class="ht-date-value">${e.checkout.date} · ${e.checkout.time}</span><span class="ht-nights">${e.nights} nuit${e.nights > 1 ? 's' : ''}</span></div>`;
       infoH += '</div>';
+      // Schedule: same layout as car card, voucher button inline
+      const htTagBtn = e.docAvailable
+        ? `<button class="bp-ticket-tag" onclick="event.stopPropagation();openSheet(sheetTargets[${ctaIdx}])"><span class="material-symbols-rounded">description</span> Voir mon voucher</button>`
+        : '';
+      let schedH = `<div class="car-schedule"><div class="car-sched-block"><div class="car-sched-label">Check-in</div><div class="car-sched-time">${e.checkin.time}</div><div class="car-sched-date">${e.checkin.date}</div></div><div class="car-sched-block"><div class="car-sched-label">Check-out · ${e.nights} nuit${e.nights > 1 ? 's' : ''}</div><div class="car-sched-time">${e.checkout.time}</div><div class="car-sched-date">${e.checkout.date}</div></div>${htTagBtn}</div>`;
       let logH = '';
-      if (e.checkinInstructions) {
-        const ci = e.checkinInstructions;
-        let items = '';
-        if (ci.methodLabel) items += `<div class="ht-logistics-item"><span>🔑</span> ${ci.methodLabel}</div>`;
-        if (ci.reception24) {
-          items += `<div class="ht-logistics-item"><span>🕐</span> Réception <strong>24h/24</strong></div>`;
-        } else if (ci.checkinUntil) {
-          items += `<div class="ht-logistics-item"><span>⚠️</span> Check-in ${ci.checkinFrom ? 'à partir de ' + ci.checkinFrom + ', ' : ''}<strong class="ht-until">jusqu'à ${ci.checkinUntil}</strong></div>`;
-        } else if (ci.checkinFrom) {
-          items += `<div class="ht-logistics-item"><span>🕐</span> Check-in à partir de <strong>${ci.checkinFrom}</strong></div>`;
-        }
-        if (ci.pinCode) items += `<div class="ht-logistics-item"><span>🔢</span> Code PIN : <strong>${ci.pinCode}</strong></div>`;
-        if (ci.phone) items += `<div class="ht-logistics-item"><span>📞</span> ${ci.phone}${e.bookingRef ? ' · Réf. <strong>' + e.bookingRef + '</strong>' : ''}</div>`;
-        if (ci.notes) items += `<div class="ht-logistics-item"><span>ℹ️</span> ${ci.notes}</div>`;
-        if (items) logH = `<div class="ht-logistics"><div class="ht-logistics-title">🏠 Infos d'arrivée</div>${items}</div>`;
+      if (e.freeTextConditions) {
+        logH = `<div class="ht-logistics"><div class="ht-logistics-title">Conditions d'arrivée</div><div class="ht-logistics-item">${e.freeTextConditions}</div></div>`;
       }
-      bodyH = `<div class="ecard">${galleryH}${infoH}${logH}</div><div class="cta-row">${cta}${secCta}</div>`;
+      bodyH = `<div class="ecard">${galleryH}${infoH}${schedH}${logH}</div>`;
     }
   }
 
   // ===== CAR CARD =====
   else if (e.type === 'car') {
-    const isDark = currentStyle === 'dark';
-    const isBold = currentStyle === 'bold';
-    const isEpure = isDark || isBold;
+    const isDark = currentColor === 'dark' || currentColor === 'contrast';
+    const isBold = currentLayout === 'bold';
+    const isEpure = isBold;
     const oj = e.pickup.location !== e.dropoff.location;
 
     if (isEpure) {
       // ── Épuré car: panoramic dark card like transport ──
       const navyCls = isDark ? ' bpb-navy' : '';
       const carDetails = e.details.filter(d => d !== 'Direct').join(' · ');
+      const carDuration = e.details.find(d => /jour|day/i.test(d)) || '';
       let h = '';
-      h += `<div class="bpb-head"><div class="bpb-carrier"><span class="bpb-date">${e.pickup.date}</span><span class="bp-carrier-icon">🚗</span>${e.carrier}<span class="bp-carrier-sub">· ${carDetails}</span></div>${e.bookingRef ? '<div class="bpb-head-right"><span class="bpb-ref">Réf. ' + e.bookingRef + '</span></div>' : ''}</div>`;
+      h += `<div class="bpb-head"><div class="bpb-carrier"><span class="bpb-date">${e.pickup.date}</span><span class="bp-carrier-icon">🚗</span>${e.title}</div>${e.bookingRef ? '<div class="bpb-head-right"><span class="bpb-ref">Réf. ' + e.bookingRef + '</span></div>' : ''}</div>`;
       // Route: pickup → dropoff (times as hero, like trains)
       h += '<div class="bpb-route">';
       h += `<div class="bpb-hero"><div class="bpb-code">${e.pickup.time}</div><div class="bpb-time">${e.pickup.date}</div><div class="bpb-name">${e.pickup.location}</div></div>`;
-      h += `<div class="bpb-mid"><div class="bpb-mid-row"><div class="bpb-mid-line"></div><div class="bpb-mid-badge">${midBadge('car')}</div><div class="bpb-mid-line"></div></div></div>`;
+      const carVoucherPill = e.docAvailable ? '<div class="bpb-action-pill"><span class="material-symbols-rounded">description</span> Voir mon voucher</div>' : '';
+      h += `<div class="bpb-mid"><div class="bpb-mid-row"><div class="bpb-mid-line"></div><div class="bpb-mid-badge">${midBadge('car', carDetails)}</div><div class="bpb-mid-line"></div></div>${carVoucherPill}</div>`;
       h += `<div class="bpb-hero arr"><div class="bpb-code">${e.dropoff.time}</div><div class="bpb-time">${e.dropoff.date}</div><div class="bpb-name">${e.dropoff.location}</div></div>`;
       h += '</div>';
       if (oj) h += `<div class="bpb-dur">⚠️ Open jaw</div>`;
@@ -1206,26 +1769,302 @@ function renderEtape(e, state, idx, autoIdx, done, total, isPast, targetId) {
       if (e.driverName) {
         h += `<div class="bpb-driver"><div class="bpb-driver-item">🪪 <strong>${e.driverName}</strong></div><div class="bpb-driver-item">📄 Permis + CB au nom du conducteur</div></div>`;
       }
-      bodyH = `<div class="bpb${navyCls}">${h}</div>`;
+      const carIdx = sheetTargets.length;
+      sheetTargets.push(e);
+      bodyH = `<div class="bpb tappable${navyCls}" onclick="openSheet(sheetTargets[${carIdx}])">${h}</div>`;
     } else {
       // ── Classic car card ──
       const detailsStr = e.details.map(d => `<span>${d}</span>`).join('<span class="sep">·</span>');
       const photoH = e.carPhoto ? `<div class="car-photo"><img src="${e.carPhoto}" alt="" loading="lazy"></div>` : '';
       let topH = `<div class="car-top">${photoH}<div class="car-header"><div class="car-title">${e.title}</div><div class="car-details">${detailsStr}${e.bookingRef ? '<span class="sep">·</span><span>Réf. ' + e.bookingRef + '</span>' : ''}</div></div></div>`;
-      let schedH = `<div class="car-schedule"><div class="car-sched-block"><div class="car-sched-label">Prise en charge</div><div class="car-sched-time">${e.pickup.time}</div><div class="car-sched-date">${e.pickup.date}</div><div class="car-sched-loc">${e.pickup.location}</div></div><div class="car-sched-block${oj ? ' oj' : ''}"><div class="car-sched-label">Restitution${oj ? ' · Open jaw' : ''}</div><div class="car-sched-time">${e.dropoff.time}</div><div class="car-sched-date">${e.dropoff.date}</div><div class="car-sched-loc">${e.dropoff.location}</div></div></div>`;
+      const carTagBtn = e.docAvailable
+        ? `<button class="bp-ticket-tag" onclick="event.stopPropagation();openSheet(sheetTargets[${ctaIdx}])"><span class="material-symbols-rounded">description</span> Voir mon voucher</button>`
+        : '';
+      let schedH = `<div class="car-schedule"><div class="car-sched-block"><div class="car-sched-label">Prise en charge</div><div class="car-sched-time">${e.pickup.time}</div><div class="car-sched-date">${e.pickup.date}</div><div class="car-sched-loc">${e.pickup.location}</div></div><div class="car-sched-block${oj ? ' oj' : ''}"><div class="car-sched-label">Restitution${oj ? ' · Open jaw' : ''}</div><div class="car-sched-time">${e.dropoff.time}</div><div class="car-sched-date">${e.dropoff.date}</div><div class="car-sched-loc">${e.dropoff.location}</div></div>${carTagBtn}</div>`;
       let driverH = '';
       if (e.driverName) {
         driverH = `<div class="car-driver"><div class="car-driver-badge">🪪</div><div class="car-driver-text"><div class="car-driver-label">Conducteur</div><div class="car-driver-name">${e.driverName}</div><div class="car-driver-docs">Permis de conduire + CB au nom du conducteur</div></div></div>`;
       }
-      bodyH = `<div class="ecard">${topH}${schedH}${driverH}</div><div class="cta-row">${cta}${secCta}</div>`;
+      bodyH = `<div class="ecard">${topH}${schedH}${driverH}</div>`;
     }
   }
 
-  ct.innerHTML = `<div class="etape-content ${isPast ? 'is-past' : ''}"><div class="etape-meta"><span class="etape-tag ${tag.c}">${tag.t}</span></div>${bodyH}</div>`;
+  ct.innerHTML = `<div class="etape-content ${isPast ? 'is-past' : ''}">${bodyH}</div>`;
 }
 
-function setState(s) { currentState = s; renderAll(); }
-function setStyle(s) { currentStyle = s; renderAll(); }
+function setState(s) { currentState = s; selectedEtapes = {}; renderAll(); }
+function setColor(c) { currentColor = c; closeSheet(); renderAll(); updateShowcase(); }
+function setLayout(l) { currentLayout = l; closeSheet(); renderAll(); }
+function setPlatform(p) {
+  currentPlatform = p;
+  document.querySelectorAll('[id^="btn-plat-"]').forEach(b => b.classList.remove('active'));
+  document.getElementById('btn-plat-' + p).classList.add('active');
+  closeSheet();
+  updateShowcase();
+}
+function selectEtape(tripKey, idx) { selectedEtapes[tripKey] = idx; renderAll(); }
+
+// ===== Bottom Sheet =====
+function openSheet(etapeData) {
+  const overlay = document.getElementById('sheet-overlay');
+  const titleEl = document.getElementById('sheet-title');
+  const bodyEl = document.getElementById('sheet-body');
+  overlay.setAttribute('data-color', currentColor);
+
+  // Title: date icon + origin → destination for transport, label for others
+  let startDate = '';
+  if (etapeData.type === 'train' || etapeData.type === 'flight') {
+    startDate = etapeData.departure && etapeData.departure.date || '';
+  } else if (etapeData.type === 'hotel') {
+    startDate = etapeData.checkin && etapeData.checkin.date || '';
+  } else if (etapeData.type === 'car') {
+    startDate = etapeData.pickup && etapeData.pickup.date || '';
+  }
+  let titleText = etapeData.shortLabel || etapeData.title;
+  if ((etapeData.type === 'train' || etapeData.type === 'flight') && etapeData.departure && etapeData.arrival) {
+    const depLabel = etapeData.departure.code || etapeData.departure.name || '';
+    const arrLabel = etapeData.arrival.code || etapeData.arrival.name || '';
+    titleText = `${depLabel} \u2192 ${arrLabel}`;
+  }
+  titleEl.innerHTML = `${dateIcon(startDate)}<span>${titleText}</span>`;
+
+  let content = '';
+  if (etapeData.type === 'train' || etapeData.type === 'flight') {
+    content = buildTransportSheet(etapeData, currentPlatform);
+  } else if (etapeData.type === 'hotel') {
+    content = buildHotelSheet(etapeData);
+  } else if (etapeData.type === 'car') {
+    content = buildCarSheet(etapeData);
+  }
+  bodyEl.innerHTML = content;
+
+  overlay.classList.add('open');
+  document.body.style.overflow = 'hidden';
+  document.addEventListener('keydown', sheetEscHandler);
+}
+
+function closeSheet() {
+  const overlay = document.getElementById('sheet-overlay');
+  overlay.classList.remove('open');
+  document.body.style.overflow = '';
+  document.removeEventListener('keydown', sheetEscHandler);
+}
+
+function sheetEscHandler(e) { if (e.key === 'Escape') closeSheet(); }
+
+// Official wallet badge SVGs
+const appleWalletBadge = `<a href="#" class="wallet-badge wallet-badge-apple" onclick="event.preventDefault()"><svg viewBox="0 0 20 24" fill="none"><path d="M15.5 12.6c-.02-2.1 1.72-3.12 1.8-3.17-.98-1.43-2.5-1.63-3.05-1.65-1.3-.13-2.53.76-3.19.76-.66 0-1.67-.75-2.75-.73-1.41.02-2.72.82-3.44 2.09-1.47 2.55-.38 6.32 1.06 8.39.7 1.02 1.53 2.15 2.63 2.11 1.05-.04 1.45-.68 2.73-.68s1.64.68 2.76.66c1.13-.02 1.86-1.04 2.54-2.06.8-1.18 1.13-2.32 1.15-2.38-.03-.01-2.21-.85-2.24-3.34zM13.38 5.66c.58-.71.97-1.68.86-2.66-.83.03-1.84.55-2.44 1.26-.53.62-1 1.6-.88 2.55.93.07 1.88-.47 2.46-1.15z" fill="white"/></svg><div class="wb-text">Add to<strong>Apple Wallet</strong></div></a>`;
+
+const googleWalletBadge = `<a href="#" class="wallet-badge wallet-badge-google" onclick="event.preventDefault()"><svg viewBox="0 0 24 24" fill="none"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 0 1-2.2 3.32v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.1z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18A10.96 10.96 0 0 0 1 12c0 1.77.42 3.45 1.18 4.93l3.66-2.84z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg><div class="wb-text">Add to<strong>Google Wallet</strong></div></a>`;
+
+const pdfDocSvg = '<svg viewBox="0 0 24 28" fill="none"><path d="M2 4a2 2 0 0 1 2-2h10l8 8v14a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V4z" fill="white" fill-opacity="0.9"/><path d="M14 2l8 8h-6a2 2 0 0 1-2-2V2z" fill="white" fill-opacity="0.6"/><text x="12" y="21" text-anchor="middle" font-size="7" font-weight="800" fill="#e53935" font-family="system-ui">PDF</text></svg>';
+
+const qrPlaceholderSvg = '<svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="5" y="5" width="25" height="25" rx="2" stroke="currentColor" stroke-width="3"/><rect x="10" y="10" width="15" height="15" rx="1" fill="currentColor"/><rect x="70" y="5" width="25" height="25" rx="2" stroke="currentColor" stroke-width="3"/><rect x="75" y="10" width="15" height="15" rx="1" fill="currentColor"/><rect x="5" y="70" width="25" height="25" rx="2" stroke="currentColor" stroke-width="3"/><rect x="10" y="75" width="15" height="15" rx="1" fill="currentColor"/><rect x="38" y="5" width="8" height="8" fill="currentColor"/><rect x="50" y="5" width="8" height="8" fill="currentColor"/><rect x="38" y="17" width="8" height="8" fill="currentColor"/><rect x="5" y="38" width="8" height="8" fill="currentColor"/><rect x="17" y="38" width="8" height="8" fill="currentColor"/><rect x="5" y="50" width="8" height="8" fill="currentColor"/><rect x="38" y="38" width="8" height="8" fill="currentColor"/><rect x="50" y="38" width="8" height="8" fill="currentColor"/><rect x="62" y="38" width="8" height="8" fill="currentColor"/><rect x="38" y="50" width="8" height="8" fill="currentColor"/><rect x="62" y="50" width="8" height="8" fill="currentColor"/><rect x="50" y="62" width="8" height="8" fill="currentColor"/><rect x="62" y="62" width="8" height="8" fill="currentColor"/><rect x="74" y="62" width="8" height="8" fill="currentColor"/><rect x="86" y="62" width="8" height="8" fill="currentColor"/><rect x="74" y="50" width="8" height="8" fill="currentColor"/><rect x="86" y="38" width="8" height="8" fill="currentColor"/><rect x="38" y="74" width="8" height="8" fill="currentColor"/><rect x="50" y="86" width="8" height="8" fill="currentColor"/><rect x="62" y="74" width="8" height="8" fill="currentColor"/><rect x="74" y="86" width="8" height="8" fill="currentColor"/><rect x="86" y="74" width="8" height="8" fill="currentColor"/><rect x="86" y="86" width="8" height="8" fill="currentColor"/></svg>';
+
+function buildTransportSheet(e, platform) {
+  const ticket = e.ticket || {};
+  const isFl = e.type === 'flight';
+  const isMobile = platform === 'ios' || platform === 'android';
+  const paxLine = (e._travelerName || e.pnr) ? `<div class="sheet-pax">${e._travelerName ? '<strong>' + e._travelerName + '</strong>' : ''}${e._travelerName && e.pnr ? ' \u00b7 ' : ''}${e.pnr || ''}</div>` : '';
+  let h = '';
+
+  // Deferred ticket
+  if (!ticket.available) {
+    h += `<div class="sheet-info"><span class="sheet-info-icon">&#128197;</span><div>Votre billet sera disponible à partir du <strong>${ticket.availableDate || '\u2014'}</strong>. Certains transporteurs n'émettent les billets que quelques jours avant le départ.${isFl ? '<br>Pensez ensuite à vous enregistrer auprès de la compagnie aérienne.' : ''}</div></div>`;
+    h += '<div class="sheet-actions"><span class="cta-pri disabled">Billet pas encore disponible</span></div>';
+    return h;
+  }
+
+  // Visual: QR code or clickable PDF document
+  if (ticket.hasQR) {
+    h += `<div class="sheet-qr">${qrPlaceholderSvg}<div class="sheet-qr-label">Présentez au contrôleur</div></div>`;
+    h += paxLine;
+  } else {
+    const docName = isFl ? 'E-ticket' : 'Billet';
+    const carrier = e.carrier || '';
+    const num = e.num || '';
+    const paxMeta = (e._travelerName || '') + (e._travelerName && e.pnr ? ' \u00b7 ' : '') + (e.pnr || '');
+    h += `<a href="#" class="sheet-doc" onclick="event.preventDefault()"><div class="sheet-doc-icon">${pdfDocSvg}</div><div class="sheet-doc-info"><div class="sheet-doc-name">${docName} ${carrier} ${num}</div><div class="sheet-doc-meta">${paxMeta || 'PDF'}</div></div></a>`;
+  }
+
+  // Actions
+  h += '<div class="sheet-actions">';
+  if (isMobile && ticket.wallet) {
+    if (platform === 'ios') h += appleWalletBadge;
+    else h += googleWalletBadge;
+  }
+  // PDF button only when QR is shown (doc block is already clickable otherwise)
+  if (ticket.hasQR) {
+    if (isMobile) {
+      h += `<button class="cta-sec" onclick="event.preventDefault()">&#128196; Voir le billet PDF</button>`;
+    } else {
+      h += `<button class="cta-pri" onclick="event.preventDefault()">&#128196; Télécharger le PDF</button>`;
+    }
+  }
+  if (isFl && !ticket.wallet && !ticket.hasQR) {
+    h += `<div class="sheet-info" style="margin-top:8px;margin-bottom:0"><span class="sheet-info-icon">&#9432;</span><div>Ceci est votre e-ticket. Enregistrez-vous auprès de la compagnie.</div></div>`;
+  }
+  h += '</div>';
+  // Itinéraire — specific to departure location
+  if (e.locUrl && e.departure) {
+    const depName = e.departure.name || '';
+    const lieu = isFl ? "l'aéroport " + depName : 'la gare ' + depName;
+    h += `<div class="sheet-footer"><a href="${e.locUrl}" onclick="event.preventDefault()">&#128205; Itinéraire vers ${lieu}</a></div>`;
+  }
+  return h;
+}
+
+function buildHotelSheet(e) {
+  let h = '<div class="sheet-actions">';
+  h += `<button class="cta-pri" onclick="event.preventDefault()">&#128196; ${e.docLabel || 'Voir le voucher'}</button>`;
+  h += '</div>';
+  if (e.locUrl) {
+    const hotelName = e.shortLabel || e.title || "l'h\u00f4tel";
+    h += `<div class="sheet-footer"><a href="${e.locUrl}" onclick="event.preventDefault()">&#128205; Itin\u00e9raire vers ${hotelName}</a></div>`;
+  }
+  return h;
+}
+
+function buildCarSheet(e) {
+  let h = '<div class="sheet-actions">';
+  h += `<button class="cta-pri" onclick="event.preventDefault()">&#128196; ${e.docLabel || 'Voir le voucher'}</button>`;
+  h += '</div>';
+  if (e.locUrl) {
+    const agencyName = e.carrier ? "l'agence " + e.carrier : "l'agence de location";
+    h += `<div class="sheet-footer"><a href="${e.locUrl}" onclick="event.preventDefault()">&#128205; Itin\u00e9raire vers ${agencyName}</a></div>`;
+  }
+  return h;
+}
+
+// Swipe-down to close (mobile)
+(function() {
+  const panel = document.querySelector('.sheet-panel');
+  let startY = 0, currentY = 0, isDragging = false;
+  panel.addEventListener('touchstart', (e) => {
+    if (panel.scrollTop > 0) return;
+    startY = e.touches[0].clientY;
+    isDragging = true;
+  });
+  panel.addEventListener('touchmove', (e) => {
+    if (!isDragging) return;
+    currentY = e.touches[0].clientY;
+    const delta = currentY - startY;
+    if (delta > 0) {
+      panel.style.transform = `translateY(${delta}px)`;
+      e.preventDefault();
+    }
+  }, { passive: false });
+  panel.addEventListener('touchend', () => {
+    if (!isDragging) return;
+    isDragging = false;
+    const delta = currentY - startY;
+    if (delta > 100) closeSheet();
+    panel.style.transform = '';
+    currentY = 0;
+  });
+})();
+
+// ===== Showcase =====
+function toggleShowcase() {
+  const sc = document.getElementById('showcase-container');
+  const btn = document.getElementById('btn-showcase');
+  if (sc.style.display === 'none' || !sc.style.display) {
+    renderShowcase();
+    sc.style.display = 'block';
+    btn.textContent = 'Masquer showcase';
+  } else {
+    sc.style.display = 'none';
+    btn.textContent = 'Showcase sheets';
+  }
+}
+
+function updateShowcase() {
+  const sc = document.getElementById('showcase-container');
+  if (sc.style.display === 'block') renderShowcase();
+}
+
+function renderShowcase() {
+  const sc = document.getElementById('showcase-container');
+  sc.setAttribute('data-color', currentColor);
+
+  // Scenario definitions — each with mock data for realistic rendering
+  const base = { _travelerName: 'Stella Smith', locUrl: '#' };
+  const trainDep = { name: 'Paris Montparnasse' };
+  const trainArr = { name: 'Bordeaux Saint-Jean' };
+  const flightDep = { name: 'Paris', code: 'CDG' };
+  const flightArr = { name: 'Nice', code: 'NCE' };
+  const scenarios = {
+    'iOS': [
+      { label: 'Wallet (pkpass)', type: 'train', ticket: { available: true, hasQR: true, wallet: true }, platform: 'ios', carrier: 'SNCF', num: 'TGV 6234', pnr: 'HJKL42', dep: trainDep, arr: trainArr },
+      { label: 'QR code (pas de wallet)', type: 'train', ticket: { available: true, hasQR: true, wallet: false }, platform: 'ios', carrier: 'OUIGO', num: '7641', pnr: 'MNOP55', dep: trainDep, arr: trainArr },
+      { label: 'PDF seul (train)', type: 'train', ticket: { available: true, hasQR: false, wallet: false }, platform: 'ios', carrier: 'SNCF', num: 'TGV 8891', pnr: 'QRST78', dep: trainDep, arr: trainArr },
+      { label: 'Vol \u2014 e-ticket', type: 'flight', ticket: { available: true, hasQR: false, wallet: false }, platform: 'ios', carrier: 'Air France', num: 'AF 1234', pnr: 'ABC123', dep: flightDep, arr: flightArr },
+      { label: 'Billet diff\u00e9r\u00e9', type: 'train', ticket: { available: false, availableDate: '15 mars 2026' }, platform: 'ios', carrier: 'SNCF', num: 'TGV 9012', pnr: 'UVWX90', dep: trainDep, arr: trainArr },
+    ],
+    'Android': [
+      { label: 'Wallet (pkpass)', type: 'train', ticket: { available: true, hasQR: true, wallet: true }, platform: 'android', carrier: 'SNCF', num: 'TGV 6234', pnr: 'HJKL42', dep: trainDep, arr: trainArr },
+      { label: 'QR code (pas de wallet)', type: 'train', ticket: { available: true, hasQR: true, wallet: false }, platform: 'android', carrier: 'OUIGO', num: '7641', pnr: 'MNOP55', dep: trainDep, arr: trainArr },
+      { label: 'PDF seul (train)', type: 'train', ticket: { available: true, hasQR: false, wallet: false }, platform: 'android', carrier: 'SNCF', num: 'TGV 8891', pnr: 'QRST78', dep: trainDep, arr: trainArr },
+      { label: 'Vol \u2014 e-ticket', type: 'flight', ticket: { available: true, hasQR: false, wallet: false }, platform: 'android', carrier: 'Air France', num: 'AF 1234', pnr: 'ABC123', dep: flightDep, arr: flightArr },
+      { label: 'Billet diff\u00e9r\u00e9', type: 'train', ticket: { available: false, availableDate: '15 mars 2026' }, platform: 'android', carrier: 'SNCF', num: 'TGV 9012', pnr: 'UVWX90', dep: trainDep, arr: trainArr },
+    ],
+    'Desktop': [
+      { label: 'Billet dispo (QR)', type: 'train', ticket: { available: true, hasQR: true, wallet: true }, platform: 'desktop', carrier: 'SNCF', num: 'TGV 6234', pnr: 'HJKL42', dep: trainDep, arr: trainArr },
+      { label: 'PDF seul', type: 'train', ticket: { available: true, hasQR: false, wallet: false }, platform: 'desktop', carrier: 'SNCF', num: 'TGV 8891', pnr: 'QRST78', dep: trainDep, arr: trainArr },
+      { label: 'Vol \u2014 e-ticket', type: 'flight', ticket: { available: true, hasQR: false, wallet: false }, platform: 'desktop', carrier: 'Air France', num: 'AF 1234', pnr: 'ABC123', dep: flightDep, arr: flightArr },
+      { label: 'Billet diff\u00e9r\u00e9', type: 'train', ticket: { available: false, availableDate: '15 mars 2026' }, platform: 'desktop', carrier: 'SNCF', num: 'TGV 9012', pnr: 'UVWX90', dep: trainDep, arr: trainArr },
+    ],
+    'H\u00f4tel / Voiture': [
+      { label: 'H\u00f4tel', etapeType: 'hotel', hotelName: 'H\u00f4tel Renaissance Bordeaux' },
+      { label: 'Voiture de location', etapeType: 'car', carCarrier: 'Hertz' },
+    ]
+  };
+
+  let html = '';
+  for (const [section, items] of Object.entries(scenarios)) {
+    html += `<div class="showcase-section"><div class="showcase-section-title">${section}</div><div class="showcase-grid">`;
+    for (const s of items) {
+      const icon = s.type === 'flight' ? '\u2708\ufe0f' : (s.type === 'train' ? '\ud83d\ude84' : (s.etapeType === 'hotel' ? '\ud83c\udfe8' : '\ud83d\ude97'));
+      const mockEtape = {
+        ...base,
+        type: s.type || s.etapeType,
+        ticket: s.ticket || {},
+        carrier: s.carrier || s.carCarrier || '',
+        num: s.num || '',
+        pnr: s.pnr || '',
+        departure: s.dep || null,
+        arrival: s.arr || null,
+        icon: icon,
+        shortLabel: s.hotelName || '',
+        title: s.hotelName || '',
+      };
+      // Build header title with date icon (éphéméride)
+      const mockDate = s.dep ? 'Ven. 09 Fév' : (s.etapeType === 'hotel' ? 'Vendredi 9 Février' : 'Mardi 17 Février');
+      let headerTitle = dateIcon(mockDate);
+      if ((s.type === 'train' || s.type === 'flight') && s.dep && s.arr) {
+        const depL = s.dep.code || s.dep.name || '';
+        const arrL = s.arr.code || s.arr.name || '';
+        headerTitle += '<span>' + depL + ' \u2192 ' + arrL + '</span>';
+      } else if (s.etapeType === 'hotel') {
+        headerTitle += '<span>' + (s.hotelName || 'H\u00f4tel') + '</span>';
+      } else if (s.etapeType === 'car') {
+        headerTitle += '<span>' + (s.carCarrier || 'Location') + ' \u2014 Voiture</span>';
+      }
+      let content;
+      if (s.etapeType === 'hotel') {
+        content = buildHotelSheet(mockEtape);
+      } else if (s.etapeType === 'car') {
+        content = buildCarSheet(mockEtape);
+      } else {
+        content = buildTransportSheet(mockEtape, s.platform);
+      }
+      const headerH = `<div class="sheet-header"><div class="sheet-title">${headerTitle}</div><button class="sheet-close" disabled>&#10005;</button></div>`;
+      html += `<div class="showcase-item"><div class="showcase-label">${s.label}</div><div class="showcase-panel">${headerH}<div class="sheet-body">${content}</div></div></div>`;
+    }
+    html += '</div></div>';
+  }
+  sc.innerHTML = html;
+}
 
 renderAll();
 </script>
