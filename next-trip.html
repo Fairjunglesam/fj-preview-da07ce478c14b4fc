@@ -263,8 +263,6 @@
     .bpb .bpb-action-pill:active { transform: scale(0.97); }
     /* Bold desktop: minimal prev/next chevrons — always inside .bpb (dark card) */
     .bold-nav { display: flex; align-items: center; justify-content: flex-end; gap: 5px; position: absolute; bottom: 8px; right: 10px; z-index: 2; }
-    /* Leg cards: nav gets its own dedicated row at the bottom */
-    .bpb-leg .bold-nav { position: static; padding: 4px 10px 8px; }
     .bold-nav-btn { display: inline-flex; align-items: center; justify-content: center; width: 24px; height: 24px; border-radius: 50%; border: 1px solid rgba(255,255,255,0.15); background: rgba(255,255,255,0.08); color: rgba(255,255,255,0.45); cursor: pointer; transition: all 0.15s; font-family: var(--font); padding: 0; }
     .bold-nav-btn:hover { background: rgba(255,255,255,0.15); border-color: rgba(255,255,255,0.3); color: rgba(255,255,255,0.85); }
     .bold-nav-btn:disabled { opacity: 0.2; pointer-events: none; }
@@ -282,7 +280,7 @@
   .etape-carousel::-webkit-scrollbar { display: none; }
   .etape-carousel .etape-slide {
     flex: 0 0 calc(100% - 16px); scroll-snap-align: start; min-width: 0;
-    min-height: 200px; display: flex; flex-direction: column; justify-content: flex-start;
+    min-height: 200px; display: flex; flex-direction: column; justify-content: center;
   }
 
   /* ===== Étape wrapper ===== */
@@ -440,7 +438,7 @@
   .trip-card:not(.contrast-mode):not(.dark-mode) .bpb-leg .leg-conn-bar::before { background: var(--grey-200); }
   .trip-card:not(.contrast-mode):not(.dark-mode) .bpb-leg .leg-conn-chip { background: #edeef2; }
   /* Floating action pill on bottom edge — transport leg cards only */
-  .bpb:has(.leg-action-center) { overflow: visible; padding-bottom: 14px; margin-bottom: 18px; }
+  .bpb:has(.leg-action-center) { overflow: visible; padding-bottom: 14px; margin-bottom: 22px; z-index: 2; }
   /* Inline voucher pill — centered in card (hotel/car) */
   .card-voucher-row { text-align: center; padding: 6px 14px; }
   .leg-action-center { position: absolute; bottom: 0; left: 50%; transform: translate(-50%, 50%); z-index: 3; }
