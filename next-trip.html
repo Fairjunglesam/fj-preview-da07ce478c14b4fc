@@ -29,7 +29,7 @@
     --ease: cubic-bezier(0.4, 0, 0.2, 1);
   }
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-  body { font-family: var(--font); background: var(--white); color: var(--black); line-height: 1.5; padding: 16px; -webkit-font-smoothing: antialiased; }
+  body { font-family: var(--font); background: var(--white); color: var(--black); line-height: 1.5; padding: 0 16px 16px; -webkit-font-smoothing: antialiased; }
 
   /* ===== Demo Controls ===== */
   .demo-controls { max-width: 960px; margin: 0 auto 12px; padding: 10px 14px; background: var(--white); border-radius: var(--radius-xs); border: var(--stroke-sm) solid var(--grey-100); display: flex; flex-wrap: wrap; gap: 5px; align-items: center; }
@@ -741,7 +741,7 @@
     .sheet-body { padding-bottom: max(40px, env(safe-area-inset-bottom, 34px)); }
     .sheet-overlay.open .sheet-panel { transform: translateY(0); }
     .sheet-handle { display: block; }
-    body { padding: 8px; }
+    body { padding: 0 8px 8px; }
     .card-inner { padding: 14px 12px 10px; }
     .card-header { margin-bottom: 10px; flex-wrap: wrap; gap: 6px; }
     .headline { font-size: 15px; }
@@ -853,8 +853,9 @@
   }
 
   /* ===== Proto Header ===== */
+  /* ===== Header (tabs + globals only) ===== */
   .proto-header { position: sticky; top: 0; z-index: 100; background: rgba(255,255,255,0.97); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border-bottom: 1px solid var(--grey-100); }
-  .proto-tabs { display: flex; align-items: center; padding: 0 16px; border-bottom: 1px solid var(--grey-100); position: relative; }
+  .proto-tabs { display: flex; align-items: center; padding: 0 16px; position: relative; }
   .proto-tab { padding: 10px 18px; font-size: 12px; font-weight: 700; color: var(--grey-400); cursor: pointer; border: none; background: none; border-bottom: 2px solid transparent; font-family: var(--font); transition: all 0.15s; margin-bottom: -1px; }
   .proto-tab:hover { color: var(--grey-600); }
   .proto-tab.active { color: var(--black); border-bottom-color: var(--black); }
@@ -863,40 +864,72 @@
   .proto-globals button { padding: 3px 8px; border: 1.5px solid var(--grey-100); border-radius: 6px; background: var(--white); font-size: 10px; font-weight: 600; cursor: pointer; transition: all 0.15s; color: var(--grey-500); font-family: var(--font); line-height: 1.2; }
   .proto-globals button:hover { background: var(--grey-50); border-color: var(--grey-200); color: var(--grey-700); }
   .proto-globals button.active { background: var(--black); color: var(--white); border-color: var(--black); }
-  .proto-panel { padding: 10px 20px 10px; overflow: hidden; transition: max-height 0.3s ease, padding 0.3s ease, opacity 0.3s ease; }
-  .proto-panel.collapsed { max-height: 0 !important; padding-top: 0; padding-bottom: 0; opacity: 0; pointer-events: none; }
-  .proto-collapse-btn { display: flex; align-items: center; gap: 4px; padding: 2px 10px; font-size: 9px; font-weight: 700; color: var(--grey-400); cursor: pointer; border: none; background: none; font-family: var(--font); text-transform: uppercase; letter-spacing: 0.3px; transition: color 0.15s; margin-left: 8px; }
-  .proto-collapse-btn:hover { color: var(--grey-600); }
-  .proto-collapse-btn .chevron { display: inline-block; transition: transform 0.3s ease; font-size: 10px; }
-  .proto-collapse-btn .chevron.up { transform: rotate(180deg); }
+
+  /* ===== Sidebar (desktop: fixed left, retractable) ===== */
+  .proto-sidebar { position: fixed; left: 0; top: 0; bottom: 0; width: 250px; background: #fff; border-right: 1px solid var(--grey-100); z-index: 110; overflow-y: auto; display: flex; flex-direction: column; transition: transform 0.3s ease; }
+  .proto-sidebar-head { display: flex; align-items: center; justify-content: space-between; padding: 12px 16px 8px; border-bottom: 1px solid var(--grey-100); flex-shrink: 0; }
+  .proto-sidebar-head span { font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px; color: var(--grey-400); font-family: var(--font); }
+  .proto-backdrop { display: none; }
+
+  /* Desktop: shift ALL main content right for sidebar */
+  .proto-main { margin-left: 250px; transition: margin-left 0.3s ease; }
+  /* Desktop collapsed state */
+  body.sidebar-collapsed .proto-sidebar { transform: translateX(-100%); }
+  body.sidebar-collapsed .proto-main { margin-left: 0; }
+  /* Desktop toggle button in header */
+  .proto-sidebar-toggle { width: 30px; height: 30px; border-radius: 7px; border: 1.5px solid var(--grey-100); background: var(--white); color: var(--grey-500); font-size: 16px; cursor: pointer; font-family: var(--font); transition: all 0.15s; display: flex; align-items: center; justify-content: center; margin-right: 8px; flex-shrink: 0; }
+  .proto-sidebar-toggle:hover { background: var(--grey-50); border-color: var(--grey-200); color: var(--grey-700); }
+
+  /* ===== Panel (inside sidebar) ===== */
+  .proto-panel { padding: 12px 14px 12px; flex: 1; }
   /* Grid-based config rows: label | controls */
-  .proto-line { display: grid; grid-template-columns: 80px 1fr; align-items: center; gap: 0 8px; min-height: 28px; }
-  .proto-line-label { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.3px; color: var(--grey-300); font-family: var(--font); white-space: nowrap; text-align: right; padding-right: 4px; }
-  .proto-line-controls { display: flex; align-items: center; gap: 5px; flex-wrap: wrap; }
-  .proto-line-controls .sc-config-pill { padding: 4px 10px; border-radius: 6px; font-size: 11px; font-weight: 600; border: 1px solid var(--grey-100); background: var(--white); color: var(--grey-400); cursor: pointer; font-family: var(--font); transition: all 0.15s; white-space: nowrap; }
+  .proto-line { display: grid; grid-template-columns: 72px 1fr; align-items: center; gap: 0 6px; min-height: 26px; }
+  .proto-line-label { font-size: 9px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.3px; color: var(--grey-300); font-family: var(--font); white-space: nowrap; text-align: right; padding-right: 2px; }
+  .proto-line-controls { display: flex; align-items: center; gap: 4px; flex-wrap: wrap; }
+  .proto-line-controls .sc-config-pill { padding: 3px 8px; border-radius: 5px; font-size: 10px; font-weight: 600; border: 1px solid var(--grey-100); background: var(--white); color: var(--grey-400); cursor: pointer; font-family: var(--font); transition: all 0.15s; white-space: nowrap; }
   .proto-line-controls .sc-config-pill:hover { border-color: var(--grey-200); color: var(--grey-600); }
   .proto-line-controls .sc-config-pill.active { background: var(--black); color: var(--white); border-color: var(--black); }
-  .proto-line-controls .sc-toggle { position: relative; width: 32px; height: 18px; border-radius: 9px; background: var(--grey-200); border: none; cursor: pointer; transition: background 0.2s; flex-shrink: 0; }
+  .proto-line-controls .sc-toggle { position: relative; width: 30px; height: 16px; border-radius: 8px; background: var(--grey-200); border: none; cursor: pointer; transition: background 0.2s; flex-shrink: 0; }
   .proto-line-controls .sc-toggle.on { background: var(--blue-500); }
-  .proto-line-controls .sc-toggle::after { content: ''; position: absolute; top: 2px; left: 2px; width: 14px; height: 14px; border-radius: 50%; background: #fff; box-shadow: 0 1px 2px rgba(0,0,0,0.2); transition: transform 0.2s; }
+  .proto-line-controls .sc-toggle::after { content: ''; position: absolute; top: 2px; left: 2px; width: 12px; height: 12px; border-radius: 50%; background: #fff; box-shadow: 0 1px 2px rgba(0,0,0,0.2); transition: transform 0.2s; }
   .proto-line-controls .sc-toggle.on::after { transform: translateX(14px); }
-  .proto-line-controls .sc-toggle-label { font-size: 11px; font-weight: 600; color: var(--grey-400); font-family: var(--font); }
+  .proto-line-controls .sc-toggle-label { font-size: 10px; font-weight: 600; color: var(--grey-400); font-family: var(--font); }
   .proto-divider { grid-column: 1 / -1; height: 0; border-top: 1px dashed var(--grey-100); margin: 2px 0; }
+
   /* Showcase mobile: CTA button to open real sheet */
   .sc-mobile-cta { display: none; padding: 30px 20px; text-align: center; }
   .sc-mobile-cta button { padding: 14px 28px; border-radius: 12px; background: var(--black); color: var(--white); font-size: 14px; font-weight: 700; border: none; cursor: pointer; font-family: var(--font); transition: all 0.15s; box-shadow: 0 2px 12px rgba(0,0,0,0.15); }
   .sc-mobile-cta button:active { transform: scale(0.97); }
   .sc-mobile-cta .sc-mobile-hint { font-size: 11px; color: var(--grey-400); margin-top: 10px; }
+
+  /* ===== Mobile overrides ===== */
   @media (max-width: 640px) {
-    .proto-panel { padding: 8px 12px 8px; }
-    .proto-line { grid-template-columns: 68px 1fr; min-height: 26px; }
-    .proto-line-label { font-size: 9px; }
-    .proto-line-controls .sc-config-pill { padding: 3px 8px; font-size: 10px; }
-    .proto-line-controls .sc-toggle-label { font-size: 10px; }
+    /* Remove desktop sidebar offset */
+    .proto-main { margin-left: 0 !important; }
+    /* Sidebar becomes bottom sheet overlay */
+    .proto-sidebar { position: fixed; left: 0; right: 0; bottom: 0; top: auto; width: 100%; min-height: 45vh; max-height: 85vh; overflow-y: auto; border-right: none; border-radius: 16px 16px 0 0; box-shadow: 0 -4px 24px rgba(0,0,0,0.15); transform: translateY(100%); transition: transform 0.3s ease; z-index: 200; }
+    .proto-sidebar.open { transform: translateY(0); }
+    body.sidebar-collapsed .proto-sidebar { transform: translateY(100%); }
+    .proto-sidebar-head { padding: 10px 14px 6px; }
+    /* Backdrop */
+    .proto-backdrop { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.3); z-index: 199; }
+    .proto-backdrop.open { display: block; }
+    /* Panel compact */
+    .proto-panel { padding: 8px 12px 16px; }
+    .proto-line { grid-template-columns: 60px 1fr; min-height: 24px; gap: 0 5px; }
+    .proto-line-label { font-size: 8px; }
+    .proto-line-controls { gap: 3px; }
+    .proto-line-controls .sc-config-pill { padding: 2px 6px; font-size: 9px; border-radius: 4px; }
+    .proto-line-controls .sc-toggle { width: 26px; height: 14px; border-radius: 7px; }
+    .proto-line-controls .sc-toggle::after { width: 10px; height: 10px; }
+    .proto-line-controls .sc-toggle.on::after { transform: translateX(12px); }
+    .proto-line-controls .sc-toggle-label { font-size: 9px; }
     .proto-globals { gap: 2px; }
     .proto-globals button { padding: 2px 6px; font-size: 9px; }
     .proto-globals .sep { margin: 0 2px; }
     .proto-tab { padding: 8px 12px; font-size: 11px; }
+    .proto-sidebar-toggle { width: 26px; height: 26px; border-radius: 6px; margin-right: 4px; }
+    .proto-sidebar-toggle .material-symbols-rounded { font-size: 14px !important; }
     /* Showcase: hide inline preview, show CTA button */
     .sc-preview { display: none; }
     .sc-mobile-cta { display: block; }
@@ -1272,11 +1305,22 @@
 </head>
 <body class="color-contrast">
 
+<!-- Sidebar (desktop: fixed left, mobile: bottom overlay) -->
+<div class="proto-sidebar" id="proto-sidebar">
+  <div class="proto-sidebar-head">
+    <span>Config</span>
+  </div>
+  <div class="proto-panel" id="proto-panel"></div>
+</div>
+<div class="proto-backdrop" id="proto-backdrop" onclick="togglePanel()"></div>
+
+<div class="proto-main">
+
 <div class="proto-header" id="proto-header">
   <div class="proto-tabs">
+    <button class="proto-sidebar-toggle" id="proto-sidebar-toggle" onclick="togglePanel()" title="Config"><span class="material-symbols-rounded" style="font-size:16px">tune</span></button>
     <button class="proto-tab active" data-tab="timeline" onclick="setTab('timeline')">Timeline</button>
     <button class="proto-tab" data-tab="ticket" onclick="setTab('ticket')">Ticket modal</button>
-    <button class="proto-collapse-btn" onclick="togglePanel()"><span class="chevron up">▾</span> Config</button>
     <div class="proto-globals">
       <button onclick="setColor('light')" id="btn-color-light">Light</button>
       <button onclick="setColor('contrast')" id="btn-color-contrast" class="active">Contrast</button>
@@ -1285,7 +1329,6 @@
       <button onclick="setLayout('bold')" id="btn-layout-bold" class="active">Bold</button>
     </div>
   </div>
-  <div class="proto-panel" id="proto-panel"></div>
 </div>
 
 <div id="showcase-container" style="display:none"></div>
@@ -1356,6 +1399,8 @@
   </div>
 
 </div>
+
+</div><!-- /.proto-main -->
 
 <div class="float-drawer" id="float-drawer">
   <div class="float-drawer-body" id="float-drawer-body"></div>
@@ -2519,21 +2564,19 @@ function setPlatform(p) {
   updateShowcase();
 }
 
-// ===== Panel collapse =====
-let _panelCollapsed = false;
+// ===== Sidebar toggle =====
+let _sidebarOpen = window.innerWidth > 640; // open on desktop, closed on mobile
 function togglePanel() {
-  _panelCollapsed = !_panelCollapsed;
-  const panel = document.getElementById('proto-panel');
-  const chevron = document.querySelector('.proto-collapse-btn .chevron');
-  if (_panelCollapsed) {
-    panel.style.maxHeight = panel.scrollHeight + 'px';
-    requestAnimationFrame(() => { panel.classList.add('collapsed'); });
-    chevron.classList.remove('up');
+  const isMobile = window.innerWidth <= 640;
+  _sidebarOpen = !_sidebarOpen;
+  if (isMobile) {
+    const sidebar = document.getElementById('proto-sidebar');
+    const backdrop = document.getElementById('proto-backdrop');
+    sidebar.classList.toggle('open', _sidebarOpen);
+    backdrop.classList.toggle('open', _sidebarOpen);
+    document.body.style.overflow = _sidebarOpen ? 'hidden' : '';
   } else {
-    panel.classList.remove('collapsed');
-    panel.style.maxHeight = panel.scrollHeight + 'px';
-    setTimeout(() => { panel.style.maxHeight = ''; }, 300);
-    chevron.classList.add('up');
+    document.body.classList.toggle('sidebar-collapsed', !_sidebarOpen);
   }
 }
 
