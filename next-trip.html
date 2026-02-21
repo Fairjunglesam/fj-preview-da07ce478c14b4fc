@@ -863,43 +863,43 @@
   .proto-globals button { padding: 3px 8px; border: 1.5px solid var(--grey-100); border-radius: 6px; background: var(--white); font-size: 10px; font-weight: 600; cursor: pointer; transition: all 0.15s; color: var(--grey-500); font-family: var(--font); line-height: 1.2; }
   .proto-globals button:hover { background: var(--grey-50); border-color: var(--grey-200); color: var(--grey-700); }
   .proto-globals button.active { background: var(--black); color: var(--white); border-color: var(--black); }
-  .proto-panel { padding: 10px 20px 14px; display: flex; flex-wrap: wrap; gap: 0; align-items: flex-start; margin-bottom: 12px; overflow: hidden; transition: max-height 0.3s ease, padding 0.3s ease, opacity 0.3s ease; }
-  .proto-panel.collapsed { max-height: 0 !important; padding-top: 0; padding-bottom: 0; margin-bottom: 0; opacity: 0; pointer-events: none; }
+  .proto-panel { padding: 10px 20px 10px; overflow: hidden; transition: max-height 0.3s ease, padding 0.3s ease, opacity 0.3s ease; }
+  .proto-panel.collapsed { max-height: 0 !important; padding-top: 0; padding-bottom: 0; opacity: 0; pointer-events: none; }
   .proto-collapse-btn { display: flex; align-items: center; gap: 4px; padding: 2px 10px; font-size: 9px; font-weight: 700; color: var(--grey-400); cursor: pointer; border: none; background: none; font-family: var(--font); text-transform: uppercase; letter-spacing: 0.3px; transition: color 0.15s; margin-left: 8px; }
   .proto-collapse-btn:hover { color: var(--grey-600); }
   .proto-collapse-btn .chevron { display: inline-block; transition: transform 0.3s ease; font-size: 10px; }
   .proto-collapse-btn .chevron.up { transform: rotate(180deg); }
-  .proto-row { display: flex; flex-wrap: wrap; gap: 6px 18px; align-items: center; width: 100%; padding: 4px 0; }
-  .proto-section { display: inline-flex; align-items: center; gap: 5px; }
-  .proto-section-label { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.3px; color: var(--grey-300); font-family: var(--font); white-space: nowrap; margin-right: 2px; }
-  .proto-section .sc-config-pill { padding: 4px 10px; border-radius: 6px; font-size: 11px; font-weight: 600; border: 1px solid var(--grey-100); background: var(--white); color: var(--grey-400); cursor: pointer; font-family: var(--font); transition: all 0.15s; white-space: nowrap; }
-  .proto-section .sc-config-pill:hover { border-color: var(--grey-200); color: var(--grey-600); }
-  .proto-section .sc-config-pill.active { background: var(--black); color: var(--white); border-color: var(--black); }
-  .proto-section .sc-toggle { position: relative; width: 32px; height: 18px; border-radius: 9px; background: var(--grey-200); border: none; cursor: pointer; transition: background 0.2s; flex-shrink: 0; }
-  .proto-section .sc-toggle.on { background: var(--blue-500); }
-  .proto-section .sc-toggle::after { content: ''; position: absolute; top: 2px; left: 2px; width: 14px; height: 14px; border-radius: 50%; background: #fff; box-shadow: 0 1px 2px rgba(0,0,0,0.2); transition: transform 0.2s; }
-  .proto-section .sc-toggle.on::after { transform: translateX(14px); }
-  .proto-section .sc-toggle-label { font-size: 11px; font-weight: 600; color: var(--grey-400); font-family: var(--font); }
-  .proto-divider { width: 100%; height: 0; border-top: 1px dashed var(--grey-100); margin: 2px 0; }
+  /* Grid-based config rows: label | controls */
+  .proto-line { display: grid; grid-template-columns: 80px 1fr; align-items: center; gap: 0 8px; min-height: 28px; }
+  .proto-line-label { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.3px; color: var(--grey-300); font-family: var(--font); white-space: nowrap; text-align: right; padding-right: 4px; }
+  .proto-line-controls { display: flex; align-items: center; gap: 5px; flex-wrap: wrap; }
+  .proto-line-controls .sc-config-pill { padding: 4px 10px; border-radius: 6px; font-size: 11px; font-weight: 600; border: 1px solid var(--grey-100); background: var(--white); color: var(--grey-400); cursor: pointer; font-family: var(--font); transition: all 0.15s; white-space: nowrap; }
+  .proto-line-controls .sc-config-pill:hover { border-color: var(--grey-200); color: var(--grey-600); }
+  .proto-line-controls .sc-config-pill.active { background: var(--black); color: var(--white); border-color: var(--black); }
+  .proto-line-controls .sc-toggle { position: relative; width: 32px; height: 18px; border-radius: 9px; background: var(--grey-200); border: none; cursor: pointer; transition: background 0.2s; flex-shrink: 0; }
+  .proto-line-controls .sc-toggle.on { background: var(--blue-500); }
+  .proto-line-controls .sc-toggle::after { content: ''; position: absolute; top: 2px; left: 2px; width: 14px; height: 14px; border-radius: 50%; background: #fff; box-shadow: 0 1px 2px rgba(0,0,0,0.2); transition: transform 0.2s; }
+  .proto-line-controls .sc-toggle.on::after { transform: translateX(14px); }
+  .proto-line-controls .sc-toggle-label { font-size: 11px; font-weight: 600; color: var(--grey-400); font-family: var(--font); }
+  .proto-divider { grid-column: 1 / -1; height: 0; border-top: 1px dashed var(--grey-100); margin: 2px 0; }
+  /* Showcase mobile: CTA button to open real sheet */
+  .sc-mobile-cta { display: none; padding: 30px 20px; text-align: center; }
+  .sc-mobile-cta button { padding: 14px 28px; border-radius: 12px; background: var(--black); color: var(--white); font-size: 14px; font-weight: 700; border: none; cursor: pointer; font-family: var(--font); transition: all 0.15s; box-shadow: 0 2px 12px rgba(0,0,0,0.15); }
+  .sc-mobile-cta button:active { transform: scale(0.97); }
+  .sc-mobile-cta .sc-mobile-hint { font-size: 11px; color: var(--grey-400); margin-top: 10px; }
   @media (max-width: 640px) {
-    .proto-panel { padding: 8px 12px 10px; }
-    .proto-row { gap: 4px 10px; }
-    .proto-section { gap: 3px; }
-    .proto-section-label { font-size: 9px; margin-right: 1px; }
-    .proto-section .sc-config-pill { padding: 3px 8px; font-size: 10px; }
-    .proto-section .sc-toggle-label { font-size: 10px; }
+    .proto-panel { padding: 8px 12px 8px; }
+    .proto-line { grid-template-columns: 68px 1fr; min-height: 26px; }
+    .proto-line-label { font-size: 9px; }
+    .proto-line-controls .sc-config-pill { padding: 3px 8px; font-size: 10px; }
+    .proto-line-controls .sc-toggle-label { font-size: 10px; }
     .proto-globals { gap: 2px; }
     .proto-globals button { padding: 2px 6px; font-size: 9px; }
     .proto-globals .sep { margin: 0 2px; }
     .proto-tab { padding: 8px 12px; font-size: 11px; }
-    /* Showcase full-width mobile */
-    #showcase-container { padding: 0; }
-    .sc-preview { max-width: 100%; width: 100%; }
-    .showcase-item { border-radius: 0; box-shadow: none; }
-    .showcase-label { display: none; }
-    .showcase-panel { border-radius: 0; }
-    #showcase-container .sheet-header { position: sticky; top: 0; z-index: 5; background: var(--white); }
-    #showcase-container[data-color="contrast"] .sheet-header { background: #1a2747; }
+    /* Showcase: hide inline preview, show CTA button */
+    .sc-preview { display: none; }
+    .sc-mobile-cta { display: block; }
   }
   /* Float drawer */
   .float-drawer { position: fixed; bottom: 20px; right: 20px; z-index: 1100; display: none; }
@@ -2558,62 +2558,42 @@ function setTab(tab) {
 
 function renderPanel() {
   const panel = document.getElementById('proto-panel');
+  const line = (label, controls) => `<div class="proto-line"><span class="proto-line-label">${label}</span><div class="proto-line-controls">${controls}</div></div>`;
+
   if (currentTab === 'timeline') {
     const st = _tlState;
     const pill = (key, val, label) => `<button class="sc-config-pill${st[key] === val ? ' active' : ''}" onclick="tlSet('${key}','${val}')">${label}</button>`;
     const tog = (key, label) => `<span class="sc-toggle-label">${label}</span><button class="sc-toggle${st[key] ? ' on' : ''}" onclick="tlSet('${key}',${!st[key]})"></button>`;
 
-    let h = '<div class="proto-row">';
-
-    // Transport + Direction on same row
-    h += '<div class="proto-section"><span class="proto-section-label">Transport</span>' +
+    let h = '';
+    h += line('Transport',
       `<button class="sc-config-pill${st.transport ? ' active' : ''}" onclick="tlSet('transport',true)">Oui</button>` +
-      `<button class="sc-config-pill${!st.transport ? ' active' : ''}" onclick="tlSet('transport',false)">Non</button>` +
-      '</div>';
+      `<button class="sc-config-pill${!st.transport ? ' active' : ''}" onclick="tlSet('transport',false)">Non</button>`);
 
     if (st.transport) {
-      h += '<div class="proto-section"><span class="proto-section-label">Direction</span>' +
-        pill('direction','ar','Aller-retour') + pill('direction','as','Aller simple') + '</div>';
-      h += '</div><div class="proto-row">';
-
-      // Mode + Legs on same row
-      h += '<div class="proto-section"><span class="proto-section-label">Mode</span>' +
-        pill('mode','train','Train') + pill('mode','vol','Avion') + '</div>';
-
+      h += line('Direction', pill('direction','ar','A/R') + pill('direction','as','Aller simple'));
+      h += line('Mode', pill('mode','train','Train') + pill('mode','vol','Avion'));
       if (st.mode === 'vol') {
-        h += '<div class="proto-section"><span class="proto-section-label">Legs</span>' +
-          pill('legs','direct','Direct') + pill('legs','1-stop','1 escale') + pill('legs','multi','Multi-escale') + '</div>';
+        h += line('Legs', pill('legs','direct','Direct') + pill('legs','1-stop','1 escale') + pill('legs','multi','Multi'));
       } else {
-        h += '<div class="proto-section"><span class="proto-section-label">Legs</span>' +
-          pill('legs','direct','Direct') + pill('legs','1-stop','Correspondance') + '</div>';
+        h += line('Legs', pill('legs','direct','Direct') + pill('legs','1-stop','Corresp.'));
       }
-
-      // Extras
       if (st.direction === 'ar') {
-        h += '<div class="proto-section"><span class="proto-section-label">Extras</span>' +
-          tog('hotel', 'Hôtel') +
-          `<span style="width:6px"></span>` + tog('car', 'Voiture') +
-          '</div>';
+        h += line('Extras', tog('hotel','Hôtel') + '<span style="width:8px"></span>' + tog('car','Voiture'));
       } else {
-        h += '<div class="proto-section"><span class="proto-section-label">Extras</span>' +
-          tog('car', 'Voiture') +
-          '</div>';
+        h += line('Extras', tog('car','Voiture'));
       }
     } else {
-      // No transport: services
-      h += '<div class="proto-section"><span class="proto-section-label">Services</span>' +
-        tog('hotel', 'Hôtel') +
-        `<span style="width:6px"></span>` + tog('car', 'Voiture') +
-        '</div>';
+      h += line('Services', tog('hotel','Hôtel') + '<span style="width:8px"></span>' + tog('car','Voiture'));
     }
 
-    h += '</div><div class="proto-divider"></div><div class="proto-row">';
-    h += '<div class="proto-section"><span class="proto-section-label">État</span>';
+    h += '<div class="proto-divider"></div>';
+    let etatPills = '';
     ['upcoming','imminent','in_transit','between_segments','trip_ending'].forEach(s => {
-      const label = { upcoming:'Upcoming', imminent:'Imminent', in_transit:'In transit', between_segments:'Between', trip_ending:'Ending' }[s];
-      h += `<button class="sc-config-pill${currentState === s ? ' active' : ''}" onclick="setState('${s}')">${label}</button>`;
+      const label = { upcoming:'Upcoming', imminent:'Imminent', in_transit:'Transit', between_segments:'Between', trip_ending:'Ending' }[s];
+      etatPills += `<button class="sc-config-pill${currentState === s ? ' active' : ''}" onclick="setState('${s}')">${label}</button>`;
     });
-    h += '</div></div>';
+    h += line('État', etatPills);
 
     panel.innerHTML = h;
   } else {
@@ -2625,31 +2605,30 @@ function renderPanel() {
     const showMulti = isTrain && !isDiffere;
     const showPlatform = isTrain && st.ticket === 'qr-wallet' && !isDiffere;
 
-    let h = '<div class="proto-row">';
-    h += '<div class="proto-section"><span class="proto-section-label">Type</span>';
+    let h = '';
+    let typePills = '';
     [['train','Train'],['flight','Avion'],['hotel','Hôtel'],['car','Voiture']].forEach(([k,l]) => {
-      h += `<button class="sc-config-pill${st.type === k ? ' active' : ''}" onclick="scSet('type','${k}')">${l}</button>`;
+      typePills += `<button class="sc-config-pill${st.type === k ? ' active' : ''}" onclick="scSet('type','${k}')">${l}</button>`;
     });
-    h += '</div>';
+    h += line('Type', typePills);
 
     if (isTrain) {
-      h += '<div class="proto-section"><span class="proto-section-label">Billet</span>';
-      [['qr-wallet','QR + Wallet'],['qr','QR seul'],['pdf','PDF'],['differe','Différé']].forEach(([k,l]) => {
-        h += `<button class="sc-config-pill${st.ticket === k ? ' active' : ''}" onclick="scSet('ticket','${k}')">${l}</button>`;
+      let billetPills = '';
+      [['qr-wallet','QR+Wallet'],['qr','QR seul'],['pdf','PDF'],['differe','Différé']].forEach(([k,l]) => {
+        billetPills += `<button class="sc-config-pill${st.ticket === k ? ' active' : ''}" onclick="scSet('ticket','${k}')">${l}</button>`;
       });
-      h += '</div>';
+      h += line('Billet', billetPills);
     }
     if (showMulti) {
-      h += `<div class="proto-section"><span class="proto-section-label">Suppliers</span><button class="sc-toggle${st.multi ? ' on' : ''}" onclick="scSet('multi',${!st.multi})"></button><span class="sc-toggle-label">${st.multi ? 'Multi-billets' : 'Mono-supplier'}</span></div>`;
+      h += line('Suppliers', `<button class="sc-toggle${st.multi ? ' on' : ''}" onclick="scSet('multi',${!st.multi})"></button><span class="sc-toggle-label">${st.multi ? 'Multi-billets' : 'Mono'}</span>`);
     }
     if (showPlatform) {
-      h += '<div class="proto-section"><span class="proto-section-label">Plateforme</span>';
+      let platPills = '';
       [['ios','iOS'],['android','Android']].forEach(([k,l]) => {
-        h += `<button class="sc-config-pill${st.platform === k ? ' active' : ''}" onclick="scSet('platform','${k}')">${l}</button>`;
+        platPills += `<button class="sc-config-pill${st.platform === k ? ' active' : ''}" onclick="scSet('platform','${k}')">${l}</button>`;
       });
-      h += '</div>';
+      h += line('Plateforme', platPills);
     }
-    h += '</div>';
     panel.innerHTML = h;
   }
 }
@@ -3259,10 +3238,68 @@ function renderShowcase() {
     }
   }
 
-  // Render preview
+  // Store mock etape for mobile sheet trigger
+  window._scMockEtape = _scBuildMockEtape();
+
+  // Render preview (desktop) + CTA button (mobile)
   const headerH = '<div class="sheet-header"><div class="sheet-title">' + headerTitle + '</div><button class="sheet-close" disabled>&#10005;</button></div>';
   html += '<div class="sc-preview"><div class="showcase-item"><div class="showcase-label">' + panelLabel + '</div><div class="showcase-panel">' + headerH + '<div class="sheet-body">' + content + '</div></div></div></div>';
+  html += '<div class="sc-mobile-cta"><button onclick="openShowcaseSheet()">Voir le billet</button><div class="sc-mobile-hint">' + panelLabel + '</div></div>';
   sc.innerHTML = html;
+}
+
+function _scBuildMockEtape() {
+  if (!window._scState) return null;
+  const st = window._scState;
+  const base = { _travelerName: 'Stella Smith', locUrl: '#' };
+  const trainDep = { name: 'Paris Montparnasse' };
+  const trainArr = { name: 'Bordeaux Saint-Jean' };
+  const flightDep = { name: 'Paris', code: 'CDG' };
+  const flightArr = { name: 'Nice', code: 'NCE' };
+  const isTrain = st.type === 'train';
+  const isDiffere = st.ticket === 'differe';
+  const showPlatform = isTrain && st.ticket === 'qr-wallet' && !isDiffere;
+
+  if (st.type === 'hotel') {
+    return { ...base, type: 'hotel', checkin: { date: 'Vendredi 9 F\u00e9vrier', time: '15:00' }, checkout: { date: 'Dimanche 11 F\u00e9vrier', time: '11:00' }, nights: 3, roomName: 'Chambre Deluxe Double', bookingRef: 'MRR-482910', address: '15 Rue du Temple, 33000 Bordeaux', freeTextConditions: 'R\u00e9cup\u00e9rez votre cl\u00e9 \u00e0 la r\u00e9ception. Check-in \u00e0 partir de 15h.', voucherPdf: 'voucher-hotel.pdf', docAvailable: true, shortLabel: 'H\u00f4tel Renaissance Bordeaux', title: 'H\u00f4tel Renaissance Bordeaux' };
+  }
+  if (st.type === 'car') {
+    return { ...base, type: 'car', pickup: { time: '14:00', date: 'Mardi 17 F\u00e9vrier', location: 'Gare Saint-Jean, Bordeaux' }, dropoff: { time: '18:00', date: 'Mardi 17 F\u00e9vrier', location: 'Gare Saint-Jean, Bordeaux' }, carrier: 'Avis', title: 'Avis \u2013 Cat. B Compacte', bookingRef: 'AVIS-84729', driverName: 'Stella Smith', voucherPdf: 'voucher-hotel.pdf', docAvailable: true };
+  }
+  if (st.type === 'flight') {
+    return { ...base, type: 'flight', carrier: 'Air France', num: 'AF 1234', pnr: 'ABC123', ticket: { available: true, hasQR: false, wallet: false }, departure: flightDep, arrival: flightArr, voucherPdf: 'voucher-flight.pdf' };
+  }
+  // Train
+  if (isDiffere) {
+    return { ...base, type: 'train', carrier: 'SNCF', num: 'TGV 9012', pnr: 'UVWX90', ticket: { available: false, availableDate: '15 mars 2026' }, departure: trainDep, arrival: trainArr };
+  }
+  if (st.multi) {
+    const hasQR = st.ticket !== 'pdf', hasWallet = st.ticket === 'qr-wallet';
+    return { ...base, type: 'train', departure: trainDep, arrival: trainArr, carrier: 'SNCF', pnr: 'XYZW89', ticket: { available: true, hasQR, wallet: false },
+      segments: [
+        { dep: { time: '08:30', name: 'Paris Montparnasse' }, arr: { time: '10:32', name: 'Lyon Part-Dieu' }, dur: '2h02', num: '6211', carrier: 'inOUI', ticket: { available: true, hasQR, wallet: hasWallet }, ...(hasQR ? {} : { voucherPdf: 'voucher-train.pdf' }) },
+        { dep: { time: '11:15', name: 'Lyon Part-Dieu' }, arr: { time: '14:28', name: 'Bordeaux Saint-Jean' }, dur: '3h13', num: '7641', carrier: 'OUIGO', ticket: { available: true, hasQR, wallet: false }, ...(hasQR ? {} : { voucherPdf: 'voucher-train.pdf' }) },
+      ],
+      connections: [{ loc: 'Lyon Part-Dieu', dur: '43 min' }],
+    };
+  }
+  // Direct
+  const carrier = st.ticket === 'qr' ? 'OUIGO' : 'SNCF';
+  const num = st.ticket === 'qr' ? '7641' : 'TGV 6234';
+  let ticket = {}, voucherPdf;
+  if (st.ticket === 'qr-wallet') ticket = { available: true, hasQR: true, wallet: true };
+  else if (st.ticket === 'qr') ticket = { available: true, hasQR: true, wallet: false };
+  else { ticket = { available: true, hasQR: false, wallet: false }; voucherPdf = 'voucher-train.pdf'; }
+  return { ...base, type: 'train', carrier, num, pnr: 'HJKL42', ticket, departure: trainDep, arrival: trainArr, ...(voucherPdf ? { voucherPdf } : {}) };
+}
+
+function openShowcaseSheet() {
+  const etape = window._scMockEtape;
+  if (!etape) return;
+  // Set platform from _scState
+  const st = window._scState || {};
+  if (st.platform) currentPlatform = st.platform;
+  openSheet(etape);
 }
 
 function scSet(key, val) {
