@@ -2675,8 +2675,12 @@ function renderShowcase() {
       { label: 'Billet diff\u00e9r\u00e9', type: 'train', ticket: { available: false, availableDate: '15 mars 2026' }, platform: 'desktop', carrier: 'SNCF', num: 'TGV 9012', pnr: 'UVWX90', dep: trainDep, arr: trainArr },
     ],
     'H\u00f4tel / Voiture': [
-      { label: 'H\u00f4tel', etapeType: 'hotel', hotelName: 'H\u00f4tel Renaissance Bordeaux' },
-      { label: 'Voiture de location', etapeType: 'car', carCarrier: 'Hertz' },
+      { label: 'H\u00f4tel (PDF)', etapeType: 'hotel', hotelName: 'H\u00f4tel Renaissance Bordeaux',
+        hotelData: { checkin: { date: 'Vendredi 9 F\u00e9vrier', time: '15:00' }, checkout: { date: 'Dimanche 11 F\u00e9vrier', time: '11:00' }, nights: 3, roomName: 'Chambre Deluxe Double', bookingRef: 'MRR-482910', address: '15 Rue du Temple, 33000 Bordeaux', freeTextConditions: 'R\u00e9cup\u00e9rez votre cl\u00e9 \u00e0 la r\u00e9ception. Check-in \u00e0 partir de 15h. R\u00e9ception ouverte 24h/24.', voucherPdf: 'voucherhotel221-2173826_1679135161643.pdf', docAvailable: true } },
+      { label: 'H\u00f4tel (pas de PDF)', etapeType: 'hotel', hotelName: 'Novotel Paris Gare de Lyon',
+        hotelData: { checkin: { date: 'Lundi 3 Mars', time: '14:00' }, checkout: { date: 'Mercredi 5 Mars', time: '12:00' }, nights: 2, roomName: 'Standard Twin', bookingRef: 'NOV-55821', address: '2 Rue Hector Malot, 75012 Paris', docAvailable: true, docLabel: 'Voir le voucher' } },
+      { label: 'Voiture (PDF)', etapeType: 'car', carCarrier: 'Avis',
+        carData: { pickup: { time: '14:00', date: 'Mardi 17 F\u00e9vrier', location: 'Gare Saint-Jean, Bordeaux' }, dropoff: { time: '18:00', date: 'Mardi 17 F\u00e9vrier', location: 'Gare Saint-Jean, Bordeaux' }, carrier: 'Avis', title: 'Avis \u2013 Cat. B Compacte', bookingRef: 'AVIS-84729', driverName: 'Stella Smith', voucherPdf: 'voucherhotel221-2173826_1679135161643.pdf', docAvailable: true } },
     ]
   };
 
@@ -2697,6 +2701,8 @@ function renderShowcase() {
         icon: icon,
         shortLabel: s.hotelName || '',
         title: s.hotelName || '',
+        ...(s.hotelData || {}),
+        ...(s.carData || {}),
       };
       // Build header title with date icon (éphéméride)
       const mockDate = s.dep ? 'Ven. 09 Fév' : (s.etapeType === 'hotel' ? 'Vendredi 9 Février' : 'Mardi 17 Février');
