@@ -1327,6 +1327,7 @@
     <label>Layout</label>
     <button onclick="setLayout('classic')" id="btn-layout-classic">Classic</button>
     <button onclick="setLayout('bold')" id="btn-layout-bold" class="active">Bold</button>
+    <span id="nav-context">
     <div class="sep"></div>
     <label>Plateforme</label>
     <button onclick="setPlatform('desktop')" id="btn-plat-desktop" class="active">Desktop</button>
@@ -1339,6 +1340,7 @@
     <button onclick="setState('in_transit')" id="btn-in_transit">in_transit</button>
     <button onclick="setState('between_segments')" id="btn-between_segments">between</button>
     <button onclick="setState('trip_ending')" id="btn-trip_ending">ending</button>
+    </span>
   </div>
   <div class="nav-scenarios" id="nav-scenarios"></div>
   <div class="nav-row" style="border-top:1px solid #e5e7eb;padding-top:6px;margin-top:4px">
@@ -1446,9 +1448,10 @@ const TRIPS = {
         duration: '1h35', carrier: 'Air France', details: ['Economy', 'Direct'],
         luggage: '1 cabine + 1 soute 23 kg',
         seat: { place: '14A' },
-        ticket: { available: true, hasQR: true, wallet: true },
+        ticket: { available: true, hasQR: false, wallet: false },
         num: 'AF 7680', pnr: 'ABC123', gate: 'B24',
         fareName: 'Economy Standard', fareExch: 'with_fee', fareRefund: false, amenities: ['meal', 'wifi'],
+        voucherPdf: 'voucher-flight.pdf',
         docLabel: 'Voir mon billet', docIcon: '🎫', docAvailable: true,
         locLabel: "Itinéraire vers l'aéroport", locIcon: '📍', locUrl: '#',
       },
@@ -1583,9 +1586,10 @@ const TRIPS = {
         connections: [{ loc: 'Munich MUC', dur: '1h20', detail: 'Terminal 2' }],
         luggage: '1 cabine + 1 soute 23 kg · Bagages jusqu\'à ATH',
         seat: { place: '22F' },
-        ticket: { available: true, hasQR: true, wallet: true },
+        ticket: { available: true, hasQR: false, wallet: false },
         pnr: 'KLM456',
         fareName: 'Economy Light', fareExch: false, fareRefund: false, amenities: ['meal', 'entertainment'],
+        voucherPdf: 'voucher-flight.pdf',
         docLabel: 'Voir mon billet', docIcon: '🎫', docAvailable: true,
         locLabel: "Itinéraire vers l'aéroport", locIcon: '📍', locUrl: '#',
       },
@@ -1640,10 +1644,10 @@ const TRIPS = {
         duration: '22h15',
         carrier: 'Lufthansa', details: ['Economy', '3 escales'],
         segments: [
-          { dep: { time: '10:15', name: 'Paris', code: 'CDG', terminal: 'T1' }, arr: { time: '11:25', name: 'Francfort', code: 'FRA', terminal: 'T1' }, dur: '1h10', num: 'LH 1035', pnr: 'BKK901', seat: { place: '34A' }, carrier: 'Lufthansa', ticket: { available: true, hasQR: true, wallet: true }, fareName: 'Economy Light', fareExch: false, fareRefund: false, amenities: ['meal'] },
-          { dep: { time: '13:00', name: 'Francfort', code: 'FRA', terminal: 'T1' }, arr: { time: '18:40', name: 'Istanbul', code: 'IST' }, dur: '2h40', num: 'TK 1592', pnr: 'BKK901', seat: { place: '18C' }, carrier: 'Turkish Airlines', ticket: { available: true, hasQR: true, wallet: true }, fareName: 'Economy', fareExch: false, fareRefund: false, amenities: ['meal', 'entertainment'] },
-          { dep: { time: '20:45', name: 'Istanbul', code: 'IST' }, arr: { time: '03:00', name: 'Doha', code: 'DOH', dayOffset: 1 }, dur: '3h15', num: 'QR 246', pnr: 'BKK901', seat: { place: '25K' }, carrier: 'Qatar Airways', ticket: { available: true, hasQR: true, wallet: true }, fareName: 'Economy', fareExch: false, fareRefund: false, amenities: ['meal', 'entertainment'] },
-          { dep: { time: '05:10', name: 'Doha', code: 'DOH', date: 'Mar. 10 Fév' }, arr: { time: '14:30', name: 'Bangkok', code: 'BKK' }, dur: '6h20', num: 'QR 836', pnr: 'BKK901', seat: { place: '31F' }, carrier: 'Qatar Airways', ticket: { available: true, hasQR: true, wallet: true }, fareName: 'Economy', fareExch: false, fareRefund: false, amenities: ['meal', 'entertainment'] },
+          { dep: { time: '10:15', name: 'Paris', code: 'CDG', terminal: 'T1' }, arr: { time: '11:25', name: 'Francfort', code: 'FRA', terminal: 'T1' }, dur: '1h10', num: 'LH 1035', pnr: 'BKK901', seat: { place: '34A' }, carrier: 'Lufthansa', ticket: { available: true, hasQR: false, wallet: false }, voucherPdf: 'voucher-flight.pdf', fareName: 'Economy Light', fareExch: false, fareRefund: false, amenities: ['meal'] },
+          { dep: { time: '13:00', name: 'Francfort', code: 'FRA', terminal: 'T1' }, arr: { time: '18:40', name: 'Istanbul', code: 'IST' }, dur: '2h40', num: 'TK 1592', pnr: 'BKK901', seat: { place: '18C' }, carrier: 'Turkish Airlines', ticket: { available: true, hasQR: false, wallet: false }, voucherPdf: 'voucher-flight.pdf', fareName: 'Economy', fareExch: false, fareRefund: false, amenities: ['meal', 'entertainment'] },
+          { dep: { time: '20:45', name: 'Istanbul', code: 'IST' }, arr: { time: '03:00', name: 'Doha', code: 'DOH', dayOffset: 1 }, dur: '3h15', num: 'QR 246', pnr: 'BKK901', seat: { place: '25K' }, carrier: 'Qatar Airways', ticket: { available: true, hasQR: false, wallet: false }, voucherPdf: 'voucher-flight.pdf', fareName: 'Economy', fareExch: false, fareRefund: false, amenities: ['meal', 'entertainment'] },
+          { dep: { time: '05:10', name: 'Doha', code: 'DOH', date: 'Mar. 10 Fév' }, arr: { time: '14:30', name: 'Bangkok', code: 'BKK' }, dur: '6h20', num: 'QR 836', pnr: 'BKK901', seat: { place: '31F' }, carrier: 'Qatar Airways', ticket: { available: true, hasQR: false, wallet: false }, voucherPdf: 'voucher-flight.pdf', fareName: 'Economy', fareExch: false, fareRefund: false, amenities: ['meal', 'entertainment'] },
         ],
         connections: [
           { loc: 'Francfort FRA', dur: '1h35' },
@@ -1652,9 +1656,10 @@ const TRIPS = {
         ],
         luggage: '1 cabine + 1 soute 23 kg · Bagages jusqu\'à BKK',
         seat: { place: '34A' },
-        ticket: { available: true, hasQR: true, wallet: true },
+        ticket: { available: true, hasQR: false, wallet: false },
         pnr: 'BKK901',
         fareName: 'Economy Light', fareExch: false, fareRefund: false, amenities: ['meal'],
+        voucherPdf: 'voucher-flight.pdf',
         docLabel: 'Voir mon billet', docIcon: '🎫', docAvailable: true,
         locLabel: "Itinéraire vers l'aéroport", locIcon: '📍', locUrl: '#',
       },
@@ -1742,9 +1747,10 @@ const TRIPS = {
         duration: '1h15', carrier: 'Air France', details: ['Economy', 'Direct'],
         luggage: '1 cabine + 1 soute 23 kg',
         seat: { place: '7C' },
-        ticket: { available: true, hasQR: true, wallet: true },
+        ticket: { available: true, hasQR: false, wallet: false },
         num: 'AF 7514', pnr: 'DEF789', gate: 'A12',
         fareName: 'Economy Standard', fareExch: 'with_fee', fareRefund: false, amenities: ['wifi'],
+        voucherPdf: 'voucher-flight.pdf',
         docLabel: 'Voir mon billet', docIcon: '🎫', docAvailable: true,
         locLabel: "Itinéraire vers l'aéroport", locIcon: '📍', locUrl: '#',
       }
@@ -2787,14 +2793,20 @@ function toggleShowcase() {
   const sc = document.getElementById('showcase-container');
   const cards = document.getElementById('cards-container');
   const btn = document.getElementById('btn-showcase');
+  const ctx = document.getElementById('nav-context');
+  const scn = document.getElementById('nav-scenarios');
   if (sc.style.display === 'none' || !sc.style.display) {
     renderShowcase();
     sc.style.display = 'block';
     cards.style.display = 'none';
+    ctx.style.display = 'none';
+    scn.style.display = 'none';
     btn.textContent = 'Masquer showcase';
   } else {
     sc.style.display = 'none';
     cards.style.display = '';
+    ctx.style.display = '';
+    scn.style.display = '';
     btn.textContent = 'Showcase sheets';
   }
 }
