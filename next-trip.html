@@ -119,6 +119,34 @@
   .stepper-status { font-size: 8px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.4px; color: var(--blue-500); text-align: center; margin-top: 1px; opacity: 0.8; }
   .stepper-step.completed .stepper-status { color: var(--green-500); }
 
+  /* ===== Bold Stepper — expanded active, compacted rest ===== */
+  .stepper.stepper-bold { gap: 0; align-items: stretch; }
+  .stepper.stepper-bold .stepper-step { flex: 0 0 auto; width: 48px; transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); overflow: hidden; }
+  .stepper.stepper-bold .stepper-step.active { flex: 1 1 auto; min-width: 130px; width: auto; background: rgba(0,169,252,0.04); border-radius: 12px; padding: 6px 4px; }
+  .stepper.stepper-bold .stepper-step.active.viewing { background: rgba(34,215,161,0.04); }
+  /* Compacted: hide label + date */
+  .stepper.stepper-bold .stepper-step:not(.active) .stepper-label { display: none; }
+  .stepper.stepper-bold .stepper-step:not(.active) .stepper-date { display: none; }
+  .stepper.stepper-bold .stepper-step:not(.active) .stepper-status { display: none; }
+  .stepper.stepper-bold .stepper-step:not(.active) { opacity: 0.5; }
+  .stepper.stepper-bold .stepper-step:not(.active):hover { opacity: 0.8; }
+  .stepper.stepper-bold .stepper-step:not(.active) .stepper-dot { width: 22px; height: 22px; }
+  .stepper.stepper-bold .stepper-step:not(.active) .stepper-dot .material-symbols-rounded { font-size: 12px; }
+  .stepper.stepper-bold .stepper-step:not(.active) .stepper-dot-row { height: 28px; }
+  .stepper.stepper-bold .stepper-step:not(.active) .stepper-line { left: calc(50% + 13px); right: calc(-50% + 13px); height: 2px; }
+  /* Active: enlarged + prominent */
+  .stepper.stepper-bold .stepper-step.active .stepper-dot { width: 40px; height: 40px; box-shadow: 0 0 0 5px rgba(0,169,252,0.15); }
+  .stepper.stepper-bold .stepper-step.active .stepper-dot .material-symbols-rounded { font-size: 20px; }
+  .stepper.stepper-bold .stepper-step.active .stepper-dot-row { height: 44px; }
+  .stepper.stepper-bold .stepper-step.active .stepper-label { font-size: 13px; font-weight: 800; }
+  .stepper.stepper-bold .stepper-step.active .stepper-date { font-size: 10px; }
+  .stepper.stepper-bold .stepper-step.active .stepper-line { left: calc(50% + 22px); right: calc(-50% + 13px); }
+  /* Completed compacted */
+  .stepper.stepper-bold .stepper-step.completed:not(.active) { opacity: 0.35; }
+  .stepper.stepper-bold .stepper-step.completed:not(.active):hover { opacity: 0.6; }
+  .stepper.stepper-bold .stepper-step.completed:not(.active) .stepper-dot { width: 20px; height: 20px; }
+  .stepper.stepper-bold .stepper-step.completed:not(.active) .stepper-dot .material-symbols-rounded { font-size: 11px; }
+
   /* ===== Étape wrapper ===== */
   .etape-content { transition: all 0.3s var(--ease); }
   .etape-content.is-past { opacity: 0.5; filter: grayscale(0.3); }
@@ -508,6 +536,18 @@
     .stepper.stepper-dark .stepper-step.active .stepper-dot { width: 32px; height: 32px; }
     .stepper.stepper-dark .stepper-step.active .stepper-dot .material-symbols-rounded { font-size: 16px; }
     .stepper.stepper-dark .stepper-step.active .stepper-label { font-size: 11px; }
+    /* Bold stepper mobile — carousel with snap */
+    .stepper.stepper-bold { overflow-x: auto; scroll-snap-type: x mandatory; -webkit-overflow-scrolling: touch; scrollbar-width: none; padding: 0 4px; }
+    .stepper.stepper-bold::-webkit-scrollbar { display: none; }
+    .stepper.stepper-bold .stepper-step { scroll-snap-align: center; flex-shrink: 0; width: 42px; }
+    .stepper.stepper-bold .stepper-step.active { min-width: 150px; flex-shrink: 0; }
+    .stepper.stepper-bold .stepper-step.active .stepper-dot { width: 34px; height: 34px; }
+    .stepper.stepper-bold .stepper-step.active .stepper-dot .material-symbols-rounded { font-size: 17px; }
+    .stepper.stepper-bold .stepper-step.active .stepper-dot-row { height: 38px; }
+    .stepper.stepper-bold .stepper-step.active .stepper-label { font-size: 12px; }
+    .stepper.stepper-bold .stepper-step:not(.active) .stepper-dot { width: 20px; height: 20px; }
+    .stepper.stepper-bold .stepper-step:not(.active) .stepper-dot .material-symbols-rounded { font-size: 11px; }
+    .stepper.stepper-bold .stepper-step:not(.active) .stepper-dot-row { height: 26px; }
     .bp-time { font-size: 22px; }
     .bp-route { padding: 8px 10px 4px; }
     .bp-head { padding: 6px 10px 4px; }
@@ -645,6 +685,11 @@
   .trip-card.dark-mode .stepper-dark .stepper-step.active .stepper-date { color: var(--blue-400, #5bc0fa); }
   .trip-card.dark-mode .stepper-dark .stepper-step.completed .stepper-label { color: rgba(255,255,255,0.3); }
   .trip-card.dark-mode .stepper-dark .stepper-step.completed .stepper-line { background: rgba(34,215,161,0.2); }
+  /* Dark mode bold stepper overrides */
+  .trip-card.dark-mode .stepper-bold .stepper-step.active { background: rgba(0,169,252,0.08); }
+  .trip-card.dark-mode .stepper-bold .stepper-step.active.viewing { background: rgba(34,215,161,0.08); }
+  .trip-card.dark-mode .stepper-bold .stepper-step:not(.active) { opacity: 0.4; }
+  .trip-card.dark-mode .stepper-bold .stepper-step:not(.active):hover { opacity: 0.7; }
 
   /* ===== Dark Mode — Full dark trip card ===== */
   .trip-card.dark-mode { background: #252540; border-color: rgba(255,255,255,0.06); box-shadow: 0 4px 20px rgba(0,0,0,0.25); backdrop-filter: none; -webkit-backdrop-filter: none; }
@@ -1396,7 +1441,7 @@ function buildStepperHTML(trip, state, activeIdx, autoIdx, done, isDark, isBold,
     }
     h += `<div class="${cls}" onclick="selectEtape('${tripKey}',${i})" style="cursor:pointer"><div class="stepper-dot-row"><div class="stepper-dot">${dotContent}</div><div class="stepper-line"></div></div><div class="stepper-label">${e.shortLabel}</div><div class="stepper-date">${e.dateShort}</div>${statusHint}</div>`;
   });
-  const stepperCls = 'stepper' + (useDarkDots ? ' stepper-dark' : '');
+  const stepperCls = 'stepper' + (useDarkDots ? ' stepper-dark' : '') + (isBold ? ' stepper-bold' : '');
   return `<div class="${stepperCls}">${h}</div>`;
 }
 
@@ -1448,6 +1493,35 @@ function renderAll() {
       b.classList.toggle('active', s === state);
     }
   });
+
+  // Bold stepper: scroll active step into view + attach swipe listeners
+  if (isBold) {
+    requestAnimationFrame(() => {
+      document.querySelectorAll('.stepper-bold').forEach(stepper => {
+        const active = stepper.querySelector('.stepper-step.active');
+        if (active) active.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+        // Swipe snap: detect which step is centered after scroll ends
+        if (!stepper._swipeAttached) {
+          stepper._swipeAttached = true;
+          let debounce;
+          stepper.addEventListener('scroll', () => {
+            clearTimeout(debounce);
+            debounce = setTimeout(() => {
+              const rect = stepper.getBoundingClientRect();
+              const center = rect.left + rect.width / 2;
+              let closest = null, minDist = Infinity;
+              stepper.querySelectorAll('.stepper-step').forEach(step => {
+                const sr = step.getBoundingClientRect();
+                const dist = Math.abs((sr.left + sr.width / 2) - center);
+                if (dist < minDist) { minDist = dist; closest = step; }
+              });
+              if (closest && !closest.classList.contains('active')) closest.click();
+            }, 200);
+          });
+        }
+      });
+    });
+  }
 }
 
 // Calendar date icon (éphéméride) — parses "Ven. 09 Fév" or "Vendredi 9 Février"
