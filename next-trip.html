@@ -2339,20 +2339,7 @@ function renderEtape(e, state, idx, autoIdx, done, total, isPast, targetId) {
     }
   }
 
-  // Smooth height transition on desktop (FLIP technique)
-  const prevH = ct.offsetHeight;
   ct.innerHTML = `<div class="etape-content ${isPast ? 'is-past' : ''}">${bodyH}</div>`;
-  const newH = ct.offsetHeight;
-  if (prevH && prevH !== newH && window.innerWidth > 640) {
-    ct.style.height = prevH + 'px';
-    ct.style.overflow = 'hidden';
-    requestAnimationFrame(() => {
-      ct.style.transition = 'height 0.25s ease';
-      ct.style.height = newH + 'px';
-      const done = () => { ct.style.height = ''; ct.style.overflow = ''; ct.style.transition = ''; ct.removeEventListener('transitionend', done); };
-      ct.addEventListener('transitionend', done);
-    });
-  }
 }
 
 function setState(s) { currentState = s; selectedEtapes = {}; renderAll(); }
