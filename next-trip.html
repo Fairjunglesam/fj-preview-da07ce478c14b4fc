@@ -789,7 +789,7 @@
   @media (max-width: 640px) {
     /* Sheet → bottom sheet on mobile */
     .sheet-overlay { align-items: flex-end; justify-content: stretch; }
-    .sheet-panel { width: 100%; max-width: 100%; max-height: none; border-radius: 20px 20px 0 0; height: 100vh; height: 100dvh; transform: translateY(100%); }
+    .sheet-panel { width: 100%; max-width: 100%; max-height: none; border-radius: 20px 20px 0 0; height: 88vh; height: 88dvh; transform: translateY(100%); }
     .sheet-body { padding-bottom: max(40px, env(safe-area-inset-bottom, 34px)); }
     .sheet-overlay.open .sheet-panel { transform: translateY(0); }
     .sheet-handle { display: block; }
@@ -2502,10 +2502,34 @@ function buildTransportSheet(e, platform) {
   const isFl = e.type === 'flight';
   const isMobile = platform === 'ios' || platform === 'android';
 
-  // Multi-segment → carousel of tickets with chevrons, federal actions below
+  // Multi-segment
   if (e.segments && e.segments.length > 1) {
-    const cid = 'stc-' + Math.random().toString(36).slice(2, 8);
     const segs = e.segments;
+    const hasPerSegTicket = segs.some(s => s.ticket);
+
+    // Same supplier / single ticket for the whole leg → one QR + route summary
+    if (!hasPerSegTicket) {
+      const ticket = e.ticket || {};
+      const depSeg = segs[0], arrSeg = segs[segs.length - 1];
+      const depN = depSeg.dep.code || depSeg.dep.name || '';
+      const arrN = arrSeg.arr.code || arrSeg.arr.name || '';
+      const conn = e.connections || [];
+      const stops = conn.map(c => c.loc).join(', ');
+      let h = '';
+      h += `<div class="sheet-ticket-label">${e.carrier || ''}</div>`;
+      h += `<div class="sheet-ticket-route">${depN} \u2192 ${arrN}${stops ? ' \u00b7 via ' + stops : ''}</div>`;
+      if (ticket.available !== false && ticket.hasQR) {
+        h += `<div class="sheet-qr">${qrPlaceholderSvg}<div class="sheet-qr-label">Pr\u00e9sentez au contr\u00f4leur</div></div>`;
+      } else if (ticket.available !== false && e.voucherPdf) {
+        const docName = isFl ? 'E-ticket' : 'Billet';
+        h += `<a href="${e.voucherPdf}" target="_blank" class="sheet-pdf"><iframe src="${e.voucherPdf}#toolbar=0&view=Fit&page=1" title="${docName}"></iframe></a>`;
+      }
+      h += buildFederalActions(e, platform);
+      return h;
+    }
+
+    // Different suppliers / per-segment tickets → carousel
+    const cid = 'stc-' + Math.random().toString(36).slice(2, 8);
     let h = `<div class="sheet-ticket-carousel" id="${cid}">`;
     segs.forEach((seg, i) => {
       const ticket = seg.ticket || {};
@@ -2528,7 +2552,6 @@ function buildTransportSheet(e, platform) {
       }
       h += '</div>';
     });
-    // Nav chevrons + counter
     h += '<div class="sheet-ticket-nav">';
     h += `<button onclick="sheetCarouselNav('${cid}',-1)" disabled><span class="material-symbols-rounded">chevron_left</span></button>`;
     h += `<span class="sheet-ticket-counter">1 / ${segs.length}</span>`;
@@ -2823,6 +2846,14 @@ function renderShowcase() {
           { dep: { time: '09:45', name: 'Munich', code: 'MUC' }, arr: { time: '13:35', name: 'Ath\u00e8nes', code: 'ATH' }, dur: '2h50', num: 'AF 1752', carrier: 'Air France', ticket: { available: true, hasQR: true, wallet: true } },
         ],
         connections: [{ loc: 'Munich MUC', dur: '1h20' }] },
+      { label: 'M\u00eame supplier (iOS)', type: 'train', platform: 'ios', carrier: 'SNCF', pnr: 'ABCD12',
+        ticket: { available: true, hasQR: true, wallet: true },
+        dep: { name: 'Paris Montparnasse' }, arr: { name: 'Bordeaux Saint-Jean' },
+        segments: [
+          { dep: { time: '08:30', name: 'Paris Montparnasse' }, arr: { time: '10:32', name: 'Lyon Part-Dieu' }, dur: '2h02', num: 'TGV 6211', carrier: 'SNCF' },
+          { dep: { time: '11:15', name: 'Lyon Part-Dieu' }, arr: { time: '14:28', name: 'Bordeaux Saint-Jean' }, dur: '3h13', num: 'TGV 6825', carrier: 'SNCF' },
+        ],
+        connections: [{ loc: 'Lyon Part-Dieu', dur: '43 min' }] },
     ],
     'H\u00f4tel / Voiture': [
       { label: 'H\u00f4tel (PDF)', etapeType: 'hotel', hotelName: 'H\u00f4tel Renaissance Bordeaux',
