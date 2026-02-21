@@ -2801,7 +2801,7 @@ function updateShowcase() {
 function renderShowcase() {
   const sc = document.getElementById('showcase-container');
   sc.setAttribute('data-color', currentColor);
-  if (!window._scState) window._scState = { type: 'train', ticket: 'qr-wallet', platform: 'ios' };
+  if (!window._scState) window._scState = { type: 'train', ticket: 'qr-wallet', option: 'none', platform: 'ios' };
   const st = window._scState;
 
   const types = [
@@ -2814,8 +2814,11 @@ function renderShowcase() {
     { key: 'qr-wallet', label: 'QR + Wallet' },
     { key: 'qr', label: 'QR seul' },
     { key: 'pdf', label: 'PDF' },
-    { key: 'differe', label: 'Diff\u00e9r\u00e9' },
+  ];
+  const options = [
+    { key: 'none', label: 'Aucune' },
     { key: 'multi', label: 'Multi-billets' },
+    { key: 'differe', label: 'Diff\u00e9r\u00e9' },
   ];
   const platforms = [
     { key: 'ios', label: 'iOS (Apple Wallet)' },
@@ -2823,7 +2826,7 @@ function renderShowcase() {
   ];
 
   const isTrain = st.type === 'train';
-  const showPlatform = isTrain && st.ticket === 'qr-wallet';
+  const showPlatform = isTrain && st.ticket === 'qr-wallet' && st.option !== 'differe';
 
   // Configurator
   let html = '<div class="sc-config">';
@@ -2836,6 +2839,11 @@ function renderShowcase() {
     html += '<div class="sc-config-row"><span class="sc-config-label">Billet</span>';
     tickets.forEach(t => {
       html += `<button class="sc-config-pill${st.ticket === t.key ? ' active' : ''}" onclick="scSet('ticket','${t.key}')">${t.label}</button>`;
+    });
+    html += '</div>';
+    html += '<div class="sc-config-row"><span class="sc-config-label">Option</span>';
+    options.forEach(o => {
+      html += `<button class="sc-config-pill${st.option === o.key ? ' active' : ''}" onclick="scSet('option','${o.key}')">${o.label}</button>`;
     });
     html += '</div>';
   }
@@ -2894,22 +2902,36 @@ function renderShowcase() {
     const depL = dep.name, arrL = arr.name;
     const platform = showPlatform ? st.platform : 'desktop';
 
-    if (st.ticket === 'multi') {
-      // Multi-billets carousel (train only)
+    if (st.option === 'differe') {
+      // Différé — override le type de billet, pas encore émis
+      const me = { ...base, type: 'train', carrier: 'SNCF', num: 'TGV 9012', pnr: 'UVWX90',
+        ticket: { available: false, availableDate: '15 mars 2026' },
+        departure: dep, arrival: arr };
+      headerTitle = dateIcon('Ven. 09 F\u00e9v') + '<span>' + depL + ' \u2192 ' + arrL + '</span>';
+      content = buildTransportSheet(me, 'desktop');
+      panelLabel = 'Diff\u00e9r\u00e9 \u00b7 SNCF TGV 9012';
+    } else if (st.option === 'multi') {
+      // Multi-billets carousel — le type de billet s'applique par segment
+      const hasQR = st.ticket !== 'pdf';
+      const hasWallet = st.ticket === 'qr-wallet';
       const me = { ...base, type: 'train', departure: dep, arrival: arr,
         carrier: 'SNCF', pnr: 'XYZW89',
-        ticket: { available: true, hasQR: true, wallet: false },
+        ticket: { available: true, hasQR: hasQR, wallet: false },
         dep: trainDep, arr: trainArr,
         segments: [
-          { dep: { time: '08:30', name: 'Paris Montparnasse' }, arr: { time: '10:32', name: 'Lyon Part-Dieu' }, dur: '2h02', num: '6211', carrier: 'inOUI', ticket: { available: true, hasQR: true, wallet: true } },
-          { dep: { time: '11:15', name: 'Lyon Part-Dieu' }, arr: { time: '14:28', name: 'Bordeaux Saint-Jean' }, dur: '3h13', num: '7641', carrier: 'OUIGO', ticket: { available: true, hasQR: true, wallet: false } },
+          { dep: { time: '08:30', name: 'Paris Montparnasse' }, arr: { time: '10:32', name: 'Lyon Part-Dieu' }, dur: '2h02', num: '6211', carrier: 'inOUI',
+            ticket: { available: true, hasQR: hasQR, wallet: hasWallet }, ...(hasQR ? {} : { voucherPdf: 'voucher-train.pdf' }) },
+          { dep: { time: '11:15', name: 'Lyon Part-Dieu' }, arr: { time: '14:28', name: 'Bordeaux Saint-Jean' }, dur: '3h13', num: '7641', carrier: 'OUIGO',
+            ticket: { available: true, hasQR: hasQR, wallet: false }, ...(hasQR ? {} : { voucherPdf: 'voucher-train.pdf' }) },
         ],
         connections: [{ loc: 'Lyon Part-Dieu', dur: '43 min' }],
       };
       headerTitle = dateIcon('Ven. 09 F\u00e9v') + '<span>' + depL + ' \u2192 ' + arrL + '</span>';
-      content = buildTransportSheet(me, 'desktop');
-      panelLabel = 'Multi-billets \u00b7 inOUI + OUIGO \u00b7 Carousel';
+      content = buildTransportSheet(me, hasWallet ? (st.platform || 'ios') : 'desktop');
+      const billetType = st.ticket === 'qr-wallet' ? 'QR+Wallet' : (st.ticket === 'qr' ? 'QR' : 'PDF');
+      panelLabel = 'Multi-billets ' + billetType + ' \u00b7 inOUI + OUIGO';
     } else {
+      // Direct — un seul billet
       const carrier = st.ticket === 'qr' ? 'OUIGO' : 'SNCF';
       const num = st.ticket === 'qr' ? '7641' : 'TGV 6234';
       let ticket = {}, voucherPdf;
@@ -2919,13 +2941,10 @@ function renderShowcase() {
       } else if (st.ticket === 'qr') {
         ticket = { available: true, hasQR: true, wallet: false };
         panelLabel = 'QR seul \u00b7 ' + carrier + ' ' + num;
-      } else if (st.ticket === 'pdf') {
+      } else {
         ticket = { available: true, hasQR: false, wallet: false };
         voucherPdf = 'voucher-train.pdf';
         panelLabel = 'PDF \u00b7 ' + carrier + ' ' + num;
-      } else {
-        ticket = { available: false, availableDate: '15 mars 2026' };
-        panelLabel = 'Diff\u00e9r\u00e9 \u00b7 ' + carrier + ' ' + num;
       }
       const me = { ...base, type: 'train', carrier, num, pnr: 'HJKL42', ticket, departure: dep, arrival: arr, ...(voucherPdf ? { voucherPdf } : {}) };
       headerTitle = dateIcon('Ven. 09 F\u00e9v') + '<span>' + depL + ' \u2192 ' + arrL + '</span>';
@@ -2940,11 +2959,14 @@ function renderShowcase() {
 }
 
 function scSet(key, val) {
-  if (!window._scState) window._scState = { type: 'train', ticket: 'qr-wallet', platform: 'ios' };
+  if (!window._scState) window._scState = { type: 'train', ticket: 'qr-wallet', option: 'none', platform: 'ios' };
   window._scState[key] = val;
   if (key === 'type' && val === 'train') {
-    if (!['qr-wallet','qr','pdf','differe','multi'].includes(window._scState.ticket)) {
+    if (!['qr-wallet','qr','pdf'].includes(window._scState.ticket)) {
       window._scState.ticket = 'qr-wallet';
+    }
+    if (!['none','multi','differe'].includes(window._scState.option)) {
+      window._scState.option = 'none';
     }
   }
   renderShowcase();
