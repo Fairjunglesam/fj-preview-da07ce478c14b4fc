@@ -1879,7 +1879,7 @@ function renderAll() {
         const total = trip.etapes.length;
         const prevDis = selIdx <= 0 ? ' disabled' : '';
         const nextDis = selIdx >= total - 1 ? ' disabled' : '';
-        const navH = '<div class="bold-nav"><span class="bold-nav-label">' + (selIdx + 1) + ' / ' + total + '</span><button class="bold-nav-btn"' + prevDis + ' onclick="selectEtape(\'' + key + '\',' + (selIdx - 1) + ')"><span class="material-symbols-rounded">chevron_left</span></button><button class="bold-nav-btn"' + nextDis + ' onclick="selectEtape(\'' + key + '\',' + (selIdx + 1) + ')"><span class="material-symbols-rounded">chevron_right</span></button></div>';
+        const navH = '<div class="bold-nav"><button class="bold-nav-btn"' + prevDis + ' onclick="selectEtape(\'' + key + '\',' + (selIdx - 1) + ')"><span class="material-symbols-rounded">chevron_left</span></button><button class="bold-nav-btn"' + nextDis + ' onclick="selectEtape(\'' + key + '\',' + (selIdx + 1) + ')"><span class="material-symbols-rounded">chevron_right</span></button></div>';
         // Insert nav inside the .bpb card (position: relative) so it overlays bottom-right
         const bpbEl = document.querySelector('#etape-' + key + ' .bpb');
         if (bpbEl) bpbEl.insertAdjacentHTML('beforeend', navH);
