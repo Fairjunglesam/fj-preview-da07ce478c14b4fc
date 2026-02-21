@@ -256,6 +256,11 @@
       animation: bold-transit-v 2.5s ease-in-out infinite;
     }
 
+    /* Desktop: card not clickable, only pill + nav buttons */
+    .bpb.tappable { cursor: default; }
+    .bpb.tappable .bpb-action-pill { cursor: pointer; }
+    .bpb-leg { cursor: default; }
+    .bpb-leg .bpb-action-pill { cursor: pointer; }
     /* Bold desktop: minimal prev/next chevrons — always inside .bpb (dark card) */
     .bold-nav { display: flex; align-items: center; justify-content: flex-end; gap: 5px; position: absolute; bottom: 8px; right: 10px; z-index: 2; }
     .bold-nav-btn { display: inline-flex; align-items: center; justify-content: center; width: 24px; height: 24px; border-radius: 50%; border: 1px solid rgba(255,255,255,0.15); background: rgba(255,255,255,0.08); color: rgba(255,255,255,0.45); cursor: pointer; transition: all 0.15s; font-family: var(--font); padding: 0; }
@@ -414,18 +419,22 @@
   /* Leg card — per-segment carrier label in mid zone */
   .leg-mid-carrier { font-size: 12px; font-weight: 700; color: rgba(255,255,255,0.6); white-space: nowrap; text-align: center; margin-bottom: 2px; letter-spacing: 0.2px; }
   .trip-card:not(.contrast-mode):not(.dark-mode) .leg-mid-carrier { color: var(--grey-600); }
-  /* Leg card — compact stacked segments */
-  .bpb-leg .bpb-hero { display: flex; flex-wrap: wrap; align-items: baseline; gap: 0 6px; }
-  .bpb-leg .bpb-hero.arr { justify-content: flex-end; }
+  .leg-mid-seat { font-size: 10px; font-weight: 600; color: rgba(255,255,255,0.45); text-align: center; margin-top: 1px; white-space: nowrap; }
+  .trip-card:not(.contrast-mode):not(.dark-mode) .leg-mid-seat { color: var(--grey-500); }
+  /* Leg card — same layout as direct, just smaller */
   .bpb-leg .bpb-code { font-size: 22px; }
-  .bpb-leg .bpb-time { font-size: 13px; font-weight: 600; margin-top: 0; }
-  .bpb-leg .bpb-name { display: none; }
-  .bpb-leg .bpb-route { padding: 4px 14px 2px; }
+  .bpb-leg .bpb-time { font-size: 11px; }
+  .bpb-leg .bpb-name { font-size: 10px; }
+  .bpb-leg .bpb-route { padding: 4px 14px 4px; }
   .bpb-leg .bpb-head { padding: 8px 14px 2px; }
-  .bpb-leg .bp-tags { padding: 0 14px 2px; }
-  .bpb-leg .bp-tag { padding: 2px 6px; }
-  .bpb-leg .bp-tag-label { font-size: 8px; }
-  .bpb-leg .bp-tag-value { font-size: 12px; }
+  .bpb-leg .bp-tags { padding: 1px 14px 2px; }
+  /* Leg card — first segment departure keeps full size */
+  .bpb-leg .leg-route-first .bpb-hero:first-child .bpb-code { font-size: 28px; }
+  .bpb-leg .leg-route-first .bpb-hero:first-child .bpb-time { font-size: 12px; }
+  .bpb-leg .leg-route-first .bpb-hero:first-child .bpb-name { font-size: 12px; }
+  /* Leg card — date label per segment when date changes */
+  .leg-seg-date { font-size: 10px; font-weight: 700; color: rgba(255,255,255,0.5); padding: 2px 14px 0; }
+  .trip-card:not(.contrast-mode):not(.dark-mode) .leg-seg-date { color: var(--grey-500); }
   /* Leg card — connection chip centered on separator line */
   .bpb-leg .leg-conn-bar { position: relative; border-top: none; margin: 2px 14px; padding: 0; justify-content: center; }
   .bpb-leg .leg-conn-bar::before { content: ''; position: absolute; top: 50%; left: 0; right: 0; height: 1px; background: rgba(255,255,255,0.08); }
@@ -819,10 +828,12 @@
     .bpb-leg .bpb-mid { display: flex; min-width: 50px; }
     .bpb-leg .bpb-mid-badge .mid-label { font-size: 11px; }
     .bpb-leg .leg-mid-carrier { font-size: 10px; }
-    .bpb-leg .bpb-code { font-size: 20px; }
+    .bpb-leg .bpb-code { font-size: 18px; }
     .bpb-leg .bpb-route { padding: 3px 12px 3px; }
-    .bpb-leg .bpb-time { font-size: 11px; }
+    .bpb-leg .bpb-time { font-size: 10px; }
+    .bpb-leg .bpb-name { font-size: 9px; }
     .bpb-leg .bp-tags { padding: 0 12px 2px; }
+    .bpb-leg .leg-route-first .bpb-hero:first-child .bpb-code { font-size: 24px; }
     .bpb-code { font-size: 28px; }
     .bpb-route { padding: 12px 12px 6px; }
     .bpb-head { padding: 10px 12px 0; }
@@ -1561,7 +1572,7 @@ const TRIPS = {
           { dep: { time: '10:15', name: 'Paris', code: 'CDG', terminal: 'T1' }, arr: { time: '11:25', name: 'Francfort', code: 'FRA', terminal: 'T1' }, dur: '1h10', num: 'LH 1035', pnr: 'BKK901', seat: { place: '34A' }, carrier: 'Lufthansa', ticket: { available: true, hasQR: true, wallet: true }, fareName: 'Economy Light', fareExch: false, fareRefund: false, amenities: ['meal'] },
           { dep: { time: '13:00', name: 'Francfort', code: 'FRA', terminal: 'T1' }, arr: { time: '18:40', name: 'Istanbul', code: 'IST' }, dur: '2h40', num: 'TK 1592', pnr: 'BKK901', seat: { place: '18C' }, carrier: 'Turkish Airlines', ticket: { available: true, hasQR: true, wallet: true }, fareName: 'Economy', fareExch: false, fareRefund: false, amenities: ['meal', 'entertainment'] },
           { dep: { time: '20:45', name: 'Istanbul', code: 'IST' }, arr: { time: '03:00', name: 'Doha', code: 'DOH', dayOffset: 1 }, dur: '3h15', num: 'QR 246', pnr: 'BKK901', seat: { place: '25K' }, carrier: 'Qatar Airways', ticket: { available: true, hasQR: true, wallet: true }, fareName: 'Economy', fareExch: false, fareRefund: false, amenities: ['meal', 'entertainment'] },
-          { dep: { time: '05:10', name: 'Doha', code: 'DOH' }, arr: { time: '14:30', name: 'Bangkok', code: 'BKK' }, dur: '6h20', num: 'QR 836', pnr: 'BKK901', seat: { place: '31F' }, carrier: 'Qatar Airways', ticket: { available: true, hasQR: true, wallet: true }, fareName: 'Economy', fareExch: false, fareRefund: false, amenities: ['meal', 'entertainment'] },
+          { dep: { time: '05:10', name: 'Doha', code: 'DOH', date: 'Mar. 10 Fév' }, arr: { time: '14:30', name: 'Bangkok', code: 'BKK' }, dur: '6h20', num: 'QR 836', pnr: 'BKK901', seat: { place: '31F' }, carrier: 'Qatar Airways', ticket: { available: true, hasQR: true, wallet: true }, fareName: 'Economy', fareExch: false, fareRefund: false, amenities: ['meal', 'entertainment'] },
         ],
         connections: [
           { loc: 'Francfort FRA', dur: '1h35' },
@@ -2050,14 +2061,17 @@ function renderEtape(e, state, idx, autoIdx, done, total, isPast, targetId) {
         h += `<div class="bpb-hero"><div class="bpb-code">${dep.time}</div><div class="bpb-name">${dep.name}</div></div>`;
       }
       const midPillLabel = midLabel;
-      // Build action pill for mid zone
+      // Build action pill for mid zone (with direct onclick for desktop)
+      const pillIdx = etapeData ? sheetTargets.length : -1;
+      if (etapeData) sheetTargets.push(etapeData);
       let actionPill = '';
       if (ticket) {
+        const pillClick = pillIdx >= 0 ? ` onclick="event.stopPropagation();openSheet(sheetTargets[${pillIdx}])"` : '';
         if (ticket.available) {
           const tIcon = ticket.hasQR ? qrSvg : '<span class="material-symbols-rounded">confirmation_number</span>';
-          actionPill = `<div class="bpb-action-pill">${tIcon} Voir mon billet</div>`;
+          actionPill = `<div class="bpb-action-pill"${pillClick}>${tIcon} Voir mon billet</div>`;
         } else {
-          actionPill = `<div class="bpb-action-pill deferred"><span class="material-symbols-rounded">event</span> Dispo le ${ticket.availableDate || '—'}</div>`;
+          actionPill = `<div class="bpb-action-pill deferred"${pillClick}><span class="material-symbols-rounded">event</span> Dispo le ${ticket.availableDate || '—'}</div>`;
         }
       }
       h += `<div class="bpb-mid"><div class="bpb-mid-row"><div class="bpb-mid-line"></div><div class="bpb-mid-badge">${midBadge(type, midPillLabel)}</div><div class="bpb-mid-line"></div></div>${actionPill}</div>`;
@@ -2070,10 +2084,8 @@ function renderEtape(e, state, idx, autoIdx, done, total, isPast, targetId) {
       h += '</div>';
       // Slim tags: only porte/siège (flight) or voie/voiture (train)
       h += infoTags(seat, fareData, null, type, true);
-      // Bold: tappable card → sheet
-      const tIdx = sheetTargets.length;
-      if (etapeData) sheetTargets.push(etapeData);
-      const tapAttr = etapeData ? ` tappable" onclick="openSheet(sheetTargets[${tIdx}])"` : '"';
+      // Card: tappable only on mobile, pill handles desktop click
+      const tapAttr = etapeData ? ` tappable" onclick="if(window.innerWidth<641)openSheet(sheetTargets[${pillIdx}])"` : '"';
       return `<div class="bpb${extraCls ? ' ' + extraCls : ''}${tapAttr}>${h}</div>`;
     }
 
@@ -2087,54 +2099,73 @@ function renderEtape(e, state, idx, autoIdx, done, total, isPast, targetId) {
       const pnr = firstSeg.pnr || etape.pnr || '';
       const headRight = pnr ? `<div class="bpb-head-right"><span class="bpb-ref">Réf. ${pnr}</span></div>` : '';
       h += `<div class="bpb-head"><div class="bpb-carrier"><span class="bpb-date">${etape.departure.date}</span></div>${headRight}</div>`;
-      // Stacked segment routes — carrier + flight num in mid zone per segment
+      // Stacked segment routes — same visual as direct cards, carrier+seat in mid
+      const headerDate = etape.departure.date;
+      let prevDate = headerDate;
       etape.segments.forEach((seg, si) => {
         const dep = seg.dep;
         const arr = seg.arr;
         const arrOff = arr.dayOffset ? `<span class="day-offset">+${arr.dayOffset}</span>` : '';
         const carrier = seg.carrier || etape.carrier;
         const segNum = seg.num || '';
-        // Mid: carrier label above, num + duration in badge
+        // Date label when it changes
+        const segDate = dep.date || null;
+        if (si > 0 && segDate && segDate !== prevDate) {
+          h += `<div class="leg-seg-date">${segDate}</div>`;
+        }
+        if (segDate) prevDate = segDate;
+        // Mid content: carrier, badge (icon + num + dur), seat/gate as text
         const midLabel = [segNum, seg.dur].filter(Boolean).join(' · ');
         const carrierLine = `<div class="leg-mid-carrier">${carrier}</div>`;
-        // Route row — same visual as direct cards, with carrier+num in mid
-        h += '<div class="bpb-route">';
+        // Seat/gate as compact text in mid zone
+        let midSeatLine = '';
+        const segSeat = seg.seat || null;
+        if (isFl) {
+          const parts = [];
+          if (seg.gate) parts.push('Porte ' + seg.gate);
+          if (segSeat && segSeat.place) parts.push('Siège ' + segSeat.place);
+          if (parts.length) midSeatLine = `<div class="leg-mid-seat">${parts.join(' · ')}</div>`;
+        } else {
+          const parts = [];
+          if (seg.platform) parts.push('Voie ' + seg.platform);
+          if (segSeat && segSeat.wagon) parts.push('V.' + segSeat.wagon + ' Pl.' + segSeat.place);
+          else if (segSeat && segSeat.place) parts.push('Place ' + segSeat.place);
+          if (parts.length) midSeatLine = `<div class="leg-mid-seat">${parts.join(' · ')}</div>`;
+        }
+        // Route row
+        const routeCls = si === 0 ? ' leg-route-first' : '';
+        h += `<div class="bpb-route${routeCls}">`;
         if (isFl && dep.code) {
           h += `<div class="bpb-hero"><div class="bpb-code">${dep.code}</div><div class="bpb-time">${dep.time}</div><div class="bpb-name">${dep.name}${dep.terminal ? ' · T' + dep.terminal : ''}</div></div>`;
         } else {
           h += `<div class="bpb-hero"><div class="bpb-code">${dep.time}</div><div class="bpb-name">${dep.name}</div></div>`;
         }
-        h += `<div class="bpb-mid">${carrierLine}<div class="bpb-mid-row"><div class="bpb-mid-line"></div><div class="bpb-mid-badge"><span class="mid-label">${midLabel}</span></div><div class="bpb-mid-line"></div></div></div>`;
+        h += `<div class="bpb-mid">${carrierLine}<div class="bpb-mid-row"><div class="bpb-mid-line"></div><div class="bpb-mid-badge">${midBadge(etape.type, midLabel)}</div><div class="bpb-mid-line"></div></div>${midSeatLine}</div>`;
         if (isFl && arr.code) {
           h += `<div class="bpb-hero arr"><div class="bpb-code">${arr.code}${arrOff}</div><div class="bpb-time">${arr.time}</div><div class="bpb-name">${arr.name}${arr.terminal ? ' · T' + arr.terminal : ''}</div></div>`;
         } else {
           h += `<div class="bpb-hero arr"><div class="bpb-code">${arr.time}${arrOff}</div><div class="bpb-name">${arr.name}</div></div>`;
         }
         h += '</div>';
-        // Seat/gate tags per segment
-        const segSeat = seg.seat || null;
-        h += infoTags(segSeat, seg, null, etape.type, true);
         // Connection bar between segments
         if (si < etape.segments.length - 1 && etape.connections && etape.connections[si]) {
           const conn = etape.connections[si];
           h += `<div class="leg-conn-bar"><span class="leg-conn-chip"><span class="material-symbols-rounded" style="font-size:12px">schedule</span> ${conn.dur} · ${conn.loc}</span></div>`;
         }
       });
-      // Action pill — centered at bottom of card, concerns the whole leg
+      // Action pill — floating on bottom edge, only this is clickable
+      const tIdx = sheetTargets.length;
+      sheetTargets.push(etape);
       const legTicket = firstSeg.ticket || etape.ticket;
       if (legTicket) {
         if (legTicket.available) {
           const tIcon = legTicket.hasQR ? qrSvg : '<span class="material-symbols-rounded">confirmation_number</span>';
-          h += `<div class="leg-action-center"><div class="bpb-action-pill">${tIcon} Voir mon billet</div></div>`;
+          h += `<div class="leg-action-center"><div class="bpb-action-pill" onclick="openSheet(sheetTargets[${tIdx}])">${tIcon} Voir mon billet</div></div>`;
         } else {
-          h += `<div class="leg-action-center"><div class="bpb-action-pill deferred"><span class="material-symbols-rounded">event</span> Dispo le ${legTicket.availableDate || '—'}</div></div>`;
+          h += `<div class="leg-action-center"><div class="bpb-action-pill deferred" onclick="openSheet(sheetTargets[${tIdx}])"><span class="material-symbols-rounded">event</span> Dispo le ${legTicket.availableDate || '—'}</div></div>`;
         }
       }
-      // Tappable
-      const tIdx = sheetTargets.length;
-      sheetTargets.push(etape);
-      const tapAttr = ` tappable" onclick="openSheet(sheetTargets[${tIdx}])"`;
-      return `<div class="bpb bpb-leg${extraCls ? ' ' + extraCls : ''}${tapAttr}>${h}</div>`;
+      return `<div class="bpb bpb-leg${extraCls ? ' ' + extraCls : ''}">${h}</div>`;
     }
 
     let allH = '';
