@@ -29,7 +29,7 @@
     --ease: cubic-bezier(0.4, 0, 0.2, 1);
   }
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-  body { font-family: var(--font); background: var(--grey-50); color: var(--black); line-height: 1.5; padding: 16px; -webkit-font-smoothing: antialiased; }
+  body { font-family: var(--font); background: var(--white); color: var(--black); line-height: 1.5; padding: 16px; -webkit-font-smoothing: antialiased; }
 
   /* ===== Demo Controls ===== */
   .demo-controls { max-width: 960px; margin: 0 auto 12px; padding: 10px 14px; background: var(--white); border-radius: var(--radius-xs); border: var(--stroke-sm) solid var(--grey-100); display: flex; flex-wrap: wrap; gap: 5px; align-items: center; }
@@ -42,6 +42,7 @@
 
   /* ===== Trip Card shell ===== */
   .trip-card { max-width: 640px; margin: 0 auto; background: rgba(255,255,255,0.55); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border-radius: 18px; border: var(--stroke-lg) solid rgba(255,255,255,0.35); overflow: hidden; transition: all 0.3s var(--ease); box-shadow: 0 2px 16px rgba(0,0,0,0.04), 0 0 0 1px rgba(0,0,0,0.03); }
+  .trip-card:has(.stepper-bold) { max-width: 900px; }
   .trip-card.state-upcoming { border-color: rgba(230,233,240,0.6); }
   .trip-card.state-imminent { border-color: rgba(0,169,252,0.18); background: linear-gradient(160deg, rgba(0,169,252,0.06) 0%, rgba(255,255,255,0.55) 35%); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); box-shadow: 0 2px 20px rgba(0,169,252,0.08), 0 0 0 1px rgba(0,169,252,0.06); }
   .trip-card.state-in_transit { border-color: rgba(0,169,252,0.22); background: linear-gradient(160deg, rgba(0,169,252,0.08) 0%, rgba(255,255,255,0.55) 45%); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); box-shadow: 0 2px 20px rgba(0,169,252,0.1), 0 0 0 1px rgba(0,169,252,0.08); }
@@ -164,6 +165,97 @@
     background-size: 250% 100%; animation: bold-transit 2.5s ease-in-out infinite;
   }
   @keyframes bold-transit { 0% { background-position: 100% 0; } 100% { background-position: 0% 0; } }
+
+  /* ===== Bold Desktop — 2-column vertical stepper layout ===== */
+  @media (min-width: 641px) {
+    /* Grid: header full-width, stepper left, etape right */
+    .card-inner:has(.stepper-bold) {
+      display: grid;
+      grid-template-columns: 180px 1fr;
+      grid-template-rows: auto 1fr;
+      gap: 0 16px;
+    }
+    .card-inner:has(.stepper-bold) > .card-header { grid-column: 1 / -1; }
+    .card-inner:has(.stepper-bold) > .stepper { grid-row: 2; grid-column: 1; align-self: start; }
+    .card-inner:has(.stepper-bold) > [id^="etape-"] { grid-row: 2; grid-column: 2; }
+
+    /* Stepper becomes vertical column */
+    .stepper.stepper-bold {
+      flex-direction: column;
+      align-items: stretch;
+      gap: 0;
+      overflow: visible;
+      margin-bottom: 0;
+    }
+    /* Each step: dot left, text right */
+    .stepper.stepper-bold .stepper-step {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      grid-template-rows: auto auto auto;
+      gap: 0 10px;
+      align-items: center;
+      flex: none;
+      padding: 8px 6px;
+      border-radius: 8px;
+    }
+    .stepper.stepper-bold .stepper-step.active { flex: none; }
+    .stepper.stepper-bold .stepper-dot-row {
+      grid-column: 1; grid-row: 1 / -1;
+      width: auto; height: auto;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .stepper.stepper-bold .stepper-label {
+      grid-column: 2; grid-row: 1;
+      text-align: left; margin-top: 0; padding: 0;
+    }
+    .stepper.stepper-bold .stepper-date {
+      grid-column: 2; grid-row: 2;
+      text-align: left; margin-top: 0;
+    }
+    .stepper.stepper-bold .stepper-status {
+      grid-column: 2; grid-row: 3;
+      text-align: left;
+    }
+
+    /* Vertical connecting lines (override horizontal pseudo-elements) */
+    .stepper.stepper-bold .stepper-step::before,
+    .stepper.stepper-bold .stepper-step::after {
+      width: 2px; height: auto;
+      left: calc(6px + 13px); /* padding-left + half of 26px dot */
+      top: auto; bottom: auto; right: auto;
+      transform: none;
+    }
+    .stepper.stepper-bold .stepper-step::before {
+      top: 0; bottom: calc(50% + 14px);
+      left: calc(6px + 13px); right: auto;
+    }
+    .stepper.stepper-bold .stepper-step::after {
+      top: calc(50% + 14px); bottom: 0;
+      left: calc(6px + 13px); right: auto;
+    }
+    .stepper.stepper-bold .stepper-step:first-child::before { display: none; }
+    .stepper.stepper-bold .stepper-step:last-child::after { display: none; }
+    /* Active bigger dot (42px) → adjust line gap */
+    .stepper.stepper-bold .stepper-step.active::before {
+      bottom: calc(50% + 22px); left: calc(6px + 13px); right: auto;
+    }
+    .stepper.stepper-bold .stepper-step.active::after {
+      top: calc(50% + 22px); left: calc(6px + 13px); right: auto;
+    }
+    /* Vertical transit animation */
+    .stepper.stepper-bold .stepper-step.active.transit::after {
+      background: linear-gradient(180deg, var(--blue-500) 40%, var(--grey-100) 60%);
+      background-size: 100% 250%;
+      animation: bold-transit-v 2.5s ease-in-out infinite;
+    }
+    /* Dark mode vertical transit */
+    .trip-card.dark-mode .stepper-bold .stepper-step.active.transit::after {
+      background: linear-gradient(180deg, var(--blue-400) 40%, rgba(255,255,255,0.08) 60%);
+      background-size: 100% 250%;
+      animation: bold-transit-v 2.5s ease-in-out infinite;
+    }
+  }
+  @keyframes bold-transit-v { 0% { background-position: 0 100%; } 100% { background-position: 0 0%; } }
 
   /* ===== Étape wrapper ===== */
   .etape-content { transition: all 0.3s var(--ease); }
