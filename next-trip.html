@@ -651,6 +651,24 @@
   .sheet-conn-icon { font-size: 12px; color: var(--orange-500); }
   .sheet-conn-text { font-size: 10px; font-weight: 700; color: var(--orange-600); }
   .sheet-divider { height: 1px; background: var(--grey-100); margin: 14px 0; }
+  /* PDF viewer in sheet (hotel/car vouchers) */
+  .sheet-pdf { width: 100%; height: 380px; border-radius: 12px; overflow: hidden; border: 1px solid var(--grey-100); margin: 8px 0 14px; background: #fff; }
+  .sheet-pdf object, .sheet-pdf iframe { width: 100%; height: 100%; border: none; }
+  .sheet-dl-row { display: flex; align-items: center; gap: 12px; margin-bottom: 14px; }
+  .sheet-dl-info { flex: 1; min-width: 0; }
+  .sheet-dl-name { font-size: 13px; font-weight: 700; color: var(--black); }
+  .sheet-dl-meta { font-size: 11px; color: var(--grey-500); margin-top: 1px; font-weight: 500; }
+  .sheet-dl-btn { display: inline-flex; align-items: center; justify-content: center; width: 40px; height: 40px; border-radius: 10px; background: var(--blue-500); color: #fff; border: none; cursor: pointer; transition: all 0.15s; flex-shrink: 0; }
+  .sheet-dl-btn:hover { background: var(--blue-600); transform: translateY(-1px); box-shadow: 0 3px 10px rgba(0,169,252,0.25); }
+  .sheet-dl-btn .material-symbols-rounded { font-size: 20px; line-height: 1; }
+  /* Hotel/car sheet details */
+  .sheet-detail-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 14px; }
+  .sheet-detail-label { font-size: 9px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.4px; color: var(--grey-400); }
+  .sheet-detail-value { font-size: 13px; font-weight: 700; color: var(--black); margin-top: 1px; }
+  .sheet-detail-sub { font-size: 11px; color: var(--grey-500); font-weight: 500; }
+  .sheet-detail-full { grid-column: 1 / -1; }
+  .sheet-conditions { font-size: 11px; color: var(--grey-600); line-height: 1.5; padding: 10px 12px; background: var(--grey-50); border-radius: 8px; margin-bottom: 14px; }
+  .sheet-conditions strong { font-weight: 700; color: var(--grey-700); }
   .sheet-footer { display: flex; justify-content: center; margin-top: 18px; padding-top: 14px; border-top: 1px solid var(--grey-100); }
   .sheet-footer a { font-size: 13px; font-weight: 600; color: var(--grey-600); text-decoration: none; display: flex; align-items: center; gap: 4px; transition: color 0.15s; }
   .sheet-footer a:hover { color: var(--blue-500); }
@@ -683,6 +701,14 @@
   .sheet-overlay[data-color="contrast"] .sheet-doc-meta { color: rgba(255,255,255,0.55); }
   .sheet-overlay[data-color="contrast"] .sheet-pax { color: rgba(255,255,255,0.65); }
   .sheet-overlay[data-color="contrast"] .sheet-pax strong { color: rgba(255,255,255,0.95); }
+  .sheet-overlay[data-color="contrast"] .sheet-pdf { border-color: rgba(255,255,255,0.12); background: rgba(255,255,255,0.04); }
+  .sheet-overlay[data-color="contrast"] .sheet-dl-name { color: #fff; }
+  .sheet-overlay[data-color="contrast"] .sheet-dl-meta { color: rgba(255,255,255,0.45); }
+  .sheet-overlay[data-color="contrast"] .sheet-detail-label { color: rgba(255,255,255,0.4); }
+  .sheet-overlay[data-color="contrast"] .sheet-detail-value { color: #fff; }
+  .sheet-overlay[data-color="contrast"] .sheet-detail-sub { color: rgba(255,255,255,0.5); }
+  .sheet-overlay[data-color="contrast"] .sheet-conditions { background: rgba(255,255,255,0.06); color: rgba(255,255,255,0.65); }
+  .sheet-overlay[data-color="contrast"] .sheet-conditions strong { color: rgba(255,255,255,0.85); }
   .sheet-overlay[data-color="contrast"] .sheet-footer { border-color: rgba(255,255,255,0.12); }
   .sheet-overlay[data-color="contrast"] .sheet-footer a { color: rgba(255,255,255,0.7); }
   .sheet-overlay[data-color="contrast"] .sheet-footer a:hover { color: var(--blue-200); }
@@ -721,6 +747,14 @@
   .sheet-overlay[data-color="dark"] .sheet-doc-meta { color: rgba(255,255,255,0.4); }
   .sheet-overlay[data-color="dark"] .sheet-pax { color: rgba(255,255,255,0.4); }
   .sheet-overlay[data-color="dark"] .sheet-pax strong { color: rgba(255,255,255,0.6); }
+  .sheet-overlay[data-color="dark"] .sheet-pdf { border-color: rgba(255,255,255,0.1); background: rgba(255,255,255,0.03); }
+  .sheet-overlay[data-color="dark"] .sheet-dl-name { color: #fff; }
+  .sheet-overlay[data-color="dark"] .sheet-dl-meta { color: rgba(255,255,255,0.4); }
+  .sheet-overlay[data-color="dark"] .sheet-detail-label { color: rgba(255,255,255,0.35); }
+  .sheet-overlay[data-color="dark"] .sheet-detail-value { color: #fff; }
+  .sheet-overlay[data-color="dark"] .sheet-detail-sub { color: rgba(255,255,255,0.45); }
+  .sheet-overlay[data-color="dark"] .sheet-conditions { background: rgba(255,255,255,0.05); color: rgba(255,255,255,0.6); }
+  .sheet-overlay[data-color="dark"] .sheet-conditions strong { color: rgba(255,255,255,0.8); }
   .sheet-overlay[data-color="dark"] .sheet-footer { border-color: rgba(255,255,255,0.06); }
   .sheet-overlay[data-color="dark"] .sheet-footer a { color: rgba(255,255,255,0.4); }
   .sheet-overlay[data-color="dark"] .sheet-footer a:hover { color: var(--blue-300); }
@@ -1327,7 +1361,7 @@ const TRIPS = {
           'https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?w=300&h=300&fit=crop',
           'https://images.unsplash.com/photo-1590490360182-c33d57733427?w=300&h=300&fit=crop',
         ],
-        docLabel: 'Voir mon voucher', docIcon: '📄', docAvailable: true,
+        docLabel: 'Voir mon voucher', docIcon: '📄', docAvailable: true, voucherPdf: 'voucherhotel221-2173826_1679135161643.pdf',
         locLabel: "Itinéraire vers l'hôtel", locIcon: '📍', locUrl: '#',
       },
       {
@@ -1340,7 +1374,7 @@ const TRIPS = {
         bookingRef: 'AVIS-84729',
         driverName: 'Stella Smith',
         carPhoto: 'https://images.unsplash.com/photo-1502877338535-766e1452684a?w=260&h=180&fit=crop',
-        docLabel: 'Voir mon voucher', docIcon: '📄', docAvailable: true,
+        docLabel: 'Voir mon voucher', docIcon: '📄', docAvailable: true, voucherPdf: 'voucherhotel221-2173826_1679135161643.pdf',
         locLabel: "Itinéraire vers l'agence", locIcon: '📍', locUrl: '#',
       },
       {
@@ -1398,7 +1432,7 @@ const TRIPS = {
           'https://images.unsplash.com/photo-1618773928121-c32242e63f39?w=300&h=300&fit=crop',
           'https://images.unsplash.com/photo-1584132967334-10e028bd69f7?w=300&h=300&fit=crop',
         ],
-        docLabel: 'Voir mon voucher', docIcon: '📄', docAvailable: true,
+        docLabel: 'Voir mon voucher', docIcon: '📄', docAvailable: true, voucherPdf: 'voucherhotel221-2173826_1679135161643.pdf',
         locLabel: "Itinéraire vers l'hôtel", locIcon: '📍', locUrl: '#',
       },
       {
@@ -1411,7 +1445,7 @@ const TRIPS = {
         bookingRef: 'EUR-19384',
         driverName: 'Stella Smith',
         carPhoto: 'https://images.unsplash.com/photo-1549399542-7e3f8b79c341?w=260&h=180&fit=crop',
-        docLabel: 'Voir mon voucher', docIcon: '📄', docAvailable: true,
+        docLabel: 'Voir mon voucher', docIcon: '📄', docAvailable: true, voucherPdf: 'voucherhotel221-2173826_1679135161643.pdf',
         locLabel: "Itinéraire vers l'agence", locIcon: '📍', locUrl: '#',
       },
       {
@@ -1472,7 +1506,7 @@ const TRIPS = {
           'https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?w=300&h=300&fit=crop',
           'https://images.unsplash.com/photo-1590490360182-c33d57733427?w=300&h=300&fit=crop',
         ],
-        docLabel: 'Voir mon voucher', docIcon: '📄', docAvailable: true,
+        docLabel: 'Voir mon voucher', docIcon: '📄', docAvailable: true, voucherPdf: 'voucherhotel221-2173826_1679135161643.pdf',
         locLabel: "Itinéraire vers l'hôtel", locIcon: '📍', locUrl: '#',
       },
       {
@@ -1534,7 +1568,7 @@ const TRIPS = {
           'https://images.unsplash.com/photo-1618773928121-c32242e63f39?w=300&h=300&fit=crop',
           'https://images.unsplash.com/photo-1584132967334-10e028bd69f7?w=300&h=300&fit=crop',
         ],
-        docLabel: 'Voir mon voucher', docIcon: '📄', docAvailable: true,
+        docLabel: 'Voir mon voucher', docIcon: '📄', docAvailable: true, voucherPdf: 'voucherhotel221-2173826_1679135161643.pdf',
         locLabel: "Itinéraire vers l'hôtel", locIcon: '📍', locUrl: '#',
       },
       {
@@ -1601,7 +1635,7 @@ const TRIPS = {
           'https://images.unsplash.com/photo-1566073771259-6a8506099945?w=600&h=300&fit=crop',
           'https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?w=300&h=300&fit=crop',
         ],
-        docLabel: 'Voir mon voucher', docIcon: '📄', docAvailable: true,
+        docLabel: 'Voir mon voucher', docIcon: '📄', docAvailable: true, voucherPdf: 'voucherhotel221-2173826_1679135161643.pdf',
         locLabel: "Itinéraire vers l'hôtel", locIcon: '📍', locUrl: '#',
       },
       {
@@ -1697,7 +1731,7 @@ const TRIPS = {
           'https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?w=600&h=300&fit=crop',
           'https://images.unsplash.com/photo-1618773928121-c32242e63f39?w=300&h=300&fit=crop',
         ],
-        docLabel: 'Voir mon voucher', docIcon: '📄', docAvailable: true,
+        docLabel: 'Voir mon voucher', docIcon: '📄', docAvailable: true, voucherPdf: 'voucherhotel221-2173826_1679135161643.pdf',
         locLabel: "Itinéraire vers l'hôtel", locIcon: '📍', locUrl: '#',
       }
     ]
@@ -2478,9 +2512,42 @@ function buildTransportSheet(e, platform) {
 }
 
 function buildHotelSheet(e) {
-  let h = '<div class="sheet-actions">';
-  h += `<button class="cta-pri" onclick="event.preventDefault()">&#128196; ${e.docLabel || 'Voir le voucher'}</button>`;
+  let h = '';
+  // PDF preview when available
+  if (e.voucherPdf) {
+    h += `<div class="sheet-pdf"><iframe src="${e.voucherPdf}" title="Voucher"></iframe></div>`;
+    h += '<div class="sheet-dl-row">';
+    h += `<div class="sheet-dl-info"><div class="sheet-dl-name">Voucher ${e.shortLabel || e.title || ''}</div><div class="sheet-dl-meta">PDF · ${e.bookingRef || ''}</div></div>`;
+    h += `<button class="sheet-dl-btn" onclick="event.preventDefault()" title="Télécharger"><span class="material-symbols-rounded">download</span></button>`;
+    h += '</div>';
+  } else if (e.docAvailable) {
+    h += '<div class="sheet-actions">';
+    h += `<button class="cta-pri" onclick="event.preventDefault()">&#128196; ${e.docLabel || 'Voir le voucher'}</button>`;
+    h += '</div>';
+  }
+  // Booking details grid
+  h += '<div class="sheet-detail-grid">';
+  if (e.checkin) {
+    h += `<div><div class="sheet-detail-label">Check-in</div><div class="sheet-detail-value">${e.checkin.time}</div><div class="sheet-detail-sub">${e.checkin.date}</div></div>`;
+  }
+  if (e.checkout) {
+    h += `<div><div class="sheet-detail-label">Check-out · ${e.nights || ''} nuit${(e.nights || 0) > 1 ? 's' : ''}</div><div class="sheet-detail-value">${e.checkout.time}</div><div class="sheet-detail-sub">${e.checkout.date}</div></div>`;
+  }
+  if (e.roomName) {
+    h += `<div><div class="sheet-detail-label">Chambre</div><div class="sheet-detail-value">${e.roomName}</div></div>`;
+  }
+  if (e.bookingRef) {
+    h += `<div><div class="sheet-detail-label">Référence</div><div class="sheet-detail-value">${e.bookingRef}</div></div>`;
+  }
+  if (e.address) {
+    h += `<div class="sheet-detail-full"><div class="sheet-detail-label">Adresse</div><div class="sheet-detail-sub">${e.address}</div></div>`;
+  }
   h += '</div>';
+  // Free-text conditions
+  if (e.freeTextConditions) {
+    h += `<div class="sheet-conditions">${e.freeTextConditions}</div>`;
+  }
+  // Itinerary
   if (e.locUrl) {
     const hotelName = e.shortLabel || e.title || "l'h\u00f4tel";
     h += `<div class="sheet-footer"><a href="${e.locUrl}" onclick="event.preventDefault()">&#128205; Itin\u00e9raire vers ${hotelName}</a></div>`;
@@ -2490,9 +2557,38 @@ function buildHotelSheet(e) {
 
 function buildCarSheet(e) {
   const isOJ = e.pickup && e.dropoff && e.pickup.location !== e.dropoff.location;
-  let h = '<div class="sheet-actions">';
-  h += `<button class="cta-pri" onclick="event.preventDefault()">&#128196; ${e.docLabel || 'Voir le voucher'}</button>`;
+  let h = '';
+  // PDF preview when available
+  if (e.voucherPdf) {
+    h += `<div class="sheet-pdf"><iframe src="${e.voucherPdf}" title="Voucher"></iframe></div>`;
+    h += '<div class="sheet-dl-row">';
+    h += `<div class="sheet-dl-info"><div class="sheet-dl-name">Voucher ${e.carrier || e.title || ''}</div><div class="sheet-dl-meta">PDF · ${e.bookingRef || ''}</div></div>`;
+    h += `<button class="sheet-dl-btn" onclick="event.preventDefault()" title="Télécharger"><span class="material-symbols-rounded">download</span></button>`;
+    h += '</div>';
+  } else if (e.docAvailable) {
+    h += '<div class="sheet-actions">';
+    h += `<button class="cta-pri" onclick="event.preventDefault()">&#128196; ${e.docLabel || 'Voir le voucher'}</button>`;
+    h += '</div>';
+  }
+  // Booking details grid
+  h += '<div class="sheet-detail-grid">';
+  if (e.pickup) {
+    h += `<div><div class="sheet-detail-label">Prise en charge</div><div class="sheet-detail-value">${e.pickup.time}</div><div class="sheet-detail-sub">${e.pickup.date}</div><div class="sheet-detail-sub">${e.pickup.location}</div></div>`;
+  }
+  if (e.dropoff) {
+    h += `<div><div class="sheet-detail-label">Restitution${isOJ ? ' · Open jaw' : ''}</div><div class="sheet-detail-value">${e.dropoff.time}</div><div class="sheet-detail-sub">${e.dropoff.date}</div><div class="sheet-detail-sub">${e.dropoff.location}</div></div>`;
+  }
+  if (e.title) {
+    h += `<div><div class="sheet-detail-label">Véhicule</div><div class="sheet-detail-value">${e.title}</div></div>`;
+  }
+  if (e.bookingRef) {
+    h += `<div><div class="sheet-detail-label">Référence</div><div class="sheet-detail-value">${e.bookingRef}</div></div>`;
+  }
+  if (e.driverName) {
+    h += `<div class="sheet-detail-full"><div class="sheet-detail-label">Conducteur</div><div class="sheet-detail-sub">🪪 Permis + CB au nom de <strong>${e.driverName}</strong></div></div>`;
+  }
   h += '</div>';
+  // Itinerary
   if (e.locUrl && !isOJ) {
     const agencyName = e.carrier ? "l'agence " + e.carrier : "l'agence de location";
     h += `<div class="sheet-footer"><a href="${e.locUrl}" onclick="event.preventDefault()">&#128205; Itin\u00e9raire vers ${agencyName}</a></div>`;
