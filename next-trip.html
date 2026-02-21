@@ -626,8 +626,13 @@
   .sheet-doc-meta { font-size: 11px; color: var(--grey-500); margin-top: 2px; font-weight: 500; }
   .sheet-pax { font-size: 11px; color: var(--grey-500); margin-top: 4px; font-weight: 500; text-align: center; }
   .sheet-pax strong { font-weight: 700; color: var(--grey-600); }
-  /* Sheet: segment breakdown for multi-segment legs */
-  .sheet-segments { margin-bottom: 14px; }
+  /* Sheet: collapsible segment toggle */
+  .sheet-seg-toggle { display: flex; align-items: center; gap: 4px; font-size: 12px; font-weight: 600; color: var(--grey-500); cursor: pointer; padding: 10px 0 4px; margin-top: 10px; border-top: 1px solid var(--grey-100); transition: color 0.15s; }
+  .sheet-seg-toggle:hover { color: var(--blue-500); }
+  .sheet-seg-chevron { font-size: 18px; transition: transform 0.2s; }
+  .sheet-seg-toggle.open .sheet-seg-chevron { transform: rotate(180deg); }
+  .sheet-segments { max-height: 0; overflow: hidden; transition: max-height 0.3s ease; }
+  .sheet-segments.open { max-height: 600px; }
   .sheet-seg { padding: 10px 0; }
   .sheet-seg + .sheet-seg { border-top: 1px solid var(--grey-75); }
   .sheet-seg-head { display: flex; align-items: center; gap: 6px; font-size: 11px; font-weight: 700; color: var(--grey-700); margin-bottom: 6px; }
@@ -2132,27 +2137,6 @@ function renderEtape(e, state, idx, autoIdx, done, total, isPast, targetId) {
         h += `<div class="bpb-hero arr"><div class="bpb-code">${arr.time}${boldArrOffset}</div><div class="bpb-name">${arr.name}</div></div>`;
       }
       h += '</div>';
-      // Compact segment rows: num + times + gate/voie + seat per segment
-      h += '<div class="leg-seg-rows">';
-      etape.segments.forEach(seg => {
-        const sNum = seg.num || '';
-        const sCarrier = seg.carrier || etape.carrier || '';
-        const arrOff = seg.arr.dayOffset ? `<span class="day-offset">+${seg.arr.dayOffset}</span>` : '';
-        let chips = '';
-        // Gate / platform
-        if (isFl && seg.gate) chips += `<span class="leg-seg-chip gate">Pte ${seg.gate}</span>`;
-        if (!isFl && seg.platform) chips += `<span class="leg-seg-chip gate">V.${seg.platform}</span>`;
-        // Seat
-        const seat = seg.seat || null;
-        if (seat) {
-          if (seat.wagon) chips += `<span class="leg-seg-chip seat">V.${seat.wagon} P.${seat.place}</span>`;
-          else if (seat.place) chips += `<span class="leg-seg-chip seat">${seat.place}</span>`;
-        } else {
-          chips += `<span class="leg-seg-chip none">—</span>`;
-        }
-        h += `<div class="leg-seg-row"><span class="leg-seg-num">${sNum}</span><span class="leg-seg-times">${seg.dep.time} → ${seg.arr.time}${arrOff}</span><span class="leg-seg-chips">${chips}</span></div>`;
-      });
-      h += '</div>';
       // Tappable
       const tIdx = sheetTargets.length;
       sheetTargets.push(etape);
@@ -2463,6 +2447,40 @@ function buildTransportSheet(e, platform) {
     const depName = e.departure.name || '';
     const lieu = isFl ? "l'aéroport " + depName : 'la gare ' + depName;
     h += `<div class="sheet-footer"><a href="${e.locUrl}" onclick="event.preventDefault()">&#128205; Itinéraire vers ${lieu}</a></div>`;
+  }
+
+  // ── Multi-segment: collapsible segment details (AFTER ticket) ──
+  if (e.segments && e.segments.length > 1) {
+    const toggleId = 'seg-toggle-' + Math.random().toString(36).slice(2, 8);
+    h += `<div class="sheet-seg-toggle" onclick="document.getElementById('${toggleId}').classList.toggle('open');this.classList.toggle('open')"><span class="material-symbols-rounded sheet-seg-chevron">expand_more</span> Détails des ${e.segments.length} ${isFl ? 'vols' : 'trains'}</div>`;
+    h += `<div class="sheet-segments" id="${toggleId}">`;
+    e.segments.forEach((seg, si) => {
+      const carrier = seg.carrier || e.carrier || '';
+      const num = seg.num || e.num || '';
+      const segIcon = isFl ? '✈️' : '🚄';
+      h += '<div class="sheet-seg">';
+      h += `<div class="sheet-seg-head"><span class="seg-icon">${segIcon}</span>${carrier}<span class="seg-num"> · ${num}</span></div>`;
+      const depLabel = (isFl && seg.dep.code) ? seg.dep.code : seg.dep.name;
+      const arrLabel = (isFl && seg.arr.code) ? seg.arr.code : seg.arr.name;
+      h += `<div class="sheet-seg-route">${depLabel} <span class="seg-arrow">→</span> ${arrLabel}</div>`;
+      const arrOffset = seg.arr.dayOffset ? ` (+${seg.arr.dayOffset}j)` : '';
+      h += `<div class="sheet-seg-times">${seg.dep.time} → ${seg.arr.time}${arrOffset} · ${seg.dur}</div>`;
+      const chips = [];
+      if (isFl && seg.gate) chips.push(`<span class="sheet-seg-chip gate">Porte ${seg.gate}</span>`);
+      if (!isFl && seg.platform) chips.push(`<span class="sheet-seg-chip gate">Voie ${seg.platform}</span>`);
+      const seat = seg.seat || null;
+      if (seat) {
+        if (seat.wagon) chips.push(`<span class="sheet-seg-chip seat">V.${seat.wagon} P.${seat.place}</span>`);
+        else if (seat.place) chips.push(`<span class="sheet-seg-chip seat">Siège ${seat.place}</span>`);
+      }
+      if (chips.length) h += `<div class="sheet-seg-meta">${chips.join('')}</div>`;
+      h += '</div>';
+      if (si < e.segments.length - 1 && e.connections && e.connections[si]) {
+        const conn = e.connections[si];
+        h += `<div class="sheet-conn"><span class="sheet-conn-icon">⏱</span><span class="sheet-conn-text">Correspondance ${conn.loc} · ${conn.dur}</span></div>`;
+      }
+    });
+    h += '</div>';
   }
   return h;
 }
