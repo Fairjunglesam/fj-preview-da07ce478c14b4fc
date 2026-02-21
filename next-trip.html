@@ -263,6 +263,8 @@
     .bpb .bpb-action-pill:active { transform: scale(0.97); }
     /* Bold desktop: minimal prev/next chevrons — always inside .bpb (dark card) */
     .bold-nav { display: flex; align-items: center; justify-content: flex-end; gap: 5px; position: absolute; bottom: 8px; right: 10px; z-index: 2; }
+    /* Leg cards: nav gets its own dedicated row at the bottom */
+    .bpb-leg .bold-nav { position: static; padding: 4px 10px 8px; }
     .bold-nav-btn { display: inline-flex; align-items: center; justify-content: center; width: 24px; height: 24px; border-radius: 50%; border: 1px solid rgba(255,255,255,0.15); background: rgba(255,255,255,0.08); color: rgba(255,255,255,0.45); cursor: pointer; transition: all 0.15s; font-family: var(--font); padding: 0; }
     .bold-nav-btn:hover { background: rgba(255,255,255,0.15); border-color: rgba(255,255,255,0.3); color: rgba(255,255,255,0.85); }
     .bold-nav-btn:disabled { opacity: 0.2; pointer-events: none; }
@@ -2081,7 +2083,9 @@ function renderEtape(e, state, idx, autoIdx, done, total, isPast, targetId) {
       }
       h += '</div>';
       // Slim tags: only porte/siège (flight) or voie/voiture (train)
-      h += infoTags(seat, fareData, null, type, true);
+      // Always render tags row (even empty) so nav chevrons have a line to sit on
+      const tags = infoTags(seat, fareData, null, type, true);
+      h += tags || '<div class="bp-tags"></div>';
       // Card: tappable only on mobile, pill handles desktop click
       const tapAttr = etapeData ? ` tappable" onclick="if(window.innerWidth<641)openSheet(sheetTargets[${pillIdx}])"` : '"';
       return `<div class="bpb${extraCls ? ' ' + extraCls : ''}${tapAttr}>${h}</div>`;
