@@ -938,6 +938,41 @@
   .float-drawer .fd-pill:hover { background: var(--grey-50); border-color: var(--grey-200); }
   .float-drawer .fd-pill.active { background: var(--black); color: var(--white); border-color: var(--black); }
 
+  /* ===== Home Skeleton Sections ===== */
+  .home-skeleton { max-width: 960px; margin: 0 auto; padding: 0 16px 60px; }
+  .home-skeleton.hidden { display: none; }
+  .skel-section { margin-top: 28px; }
+  .skel-section-title { font-size: 13px; font-weight: 700; color: var(--grey-500); text-transform: uppercase; letter-spacing: 0.3px; margin-bottom: 12px; display: flex; align-items: center; gap: 8px; }
+  .skel-section-title .skel-badge { background: #ef4444; color: #fff; font-size: 11px; font-weight: 700; padding: 1px 7px; border-radius: 10px; }
+  .skel-card { background: var(--white); border: 1px solid var(--grey-100); border-radius: 12px; padding: 16px; margin-bottom: 10px; }
+  .skel-row { display: flex; align-items: center; gap: 12px; }
+  .skel-row + .skel-row { margin-top: 10px; }
+  .skel-bar { height: 10px; border-radius: 5px; background: var(--grey-100); }
+  .skel-bar.w30 { width: 30%; }
+  .skel-bar.w40 { width: 40%; }
+  .skel-bar.w50 { width: 50%; }
+  .skel-bar.w60 { width: 60%; }
+  .skel-bar.w70 { width: 70%; }
+  .skel-bar.w80 { width: 80%; }
+  .skel-bar.w100 { width: 100%; }
+  .skel-bar.h6 { height: 6px; }
+  .skel-bar.h14 { height: 14px; }
+  .skel-circle { width: 36px; height: 36px; border-radius: 50%; background: var(--grey-100); flex-shrink: 0; }
+  .skel-circle.sm { width: 28px; height: 28px; }
+  .skel-card .skel-title { font-size: 12px; font-weight: 600; color: var(--grey-400); margin-bottom: 8px; }
+  .skel-separator { height: 1px; background: var(--grey-100); margin: 20px 0; }
+  /* Dark overrides */
+  body.color-dark .home-skeleton .skel-card,
+  body.color-contrast .home-skeleton .skel-card { background: rgba(255,255,255,0.04); border-color: rgba(255,255,255,0.08); }
+  body.color-dark .home-skeleton .skel-bar,
+  body.color-contrast .home-skeleton .skel-bar { background: rgba(255,255,255,0.08); }
+  body.color-dark .home-skeleton .skel-circle,
+  body.color-contrast .home-skeleton .skel-circle { background: rgba(255,255,255,0.08); }
+  body.color-dark .home-skeleton .skel-section-title,
+  body.color-contrast .home-skeleton .skel-section-title { color: rgba(255,255,255,0.4); }
+  body.color-dark .home-skeleton .skel-badge,
+  body.color-contrast .home-skeleton .skel-badge { background: #dc2626; }
+
   /* ===== Scenario Sections ===== */
   .scenario-section { max-width: 960px; margin: 24px auto; scroll-margin-top: 90px; }
   .scenario-label { font-size: 11px; font-weight: 700; color: var(--grey-400); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 8px; padding-left: 4px; }
@@ -1337,7 +1372,7 @@
   #showcase-container[data-color="dark"] .sheet-actions .cta-sec { border-color: rgba(255,255,255,0.15); color: #fff; background: rgba(255,255,255,0.08); }
 </style>
 </head>
-<body>
+<body class="color-contrast">
 
 <div class="proto-header" id="proto-header">
   <div class="proto-tabs">
@@ -1357,6 +1392,72 @@
 
 <div id="showcase-container" style="display:none"></div>
 <div id="cards-container"></div>
+
+<div class="home-skeleton" id="home-skeleton">
+
+  <!-- Validations en attente -->
+  <div class="skel-section">
+    <div class="skel-section-title">
+      <span>Validations en attente</span>
+      <span class="skel-badge">3</span>
+    </div>
+    <div class="skel-card">
+      <div class="skel-row"><div class="skel-circle sm"></div><div style="flex:1"><div class="skel-bar w60"></div><div class="skel-bar w40 h6" style="margin-top:6px"></div></div><div class="skel-bar w30 h14" style="max-width:60px;border-radius:7px"></div></div>
+    </div>
+    <div class="skel-card">
+      <div class="skel-row"><div class="skel-circle sm"></div><div style="flex:1"><div class="skel-bar w50"></div><div class="skel-bar w30 h6" style="margin-top:6px"></div></div><div class="skel-bar w30 h14" style="max-width:60px;border-radius:7px"></div></div>
+    </div>
+    <div class="skel-card">
+      <div class="skel-row"><div class="skel-circle sm"></div><div style="flex:1"><div class="skel-bar w70"></div><div class="skel-bar w40 h6" style="margin-top:6px"></div></div><div class="skel-bar w30 h14" style="max-width:60px;border-radius:7px"></div></div>
+    </div>
+  </div>
+
+  <!-- Voyages à venir -->
+  <div class="skel-section">
+    <div class="skel-section-title">Voyages à venir</div>
+    <div class="skel-card">
+      <div class="skel-row"><div class="skel-circle"></div><div style="flex:1"><div class="skel-bar w70 h14"></div><div class="skel-bar w40 h6" style="margin-top:6px"></div></div></div>
+      <div class="skel-row" style="margin-top:12px"><div class="skel-bar w80 h6"></div></div>
+      <div class="skel-row"><div class="skel-bar w60 h6"></div></div>
+    </div>
+    <div class="skel-card">
+      <div class="skel-row"><div class="skel-circle"></div><div style="flex:1"><div class="skel-bar w50 h14"></div><div class="skel-bar w30 h6" style="margin-top:6px"></div></div></div>
+      <div class="skel-row" style="margin-top:12px"><div class="skel-bar w70 h6"></div></div>
+      <div class="skel-row"><div class="skel-bar w50 h6"></div></div>
+    </div>
+  </div>
+
+  <!-- Raccourcis -->
+  <div class="skel-section">
+    <div class="skel-section-title">Raccourcis</div>
+    <div style="display:flex;gap:10px">
+      <div class="skel-card" style="flex:1;text-align:center;padding:20px 12px">
+        <div class="skel-circle" style="margin:0 auto 8px"></div>
+        <div class="skel-bar w60 h6" style="margin:0 auto"></div>
+      </div>
+      <div class="skel-card" style="flex:1;text-align:center;padding:20px 12px">
+        <div class="skel-circle" style="margin:0 auto 8px"></div>
+        <div class="skel-bar w60 h6" style="margin:0 auto"></div>
+      </div>
+      <div class="skel-card" style="flex:1;text-align:center;padding:20px 12px">
+        <div class="skel-circle" style="margin:0 auto 8px"></div>
+        <div class="skel-bar w60 h6" style="margin:0 auto"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Voyages passés -->
+  <div class="skel-section">
+    <div class="skel-section-title">Voyages passés</div>
+    <div class="skel-card">
+      <div class="skel-row"><div class="skel-circle sm"></div><div style="flex:1"><div class="skel-bar w60 h14"></div><div class="skel-bar w40 h6" style="margin-top:6px"></div></div></div>
+    </div>
+    <div class="skel-card">
+      <div class="skel-row"><div class="skel-circle sm"></div><div style="flex:1"><div class="skel-bar w50 h14"></div><div class="skel-bar w30 h6" style="margin-top:6px"></div></div></div>
+    </div>
+  </div>
+
+</div>
 
 <div class="float-drawer" id="float-drawer">
   <div class="float-drawer-body" id="float-drawer-body"></div>
@@ -1926,7 +2027,7 @@ function tlSet(key, val) {
 }
 
 function buildStepperHTML(trip, state, activeIdx, autoIdx, done, isDark, isBold, tripKey) {
-  if (trip.etapes.length <= 2) return '';
+  if (trip.etapes.length < 2) return '';
   let h = '';
   const useIcons = isBold; // Material Symbols icons = Bold layout feature
   const useDarkDots = isDark || isBold; // Dark dots = dark color OR bold layout
@@ -2504,6 +2605,8 @@ function setState(s) {
 function setColor(c) {
   currentColor = c;
   document.querySelectorAll('[id^="btn-color-"]').forEach(b => b.classList.toggle('active', b.id === 'btn-color-' + c));
+  document.body.className = document.body.className.replace(/color-\w+/g, '');
+  document.body.classList.add('color-' + c);
   closeSheet();
   if (currentTab === 'timeline') renderAll();
   else updateShowcase();
@@ -2525,13 +2628,16 @@ function setTab(tab) {
   currentTab = tab;
   document.querySelectorAll('.proto-tab').forEach(t => t.classList.toggle('active', t.dataset.tab === tab));
   renderPanel();
+  const skel = document.getElementById('home-skeleton');
   if (tab === 'timeline') {
     document.getElementById('showcase-container').style.display = 'none';
     document.getElementById('cards-container').style.display = '';
+    if (skel) skel.classList.remove('hidden');
     renderAll();
   } else {
     document.getElementById('showcase-container').style.display = 'block';
     document.getElementById('cards-container').style.display = 'none';
+    if (skel) skel.classList.add('hidden');
     renderShowcase();
   }
 }
