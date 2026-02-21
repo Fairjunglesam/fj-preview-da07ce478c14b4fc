@@ -271,6 +271,8 @@
     .bold-nav-btn:disabled { opacity: 0.2; pointer-events: none; }
     .bold-nav-btn .material-symbols-rounded { font-size: 16px; line-height: 1; }
     .bold-nav-label { font-size: 10px; font-weight: 600; color: rgba(255,255,255,0.35); min-width: 24px; text-align: center; }
+    /* Ensure nav doesn't overlap card content */
+    .bpb:has(.bold-nav) { padding-bottom: 38px; }
   }
   @keyframes bold-transit-v { 0% { background-position: 0 100%; } 100% { background-position: 0 0%; } }
 
@@ -377,7 +379,7 @@
   .bpb-code { font-size: 28px; font-weight: 800; color: #FFFFFF; letter-spacing: -1px; line-height: 1; }
   .bpb-code .day-offset { font-size: 13px; font-weight: 700; color: rgba(255,141,84,0.8); vertical-align: super; margin-left: 1px; letter-spacing: 0; }
   .bpb-time { font-size: 12px; font-weight: 700; color: rgba(255,255,255,0.8); margin-top: 3px; }
-  .bpb-name { font-size: 12px; color: rgba(255,255,255,0.8); margin-top: 2px; font-weight: 500; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .bpb-name { font-size: 12px; color: rgba(255,255,255,0.8); margin-top: 2px; font-weight: 500; }
   .bpb-mid { flex-shrink: 0; display: flex; flex-direction: column; align-items: center; gap: 2px; min-width: 70px; }
   .bpb-mid-row { display: flex; align-items: center; width: calc(100% + 24px); margin: 0 -12px; }
   .bpb-mid-line { flex: 1; height: 2px; background: rgba(255,255,255,0.25); position: relative; border-radius: 1px; }
@@ -392,7 +394,7 @@
   .bpb-action-pill { display: inline-flex; align-items: center; gap: 4px; padding: 3px 10px; margin-top: 3px; border-radius: 6px; font-size: 9px; font-weight: 800; background: rgba(255,255,255,0.20); color: rgba(255,255,255,0.85); border: 1px solid rgba(255,255,255,0.25); letter-spacing: 0.6px; text-transform: uppercase; font-family: var(--font); white-space: nowrap; transition: transform 0.15s, box-shadow 0.15s; }
   .bpb-action-pill svg { width: 10px; height: 10px; fill: currentColor; }
   .bpb-action-pill .material-symbols-rounded { font-size: 12px; line-height: 1; }
-  .bpb-action-pill.deferred { opacity: 0.7; font-size: 8px; text-transform: none; letter-spacing: 0; }
+  .bpb-action-pill.deferred { opacity: 0.85; }
   .bpb .bp-tags { padding: 2px 14px 12px; justify-content: space-between; }
   .bpb .bp-tag { background: rgba(255,255,255,0.07); border-color: rgba(255,255,255,0.12); padding: 3px 10px; border-radius: 6px; gap: 8px; }
   .bpb .bp-tag > div { display: flex; align-items: baseline; gap: 4px; }
@@ -439,8 +441,10 @@
   .bpb-navy .leg-conn-chip { background: #1a2138; }
   .trip-card:not(.contrast-mode):not(.dark-mode) .bpb-leg .leg-conn-bar::before { background: var(--grey-200); }
   .trip-card:not(.contrast-mode):not(.dark-mode) .bpb-leg .leg-conn-chip { background: #edeef2; }
-  /* Floating action pill on bottom edge — any card with .leg-action-center */
+  /* Floating action pill on bottom edge — transport leg cards only */
   .bpb:has(.leg-action-center) { overflow: visible; padding-bottom: 14px; margin-bottom: 18px; }
+  /* Inline voucher pill — centered in card (hotel/car) */
+  .card-voucher-row { text-align: center; padding: 6px 14px; }
   .leg-action-center { position: absolute; bottom: 0; left: 50%; transform: translate(-50%, 50%); z-index: 3; }
   .leg-action-center .bpb-action-pill { background: #3a4258; color: rgba(255,255,255,0.9); border: 1px solid rgba(255,255,255,0.15); box-shadow: 0 2px 8px rgba(0,0,0,0.25); }
   .bpb-navy .leg-action-center .bpb-action-pill { background: #2a3452; }
@@ -457,7 +461,7 @@
   .htd-date-time { font-size: 30px; font-weight: 800; color: #fff; letter-spacing: -0.8px; line-height: 1; margin-top: 3px; }
   .htd-date-day { font-size: 12px; color: rgba(255,255,255,0.65); margin-top: 4px; font-weight: 600; }
   .htd-hero { display: flex; flex-direction: column; }
-  .htd-hero .bpb-name { order: -1; margin-top: 0; margin-bottom: 3px; font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.3px; white-space: nowrap; }
+  .htd-hero .bpb-name { order: -1; margin-top: 0; margin-bottom: 3px; font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.3px; }
   .htd-hero.arr { align-items: flex-end; }
   .htd-code { font-size: 16px !important; font-weight: 800 !important; letter-spacing: -0.3px !important; white-space: nowrap; }
   .htd-mid { flex-shrink: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 12px 2px 0; min-width: 50px; }
@@ -791,6 +795,8 @@
     .stepper.stepper-bold .stepper-step.active { flex: 1; }
     /* Hide prev/next nav on mobile (swipe replaces it) */
     .bold-nav { display: none; }
+    /* Hide inline voucher pill on mobile (card is tappable instead) */
+    .card-voucher-row { display: none; }
     .stepper.stepper-bold .stepper-step.active { width: 140px; }
     .stepper.stepper-bold .stepper-step.active .stepper-dot { width: 34px; height: 34px; }
     .stepper.stepper-bold .stepper-step.active .stepper-dot .material-symbols-rounded { font-size: 17px; }
@@ -2066,7 +2072,7 @@ function renderEtape(e, state, idx, autoIdx, done, total, isPast, targetId) {
           const tIcon = ticket.hasQR ? qrSvg : '<span class="material-symbols-rounded">confirmation_number</span>';
           actionPill = `<div class="bpb-action-pill"${pillClick}>${tIcon} Voir mon billet</div>`;
         } else {
-          actionPill = `<div class="bpb-action-pill deferred"${pillClick}><span class="material-symbols-rounded">event</span> Dispo le ${ticket.availableDate || '—'}</div>`;
+          actionPill = `<div class="bpb-action-pill deferred"${pillClick}><span class="material-symbols-rounded">event</span> Billet dispo. le ${ticket.availableDate || '—'}</div>`;
         }
       }
       h += `<div class="bpb-mid"><div class="bpb-mid-row"><div class="bpb-mid-line"></div><div class="bpb-mid-badge">${midBadge(type, midPillLabel)}</div><div class="bpb-mid-line"></div></div>${actionPill}</div>`;
@@ -2160,7 +2166,7 @@ function renderEtape(e, state, idx, autoIdx, done, total, isPast, targetId) {
           const tIcon = legTicket.hasQR ? qrSvg : '<span class="material-symbols-rounded">confirmation_number</span>';
           h += `<div class="leg-action-center"><div class="bpb-action-pill" onclick="openSheet(sheetTargets[${tIdx}])">${tIcon} Voir mon billet</div></div>`;
         } else {
-          h += `<div class="leg-action-center"><div class="bpb-action-pill deferred" onclick="openSheet(sheetTargets[${tIdx}])"><span class="material-symbols-rounded">event</span> Dispo le ${legTicket.availableDate || '—'}</div></div>`;
+          h += `<div class="leg-action-center"><div class="bpb-action-pill deferred" onclick="openSheet(sheetTargets[${tIdx}])"><span class="material-symbols-rounded">event</span> Billet dispo. le ${legTicket.availableDate || '—'}</div></div>`;
         }
       }
       return `<div class="bpb bpb-leg${extraCls ? ' ' + extraCls : ''}">${h}</div>`;
@@ -2250,9 +2256,9 @@ function renderEtape(e, state, idx, autoIdx, done, total, isPast, targetId) {
       }
       const htIdx = sheetTargets.length;
       sheetTargets.push(e);
-      // Floating pill — same style as transport leg cards
+      // Inline voucher pill — centered in card (hidden on mobile, card is tappable)
       if (e.docAvailable) {
-        h += `<div class="leg-action-center"><div class="bpb-action-pill" onclick="event.stopPropagation();openSheet(sheetTargets[${htIdx}])"><span class="material-symbols-rounded">description</span> Voir mon voucher</div></div>`;
+        h += `<div class="card-voucher-row"><div class="bpb-action-pill" onclick="event.stopPropagation();openSheet(sheetTargets[${htIdx}])"><span class="material-symbols-rounded">description</span> Voir mon voucher</div></div>`;
       }
       bodyH = `<div class="bpb tappable${navyCls}" onclick="if(window.innerWidth<641)openSheet(sheetTargets[${htIdx}])">${h}</div>`;
     } else {
@@ -2304,22 +2310,20 @@ function renderEtape(e, state, idx, autoIdx, done, total, isPast, targetId) {
       const navyCls = isDark ? ' bpb-navy' : '';
       const carDetails = e.details.filter(d => d !== 'Direct').join(' · ');
       const carDuration = e.details.find(d => /jour|day/i.test(d)) || '';
+      const carIdx = sheetTargets.length;
+      sheetTargets.push(e);
+      const carVoucherPill = e.docAvailable ? `<div class="bpb-action-pill" onclick="event.stopPropagation();openSheet(sheetTargets[${carIdx}])"><span class="material-symbols-rounded">description</span> Voir mon voucher</div>` : '';
       let h = '';
       h += `<div class="bpb-head"><div class="bpb-carrier"><span class="bpb-date">${e.pickup.date}</span><span class="bp-carrier-icon">🚗</span>${e.title}</div>${e.bookingRef ? '<div class="bpb-head-right"><span class="bpb-ref">Réf. ' + e.bookingRef + '</span></div>' : ''}</div>`;
-      // Route: pickup → dropoff (times as hero, like trains)
+      // Route: pickup → dropoff (times as hero, like trains) — voucher pill in mid zone
       h += '<div class="bpb-route">';
       h += `<div class="bpb-hero"><div class="bpb-code">${e.pickup.time}</div><div class="bpb-time">${e.pickup.date}</div><div class="bpb-name">${e.pickup.location}</div></div>`;
-      h += `<div class="bpb-mid"><div class="bpb-mid-row"><div class="bpb-mid-line"></div><div class="bpb-mid-badge">${midBadge('car', carDetails)}</div><div class="bpb-mid-line"></div></div></div>`;
+      h += `<div class="bpb-mid"><div class="bpb-mid-row"><div class="bpb-mid-line"></div><div class="bpb-mid-badge">${midBadge('car', carDetails)}</div><div class="bpb-mid-line"></div></div>${carVoucherPill}</div>`;
       h += `<div class="bpb-hero arr"><div class="bpb-code">${e.dropoff.time}</div><div class="bpb-time">${e.dropoff.date}</div><div class="bpb-name">${e.dropoff.location}</div></div>`;
       h += '</div>';
       if (oj) h += `<div class="bpb-dur"><span class="material-symbols-rounded">warning</span> Restitution dans une agence différente (open jaw)</div>`;
       if (e.driverName) {
         h += `<div class="bpb-driver"><div class="bpb-driver-item">🪪 Permis + CB au nom du conducteur : <strong>${e.driverName}</strong></div></div>`;
-      }
-      const carIdx = sheetTargets.length;
-      sheetTargets.push(e);
-      if (e.docAvailable) {
-        h += `<div class="leg-action-center"><div class="bpb-action-pill" onclick="event.stopPropagation();openSheet(sheetTargets[${carIdx}])"><span class="material-symbols-rounded">description</span> Voir mon voucher</div></div>`;
       }
       bodyH = `<div class="bpb tappable${navyCls}" onclick="if(window.innerWidth<641)openSheet(sheetTargets[${carIdx}])">${h}</div>`;
     } else {
