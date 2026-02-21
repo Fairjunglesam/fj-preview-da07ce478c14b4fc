@@ -2067,14 +2067,7 @@ function renderEtape(e, state, idx, autoIdx, done, total, isPast, targetId) {
         h += `<div class="bpb-hero arr"><div class="bpb-code">${arr.time}${boldArrOffset}</div><div class="bpb-name">${arr.name}</div></div>`;
       }
       h += '</div>';
-      // Luggage
-      if (isFl && etape.luggage) {
-        const lugCls = extraCls ? 'bp-luggage luggage-dark' : 'bp-luggage';
-        h += `<div class="${lugCls}">🧳 ${etape.luggage}</div>`;
-      }
-      // Tags from first segment seat
-      const mainSeat = firstSeg.seat || etape.seat;
-      h += infoTags(mainSeat, fareData, null, etape.type, true);
+      // Multi-segment leg: no luggage, no individual seats/gates (shown in detail sheet)
       // Tappable
       const tIdx = sheetTargets.length;
       sheetTargets.push(etape);
