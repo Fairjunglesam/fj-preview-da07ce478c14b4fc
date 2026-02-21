@@ -173,7 +173,7 @@
     }
     .card-inner:has(.stepper-bold) > .card-header { grid-column: 1 / -1; margin-bottom: 6px; }
     .card-inner:has(.stepper-bold) > .stepper { grid-row: 2; grid-column: 1; align-self: center; }
-    .card-inner:has(.stepper-bold) > [id^="etape-"] { grid-row: 2; grid-column: 2; align-self: center; overflow: visible; }
+    .card-inner:has(.stepper-bold) > [id^="etape-"] { grid-row: 2; grid-column: 2; align-self: center; }
 
     /* Stepper becomes vertical column */
     .stepper.stepper-bold {
@@ -261,8 +261,8 @@
     .bpb .leg-action-center .bpb-action-pill { cursor: pointer; }
     .bpb .bpb-action-pill:hover { transform: translateY(-1px); box-shadow: 0 3px 12px rgba(0,0,0,0.15); }
     .bpb .bpb-action-pill:active { transform: scale(0.97); }
-    /* Bold desktop: minimal prev/next chevrons — always inside .bpb (dark card) */
-    .bold-nav { display: flex; align-items: center; justify-content: flex-end; gap: 5px; position: absolute; bottom: 8px; right: 10px; z-index: 2; }
+    /* Bold desktop: prev/next chevrons in header row */
+    .bold-nav { display: inline-flex; align-items: center; gap: 4px; margin-left: auto; flex-shrink: 0; }
     .bold-nav-btn { display: inline-flex; align-items: center; justify-content: center; width: 24px; height: 24px; border-radius: 50%; border: 1px solid rgba(255,255,255,0.15); background: rgba(255,255,255,0.08); color: rgba(255,255,255,0.45); cursor: pointer; transition: all 0.15s; font-family: var(--font); padding: 0; }
     .bold-nav-btn:hover { background: rgba(255,255,255,0.15); border-color: rgba(255,255,255,0.3); color: rgba(255,255,255,0.85); }
     .bold-nav-btn:disabled { opacity: 0.2; pointer-events: none; }
@@ -284,7 +284,7 @@
   }
 
   /* ===== Étape wrapper ===== */
-  .etape-content { transition: all 0.3s var(--ease); overflow: visible; }
+  .etape-content { transition: all 0.3s var(--ease); }
   .etape-content.is-past { opacity: 0.5; filter: grayscale(0.3); }
   .etape-content.is-past:hover { opacity: 0.7; }
   .etape-meta { display: flex; align-items: center; gap: 6px; margin-bottom: 8px; }
@@ -437,11 +437,9 @@
   .bpb-navy .leg-conn-chip { background: #1a2138; }
   .trip-card:not(.contrast-mode):not(.dark-mode) .bpb-leg .leg-conn-bar::before { background: var(--grey-200); }
   .trip-card:not(.contrast-mode):not(.dark-mode) .bpb-leg .leg-conn-chip { background: #edeef2; }
-  /* Floating action pill on bottom edge — transport leg cards only */
-  .bpb:has(.leg-action-center) { overflow: visible; padding-bottom: 14px; margin-bottom: 22px; z-index: 2; }
-  /* Inline voucher pill — centered in card (hotel/car) */
+  /* Inline action pill — centered in card */
+  .leg-action-center { text-align: center; padding: 6px 14px 10px; }
   .card-voucher-row { text-align: center; padding: 6px 14px; }
-  .leg-action-center { position: absolute; bottom: 0; left: 50%; transform: translate(-50%, 50%); z-index: 3; }
   /* Hotel dark card */
   .htd-title { font-size: 15px; font-weight: 700; color: #fff; line-height: 1.3; }
   .htd-title .stars { color: var(--yellow-500); font-size: 12px; margin-left: 2px; }
@@ -793,7 +791,6 @@
     .card-voucher-row { display: none; }
     .htd-nights-sep > .bpb-action-pill { display: none; }
     .leg-action-center { display: none; }
-    .bpb:has(.leg-action-center) { overflow: hidden; padding-bottom: 0; margin-bottom: 0; }
     .stepper.stepper-bold .stepper-step.active { width: 140px; }
     .stepper.stepper-bold .stepper-step.active .stepper-dot { width: 34px; height: 34px; }
     .stepper.stepper-bold .stepper-step.active .stepper-dot .material-symbols-rounded { font-size: 17px; }
@@ -923,6 +920,8 @@
   .trip-card:not(.contrast-mode) .bpb .bp-doc-btn.deferred { background: var(--grey-50); color: var(--grey-500); }
   .trip-card:not(.contrast-mode) .bpb .bp-doc-wallet { color: var(--black); background: var(--grey-50); border-color: var(--grey-200); }
   .trip-card:not(.contrast-mode) .bpb-action-pill { background: rgba(0,0,0,0.06); color: var(--grey-700); border-color: rgba(0,0,0,0.10); }
+  .trip-card:not(.contrast-mode) .bold-nav-btn { border-color: rgba(0,0,0,0.12); background: rgba(0,0,0,0.04); color: var(--grey-400); }
+  .trip-card:not(.contrast-mode) .bold-nav-btn:hover { background: rgba(0,0,0,0.08); border-color: rgba(0,0,0,0.2); color: var(--grey-600); }
   .trip-card:not(.contrast-mode) .bpb-action-pill svg { fill: var(--grey-500); }
   .trip-card:not(.contrast-mode) .bpb-action-pill .material-symbols-rounded { color: var(--grey-500); }
   .trip-card:not(.contrast-mode):not(.dark-mode) .bpb-driver { border-top-color: var(--grey-100); }
@@ -1881,9 +1880,9 @@ function renderAll() {
         const prevDis = selIdx <= 0 ? ' disabled' : '';
         const nextDis = selIdx >= total - 1 ? ' disabled' : '';
         const navH = '<div class="bold-nav"><button class="bold-nav-btn"' + prevDis + ' onclick="selectEtape(\'' + key + '\',' + (selIdx - 1) + ')"><span class="material-symbols-rounded">chevron_left</span></button><button class="bold-nav-btn"' + nextDis + ' onclick="selectEtape(\'' + key + '\',' + (selIdx + 1) + ')"><span class="material-symbols-rounded">chevron_right</span></button></div>';
-        // Insert nav inside the .bpb card (position: relative) so it overlays bottom-right
-        const bpbEl = document.querySelector('#etape-' + key + ' .bpb');
-        if (bpbEl) bpbEl.insertAdjacentHTML('beforeend', navH);
+        // Insert nav into the header row (top-right, no overlap with content)
+        const headEl = document.querySelector('#etape-' + key + ' .bpb-head');
+        if (headEl) headEl.insertAdjacentHTML('beforeend', navH);
         else document.getElementById('etape-' + key).insertAdjacentHTML('beforeend', navH);
       }
     }
