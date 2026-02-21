@@ -414,14 +414,20 @@
   /* Leg card — per-segment carrier label in mid zone */
   .leg-mid-carrier { font-size: 10px; font-weight: 700; color: rgba(255,255,255,0.5); white-space: nowrap; text-align: center; margin-bottom: 2px; letter-spacing: 0.2px; }
   .trip-card:not(.contrast-mode):not(.dark-mode) .leg-mid-carrier { color: var(--grey-500); }
-  /* Leg card — tighter layout for stacked segments */
-  .bpb-leg .bpb-code { font-size: 24px; }
-  .bpb-leg .bpb-route { padding: 4px 14px 4px; }
+  /* Leg card — compact stacked segments */
+  .bpb-leg .bpb-hero { display: flex; flex-wrap: wrap; align-items: baseline; gap: 0 6px; }
+  .bpb-leg .bpb-hero.arr { justify-content: flex-end; }
+  .bpb-leg .bpb-code { font-size: 22px; }
+  .bpb-leg .bpb-time { font-size: 13px; font-weight: 600; margin-top: 0; }
+  .bpb-leg .bpb-name { display: none; }
+  .bpb-leg .bpb-route { padding: 4px 14px 2px; }
   .bpb-leg .bpb-head { padding: 8px 14px 2px; }
-  .bpb-leg .bp-tags { padding: 2px 14px 2px; }
-  .bpb-leg .bpb-route + .bp-tags { padding-bottom: 4px; }
+  .bpb-leg .bp-tags { padding: 0 14px 2px; }
+  .bpb-leg .bp-tag { padding: 2px 6px; }
+  .bpb-leg .bp-tag-label { font-size: 8px; }
+  .bpb-leg .bp-tag-value { font-size: 12px; }
   /* Leg card — connection chip centered on separator line */
-  .bpb-leg .leg-conn-bar { position: relative; border-top: none; margin: 4px 14px; padding: 0; justify-content: center; }
+  .bpb-leg .leg-conn-bar { position: relative; border-top: none; margin: 2px 14px; padding: 0; justify-content: center; }
   .bpb-leg .leg-conn-bar::before { content: ''; position: absolute; top: 50%; left: 0; right: 0; height: 1px; background: rgba(255,255,255,0.08); }
   .bpb-leg .leg-conn-chip { position: relative; z-index: 1; background: #262d3f; }
   .bpb-navy .leg-conn-chip { background: #1a2138; }
@@ -816,8 +822,7 @@
     .bpb-leg .bpb-code { font-size: 20px; }
     .bpb-leg .bpb-route { padding: 3px 12px 3px; }
     .bpb-leg .bpb-time { font-size: 11px; }
-    .bpb-leg .bpb-name { font-size: 10px; }
-    .bpb-leg .bp-tags { padding: 2px 12px 2px; }
+    .bpb-leg .bp-tags { padding: 0 12px 2px; }
     .bpb-code { font-size: 28px; }
     .bpb-route { padding: 12px 12px 6px; }
     .bpb-head { padding: 10px 12px 0; }
