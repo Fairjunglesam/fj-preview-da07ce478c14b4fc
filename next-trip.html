@@ -644,7 +644,8 @@
   .sheet-ticket-counter { font-size: 11px; color: var(--grey-400); font-weight: 600; min-width: 28px; text-align: center; }
   /* PDF viewer in sheet (hotel/car vouchers) */
   .sheet-pdf { display: block; width: 200px; aspect-ratio: 210 / 297; margin: 16px auto 18px; border-radius: 14px; overflow: hidden; border: 1px solid var(--grey-100); background: #fff; text-decoration: none; cursor: pointer; }
-  .sheet-pdf iframe { width: 200%; height: 200%; border: none; transform: scale(0.5); transform-origin: 0 0; pointer-events: none; }
+  .sheet-pdf-placeholder { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; background: #f5f5f7; }
+  .sheet-pdf-placeholder svg { width: 48px; height: 48px; opacity: 0.35; }
   .sheet-dl-row { display: flex; align-items: center; gap: 12px; margin-bottom: 14px; }
   .sheet-dl-info { flex: 1; min-width: 0; }
   .sheet-dl-name { font-size: 13px; font-weight: 700; color: var(--black); }
@@ -2763,16 +2764,8 @@ function renderFloatDrawer() {
 
   let h = '';
 
-  // Platform row
-  h += '<div class="fd-row"><span class="fd-label">Plat.</span>';
-  ['desktop', 'ios', 'android'].forEach(p => {
-    const lbl = p === 'desktop' ? 'Desktop' : p === 'ios' ? 'iOS' : 'Android';
-    h += `<button class="fd-pill${p === currentPlatform ? ' active' : ''}" onclick="switchSheetPlatform('${p}')">${lbl}</button>`;
-  });
-  h += '</div>';
-
   if (isTransport) {
-    // Ticket row
+    // Ticket row — first
     h += '<div class="fd-row"><span class="fd-label">Ticket</span>';
     [['qr-wallet','QR+W'],['qr','QR'],['pdf','PDF'],['differe','Diff.']].forEach(([k, l]) => {
       h += `<button class="fd-pill${st.ticket === k ? ' active' : ''}" onclick="fdSet('ticket','${k}')">${l}</button>`;
@@ -2783,6 +2776,24 @@ function renderFloatDrawer() {
     if (hasSegs) {
       h += `<div class="fd-row"><span class="fd-label">Multi</span><button class="fd-toggle${st.multi ? ' on' : ''}" onclick="fdSet('multi',${!st.multi})"></button><span style="font-size:10px;color:var(--grey-500);margin-left:2px">${st.multi ? 'Multi-billets' : 'Mono'}</span></div>`;
     }
+
+    // Platform row — only if wallet (QR+W)
+    if (st.ticket === 'qr-wallet') {
+      h += '<div class="fd-row"><span class="fd-label">Plat.</span>';
+      ['desktop', 'ios', 'android'].forEach(p => {
+        const lbl = p === 'desktop' ? 'Desktop' : p === 'ios' ? 'iOS' : 'Android';
+        h += `<button class="fd-pill${p === currentPlatform ? ' active' : ''}" onclick="switchSheetPlatform('${p}')">${lbl}</button>`;
+      });
+      h += '</div>';
+    }
+  } else {
+    // Non-transport: just platform
+    h += '<div class="fd-row"><span class="fd-label">Plat.</span>';
+    ['desktop', 'ios', 'android'].forEach(p => {
+      const lbl = p === 'desktop' ? 'Desktop' : p === 'ios' ? 'iOS' : 'Android';
+      h += `<button class="fd-pill${p === currentPlatform ? ' active' : ''}" onclick="switchSheetPlatform('${p}')">${lbl}</button>`;
+    });
+    h += '</div>';
   }
 
   body.innerHTML = h;
@@ -2821,7 +2832,7 @@ function buildTransportSheet(e, platform) {
         h += `<div class="sheet-qr">${qrPlaceholderSvg}<div class="sheet-qr-label">Pr\u00e9sentez au contr\u00f4leur</div></div>`;
       } else if (ticket.available !== false && e.voucherPdf) {
         const docName = isFl ? 'Confirmation' : 'Billet';
-        h += `<a href="${e.voucherPdf}" target="_blank" class="sheet-pdf"><iframe src="${e.voucherPdf}#toolbar=0&view=Fit&page=1" title="${docName}"></iframe></a>`;
+        h += `<a href="${e.voucherPdf}" target="_blank" class="sheet-pdf"><div class="sheet-pdf-placeholder">${pdfDocSvg}</div></a>`;
       }
       h += buildFederalActions(e, platform);
       return h;
@@ -2846,7 +2857,7 @@ function buildTransportSheet(e, platform) {
           h += `<div class="sheet-qr">${qrPlaceholderSvg}<div class="sheet-qr-label">Pr\u00e9sentez au contr\u00f4leur</div></div>`;
         } else if (seg.voucherPdf) {
           const docName = isFl ? 'Confirmation' : 'Billet';
-          h += `<a href="${seg.voucherPdf}" target="_blank" class="sheet-pdf"><iframe src="${seg.voucherPdf}#toolbar=0&view=Fit&page=1" title="${docName}"></iframe></a>`;
+          h += `<a href="${seg.voucherPdf}" target="_blank" class="sheet-pdf"><div class="sheet-pdf-placeholder">${pdfDocSvg}</div></a>`;
         }
       }
       h += '</div>';
@@ -2923,7 +2934,7 @@ function buildSingleTicketSection(e, platform) {
     const num = e.num || '';
     const paxMeta = (e._travelerName || '') + (e._travelerName && e.pnr ? ' \u00b7 ' : '') + (e.pnr || '');
     if (e.voucherPdf) {
-      h += `<a href="${e.voucherPdf}" target="_blank" class="sheet-pdf"><iframe src="${e.voucherPdf}#toolbar=0&view=Fit&page=1" title="${docName}"></iframe></a>`;
+      h += `<a href="${e.voucherPdf}" target="_blank" class="sheet-pdf"><div class="sheet-pdf-placeholder">${pdfDocSvg}</div></a>`;
       h += '<div class="sheet-dl-row">';
       h += `<div class="sheet-dl-info"><div class="sheet-dl-name">${docName} ${carrier} ${num}</div><div class="sheet-dl-meta">${paxMeta || 'PDF'}</div></div>`;
       h += `<a href="${e.voucherPdf}" target="_blank" download class="sheet-dl-btn" title="Télécharger"><span class="material-symbols-rounded">download</span></a>`;
@@ -2963,7 +2974,7 @@ function buildHotelSheet(e) {
   const mUrl = e.address ? mapsLink(e.address) : e.locUrl;
   // PDF preview when available
   if (e.voucherPdf) {
-    h += `<a href="${e.voucherPdf}" target="_blank" class="sheet-pdf"><iframe src="${e.voucherPdf}#toolbar=0&view=Fit&page=1" title="Voucher"></iframe></a>`;
+    h += `<a href="${e.voucherPdf}" target="_blank" class="sheet-pdf"><div class="sheet-pdf-placeholder">${pdfDocSvg}</div></a>`;
     h += '<div class="sheet-dl-row">';
     h += `<div class="sheet-dl-info"><div class="sheet-dl-name">Voucher ${e.shortLabel || e.title || ''}</div><div class="sheet-dl-meta">PDF · ${e.bookingRef || ''}</div></div>`;
     if (mUrl) h += mapBtn(mUrl);
@@ -3011,7 +3022,7 @@ function buildCarSheet(e) {
   let h = '';
   // PDF preview when available
   if (e.voucherPdf) {
-    h += `<a href="${e.voucherPdf}" target="_blank" class="sheet-pdf"><iframe src="${e.voucherPdf}#toolbar=0&view=Fit&page=1" title="Voucher"></iframe></a>`;
+    h += `<a href="${e.voucherPdf}" target="_blank" class="sheet-pdf"><div class="sheet-pdf-placeholder">${pdfDocSvg}</div></a>`;
     h += '<div class="sheet-dl-row">';
     h += `<div class="sheet-dl-info"><div class="sheet-dl-name">Voucher ${e.carrier || e.title || ''}</div><div class="sheet-dl-meta">PDF · ${e.bookingRef || ''}</div></div>`;
     if (mUrl && !isOJ) h += mapBtn(mUrl);
