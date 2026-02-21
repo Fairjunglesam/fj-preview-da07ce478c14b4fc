@@ -275,7 +275,7 @@
   .etape-carousel::-webkit-scrollbar { display: none; }
   .etape-carousel .etape-slide {
     flex: 0 0 calc(100% - 16px); scroll-snap-align: start; min-width: 0;
-    height: 320px; display: flex; flex-direction: column; justify-content: flex-start; overflow: hidden;
+    min-height: 200px; display: flex; flex-direction: column; justify-content: flex-start;
   }
 
   /* ===== Étape wrapper ===== */
@@ -378,7 +378,7 @@
   .bpb-mid-line:last-child::after { right: 0; }
   .bpb-mid-badge { display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin: 0 6px; gap: 4px; white-space: nowrap; background: none; border: none; }
   .bpb-mid-badge .material-symbols-rounded { font-size: 15px; color: rgba(255,255,255,0.45); line-height: 1; }
-  .bpb-mid-badge .mid-label { font-size: 11px; font-weight: 700; color: rgba(255,255,255,0.50); letter-spacing: -0.2px; }
+  .bpb-mid-badge .mid-label { font-size: 12px; font-weight: 700; color: rgba(255,255,255,0.55); letter-spacing: -0.2px; }
   .bpb-dur { font-size: 10px; font-weight: 700; color: rgba(255,200,120,0.85); padding: 4px 14px 2px; display: flex; align-items: center; gap: 4px; }
   .bpb-dur .material-symbols-rounded { font-size: 14px; color: rgba(255,180,80,0.9); }
   .bpb-action-pill { display: inline-flex; align-items: center; gap: 4px; padding: 3px 10px; margin-top: 3px; border-radius: 6px; font-size: 9px; font-weight: 800; background: rgba(255,255,255,0.20); color: rgba(255,255,255,0.85); border: 1px solid rgba(255,255,255,0.25); letter-spacing: 0.6px; text-transform: uppercase; font-family: var(--font); white-space: nowrap; }
@@ -412,8 +412,8 @@
   .trip-card:not(.contrast-mode):not(.dark-mode) .leg-conn-chip { background: rgba(255,141,84,0.08); border-color: rgba(255,141,84,0.15); color: #cc5500; }
   .leg-conn-chip .material-symbols-rounded { font-size: 12px; line-height: 1; }
   /* Leg card — per-segment carrier label in mid zone */
-  .leg-mid-carrier { font-size: 10px; font-weight: 700; color: rgba(255,255,255,0.5); white-space: nowrap; text-align: center; margin-bottom: 2px; letter-spacing: 0.2px; }
-  .trip-card:not(.contrast-mode):not(.dark-mode) .leg-mid-carrier { color: var(--grey-500); }
+  .leg-mid-carrier { font-size: 12px; font-weight: 700; color: rgba(255,255,255,0.6); white-space: nowrap; text-align: center; margin-bottom: 2px; letter-spacing: 0.2px; }
+  .trip-card:not(.contrast-mode):not(.dark-mode) .leg-mid-carrier { color: var(--grey-600); }
   /* Leg card — compact stacked segments */
   .bpb-leg .bpb-hero { display: flex; flex-wrap: wrap; align-items: baseline; gap: 0 6px; }
   .bpb-leg .bpb-hero.arr { justify-content: flex-end; }
@@ -760,10 +760,10 @@
     .sheet-handle { display: block; }
     body { padding: 8px; }
     .card-inner { padding: 14px 12px 10px; }
-    .card-header { margin-bottom: 10px; flex-direction: column; gap: 6px; }
+    .card-header { margin-bottom: 10px; flex-wrap: wrap; gap: 6px; }
     .headline { font-size: 15px; }
     .co-travelers { font-size: 10px; }
-    .header-link { margin-left: 0; align-self: flex-start; padding: 4px 8px; font-size: 10px; }
+    .header-link { padding: 4px 8px; font-size: 10px; }
     .stepper { margin-bottom: 10px; }
     .stepper-step { padding: 3px 0; }
     .stepper-dot-row { height: 30px; }
@@ -817,8 +817,8 @@
     /* Bold mobile — hide mid section to save space (except leg cards with escales) */
     .bpb-mid { display: none; }
     .bpb-leg .bpb-mid { display: flex; min-width: 50px; }
-    .bpb-leg .bpb-mid-badge .mid-label { font-size: 9px; }
-    .bpb-leg .leg-mid-carrier { font-size: 9px; }
+    .bpb-leg .bpb-mid-badge .mid-label { font-size: 11px; }
+    .bpb-leg .leg-mid-carrier { font-size: 10px; }
     .bpb-leg .bpb-code { font-size: 20px; }
     .bpb-leg .bpb-route { padding: 3px 12px 3px; }
     .bpb-leg .bpb-time { font-size: 11px; }
@@ -2326,7 +2326,7 @@ function selectEtape(tripKey, idx) {
   const carousel = document.querySelector('#etape-' + tripKey + ' .etape-carousel');
   if (carousel) {
     const slide = document.getElementById('slide-' + tripKey + '-' + idx);
-    if (slide) slide.scrollIntoView({ behavior: 'smooth', inline: 'start', block: 'nearest' });
+    if (slide) slide.scrollIntoView({ behavior: 'instant', inline: 'start', block: 'nearest' });
     selectedEtapes[tripKey] = idx;
     return;
   }
