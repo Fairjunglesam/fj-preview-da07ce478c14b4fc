@@ -644,8 +644,7 @@
   .sheet-ticket-counter { font-size: 11px; color: var(--grey-400); font-weight: 600; min-width: 28px; text-align: center; }
   /* PDF viewer in sheet (hotel/car vouchers) */
   .sheet-pdf { display: block; width: 200px; aspect-ratio: 210 / 297; margin: 16px auto 18px; border-radius: 14px; overflow: hidden; border: 1px solid var(--grey-100); background: #fff; text-decoration: none; cursor: pointer; }
-  .sheet-pdf-placeholder { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; background: #f5f5f7; }
-  .sheet-pdf-placeholder svg { width: 48px; height: 48px; opacity: 0.35; }
+  .sheet-pdf iframe { width: 200%; height: 200%; border: none; transform: scale(0.5); transform-origin: 0 0; pointer-events: none; }
   .sheet-dl-row { display: flex; align-items: center; gap: 12px; margin-bottom: 14px; }
   .sheet-dl-info { flex: 1; min-width: 0; }
   .sheet-dl-name { font-size: 13px; font-weight: 700; color: var(--black); }
@@ -1370,6 +1369,7 @@ const TRIPS = {
         ticket: { available: true, hasQR: true, wallet: true },
         num: 'OUIGO 7641', pnr: 'HJKL42', platform: '3',
         fareName: 'Prem\'s', fareExch: false, fareRefund: false, amenities: ['wifi', 'power'],
+        voucherPdf: 'voucher-train.pdf',
         docLabel: 'Voir mon billet', docIcon: '🎫', docAvailable: true,
         locLabel: 'Itinéraire vers la gare', locIcon: '📍', locUrl: '#',
       },
@@ -1391,7 +1391,7 @@ const TRIPS = {
           'https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?w=300&h=300&fit=crop',
           'https://images.unsplash.com/photo-1590490360182-c33d57733427?w=300&h=300&fit=crop',
         ],
-        docLabel: 'Voir mon voucher', docIcon: '📄', docAvailable: true, voucherPdf: 'voucherhotel221-2173826_1679135161643.pdf',
+        docLabel: 'Voir mon voucher', docIcon: '📄', docAvailable: true, voucherPdf: 'voucher-hotel.pdf',
         locLabel: "Itinéraire vers l'hôtel", locIcon: '📍', locUrl: '#',
       },
       {
@@ -1404,7 +1404,7 @@ const TRIPS = {
         bookingRef: 'AVIS-84729',
         driverName: 'Stella Smith',
         carPhoto: 'https://images.unsplash.com/photo-1502877338535-766e1452684a?w=260&h=180&fit=crop',
-        docLabel: 'Voir mon voucher', docIcon: '📄', docAvailable: true, voucherPdf: 'voucherhotel221-2173826_1679135161643.pdf',
+        docLabel: 'Voir mon voucher', docIcon: '📄', docAvailable: true, voucherPdf: 'voucher-flight.pdf',
         locLabel: "Itinéraire vers l'agence", locIcon: '📍', locUrl: '#',
       },
       {
@@ -1463,7 +1463,7 @@ const TRIPS = {
           'https://images.unsplash.com/photo-1618773928121-c32242e63f39?w=300&h=300&fit=crop',
           'https://images.unsplash.com/photo-1584132967334-10e028bd69f7?w=300&h=300&fit=crop',
         ],
-        docLabel: 'Voir mon voucher', docIcon: '📄', docAvailable: true, voucherPdf: 'voucherhotel221-2173826_1679135161643.pdf',
+        docLabel: 'Voir mon voucher', docIcon: '📄', docAvailable: true, voucherPdf: 'voucher-hotel.pdf',
         locLabel: "Itinéraire vers l'hôtel", locIcon: '📍', locUrl: '#',
       },
       {
@@ -1476,7 +1476,7 @@ const TRIPS = {
         bookingRef: 'EUR-19384',
         driverName: 'Stella Smith',
         carPhoto: 'https://images.unsplash.com/photo-1549399542-7e3f8b79c341?w=260&h=180&fit=crop',
-        docLabel: 'Voir mon voucher', docIcon: '📄', docAvailable: true, voucherPdf: 'voucherhotel221-2173826_1679135161643.pdf',
+        docLabel: 'Voir mon voucher', docIcon: '📄', docAvailable: true, voucherPdf: 'voucher-hotel.pdf',
         locLabel: "Itinéraire vers l'agence", locIcon: '📍', locUrl: '#',
       },
       {
@@ -1517,6 +1517,7 @@ const TRIPS = {
         ticket: { available: true, hasQR: true, wallet: false },
         pnr: 'XYZW89',
         fareName: 'Loisir', fareExch: 'with_fee', fareRefund: false, amenities: ['wifi', 'power', 'bar'],
+        voucherPdf: 'voucher-train.pdf',
         docLabel: 'Voir mon billet', docIcon: '🎫', docAvailable: true,
         locLabel: 'Itinéraire vers la gare', locIcon: '📍', locUrl: '#',
       },
@@ -1538,7 +1539,7 @@ const TRIPS = {
           'https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?w=300&h=300&fit=crop',
           'https://images.unsplash.com/photo-1590490360182-c33d57733427?w=300&h=300&fit=crop',
         ],
-        docLabel: 'Voir mon voucher', docIcon: '📄', docAvailable: true, voucherPdf: 'voucherhotel221-2173826_1679135161643.pdf',
+        docLabel: 'Voir mon voucher', docIcon: '📄', docAvailable: true, voucherPdf: 'voucher-hotel.pdf',
         locLabel: "Itinéraire vers l'hôtel", locIcon: '📍', locUrl: '#',
       },
       {
@@ -1552,6 +1553,7 @@ const TRIPS = {
         ticket: { available: true, hasQR: true, wallet: false },
         num: 'OUIGO 7854', pnr: 'XYZW89',
         fareName: 'Prem\'s', fareExch: false, fareRefund: false, amenities: ['wifi'],
+        voucherPdf: 'voucher-train.pdf',
         docLabel: 'Voir mon billet', docIcon: '🎫', docAvailable: true,
         locLabel: 'Itinéraire vers la gare', locIcon: '📍', locUrl: '#',
       }
@@ -1601,7 +1603,7 @@ const TRIPS = {
           'https://images.unsplash.com/photo-1618773928121-c32242e63f39?w=300&h=300&fit=crop',
           'https://images.unsplash.com/photo-1584132967334-10e028bd69f7?w=300&h=300&fit=crop',
         ],
-        docLabel: 'Voir mon voucher', docIcon: '📄', docAvailable: true, voucherPdf: 'voucherhotel221-2173826_1679135161643.pdf',
+        docLabel: 'Voir mon voucher', docIcon: '📄', docAvailable: true, voucherPdf: 'voucher-hotel.pdf',
         locLabel: "Itinéraire vers l'hôtel", locIcon: '📍', locUrl: '#',
       },
       {
@@ -1670,7 +1672,7 @@ const TRIPS = {
           'https://images.unsplash.com/photo-1566073771259-6a8506099945?w=600&h=300&fit=crop',
           'https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?w=300&h=300&fit=crop',
         ],
-        docLabel: 'Voir mon voucher', docIcon: '📄', docAvailable: true, voucherPdf: 'voucherhotel221-2173826_1679135161643.pdf',
+        docLabel: 'Voir mon voucher', docIcon: '📄', docAvailable: true, voucherPdf: 'voucher-hotel.pdf',
         locLabel: "Itinéraire vers l'hôtel", locIcon: '📍', locUrl: '#',
       },
       {
@@ -1767,7 +1769,7 @@ const TRIPS = {
           'https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?w=600&h=300&fit=crop',
           'https://images.unsplash.com/photo-1618773928121-c32242e63f39?w=300&h=300&fit=crop',
         ],
-        docLabel: 'Voir mon voucher', docIcon: '📄', docAvailable: true, voucherPdf: 'voucherhotel221-2173826_1679135161643.pdf',
+        docLabel: 'Voir mon voucher', docIcon: '📄', docAvailable: true, voucherPdf: 'voucher-hotel.pdf',
         locLabel: "Itinéraire vers l'hôtel", locIcon: '📍', locUrl: '#',
       }
     ]
@@ -2729,7 +2731,7 @@ function _applyFdOverrides(etape) {
       if (e.segments) e.segments.forEach(s => { s.ticket = { available: false }; });
     } else if (st.ticket === 'pdf') {
       e.ticket = { available: true, hasQR: false, wallet: false };
-      e.voucherPdf = e.type === 'flight' ? 'voucher-flight.pdf' : 'billet.pdf';
+      e.voucherPdf = e.type === 'flight' ? 'voucher-flight.pdf' : 'voucher-train.pdf';
       if (e.segments) e.segments.forEach(s => { s.ticket = null; });
     } else if (st.ticket === 'qr') {
       e.ticket = { available: true, hasQR: true, wallet: false };
@@ -2832,7 +2834,7 @@ function buildTransportSheet(e, platform) {
         h += `<div class="sheet-qr">${qrPlaceholderSvg}<div class="sheet-qr-label">Pr\u00e9sentez au contr\u00f4leur</div></div>`;
       } else if (ticket.available !== false && e.voucherPdf) {
         const docName = isFl ? 'Confirmation' : 'Billet';
-        h += `<a href="${e.voucherPdf}" target="_blank" class="sheet-pdf"><div class="sheet-pdf-placeholder">${pdfDocSvg}</div></a>`;
+        h += `<a href="${e.voucherPdf}" target="_blank" class="sheet-pdf"><iframe src="${e.voucherPdf}#toolbar=0&view=Fit&page=1" title="PDF"></iframe></a>`;
       }
       h += buildFederalActions(e, platform);
       return h;
@@ -2857,7 +2859,7 @@ function buildTransportSheet(e, platform) {
           h += `<div class="sheet-qr">${qrPlaceholderSvg}<div class="sheet-qr-label">Pr\u00e9sentez au contr\u00f4leur</div></div>`;
         } else if (seg.voucherPdf) {
           const docName = isFl ? 'Confirmation' : 'Billet';
-          h += `<a href="${seg.voucherPdf}" target="_blank" class="sheet-pdf"><div class="sheet-pdf-placeholder">${pdfDocSvg}</div></a>`;
+          h += `<a href="${seg.voucherPdf}" target="_blank" class="sheet-pdf"><iframe src="${seg.voucherPdf}#toolbar=0&view=Fit&page=1" title="PDF"></iframe></a>`;
         }
       }
       h += '</div>';
@@ -2934,7 +2936,7 @@ function buildSingleTicketSection(e, platform) {
     const num = e.num || '';
     const paxMeta = (e._travelerName || '') + (e._travelerName && e.pnr ? ' \u00b7 ' : '') + (e.pnr || '');
     if (e.voucherPdf) {
-      h += `<a href="${e.voucherPdf}" target="_blank" class="sheet-pdf"><div class="sheet-pdf-placeholder">${pdfDocSvg}</div></a>`;
+      h += `<a href="${e.voucherPdf}" target="_blank" class="sheet-pdf"><iframe src="${e.voucherPdf}#toolbar=0&view=Fit&page=1" title="PDF"></iframe></a>`;
       h += '<div class="sheet-dl-row">';
       h += `<div class="sheet-dl-info"><div class="sheet-dl-name">${docName} ${carrier} ${num}</div><div class="sheet-dl-meta">${paxMeta || 'PDF'}</div></div>`;
       h += `<a href="${e.voucherPdf}" target="_blank" download class="sheet-dl-btn" title="Télécharger"><span class="material-symbols-rounded">download</span></a>`;
@@ -2974,7 +2976,7 @@ function buildHotelSheet(e) {
   const mUrl = e.address ? mapsLink(e.address) : e.locUrl;
   // PDF preview when available
   if (e.voucherPdf) {
-    h += `<a href="${e.voucherPdf}" target="_blank" class="sheet-pdf"><div class="sheet-pdf-placeholder">${pdfDocSvg}</div></a>`;
+    h += `<a href="${e.voucherPdf}" target="_blank" class="sheet-pdf"><iframe src="${e.voucherPdf}#toolbar=0&view=Fit&page=1" title="PDF"></iframe></a>`;
     h += '<div class="sheet-dl-row">';
     h += `<div class="sheet-dl-info"><div class="sheet-dl-name">Voucher ${e.shortLabel || e.title || ''}</div><div class="sheet-dl-meta">PDF · ${e.bookingRef || ''}</div></div>`;
     if (mUrl) h += mapBtn(mUrl);
@@ -3022,7 +3024,7 @@ function buildCarSheet(e) {
   let h = '';
   // PDF preview when available
   if (e.voucherPdf) {
-    h += `<a href="${e.voucherPdf}" target="_blank" class="sheet-pdf"><div class="sheet-pdf-placeholder">${pdfDocSvg}</div></a>`;
+    h += `<a href="${e.voucherPdf}" target="_blank" class="sheet-pdf"><iframe src="${e.voucherPdf}#toolbar=0&view=Fit&page=1" title="PDF"></iframe></a>`;
     h += '<div class="sheet-dl-row">';
     h += `<div class="sheet-dl-info"><div class="sheet-dl-name">Voucher ${e.carrier || e.title || ''}</div><div class="sheet-dl-meta">PDF · ${e.bookingRef || ''}</div></div>`;
     if (mUrl && !isOJ) h += mapBtn(mUrl);
@@ -3125,7 +3127,7 @@ function renderShowcase() {
       nights: 3, roomName: 'Chambre Deluxe Double', bookingRef: 'MRR-482910',
       address: '15 Rue du Temple, 33000 Bordeaux',
       freeTextConditions: 'R\u00e9cup\u00e9rez votre cl\u00e9 \u00e0 la r\u00e9ception. Check-in \u00e0 partir de 15h. R\u00e9ception ouverte 24h/24.',
-      voucherPdf: 'voucherhotel221-2173826_1679135161643.pdf', docAvailable: true,
+      voucherPdf: 'voucher-hotel.pdf', docAvailable: true,
       shortLabel: 'H\u00f4tel Renaissance Bordeaux', title: 'H\u00f4tel Renaissance Bordeaux',
     };
     headerTitle = dateIcon('Vendredi 9 F\u00e9vrier') + '<span>H\u00f4tel Renaissance Bordeaux</span>';
@@ -3136,7 +3138,7 @@ function renderShowcase() {
       pickup: { time: '14:00', date: 'Mardi 17 F\u00e9vrier', location: 'Gare Saint-Jean, Bordeaux' },
       dropoff: { time: '18:00', date: 'Mardi 17 F\u00e9vrier', location: 'Gare Saint-Jean, Bordeaux' },
       carrier: 'Avis', title: 'Avis \u2013 Cat. B Compacte', bookingRef: 'AVIS-84729',
-      driverName: 'Stella Smith', voucherPdf: 'voucherhotel221-2173826_1679135161643.pdf', docAvailable: true,
+      driverName: 'Stella Smith', voucherPdf: 'voucher-hotel.pdf', docAvailable: true,
     };
     headerTitle = dateIcon('Mardi 17 F\u00e9vrier') + '<span>Avis \u2014 Voiture</span>';
     content = buildCarSheet(me);
