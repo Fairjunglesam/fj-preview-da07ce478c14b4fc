@@ -425,9 +425,20 @@
   .leg-conn-chip { display: inline-flex; align-items: center; gap: 4px; padding: 3px 8px; background: rgba(255,141,84,0.12); border: 1px solid rgba(255,141,84,0.2); border-radius: 6px; font-size: 10px; font-weight: 700; color: rgba(255,180,100,0.9); }
   .trip-card:not(.contrast-mode):not(.dark-mode) .leg-conn-chip { background: rgba(255,141,84,0.08); border-color: rgba(255,141,84,0.15); color: #cc5500; }
   .leg-conn-chip .material-symbols-rounded { font-size: 12px; line-height: 1; }
-  /* Leg card — escale description text in mid zone */
+  /* Leg card — escale count in mid zone */
   .leg-escale-desc { font-size: 9px; font-weight: 600; color: rgba(255,255,255,0.45); text-align: center; margin-top: 2px; white-space: nowrap; }
   .trip-card:not(.contrast-mode):not(.dark-mode) .leg-escale-desc { color: var(--grey-500); }
+  /* Leg card — segment timeline (compact rows) */
+  .leg-timeline { padding: 4px 14px 6px; border-top: 1px solid rgba(255,255,255,0.06); }
+  .trip-card:not(.contrast-mode):not(.dark-mode) .leg-timeline { border-top-color: var(--grey-100); }
+  .leg-seg-row { display: flex; align-items: center; justify-content: space-between; gap: 8px; padding: 3px 0; }
+  .leg-seg-times { font-size: 11px; font-weight: 700; color: rgba(255,255,255,0.8); white-space: nowrap; }
+  .trip-card:not(.contrast-mode):not(.dark-mode) .leg-seg-times { color: var(--grey-800); }
+  .leg-seg-detail { font-size: 10px; font-weight: 500; color: rgba(255,255,255,0.4); white-space: nowrap; text-align: right; }
+  .trip-card:not(.contrast-mode):not(.dark-mode) .leg-seg-detail { color: var(--grey-400); }
+  .leg-conn-row { display: flex; align-items: center; gap: 4px; padding: 2px 0; font-size: 10px; font-weight: 600; color: rgba(255,180,100,0.8); }
+  .trip-card:not(.contrast-mode):not(.dark-mode) .leg-conn-row { color: var(--orange-600); }
+  .leg-conn-row .material-symbols-rounded { font-size: 13px; line-height: 1; }
   /* Hotel dark card */
   .htd-title { font-size: 15px; font-weight: 700; color: #fff; line-height: 1.3; }
   .htd-title .stars { color: var(--yellow-500); font-size: 12px; margin-left: 2px; }
@@ -1941,7 +1952,7 @@ function renderEtape(e, state, idx, autoIdx, done, total, isPast, targetId) {
     }
 
     // Leg-level card for multi-segment etapes (bold mode only)
-    // Shows origin → [stop dots] → destination with connection info
+    // Shows origin → destination big codes, then compact segment timeline
     function bpCardLeg(etape, extraCls) {
       const isFl = etape.type === 'flight';
       const firstSeg = etape.segments[0];
@@ -1949,7 +1960,6 @@ function renderEtape(e, state, idx, autoIdx, done, total, isPast, targetId) {
       const dep = firstSeg.dep;
       const arr = lastSeg.arr;
       const stopCount = etape.segments.length - 1;
-      const MAX_STOP_DOTS = 2; // show individual dots up to this, then trim
       let h = '';
       // Header — collect unique carriers across segments
       const carriers = [];
@@ -1962,37 +1972,17 @@ function renderEtape(e, state, idx, autoIdx, done, total, isPast, targetId) {
       const fareData = firstSeg.fareName ? firstSeg : etape;
       const fareCls = fareData.fareName ? '<span class="bp-carrier-sub"> · ' + fareData.fareName + '</span>' : '';
       const pnr = firstSeg.pnr || etape.pnr || '';
-      // Stop count badge in header
-      const stopBadge = stopCount === 1 ? '<span class="bp-carrier-sub"> · 1 escale</span>' : `<span class="bp-carrier-sub"> · ${stopCount} escales</span>`;
+      const escLabel = stopCount === 1 ? '1 escale' : stopCount + ' escales';
       const headRight = pnr ? `<div class="bpb-head-right"><span class="bpb-ref">Réf. ${pnr}</span></div>` : '';
-      h += `<div class="bpb-head"><div class="bpb-carrier"><span class="bpb-date">${etape.departure.date}</span><span class="bp-carrier-icon">${etape.icon}</span>${carrierStr}${fareCls}${stopBadge}</div>${headRight}</div>`;
-      // Route with stop dots (trimmed if > MAX_STOP_DOTS)
+      h += `<div class="bpb-head"><div class="bpb-carrier"><span class="bpb-date">${etape.departure.date}</span><span class="bp-carrier-icon">${etape.icon}</span>${carrierStr}${fareCls}</div>${headRight}</div>`;
+      // Big route: origin code → destination code
       h += '<div class="bpb-route">';
       if (isFl && dep.code) {
         h += `<div class="bpb-hero"><div class="bpb-code">${dep.code}</div><div class="bpb-time">${dep.time}</div><div class="bpb-name">${dep.name}${dep.terminal ? ' · T' + dep.terminal : ''}</div></div>`;
       } else {
         h += `<div class="bpb-hero"><div class="bpb-code">${dep.time}</div><div class="bpb-name">${dep.name}</div></div>`;
       }
-      // Mid: descriptive escale info (not cryptic dots)
-      // Build escale description for mid zone
-      let escaleDesc = '';
-      if (etape.connections && etape.connections.length) {
-        if (stopCount === 1) {
-          const c = etape.connections[0];
-          const stopCode = etape.segments[1].dep.code || c.loc.split(' ')[0];
-          escaleDesc = `1 escale · ${stopCode} · ${c.dur}`;
-        } else if (stopCount === 2) {
-          const names = etape.connections.map(c => {
-            const seg = etape.segments[etape.connections.indexOf(c) + 1];
-            return seg && seg.dep.code ? seg.dep.code : c.loc.split(' ')[0];
-          });
-          escaleDesc = `${stopCount} escales · ${names.join(', ')}`;
-        } else {
-          const firstName = etape.segments[1].dep.code || etape.connections[0].loc.split(' ')[0];
-          escaleDesc = `${stopCount} escales · ${firstName} +${stopCount - 1}`;
-        }
-      }
-      // Ticket action pill
+      // Mid: duration badge + escale count
       let actionPill = '';
       const legTicket = firstSeg.ticket || etape.ticket;
       if (legTicket) {
@@ -2003,14 +1993,7 @@ function renderEtape(e, state, idx, autoIdx, done, total, isPast, targetId) {
           actionPill = `<div class="bpb-action-pill deferred"><span class="material-symbols-rounded">event</span> Dispo le ${legTicket.availableDate || '—'}</div>`;
         }
       }
-      // Mid zone: line — [escale dot] — duration badge — [escale dot] — line
-      // Plus escale description text below
-      const stopDot = stopCount > 0 ? '<div class="leg-stop-dot"><div class="leg-stop-dot-circle"></div></div>' : '';
-      h += `<div class="bpb-mid"><div class="bpb-mid-row"><div class="bpb-mid-line"></div>${stopDot}<div class="bpb-mid-badge">${midBadge(etape.type, etape.duration)}</div><div class="bpb-mid-line"></div></div>`;
-      if (escaleDesc) {
-        h += `<div class="leg-escale-desc">${escaleDesc}</div>`;
-      }
-      h += `${actionPill}</div>`;
+      h += `<div class="bpb-mid"><div class="bpb-mid-row"><div class="bpb-mid-line"></div><div class="bpb-mid-badge">${midBadge(etape.type, etape.duration)}</div><div class="bpb-mid-line"></div></div><div class="leg-escale-desc">${escLabel}</div>${actionPill}</div>`;
       // Arrival
       const boldArrOffset = arr.dayOffset ? `<span class="day-offset">+${arr.dayOffset}</span>` : '';
       if (isFl && arr.code) {
@@ -2018,6 +2001,23 @@ function renderEtape(e, state, idx, autoIdx, done, total, isPast, targetId) {
       } else {
         h += `<div class="bpb-hero arr"><div class="bpb-code">${arr.time}${boldArrOffset}</div><div class="bpb-name">${arr.name}</div></div>`;
       }
+      h += '</div>';
+      // Segment timeline — compact rows for each segment + connection
+      h += '<div class="leg-timeline">';
+      etape.segments.forEach((seg, si) => {
+        const segCarrier = seg.carrier || etape.carrier;
+        const segNum = seg.num || '';
+        const segDep = seg.dep;
+        const segArr = seg.arr;
+        const depCode = (isFl && segDep.code) ? segDep.code : segDep.name;
+        const arrCode = (isFl && segArr.code) ? segArr.code : segArr.name;
+        h += `<div class="leg-seg-row"><span class="leg-seg-times">${depCode} ${segDep.time} → ${arrCode} ${segArr.time}</span><span class="leg-seg-detail">${segNum}${seg.dur ? ' · ' + seg.dur : ''}</span></div>`;
+        // Connection after this segment (if not last)
+        if (si < etape.segments.length - 1 && etape.connections && etape.connections[si]) {
+          const conn = etape.connections[si];
+          h += `<div class="leg-conn-row"><span class="material-symbols-rounded">transfer_within_a_station</span>Escale ${conn.loc} · ${conn.dur}</div>`;
+        }
+      });
       h += '</div>';
       // Luggage
       if (isFl && etape.luggage) {
