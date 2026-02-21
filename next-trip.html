@@ -781,8 +781,8 @@
     .stepper.stepper-dark .stepper-step.active .stepper-label { font-size: 11px; }
     /* Bold stepper mobile — compact, no scroll (swipe on card area instead) */
     .stepper.stepper-bold { padding: 0 4px; gap: 0; }
-    .stepper.stepper-bold .stepper-step { flex: 0.7; min-width: 0; }
-    .stepper.stepper-bold .stepper-step.active { flex: 1.3; }
+    .stepper.stepper-bold .stepper-step { flex: 1; min-width: 0; }
+    .stepper.stepper-bold .stepper-step.active { flex: 1; }
     /* Hide prev/next nav on mobile (swipe replaces it) */
     .bold-nav { display: none; }
     .stepper.stepper-bold .stepper-step.active { width: 140px; }
@@ -1241,13 +1241,12 @@
 <div class="sticky-nav" id="sticky-nav">
   <div class="nav-row">
     <label>Couleur</label>
-    <button onclick="setColor('light')" id="btn-color-light" class="active">Light</button>
-    <button onclick="setColor('contrast')" id="btn-color-contrast">Contrast</button>
-    <button onclick="setColor('dark')" id="btn-color-dark">Dark contrast</button>
+    <button onclick="setColor('light')" id="btn-color-light">Light</button>
+    <button onclick="setColor('contrast')" id="btn-color-contrast" class="active">Contrast</button>
     <div class="sep"></div>
     <label>Layout</label>
-    <button onclick="setLayout('classic')" id="btn-layout-classic" class="active">Classic</button>
-    <button onclick="setLayout('bold')" id="btn-layout-bold">Bold</button>
+    <button onclick="setLayout('classic')" id="btn-layout-classic">Classic</button>
+    <button onclick="setLayout('bold')" id="btn-layout-bold" class="active">Bold</button>
     <div class="sep"></div>
     <label>Plateforme</label>
     <button onclick="setPlatform('desktop')" id="btn-plat-desktop" class="active">Desktop</button>
@@ -1700,8 +1699,8 @@ const TRIPS = {
 let currentState = 'upcoming';
 let currentContext = 'home';
 let autoResetTimer = null;
-let currentColor = 'light';   // light | dark
-let currentLayout = 'classic'; // classic | bold
+let currentColor = 'contrast';   // light | contrast
+let currentLayout = 'bold'; // classic | bold
 let currentPlatform = 'desktop'; // desktop | ios | android
 let selectedEtapes = {};       // per-card selected étape index
 let sheetTargets = [];         // etape data refs for sheet onclick
