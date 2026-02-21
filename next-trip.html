@@ -554,11 +554,7 @@
     .stepper.stepper-dark .stepper-step.active .stepper-dot { width: 32px; height: 32px; }
     .stepper.stepper-dark .stepper-step.active .stepper-dot .material-symbols-rounded { font-size: 16px; }
     .stepper.stepper-dark .stepper-step.active .stepper-label { font-size: 11px; }
-    /* Bold stepper mobile — carousel with snap */
-    .stepper.stepper-bold { overflow-x: auto; scroll-snap-type: x mandatory; -webkit-overflow-scrolling: touch; scrollbar-width: none; padding: 0 8px; }
-    .stepper.stepper-bold::-webkit-scrollbar { display: none; }
-    .stepper.stepper-bold .stepper-step { scroll-snap-align: center; flex: none; width: 82px; }
-    .stepper.stepper-bold .stepper-step.active { width: 160px; }
+    /* Bold stepper mobile — smaller dots, tighter layout */
     .stepper.stepper-bold .stepper-step.active .stepper-dot { width: 34px; height: 34px; }
     .stepper.stepper-bold .stepper-step.active .stepper-dot .material-symbols-rounded { font-size: 17px; }
     .stepper.stepper-bold .stepper-step.active .stepper-dot-row { height: 38px; }
@@ -1525,36 +1521,6 @@ function renderAll() {
     }
   });
 
-  // Bold stepper: scroll active into view + swipe snap (mobile only)
-  if (isBold) {
-    requestAnimationFrame(() => {
-      document.querySelectorAll('.stepper-bold').forEach(stepper => {
-        const isScrollable = stepper.scrollWidth > stepper.clientWidth + 4;
-        if (isScrollable) {
-          const active = stepper.querySelector('.stepper-step.active');
-          if (active) active.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
-        }
-        if (!stepper._swipeAttached) {
-          stepper._swipeAttached = true;
-          let debounce;
-          stepper.addEventListener('scroll', () => {
-            clearTimeout(debounce);
-            debounce = setTimeout(() => {
-              const rect = stepper.getBoundingClientRect();
-              const center = rect.left + rect.width / 2;
-              let closest = null, minDist = Infinity;
-              stepper.querySelectorAll('.stepper-step').forEach(step => {
-                const sr = step.getBoundingClientRect();
-                const dist = Math.abs((sr.left + sr.width / 2) - center);
-                if (dist < minDist) { minDist = dist; closest = step; }
-              });
-              if (closest && !closest.classList.contains('active')) closest.click();
-            }, 200);
-          });
-        }
-      });
-    });
-  }
 }
 
 // Calendar date icon (éphéméride) — parses "Ven. 09 Fév" or "Vendredi 9 Février"
