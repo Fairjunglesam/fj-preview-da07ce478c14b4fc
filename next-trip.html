@@ -656,6 +656,10 @@
   .sheet-conn-icon { font-size: 12px; color: var(--orange-500); }
   .sheet-conn-text { font-size: 10px; font-weight: 700; color: var(--orange-600); }
   .sheet-divider { height: 1px; background: var(--grey-100); margin: 14px 0; }
+  .sheet-seg-section { padding: 6px 0; }
+  .sheet-seg-route-line { font-size: 14px; font-weight: 700; color: var(--black); }
+  .sheet-seg-route-arrow { color: var(--grey-300); margin: 0 4px; }
+  .sheet-seg-route-detail { font-size: 11px; color: var(--grey-500); margin-top: 2px; font-weight: 500; }
   /* PDF viewer in sheet (hotel/car vouchers) */
   .sheet-pdf { display: block; width: 200px; aspect-ratio: 210 / 297; margin: 16px auto 18px; border-radius: 14px; overflow: hidden; border: 1px solid var(--grey-100); background: #fff; text-decoration: none; cursor: pointer; }
   .sheet-pdf iframe { width: 200%; height: 200%; border: none; transform: scale(0.5); transform-origin: 0 0; pointer-events: none; }
@@ -734,6 +738,9 @@
   .sheet-overlay[data-color="contrast"] .sheet-seg-head .seg-num { color: rgba(255,255,255,0.4); }
   .sheet-overlay[data-color="contrast"] .sheet-seg-route { color: #fff; }
   .sheet-overlay[data-color="contrast"] .sheet-seg-route .seg-arrow { color: rgba(255,255,255,0.3); }
+  .sheet-overlay[data-color="contrast"] .sheet-seg-route-line { color: #fff; }
+  .sheet-overlay[data-color="contrast"] .sheet-seg-route-arrow { color: rgba(255,255,255,0.3); }
+  .sheet-overlay[data-color="contrast"] .sheet-seg-route-detail { color: rgba(255,255,255,0.45); }
   .sheet-overlay[data-color="contrast"] .sheet-seg-times { color: rgba(255,255,255,0.45); }
   .sheet-overlay[data-color="contrast"] .sheet-seg-chip.seat { background: rgba(0,169,252,0.12); color: var(--blue-300); border-color: rgba(0,169,252,0.2); }
   .sheet-overlay[data-color="contrast"] .sheet-seg-chip.gate { background: rgba(255,141,84,0.1); color: var(--orange-300); border-color: rgba(255,141,84,0.18); }
@@ -784,6 +791,9 @@
   .sheet-overlay[data-color="dark"] .sheet-seg-head { color: rgba(255,255,255,0.65); }
   .sheet-overlay[data-color="dark"] .sheet-seg-head .seg-num { color: rgba(255,255,255,0.35); }
   .sheet-overlay[data-color="dark"] .sheet-seg-route { color: #fff; }
+  .sheet-overlay[data-color="dark"] .sheet-seg-route-line { color: #fff; }
+  .sheet-overlay[data-color="dark"] .sheet-seg-route-arrow { color: rgba(255,255,255,0.25); }
+  .sheet-overlay[data-color="dark"] .sheet-seg-route-detail { color: rgba(255,255,255,0.4); }
   .sheet-overlay[data-color="dark"] .sheet-seg-route .seg-arrow { color: rgba(255,255,255,0.25); }
   .sheet-overlay[data-color="dark"] .sheet-seg-times { color: rgba(255,255,255,0.4); }
   .sheet-overlay[data-color="dark"] .sheet-seg-chip.seat { background: rgba(0,169,252,0.1); color: var(--blue-300); border-color: rgba(0,169,252,0.18); }
@@ -2497,10 +2507,64 @@ const pdfDocSvg = '<svg viewBox="0 0 24 28" fill="none"><path d="M2 4a2 2 0 0 1 
 const qrPlaceholderSvg = '<svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="5" y="5" width="25" height="25" rx="2" stroke="currentColor" stroke-width="3"/><rect x="10" y="10" width="15" height="15" rx="1" fill="currentColor"/><rect x="70" y="5" width="25" height="25" rx="2" stroke="currentColor" stroke-width="3"/><rect x="75" y="10" width="15" height="15" rx="1" fill="currentColor"/><rect x="5" y="70" width="25" height="25" rx="2" stroke="currentColor" stroke-width="3"/><rect x="10" y="75" width="15" height="15" rx="1" fill="currentColor"/><rect x="38" y="5" width="8" height="8" fill="currentColor"/><rect x="50" y="5" width="8" height="8" fill="currentColor"/><rect x="38" y="17" width="8" height="8" fill="currentColor"/><rect x="5" y="38" width="8" height="8" fill="currentColor"/><rect x="17" y="38" width="8" height="8" fill="currentColor"/><rect x="5" y="50" width="8" height="8" fill="currentColor"/><rect x="38" y="38" width="8" height="8" fill="currentColor"/><rect x="50" y="38" width="8" height="8" fill="currentColor"/><rect x="62" y="38" width="8" height="8" fill="currentColor"/><rect x="38" y="50" width="8" height="8" fill="currentColor"/><rect x="62" y="50" width="8" height="8" fill="currentColor"/><rect x="50" y="62" width="8" height="8" fill="currentColor"/><rect x="62" y="62" width="8" height="8" fill="currentColor"/><rect x="74" y="62" width="8" height="8" fill="currentColor"/><rect x="86" y="62" width="8" height="8" fill="currentColor"/><rect x="74" y="50" width="8" height="8" fill="currentColor"/><rect x="86" y="38" width="8" height="8" fill="currentColor"/><rect x="38" y="74" width="8" height="8" fill="currentColor"/><rect x="50" y="86" width="8" height="8" fill="currentColor"/><rect x="62" y="74" width="8" height="8" fill="currentColor"/><rect x="74" y="86" width="8" height="8" fill="currentColor"/><rect x="86" y="74" width="8" height="8" fill="currentColor"/><rect x="86" y="86" width="8" height="8" fill="currentColor"/></svg>';
 
 function buildTransportSheet(e, platform) {
+  const isFl = e.type === 'flight';
+  const isMobile = platform === 'ios' || platform === 'android';
+
+  // Multi-segment → show segment routes, then federal actions at bottom
+  if (e.segments && e.segments.length > 1) {
+    let h = '';
+    const conn = e.connections || [];
+    e.segments.forEach((seg, i) => {
+      if (i > 0) {
+        const c = conn[i - 1];
+        if (c) h += `<div class="sheet-conn"><span class="sheet-conn-icon">&#8645;</span><span class="sheet-conn-text">${c.loc} · ${c.dur}</span></div>`;
+        else h += '<div class="sheet-divider"></div>';
+      }
+      const depN = seg.dep.code || seg.dep.name || '';
+      const arrN = seg.arr.code || seg.arr.name || '';
+      const depT = seg.dep.time || '';
+      const arrT = seg.arr.time || '';
+      h += `<div class="sheet-seg-section">`;
+      h += `<div class="sheet-seg-route-header">`;
+      h += `<div class="sheet-seg-route-line"><span class="sheet-seg-route-dep">${depN}</span><span class="sheet-seg-route-arrow">\u2192</span><span class="sheet-seg-route-arr">${arrN}</span></div>`;
+      h += `<div class="sheet-seg-route-detail">${depT} \u2013 ${arrT} · ${seg.carrier || e.carrier || ''} ${seg.num || ''} · ${seg.dur || ''}</div>`;
+      h += `</div></div>`;
+    });
+    // Federal actions: wallet + download (one for the whole leg)
+    h += buildFederalActions(e, platform);
+    return h;
+  }
+
+  // Single segment (or no segments)
+  return buildSingleTicketSection(e, platform);
+}
+
+function buildFederalActions(e, platform) {
   const ticket = e.ticket || {};
   const isFl = e.type === 'flight';
   const isMobile = platform === 'ios' || platform === 'android';
-  const paxLine = (e._travelerName || e.pnr) ? `<div class="sheet-pax">${e._travelerName ? '<strong>' + e._travelerName + '</strong>' : ''}${e._travelerName && e.pnr ? ' \u00b7 ' : ''}${e.pnr || ''}</div>` : '';
+  const hasWallet = isMobile && ticket.wallet;
+  let h = '<div class="sheet-divider"></div>';
+  if (hasWallet && ticket.hasQR) {
+    h += '<div class="sheet-actions-row">';
+    h += (platform === 'ios') ? appleWalletBadge : googleWalletBadge;
+    h += `<button class="sheet-dl-btn" onclick="event.preventDefault()" title="Télécharger"><span class="material-symbols-rounded">download</span></button>`;
+    h += '</div>';
+  } else {
+    const docName = isFl ? 'E-ticket' : 'Billet';
+    const dlMeta = (e._travelerName || '') + (e._travelerName && e.pnr ? ' \u00b7 ' : '') + (e.pnr || '');
+    h += '<div class="sheet-dl-row">';
+    h += `<div class="sheet-dl-info"><div class="sheet-dl-name">${docName} ${e.carrier || ''}</div><div class="sheet-dl-meta">${dlMeta || 'PDF'}</div></div>`;
+    h += `<button class="sheet-dl-btn" onclick="event.preventDefault()" title="Télécharger"><span class="material-symbols-rounded">download</span></button>`;
+    h += '</div>';
+  }
+  return h;
+}
+
+function buildSingleTicketSection(e, platform) {
+  const ticket = e.ticket || {};
+  const isFl = e.type === 'flight';
+  const isMobile = platform === 'ios' || platform === 'android';
   let h = '';
 
   // Deferred ticket
@@ -2532,13 +2596,11 @@ function buildTransportSheet(e, platform) {
   // Actions
   const hasWallet = isMobile && ticket.wallet;
   if (hasWallet && ticket.hasQR) {
-    // Wallet + download icon side by side
     h += '<div class="sheet-actions-row">';
     h += (platform === 'ios') ? appleWalletBadge : googleWalletBadge;
     h += `<button class="sheet-dl-btn" onclick="event.preventDefault()" title="Télécharger le PDF"><span class="material-symbols-rounded">download</span></button>`;
     h += '</div>';
   } else if (ticket.hasQR && !hasWallet) {
-    // No wallet → dl-row with doc info + download icon button
     const docName = isFl ? 'E-ticket' : 'Billet';
     const dlMeta = (e._travelerName || '') + (e._travelerName && e.pnr ? ' \u00b7 ' : '') + (e.pnr || '');
     h += '<div class="sheet-dl-row">';
@@ -2725,6 +2787,24 @@ function renderShowcase() {
       { label: 'Vol \u2014 e-ticket', type: 'flight', ticket: { available: true, hasQR: false, wallet: false }, platform: 'desktop', carrier: 'Air France', num: 'AF 1234', pnr: 'ABC123', dep: flightDep, arr: flightArr, voucherPdf: 'transport-voucher.pdf' },
       { label: 'Billet diff\u00e9r\u00e9', type: 'train', ticket: { available: false, availableDate: '15 mars 2026' }, platform: 'desktop', carrier: 'SNCF', num: 'TGV 9012', pnr: 'UVWX90', dep: trainDep, arr: trainArr },
     ],
+    'Multi-segment': [
+      { label: 'Correspondance train (iOS)', type: 'train', platform: 'ios', carrier: 'SNCF', pnr: 'XYZW89',
+        ticket: { available: true, hasQR: true, wallet: true },
+        dep: { name: 'Paris Montparnasse' }, arr: { name: 'Bordeaux Saint-Jean' },
+        segments: [
+          { dep: { time: '08:30', name: 'Paris Montparnasse' }, arr: { time: '10:32', name: 'Lyon Part-Dieu' }, dur: '2h02', num: 'TGV 6211', carrier: 'SNCF', ticket: { available: true, hasQR: true, wallet: true } },
+          { dep: { time: '11:15', name: 'Lyon Part-Dieu' }, arr: { time: '14:28', name: 'Bordeaux Saint-Jean' }, dur: '3h13', num: 'TGV 6825', carrier: 'SNCF', ticket: { available: true, hasQR: true, wallet: false } },
+        ],
+        connections: [{ loc: 'Lyon Part-Dieu', dur: '43 min' }] },
+      { label: 'Escale vol (desktop)', type: 'flight', platform: 'desktop', carrier: 'Lufthansa', pnr: 'KLM456',
+        ticket: { available: true, hasQR: true, wallet: false },
+        dep: { name: 'Paris', code: 'CDG' }, arr: { name: 'Ath\u00e8nes', code: 'ATH' },
+        segments: [
+          { dep: { time: '06:45', name: 'Paris', code: 'CDG' }, arr: { time: '08:25', name: 'Munich', code: 'MUC' }, dur: '1h40', num: 'LH 2231', carrier: 'Lufthansa', ticket: { available: true, hasQR: true, wallet: true } },
+          { dep: { time: '09:45', name: 'Munich', code: 'MUC' }, arr: { time: '13:35', name: 'Ath\u00e8nes', code: 'ATH' }, dur: '2h50', num: 'LH 1752', carrier: 'Lufthansa', ticket: { available: true, hasQR: true, wallet: true } },
+        ],
+        connections: [{ loc: 'Munich MUC', dur: '1h20' }] },
+    ],
     'H\u00f4tel / Voiture': [
       { label: 'H\u00f4tel (PDF)', etapeType: 'hotel', hotelName: 'H\u00f4tel Renaissance Bordeaux',
         hotelData: { checkin: { date: 'Vendredi 9 F\u00e9vrier', time: '15:00' }, checkout: { date: 'Dimanche 11 F\u00e9vrier', time: '11:00' }, nights: 3, roomName: 'Chambre Deluxe Double', bookingRef: 'MRR-482910', address: '15 Rue du Temple, 33000 Bordeaux', freeTextConditions: 'R\u00e9cup\u00e9rez votre cl\u00e9 \u00e0 la r\u00e9ception. Check-in \u00e0 partir de 15h. R\u00e9ception ouverte 24h/24.', voucherPdf: 'voucherhotel221-2173826_1679135161643.pdf', docAvailable: true } },
@@ -2753,6 +2833,8 @@ function renderShowcase() {
         shortLabel: s.hotelName || '',
         title: s.hotelName || '',
         ...(s.voucherPdf ? { voucherPdf: s.voucherPdf } : {}),
+        ...(s.segments ? { segments: s.segments } : {}),
+        ...(s.connections ? { connections: s.connections } : {}),
         ...(s.hotelData || {}),
         ...(s.carData || {}),
       };
