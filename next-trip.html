@@ -2628,6 +2628,16 @@ function selectEtape(tripKey, idx) {
 let _sheetEtape = null;
 function openSheet(etapeData) {
   _sheetEtape = etapeData;
+  // Sync float drawer state with etape's actual ticket data
+  if (currentTab === 'timeline' && (etapeData.type === 'train' || etapeData.type === 'flight')) {
+    const t = etapeData.ticket || {};
+    if (!t.available) _fdState.ticket = 'differe';
+    else if (t.hasQR && t.wallet) _fdState.ticket = 'qr-wallet';
+    else if (t.hasQR) _fdState.ticket = 'qr';
+    else _fdState.ticket = 'pdf';
+    // Sync multi from segments
+    _fdState.multi = !!(etapeData.segments && etapeData.segments.length > 1 && etapeData.segments.some(s => s.ticket));
+  }
   const patched = (currentTab === 'timeline') ? _applyFdOverrides(etapeData) : etapeData;
   _renderSheet(patched);
   // Show float drawer (only in timeline tab)
