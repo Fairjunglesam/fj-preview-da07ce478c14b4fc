@@ -652,8 +652,8 @@
   .sheet-conn-text { font-size: 10px; font-weight: 700; color: var(--orange-600); }
   .sheet-divider { height: 1px; background: var(--grey-100); margin: 14px 0; }
   /* PDF viewer in sheet (hotel/car vouchers) */
-  .sheet-pdf { width: 100%; aspect-ratio: 210 / 297; max-height: 540px; border-radius: 12px; overflow: hidden; border: 1px solid var(--grey-100); margin: 8px 0 14px; background: #fff; }
-  .sheet-pdf iframe { width: 100%; height: 100%; border: none; }
+  .sheet-pdf { display: block; width: 200px; aspect-ratio: 210 / 297; margin: 16px auto 18px; border-radius: 14px; overflow: hidden; border: 1px solid var(--grey-100); background: #fff; text-decoration: none; cursor: pointer; }
+  .sheet-pdf iframe { width: 200%; height: 200%; border: none; transform: scale(0.5); transform-origin: 0 0; pointer-events: none; }
   .sheet-dl-row { display: flex; align-items: center; gap: 12px; margin-bottom: 14px; }
   .sheet-dl-info { flex: 1; min-width: 0; }
   .sheet-dl-name { font-size: 13px; font-weight: 700; color: var(--black); }
@@ -2515,10 +2515,10 @@ function buildHotelSheet(e) {
   let h = '';
   // PDF preview when available
   if (e.voucherPdf) {
-    h += `<div class="sheet-pdf"><iframe src="${e.voucherPdf}#toolbar=0&view=Fit" title="Voucher"></iframe></div>`;
+    h += `<a href="${e.voucherPdf}" target="_blank" class="sheet-pdf"><iframe src="${e.voucherPdf}#toolbar=0&view=Fit&page=1" title="Voucher"></iframe></a>`;
     h += '<div class="sheet-dl-row">';
     h += `<div class="sheet-dl-info"><div class="sheet-dl-name">Voucher ${e.shortLabel || e.title || ''}</div><div class="sheet-dl-meta">PDF · ${e.bookingRef || ''}</div></div>`;
-    h += `<button class="sheet-dl-btn" onclick="event.preventDefault()" title="Télécharger"><span class="material-symbols-rounded">download</span></button>`;
+    h += `<a href="${e.voucherPdf}" target="_blank" download class="sheet-dl-btn" title="Télécharger"><span class="material-symbols-rounded">download</span></a>`;
     h += '</div>';
   } else if (e.docAvailable) {
     h += '<div class="sheet-actions">';
@@ -2560,10 +2560,10 @@ function buildCarSheet(e) {
   let h = '';
   // PDF preview when available
   if (e.voucherPdf) {
-    h += `<div class="sheet-pdf"><iframe src="${e.voucherPdf}#toolbar=0&view=Fit" title="Voucher"></iframe></div>`;
+    h += `<a href="${e.voucherPdf}" target="_blank" class="sheet-pdf"><iframe src="${e.voucherPdf}#toolbar=0&view=Fit&page=1" title="Voucher"></iframe></a>`;
     h += '<div class="sheet-dl-row">';
     h += `<div class="sheet-dl-info"><div class="sheet-dl-name">Voucher ${e.carrier || e.title || ''}</div><div class="sheet-dl-meta">PDF · ${e.bookingRef || ''}</div></div>`;
-    h += `<button class="sheet-dl-btn" onclick="event.preventDefault()" title="Télécharger"><span class="material-symbols-rounded">download</span></button>`;
+    h += `<a href="${e.voucherPdf}" target="_blank" download class="sheet-dl-btn" title="Télécharger"><span class="material-symbols-rounded">download</span></a>`;
     h += '</div>';
   } else if (e.docAvailable) {
     h += '<div class="sheet-actions">';
