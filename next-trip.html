@@ -219,7 +219,8 @@
   .bpb-mid-badge { display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin: 0 6px; gap: 4px; white-space: nowrap; background: none; border: none; }
   .bpb-mid-badge .material-symbols-rounded { font-size: 15px; color: rgba(255,255,255,0.45); line-height: 1; }
   .bpb-mid-badge .mid-label { font-size: 11px; font-weight: 700; color: rgba(255,255,255,0.50); letter-spacing: -0.2px; }
-  .bpb-dur { font-size: 9px; font-weight: 600; color: rgba(255,255,255,0.5); white-space: nowrap; }
+  .bpb-dur { font-size: 10px; font-weight: 700; color: rgba(255,200,120,0.85); padding: 4px 14px 2px; display: flex; align-items: center; gap: 4px; }
+  .bpb-dur .material-symbols-rounded { font-size: 14px; color: rgba(255,180,80,0.9); }
   .bpb-action-pill { display: inline-flex; align-items: center; gap: 4px; padding: 3px 10px; margin-top: 3px; border-radius: 6px; font-size: 9px; font-weight: 800; background: rgba(255,255,255,0.20); color: rgba(255,255,255,0.85); border: 1px solid rgba(255,255,255,0.25); letter-spacing: 0.6px; text-transform: uppercase; font-family: var(--font); white-space: nowrap; }
   .bpb-action-pill svg { width: 10px; height: 10px; fill: currentColor; }
   .bpb-action-pill .material-symbols-rounded { font-size: 12px; line-height: 1; }
@@ -596,7 +597,8 @@
   .trip-card:not(.contrast-mode) .bpb-mid-line:first-child::before, .trip-card:not(.contrast-mode) .bpb-mid-line:last-child::after { background: var(--grey-300); }
   .trip-card:not(.contrast-mode) .bpb-mid-badge .material-symbols-rounded { color: var(--grey-400); }
   .trip-card:not(.contrast-mode) .bpb-mid-badge .mid-label { color: var(--grey-400); }
-  .trip-card:not(.contrast-mode) .bpb-dur { color: var(--grey-400); }
+  .trip-card:not(.contrast-mode):not(.dark-mode) .bpb-dur { color: var(--orange-600); }
+  .trip-card:not(.contrast-mode):not(.dark-mode) .bpb-dur .material-symbols-rounded { color: var(--orange-500); }
   .trip-card:not(.contrast-mode) .bpb .bp-tag { background: rgba(255,255,255,0.82); border-color: rgba(180,185,200,0.45); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); box-shadow: 0 1px 3px rgba(0,0,0,0.06); }
   .trip-card:not(.contrast-mode) .bpb .bp-tag-label { color: var(--grey-600); font-weight: 700; }
   .trip-card:not(.contrast-mode) .bpb .bp-tag-value { color: var(--black); font-weight: 800; }
@@ -773,7 +775,8 @@
   .trip-card.dark-mode .bpb-mid-line:first-child::before, .trip-card.dark-mode .bpb-mid-line:last-child::after { background: rgba(30,30,70,0.30); }
   .trip-card.dark-mode .bpb-mid-badge .material-symbols-rounded { color: rgba(30,30,60,0.40); }
   .trip-card.dark-mode .bpb-mid-badge .mid-label { color: rgba(30,30,60,0.45); }
-  .trip-card.dark-mode .bpb-dur { color: rgba(30,30,60,0.5); }
+  .trip-card.dark-mode .bpb-dur { color: rgba(200,120,40,0.8); }
+  .trip-card.dark-mode .bpb-dur .material-symbols-rounded { color: rgba(200,120,40,0.9); }
   .trip-card.dark-mode .bpb .bp-tag { background: rgba(255,255,255,0.55); border-color: rgba(255,255,255,0.40); box-shadow: 0 1px 3px rgba(0,0,0,0.06); }
   .trip-card.dark-mode .bpb .bp-tag-label { color: rgba(30,30,60,0.6); }
   .trip-card.dark-mode .bpb .bp-tag-value { color: #0a0a20; font-weight: 700; }
@@ -1764,7 +1767,7 @@ function renderEtape(e, state, idx, autoIdx, done, total, isPast, targetId) {
       h += `<div class="bpb-mid"><div class="bpb-mid-row"><div class="bpb-mid-line"></div><div class="bpb-mid-badge">${midBadge('car', carDetails)}</div><div class="bpb-mid-line"></div></div>${carVoucherPill}</div>`;
       h += `<div class="bpb-hero arr"><div class="bpb-code">${e.dropoff.time}</div><div class="bpb-time">${e.dropoff.date}</div><div class="bpb-name">${e.dropoff.location}</div></div>`;
       h += '</div>';
-      if (oj) h += `<div class="bpb-dur">⚠️ Open jaw</div>`;
+      if (oj) h += `<div class="bpb-dur"><span class="material-symbols-rounded">warning</span> Restitution dans une agence différente (open jaw)</div>`;
       // Driver — warm amber tinted row
       if (e.driverName) {
         h += `<div class="bpb-driver"><div class="bpb-driver-item">🪪 Permis + CB au nom du conducteur : <strong>${e.driverName}</strong></div></div>`;
@@ -1926,10 +1929,11 @@ function buildHotelSheet(e) {
 }
 
 function buildCarSheet(e) {
+  const isOJ = e.pickup && e.dropoff && e.pickup.location !== e.dropoff.location;
   let h = '<div class="sheet-actions">';
   h += `<button class="cta-pri" onclick="event.preventDefault()">&#128196; ${e.docLabel || 'Voir le voucher'}</button>`;
   h += '</div>';
-  if (e.locUrl) {
+  if (e.locUrl && !isOJ) {
     const agencyName = e.carrier ? "l'agence " + e.carrier : "l'agence de location";
     h += `<div class="sheet-footer"><a href="${e.locUrl}" onclick="event.preventDefault()">&#128205; Itin\u00e9raire vers ${agencyName}</a></div>`;
   }
