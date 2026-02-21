@@ -2557,7 +2557,7 @@ function buildTransportSheet(e, platform) {
     h += `<span class="sheet-ticket-counter">1 / ${segs.length}</span>`;
     h += `<button onclick="sheetCarouselNav('${cid}',1)"><span class="material-symbols-rounded">chevron_right</span></button>`;
     h += '</div></div>';
-    h += buildFederalActions(e, platform);
+    h += buildFederalActions(e, platform, true);
     return h;
   }
 
@@ -2579,13 +2579,12 @@ function sheetCarouselNav(id, dir) {
   btns[1].disabled = cur === slides.length - 1;
 }
 
-function buildFederalActions(e, platform) {
+function buildFederalActions(e, platform, multipleTickets) {
   const ticket = e.ticket || {};
   const isFl = e.type === 'flight';
   const isMobile = platform === 'ios' || platform === 'android';
   const hasWallet = isMobile && ticket.wallet;
-  const isMultiSeg = e.segments && e.segments.length > 1;
-  const docName = isMultiSeg ? (isFl ? 'Tous les billets' : 'Tous les billets') : (isFl ? 'E-ticket' : 'Billet') + ' ' + (e.carrier || '');
+  const docName = multipleTickets ? 'Tous les billets' : (isFl ? 'E-ticket' : 'Billet') + ' ' + (e.carrier || '');
   const dlMeta = (e._travelerName || '') + (e._travelerName && e.pnr ? ' \u00b7 ' : '') + (e.pnr || '');
   let h = '<div class="sheet-divider"></div>';
   h += '<div class="sheet-dl-row">';
