@@ -614,6 +614,7 @@
   .sheet-actions .cta-sec { width: 100%; justify-content: center; padding: 8px 14px; }
   .sheet-actions-row { display: flex; align-items: center; gap: 10px; }
   .sheet-actions-row .wallet-badge-apple, .sheet-actions-row .wallet-badge-google { flex: 1; }
+  .sheet-wallet-row { margin-top: 6px; }
   .sheet-pdf-link { display: inline-flex; align-items: center; gap: 5px; font-size: 12px; font-weight: 700; color: var(--grey-500); text-decoration: none; padding: 6px 0; transition: color 0.15s; cursor: pointer; border: none; background: none; font-family: var(--font); flex-shrink: 0; }
   .sheet-pdf-link:hover { color: var(--blue-500); }
   .sheet-pdf-link .material-symbols-rounded { font-size: 16px; }
@@ -632,34 +633,21 @@
   .sheet-doc-meta { font-size: 11px; color: var(--grey-500); margin-top: 2px; font-weight: 500; }
   .sheet-pax { font-size: 13px; color: var(--grey-600); margin-top: 6px; margin-bottom: 8px; font-weight: 500; text-align: center; }
   .sheet-pax strong { font-weight: 700; color: var(--grey-800); }
-  /* Sheet: collapsible segment toggle */
-  .sheet-seg-toggle { display: flex; align-items: center; gap: 4px; font-size: 12px; font-weight: 600; color: var(--grey-500); cursor: pointer; padding: 10px 0 4px; margin-top: 10px; border-top: 1px solid var(--grey-100); transition: color 0.15s; }
-  .sheet-seg-toggle:hover { color: var(--blue-500); }
-  .sheet-seg-chevron { font-size: 18px; transition: transform 0.2s; }
-  .sheet-seg-toggle.open .sheet-seg-chevron { transform: rotate(180deg); }
-  .sheet-segments { max-height: 0; overflow: hidden; transition: max-height 0.3s ease; }
-  .sheet-segments.open { max-height: 600px; }
-  .sheet-seg { padding: 10px 0; }
-  .sheet-seg + .sheet-seg { border-top: 1px solid var(--grey-75); }
-  .sheet-seg-head { display: flex; align-items: center; gap: 6px; font-size: 11px; font-weight: 700; color: var(--grey-700); margin-bottom: 6px; }
-  .sheet-seg-head .seg-icon { font-size: 13px; opacity: 0.6; }
-  .sheet-seg-head .seg-num { color: var(--grey-400); font-weight: 600; }
-  .sheet-seg-route { display: flex; align-items: baseline; gap: 6px; font-size: 13px; font-weight: 600; color: var(--black); }
-  .sheet-seg-route .seg-arrow { color: var(--grey-300); font-size: 11px; }
-  .sheet-seg-times { font-size: 11px; color: var(--grey-500); margin-top: 2px; }
-  .sheet-seg-meta { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 5px; }
-  .sheet-seg-chip { font-size: 10px; font-weight: 700; padding: 2px 8px; border-radius: 5px; }
-  .sheet-seg-chip.seat { background: var(--blue-50); color: var(--blue-700); border: 1px solid var(--blue-100); }
-  .sheet-seg-chip.gate { background: var(--orange-50); color: var(--orange-700); border: 1px solid var(--orange-100); }
-  .sheet-seg-chip.none { background: var(--grey-50); color: var(--grey-400); border: 1px solid var(--grey-100); }
   .sheet-conn { display: flex; align-items: center; gap: 6px; padding: 6px 12px; background: rgba(255,141,84,0.06); border-radius: 8px; margin: 4px 0; }
   .sheet-conn-icon { font-size: 12px; color: var(--orange-500); }
   .sheet-conn-text { font-size: 10px; font-weight: 700; color: var(--orange-600); }
   .sheet-divider { height: 1px; background: var(--grey-100); margin: 14px 0; }
-  .sheet-seg-section { padding: 6px 0; }
-  .sheet-seg-route-line { font-size: 14px; font-weight: 700; color: var(--black); }
-  .sheet-seg-route-arrow { color: var(--grey-300); margin: 0 4px; }
-  .sheet-seg-route-detail { font-size: 11px; color: var(--grey-500); margin-top: 2px; font-weight: 500; }
+  /* Multi-segment ticket carousel */
+  .sheet-ticket-carousel { position: relative; }
+  .sheet-ticket-slide { display: none; text-align: center; }
+  .sheet-ticket-slide.active { display: block; }
+  .sheet-ticket-label { font-size: 13px; font-weight: 700; color: var(--black); }
+  .sheet-ticket-route { font-size: 11px; color: var(--grey-500); margin-top: 2px; font-weight: 500; }
+  .sheet-ticket-nav { display: flex; align-items: center; justify-content: center; gap: 10px; margin-top: 6px; }
+  .sheet-ticket-nav button { width: 28px; height: 28px; border-radius: 50%; border: 1.5px solid var(--grey-200); background: transparent; color: var(--grey-500); display: inline-flex; align-items: center; justify-content: center; cursor: pointer; padding: 0; }
+  .sheet-ticket-nav button:disabled { opacity: 0.25; cursor: default; }
+  .sheet-ticket-nav button span { font-size: 18px; }
+  .sheet-ticket-counter { font-size: 11px; color: var(--grey-400); font-weight: 600; min-width: 28px; text-align: center; }
   /* PDF viewer in sheet (hotel/car vouchers) */
   .sheet-pdf { display: block; width: 200px; aspect-ratio: 210 / 297; margin: 16px auto 18px; border-radius: 14px; overflow: hidden; border: 1px solid var(--grey-100); background: #fff; text-decoration: none; cursor: pointer; }
   .sheet-pdf iframe { width: 200%; height: 200%; border: none; transform: scale(0.5); transform-origin: 0 0; pointer-events: none; }
@@ -733,18 +721,10 @@
   .sheet-overlay[data-color="contrast"] .sheet-actions .cta-pri:hover { background: rgba(255,255,255,0.9); }
   .sheet-overlay[data-color="contrast"] .sheet-actions .cta-sec { border-color: rgba(255,255,255,0.18); color: #fff; background: rgba(255,255,255,0.08); }
   .sheet-overlay[data-color="contrast"] .sheet-actions .cta-sec:hover { background: rgba(255,255,255,0.14); }
-  .sheet-overlay[data-color="contrast"] .sheet-seg + .sheet-seg { border-color: rgba(255,255,255,0.06); }
-  .sheet-overlay[data-color="contrast"] .sheet-seg-head { color: rgba(255,255,255,0.7); }
-  .sheet-overlay[data-color="contrast"] .sheet-seg-head .seg-num { color: rgba(255,255,255,0.4); }
-  .sheet-overlay[data-color="contrast"] .sheet-seg-route { color: #fff; }
-  .sheet-overlay[data-color="contrast"] .sheet-seg-route .seg-arrow { color: rgba(255,255,255,0.3); }
-  .sheet-overlay[data-color="contrast"] .sheet-seg-route-line { color: #fff; }
-  .sheet-overlay[data-color="contrast"] .sheet-seg-route-arrow { color: rgba(255,255,255,0.3); }
-  .sheet-overlay[data-color="contrast"] .sheet-seg-route-detail { color: rgba(255,255,255,0.45); }
-  .sheet-overlay[data-color="contrast"] .sheet-seg-times { color: rgba(255,255,255,0.45); }
-  .sheet-overlay[data-color="contrast"] .sheet-seg-chip.seat { background: rgba(0,169,252,0.12); color: var(--blue-300); border-color: rgba(0,169,252,0.2); }
-  .sheet-overlay[data-color="contrast"] .sheet-seg-chip.gate { background: rgba(255,141,84,0.1); color: var(--orange-300); border-color: rgba(255,141,84,0.18); }
-  .sheet-overlay[data-color="contrast"] .sheet-seg-chip.none { background: rgba(255,255,255,0.05); color: rgba(255,255,255,0.3); border-color: rgba(255,255,255,0.08); }
+  .sheet-overlay[data-color="contrast"] .sheet-ticket-label { color: #fff; }
+  .sheet-overlay[data-color="contrast"] .sheet-ticket-route { color: rgba(255,255,255,0.45); }
+  .sheet-overlay[data-color="contrast"] .sheet-ticket-nav button { border-color: rgba(255,255,255,0.18); color: rgba(255,255,255,0.7); }
+  .sheet-overlay[data-color="contrast"] .sheet-ticket-counter { color: rgba(255,255,255,0.4); }
   .sheet-overlay[data-color="contrast"] .sheet-conn { background: rgba(255,141,84,0.08); }
   .sheet-overlay[data-color="contrast"] .sheet-conn-text { color: var(--orange-300); }
   .sheet-overlay[data-color="contrast"] .sheet-divider { background: rgba(255,255,255,0.06); }
@@ -787,18 +767,10 @@
   .sheet-overlay[data-color="dark"] .sheet-actions .cta-pri:hover { background: rgba(255,255,255,0.9); }
   .sheet-overlay[data-color="dark"] .sheet-actions .cta-sec { border-color: rgba(255,255,255,0.15); color: #fff; background: rgba(255,255,255,0.08); }
   .sheet-overlay[data-color="dark"] .sheet-actions .cta-sec:hover { background: rgba(255,255,255,0.14); }
-  .sheet-overlay[data-color="dark"] .sheet-seg + .sheet-seg { border-color: rgba(255,255,255,0.06); }
-  .sheet-overlay[data-color="dark"] .sheet-seg-head { color: rgba(255,255,255,0.65); }
-  .sheet-overlay[data-color="dark"] .sheet-seg-head .seg-num { color: rgba(255,255,255,0.35); }
-  .sheet-overlay[data-color="dark"] .sheet-seg-route { color: #fff; }
-  .sheet-overlay[data-color="dark"] .sheet-seg-route-line { color: #fff; }
-  .sheet-overlay[data-color="dark"] .sheet-seg-route-arrow { color: rgba(255,255,255,0.25); }
-  .sheet-overlay[data-color="dark"] .sheet-seg-route-detail { color: rgba(255,255,255,0.4); }
-  .sheet-overlay[data-color="dark"] .sheet-seg-route .seg-arrow { color: rgba(255,255,255,0.25); }
-  .sheet-overlay[data-color="dark"] .sheet-seg-times { color: rgba(255,255,255,0.4); }
-  .sheet-overlay[data-color="dark"] .sheet-seg-chip.seat { background: rgba(0,169,252,0.1); color: var(--blue-300); border-color: rgba(0,169,252,0.18); }
-  .sheet-overlay[data-color="dark"] .sheet-seg-chip.gate { background: rgba(255,141,84,0.08); color: var(--orange-300); border-color: rgba(255,141,84,0.15); }
-  .sheet-overlay[data-color="dark"] .sheet-seg-chip.none { background: rgba(255,255,255,0.04); color: rgba(255,255,255,0.25); border-color: rgba(255,255,255,0.06); }
+  .sheet-overlay[data-color="dark"] .sheet-ticket-label { color: #fff; }
+  .sheet-overlay[data-color="dark"] .sheet-ticket-route { color: rgba(255,255,255,0.4); }
+  .sheet-overlay[data-color="dark"] .sheet-ticket-nav button { border-color: rgba(255,255,255,0.15); color: rgba(255,255,255,0.6); }
+  .sheet-overlay[data-color="dark"] .sheet-ticket-counter { color: rgba(255,255,255,0.35); }
   .sheet-overlay[data-color="dark"] .sheet-conn { background: rgba(255,141,84,0.06); }
   .sheet-overlay[data-color="dark"] .sheet-conn-text { color: var(--orange-300); }
   .sheet-overlay[data-color="dark"] .sheet-divider { background: rgba(255,255,255,0.06); }
@@ -1254,6 +1226,9 @@
 
   /* Showcase grid */
   #showcase-container { padding: 20px; max-width: 1200px; margin: 0 auto; }
+  .showcase-toc { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 20px; padding-bottom: 14px; border-bottom: 1px solid var(--grey-100); }
+  .showcase-toc-link { font-size: 11px; font-weight: 700; padding: 4px 10px; border-radius: 6px; background: var(--grey-50); color: var(--grey-600); text-decoration: none; border: 1px solid var(--grey-100); }
+  .showcase-toc-link:hover { background: var(--blue-50); color: var(--blue-600); border-color: var(--blue-100); }
   .showcase-section { margin-bottom: 28px; }
   .showcase-section-title { font-size: 13px; font-weight: 800; text-transform: uppercase; letter-spacing: 1px; color: var(--grey-400); margin-bottom: 12px; padding-bottom: 6px; border-bottom: 2px solid var(--grey-100); font-family: var(--font); }
   .showcase-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 16px; }
@@ -1262,6 +1237,9 @@
   .showcase-panel { padding: 0; background: var(--white); }
   /* Showcase color overrides */
   #showcase-container[data-color="contrast"] .showcase-item { box-shadow: 0 1px 6px rgba(0,0,0,0.3); }
+  #showcase-container[data-color="contrast"] .showcase-toc { border-color: rgba(255,255,255,0.08); }
+  #showcase-container[data-color="contrast"] .showcase-toc-link { background: rgba(255,255,255,0.06); color: rgba(255,255,255,0.6); border-color: rgba(255,255,255,0.1); }
+  #showcase-container[data-color="contrast"] .showcase-toc-link:hover { background: rgba(0,169,252,0.12); color: var(--blue-300); border-color: rgba(0,169,252,0.2); }
   #showcase-container[data-color="contrast"] .showcase-label { background: #0f1a30; color: rgba(255,255,255,0.5); border-color: rgba(255,255,255,0.06); }
   #showcase-container[data-color="contrast"] .showcase-panel { background: #1a2747; color: rgba(255,255,255,0.85); }
   #showcase-container[data-color="contrast"] .showcase-section-title { color: rgba(255,255,255,0.3); border-color: rgba(255,255,255,0.08); }
@@ -1288,10 +1266,18 @@
   #showcase-container[data-color="contrast"] .sheet-detail-sub { color: rgba(255,255,255,0.5); }
   #showcase-container[data-color="contrast"] .sheet-conditions { background: rgba(255,255,255,0.06); color: rgba(255,255,255,0.65); }
   #showcase-container[data-color="contrast"] .sheet-map-btn { background: rgba(255,255,255,0.1); color: rgba(255,255,255,0.7); }
+  #showcase-container[data-color="contrast"] .sheet-ticket-label { color: #fff; }
+  #showcase-container[data-color="contrast"] .sheet-ticket-route { color: rgba(255,255,255,0.45); }
+  #showcase-container[data-color="contrast"] .sheet-ticket-nav button { border-color: rgba(255,255,255,0.18); color: rgba(255,255,255,0.7); }
+  #showcase-container[data-color="contrast"] .sheet-ticket-counter { color: rgba(255,255,255,0.4); }
+  #showcase-container[data-color="contrast"] .sheet-divider { background: rgba(255,255,255,0.08); }
   #showcase-container[data-color="contrast"] .sheet-footer { border-color: rgba(255,255,255,0.08); }
   #showcase-container[data-color="contrast"] .sheet-footer a { color: rgba(255,255,255,0.45); }
   #showcase-container[data-color="contrast"] .sheet-actions .cta-pri { background: #fff; color: #1a2747; font-weight: 800; }
   #showcase-container[data-color="contrast"] .sheet-actions .cta-sec { border-color: rgba(255,255,255,0.18); color: #fff; background: rgba(255,255,255,0.08); }
+  #showcase-container[data-color="dark"] .showcase-toc { border-color: rgba(255,255,255,0.06); }
+  #showcase-container[data-color="dark"] .showcase-toc-link { background: rgba(255,255,255,0.05); color: rgba(255,255,255,0.5); border-color: rgba(255,255,255,0.08); }
+  #showcase-container[data-color="dark"] .showcase-toc-link:hover { background: rgba(0,169,252,0.1); color: var(--blue-300); border-color: rgba(0,169,252,0.18); }
   #showcase-container[data-color="dark"] .showcase-item { box-shadow: 0 1px 6px rgba(0,0,0,0.4); }
   #showcase-container[data-color="dark"] .showcase-label { background: #1a1a35; color: rgba(255,255,255,0.4); border-color: rgba(255,255,255,0.05); }
   #showcase-container[data-color="dark"] .showcase-panel { background: #252540; color: rgba(255,255,255,0.85); }
@@ -1319,6 +1305,11 @@
   #showcase-container[data-color="dark"] .sheet-detail-sub { color: rgba(255,255,255,0.45); }
   #showcase-container[data-color="dark"] .sheet-conditions { background: rgba(255,255,255,0.05); color: rgba(255,255,255,0.55); }
   #showcase-container[data-color="dark"] .sheet-map-btn { background: rgba(255,255,255,0.08); color: rgba(255,255,255,0.6); }
+  #showcase-container[data-color="dark"] .sheet-ticket-label { color: #fff; }
+  #showcase-container[data-color="dark"] .sheet-ticket-route { color: rgba(255,255,255,0.4); }
+  #showcase-container[data-color="dark"] .sheet-ticket-nav button { border-color: rgba(255,255,255,0.15); color: rgba(255,255,255,0.6); }
+  #showcase-container[data-color="dark"] .sheet-ticket-counter { color: rgba(255,255,255,0.35); }
+  #showcase-container[data-color="dark"] .sheet-divider { background: rgba(255,255,255,0.06); }
   #showcase-container[data-color="dark"] .sheet-footer { border-color: rgba(255,255,255,0.06); }
   #showcase-container[data-color="dark"] .sheet-footer a { color: rgba(255,255,255,0.4); }
   #showcase-container[data-color="dark"] .sheet-actions .cta-pri { background: #fff; color: #252540; font-weight: 800; }
@@ -2510,27 +2501,38 @@ function buildTransportSheet(e, platform) {
   const isFl = e.type === 'flight';
   const isMobile = platform === 'ios' || platform === 'android';
 
-  // Multi-segment → show segment routes, then federal actions at bottom
+  // Multi-segment → carousel of tickets with chevrons, federal actions below
   if (e.segments && e.segments.length > 1) {
-    let h = '';
-    const conn = e.connections || [];
-    e.segments.forEach((seg, i) => {
-      if (i > 0) {
-        const c = conn[i - 1];
-        if (c) h += `<div class="sheet-conn"><span class="sheet-conn-icon">&#8645;</span><span class="sheet-conn-text">${c.loc} · ${c.dur}</span></div>`;
-        else h += '<div class="sheet-divider"></div>';
-      }
+    const cid = 'stc-' + Math.random().toString(36).slice(2, 8);
+    const segs = e.segments;
+    let h = `<div class="sheet-ticket-carousel" id="${cid}">`;
+    segs.forEach((seg, i) => {
+      const ticket = seg.ticket || {};
       const depN = seg.dep.code || seg.dep.name || '';
       const arrN = seg.arr.code || seg.arr.name || '';
       const depT = seg.dep.time || '';
       const arrT = seg.arr.time || '';
-      h += `<div class="sheet-seg-section">`;
-      h += `<div class="sheet-seg-route-header">`;
-      h += `<div class="sheet-seg-route-line"><span class="sheet-seg-route-dep">${depN}</span><span class="sheet-seg-route-arrow">\u2192</span><span class="sheet-seg-route-arr">${arrN}</span></div>`;
-      h += `<div class="sheet-seg-route-detail">${depT} \u2013 ${arrT} · ${seg.carrier || e.carrier || ''} ${seg.num || ''} · ${seg.dur || ''}</div>`;
-      h += `</div></div>`;
+      const carrier = seg.carrier || e.carrier || '';
+      const num = seg.num || '';
+      h += `<div class="sheet-ticket-slide${i === 0 ? ' active' : ''}">`;
+      h += `<div class="sheet-ticket-label">${carrier} ${num}</div>`;
+      h += `<div class="sheet-ticket-route">${depN} \u2192 ${arrN} \u00b7 ${depT}\u2009\u2013\u2009${arrT}</div>`;
+      if (ticket.available !== false) {
+        if (ticket.hasQR) {
+          h += `<div class="sheet-qr">${qrPlaceholderSvg}<div class="sheet-qr-label">Pr\u00e9sentez au contr\u00f4leur</div></div>`;
+        } else if (seg.voucherPdf) {
+          const docName = isFl ? 'E-ticket' : 'Billet';
+          h += `<a href="${seg.voucherPdf}" target="_blank" class="sheet-pdf"><iframe src="${seg.voucherPdf}#toolbar=0&view=Fit&page=1" title="${docName}"></iframe></a>`;
+        }
+      }
+      h += '</div>';
     });
-    // Federal actions: wallet + download (one for the whole leg)
+    // Nav chevrons + counter
+    h += '<div class="sheet-ticket-nav">';
+    h += `<button onclick="sheetCarouselNav('${cid}',-1)" disabled><span class="material-symbols-rounded">chevron_left</span></button>`;
+    h += `<span class="sheet-ticket-counter">1 / ${segs.length}</span>`;
+    h += `<button onclick="sheetCarouselNav('${cid}',1)"><span class="material-symbols-rounded">chevron_right</span></button>`;
+    h += '</div></div>';
     h += buildFederalActions(e, platform);
     return h;
   }
@@ -2539,23 +2541,36 @@ function buildTransportSheet(e, platform) {
   return buildSingleTicketSection(e, platform);
 }
 
+function sheetCarouselNav(id, dir) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  const slides = el.querySelectorAll('.sheet-ticket-slide');
+  let cur = [...slides].findIndex(s => s.classList.contains('active'));
+  slides[cur].classList.remove('active');
+  cur = Math.max(0, Math.min(slides.length - 1, cur + dir));
+  slides[cur].classList.add('active');
+  el.querySelector('.sheet-ticket-counter').textContent = (cur + 1) + ' / ' + slides.length;
+  const btns = el.querySelectorAll('.sheet-ticket-nav button');
+  btns[0].disabled = cur === 0;
+  btns[1].disabled = cur === slides.length - 1;
+}
+
 function buildFederalActions(e, platform) {
   const ticket = e.ticket || {};
   const isFl = e.type === 'flight';
   const isMobile = platform === 'ios' || platform === 'android';
   const hasWallet = isMobile && ticket.wallet;
+  const isMultiSeg = e.segments && e.segments.length > 1;
+  const docName = isMultiSeg ? (isFl ? 'Tous les billets' : 'Tous les billets') : (isFl ? 'E-ticket' : 'Billet') + ' ' + (e.carrier || '');
+  const dlMeta = (e._travelerName || '') + (e._travelerName && e.pnr ? ' \u00b7 ' : '') + (e.pnr || '');
   let h = '<div class="sheet-divider"></div>';
-  if (hasWallet && ticket.hasQR) {
-    h += '<div class="sheet-actions-row">';
+  h += '<div class="sheet-dl-row">';
+  h += `<div class="sheet-dl-info"><div class="sheet-dl-name">${docName}</div><div class="sheet-dl-meta">${dlMeta || 'PDF'}</div></div>`;
+  h += `<button class="sheet-dl-btn" onclick="event.preventDefault()" title="T\u00e9l\u00e9charger"><span class="material-symbols-rounded">download</span></button>`;
+  h += '</div>';
+  if (hasWallet) {
+    h += '<div class="sheet-wallet-row">';
     h += (platform === 'ios') ? appleWalletBadge : googleWalletBadge;
-    h += `<button class="sheet-dl-btn" onclick="event.preventDefault()" title="Télécharger"><span class="material-symbols-rounded">download</span></button>`;
-    h += '</div>';
-  } else {
-    const docName = isFl ? 'E-ticket' : 'Billet';
-    const dlMeta = (e._travelerName || '') + (e._travelerName && e.pnr ? ' \u00b7 ' : '') + (e.pnr || '');
-    h += '<div class="sheet-dl-row">';
-    h += `<div class="sheet-dl-info"><div class="sheet-dl-name">${docName} ${e.carrier || ''}</div><div class="sheet-dl-meta">${dlMeta || 'PDF'}</div></div>`;
-    h += `<button class="sheet-dl-btn" onclick="event.preventDefault()" title="Télécharger"><span class="material-symbols-rounded">download</span></button>`;
     h += '</div>';
   }
   return h;
@@ -2593,23 +2608,23 @@ function buildSingleTicketSection(e, platform) {
     }
   }
 
-  // Actions
+  // Actions — always show ticket info dl-row, wallet below if available
   const hasWallet = isMobile && ticket.wallet;
-  if (hasWallet && ticket.hasQR) {
-    h += '<div class="sheet-actions-row">';
-    h += (platform === 'ios') ? appleWalletBadge : googleWalletBadge;
-    h += `<button class="sheet-dl-btn" onclick="event.preventDefault()" title="Télécharger le PDF"><span class="material-symbols-rounded">download</span></button>`;
-    h += '</div>';
-  } else if (ticket.hasQR && !hasWallet) {
+  if (ticket.hasQR) {
     const docName = isFl ? 'E-ticket' : 'Billet';
     const dlMeta = (e._travelerName || '') + (e._travelerName && e.pnr ? ' \u00b7 ' : '') + (e.pnr || '');
     h += '<div class="sheet-dl-row">';
     h += `<div class="sheet-dl-info"><div class="sheet-dl-name">${docName} ${e.carrier || ''} ${e.num || ''}</div><div class="sheet-dl-meta">${dlMeta || 'PDF'}</div></div>`;
-    h += `<button class="sheet-dl-btn" onclick="event.preventDefault()" title="Télécharger le PDF"><span class="material-symbols-rounded">download</span></button>`;
+    h += `<button class="sheet-dl-btn" onclick="event.preventDefault()" title="T\u00e9l\u00e9charger"><span class="material-symbols-rounded">download</span></button>`;
+    h += '</div>';
+  }
+  if (hasWallet) {
+    h += '<div class="sheet-wallet-row">';
+    h += (platform === 'ios') ? appleWalletBadge : googleWalletBadge;
     h += '</div>';
   }
   if (isFl && !hasWallet && !ticket.hasQR) {
-    h += `<div class="sheet-info" style="margin-top:8px;margin-bottom:0"><span class="sheet-info-icon">&#9432;</span><div>Ceci est votre e-ticket. Enregistrez-vous auprès de la compagnie.</div></div>`;
+    h += `<div class="sheet-info" style="margin-top:8px;margin-bottom:0"><span class="sheet-info-icon">&#9432;</span><div>Ceci est votre e-ticket. Enregistrez-vous aupr\u00e8s de la compagnie.</div></div>`;
   }
 
   return h;
@@ -2792,8 +2807,8 @@ function renderShowcase() {
         ticket: { available: true, hasQR: true, wallet: true },
         dep: { name: 'Paris Montparnasse' }, arr: { name: 'Bordeaux Saint-Jean' },
         segments: [
-          { dep: { time: '08:30', name: 'Paris Montparnasse' }, arr: { time: '10:32', name: 'Lyon Part-Dieu' }, dur: '2h02', num: 'TGV 6211', carrier: 'SNCF', ticket: { available: true, hasQR: true, wallet: true } },
-          { dep: { time: '11:15', name: 'Lyon Part-Dieu' }, arr: { time: '14:28', name: 'Bordeaux Saint-Jean' }, dur: '3h13', num: 'TGV 6825', carrier: 'SNCF', ticket: { available: true, hasQR: true, wallet: false } },
+          { dep: { time: '08:30', name: 'Paris Montparnasse' }, arr: { time: '10:32', name: 'Lyon Part-Dieu' }, dur: '2h02', num: '6211', carrier: 'inOUI', ticket: { available: true, hasQR: true, wallet: true } },
+          { dep: { time: '11:15', name: 'Lyon Part-Dieu' }, arr: { time: '14:28', name: 'Bordeaux Saint-Jean' }, dur: '3h13', num: '7641', carrier: 'OUIGO', ticket: { available: true, hasQR: true, wallet: false } },
         ],
         connections: [{ loc: 'Lyon Part-Dieu', dur: '43 min' }] },
       { label: 'Escale vol (desktop)', type: 'flight', platform: 'desktop', carrier: 'Lufthansa', pnr: 'KLM456',
@@ -2801,23 +2816,29 @@ function renderShowcase() {
         dep: { name: 'Paris', code: 'CDG' }, arr: { name: 'Ath\u00e8nes', code: 'ATH' },
         segments: [
           { dep: { time: '06:45', name: 'Paris', code: 'CDG' }, arr: { time: '08:25', name: 'Munich', code: 'MUC' }, dur: '1h40', num: 'LH 2231', carrier: 'Lufthansa', ticket: { available: true, hasQR: true, wallet: true } },
-          { dep: { time: '09:45', name: 'Munich', code: 'MUC' }, arr: { time: '13:35', name: 'Ath\u00e8nes', code: 'ATH' }, dur: '2h50', num: 'LH 1752', carrier: 'Lufthansa', ticket: { available: true, hasQR: true, wallet: true } },
+          { dep: { time: '09:45', name: 'Munich', code: 'MUC' }, arr: { time: '13:35', name: 'Ath\u00e8nes', code: 'ATH' }, dur: '2h50', num: 'AF 1752', carrier: 'Air France', ticket: { available: true, hasQR: true, wallet: true } },
         ],
         connections: [{ loc: 'Munich MUC', dur: '1h20' }] },
     ],
     'H\u00f4tel / Voiture': [
       { label: 'H\u00f4tel (PDF)', etapeType: 'hotel', hotelName: 'H\u00f4tel Renaissance Bordeaux',
         hotelData: { checkin: { date: 'Vendredi 9 F\u00e9vrier', time: '15:00' }, checkout: { date: 'Dimanche 11 F\u00e9vrier', time: '11:00' }, nights: 3, roomName: 'Chambre Deluxe Double', bookingRef: 'MRR-482910', address: '15 Rue du Temple, 33000 Bordeaux', freeTextConditions: 'R\u00e9cup\u00e9rez votre cl\u00e9 \u00e0 la r\u00e9ception. Check-in \u00e0 partir de 15h. R\u00e9ception ouverte 24h/24.', voucherPdf: 'voucherhotel221-2173826_1679135161643.pdf', docAvailable: true } },
-      { label: 'H\u00f4tel (pas de PDF)', etapeType: 'hotel', hotelName: 'Novotel Paris Gare de Lyon',
-        hotelData: { checkin: { date: 'Lundi 3 Mars', time: '14:00' }, checkout: { date: 'Mercredi 5 Mars', time: '12:00' }, nights: 2, roomName: 'Standard Twin', bookingRef: 'NOV-55821', address: '2 Rue Hector Malot, 75012 Paris', docAvailable: true, docLabel: 'Voir le voucher' } },
       { label: 'Voiture (PDF)', etapeType: 'car', carCarrier: 'Avis',
         carData: { pickup: { time: '14:00', date: 'Mardi 17 F\u00e9vrier', location: 'Gare Saint-Jean, Bordeaux' }, dropoff: { time: '18:00', date: 'Mardi 17 F\u00e9vrier', location: 'Gare Saint-Jean, Bordeaux' }, carrier: 'Avis', title: 'Avis \u2013 Cat. B Compacte', bookingRef: 'AVIS-84729', driverName: 'Stella Smith', voucherPdf: 'voucherhotel221-2173826_1679135161643.pdf', docAvailable: true } },
     ]
   };
 
-  let html = '';
+  // ToC
+  const sectionKeys = Object.keys(scenarios);
+  let html = '<div class="showcase-toc">';
+  sectionKeys.forEach(k => {
+    const anchor = 'sc-' + k.toLowerCase().replace(/[^a-z0-9]+/g, '-');
+    html += `<a href="#${anchor}" class="showcase-toc-link">${k}</a>`;
+  });
+  html += '</div>';
   for (const [section, items] of Object.entries(scenarios)) {
-    html += `<div class="showcase-section"><div class="showcase-section-title">${section}</div><div class="showcase-grid">`;
+    const anchor = 'sc-' + section.toLowerCase().replace(/[^a-z0-9]+/g, '-');
+    html += `<div class="showcase-section" id="${anchor}"><div class="showcase-section-title">${section}</div><div class="showcase-grid">`;
     for (const s of items) {
       const icon = s.type === 'flight' ? '\u2708\ufe0f' : (s.type === 'train' ? '\ud83d\ude84' : (s.etapeType === 'hotel' ? '\ud83c\udfe8' : '\ud83d\ude97'));
       const mockEtape = {
