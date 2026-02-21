@@ -406,39 +406,25 @@
   .bp-transit.dark-transit, .bp-transit.bold-transit { background: rgba(0,169,252,0.1); color: var(--blue-300); border-radius: 10px; }
   .bp-transit.dark-transit strong, .bp-transit.bold-transit strong { color: var(--blue-200); }
   .bp-luggage.luggage-dark { color: rgba(255,255,255,0.45); }
-  /* Leg card — stop indicator dots on route timeline */
-  .leg-stop-dot { display: inline-flex; flex-direction: column; align-items: center; gap: 2px; flex-shrink: 0; padding: 0 2px; }
-  .leg-stop-dot-circle { width: 8px; height: 8px; border-radius: 50%; border: 2px solid rgba(255,255,255,0.4); background: transparent; }
-  .trip-card:not(.contrast-mode):not(.dark-mode) .leg-stop-dot-circle { border-color: var(--grey-400); }
-  .leg-stop-dot-label { font-size: 8px; font-weight: 700; color: rgba(255,255,255,0.45); white-space: nowrap; text-align: center; }
-  .trip-card:not(.contrast-mode):not(.dark-mode) .leg-stop-dot-label { color: var(--grey-500); }
   /* Connection info bar below route in leg card */
   .leg-conn-bar { display: flex; flex-wrap: wrap; gap: 6px; padding: 4px 14px 6px; align-items: center; }
   .leg-conn-chip { display: inline-flex; align-items: center; gap: 4px; padding: 3px 8px; background: rgba(255,141,84,0.12); border: 1px solid rgba(255,141,84,0.2); border-radius: 6px; font-size: 10px; font-weight: 700; color: rgba(255,180,100,0.9); }
   .trip-card:not(.contrast-mode):not(.dark-mode) .leg-conn-chip { background: rgba(255,141,84,0.08); border-color: rgba(255,141,84,0.15); color: #cc5500; }
   .leg-conn-chip .material-symbols-rounded { font-size: 12px; line-height: 1; }
-  /* Leg card — escale info lines in mid zone */
-  .leg-escale-line { font-size: 9px; font-weight: 600; color: rgba(255,180,100,0.8); text-align: center; margin-top: 1px; white-space: nowrap; }
-  .trip-card:not(.contrast-mode):not(.dark-mode) .leg-escale-line { color: var(--orange-600); }
-  /* Leg card — compact segment rows */
-  .leg-seg-rows { padding: 4px 14px 6px; border-top: 1px solid rgba(255,255,255,0.06); }
-  .leg-seg-row { display: flex; align-items: baseline; gap: 8px; padding: 3px 0; font-size: 10px; color: rgba(255,255,255,0.7); }
-  .leg-seg-num { font-weight: 700; color: rgba(255,255,255,0.5); min-width: 62px; white-space: nowrap; letter-spacing: -0.2px; }
-  .leg-seg-times { font-weight: 600; color: rgba(255,255,255,0.85); white-space: nowrap; }
-  .leg-seg-times .day-offset { font-size: 8px; font-weight: 700; color: rgba(255,141,84,0.8); vertical-align: super; }
-  .leg-seg-chips { display: flex; gap: 4px; margin-left: auto; }
-  .leg-seg-chip { font-size: 9px; font-weight: 700; padding: 1px 5px; border-radius: 4px; white-space: nowrap; }
-  .leg-seg-chip.gate { background: rgba(255,141,84,0.12); color: rgba(255,180,120,0.9); }
-  .leg-seg-chip.seat { background: rgba(0,169,252,0.12); color: rgba(120,200,255,0.9); }
-  .leg-seg-chip.none { color: rgba(255,255,255,0.25); }
-  /* Light mode overrides */
-  .trip-card:not(.contrast-mode):not(.dark-mode) .leg-seg-rows { border-top-color: var(--grey-100); }
-  .trip-card:not(.contrast-mode):not(.dark-mode) .leg-seg-row { color: var(--grey-500); }
-  .trip-card:not(.contrast-mode):not(.dark-mode) .leg-seg-num { color: var(--grey-400); }
-  .trip-card:not(.contrast-mode):not(.dark-mode) .leg-seg-times { color: var(--grey-700); }
-  .trip-card:not(.contrast-mode):not(.dark-mode) .leg-seg-chip.gate { background: var(--orange-50); color: var(--orange-700); }
-  .trip-card:not(.contrast-mode):not(.dark-mode) .leg-seg-chip.seat { background: var(--blue-50); color: var(--blue-700); }
-  .trip-card:not(.contrast-mode):not(.dark-mode) .leg-seg-chip.none { color: var(--grey-300); }
+  /* Leg card — per-segment carrier label in mid zone */
+  .leg-mid-carrier { font-size: 10px; font-weight: 700; color: rgba(255,255,255,0.5); white-space: nowrap; text-align: center; margin-bottom: 2px; letter-spacing: 0.2px; }
+  .trip-card:not(.contrast-mode):not(.dark-mode) .leg-mid-carrier { color: var(--grey-500); }
+  /* Leg card — tighter layout for stacked segments */
+  .bpb-leg .bpb-code { font-size: 24px; }
+  .bpb-leg .bpb-route { padding: 4px 14px 4px; }
+  .bpb-leg .bpb-head { padding: 8px 14px 2px; }
+  .bpb-leg .bp-tags { padding: 2px 14px 2px; }
+  .bpb-leg .bpb-route + .bp-tags { padding-bottom: 4px; }
+  .bpb-leg .leg-conn-bar { border-top: 1px solid rgba(255,255,255,0.06); margin: 0 14px; padding: 0; justify-content: center; }
+  .bpb-leg .leg-conn-chip { transform: translateY(-50%); }
+  .trip-card:not(.contrast-mode):not(.dark-mode) .bpb-leg .leg-conn-bar { border-top-color: var(--grey-200); }
+  /* Leg card — centered action pill at bottom */
+  .leg-action-center { display: flex; justify-content: center; padding: 6px 14px 10px; }
   /* Hotel dark card */
   .htd-title { font-size: 15px; font-weight: 700; color: #fff; line-height: 1.3; }
   .htd-title .stars { color: var(--yellow-500); font-size: 12px; margin-left: 2px; }
@@ -816,9 +802,14 @@
     .bp-scroll .bp-conn-between { width: 100%; padding: 6px 0; }
     /* Bold mobile — hide mid section to save space (except leg cards with escales) */
     .bpb-mid { display: none; }
-    .bpb-leg .bpb-mid { display: flex; min-width: 60px; }
-    .bpb-leg .bpb-mid-badge .mid-label { font-size: 10px; }
-    .bpb-leg .leg-escale-line { font-size: 8px; }
+    .bpb-leg .bpb-mid { display: flex; min-width: 50px; }
+    .bpb-leg .bpb-mid-badge .mid-label { font-size: 9px; }
+    .bpb-leg .leg-mid-carrier { font-size: 9px; }
+    .bpb-leg .bpb-code { font-size: 20px; }
+    .bpb-leg .bpb-route { padding: 3px 12px 3px; }
+    .bpb-leg .bpb-time { font-size: 11px; }
+    .bpb-leg .bpb-name { font-size: 10px; }
+    .bpb-leg .bp-tags { padding: 2px 12px 2px; }
     .bpb-code { font-size: 28px; }
     .bpb-route { padding: 12px 12px 6px; }
     .bpb-head { padding: 10px 12px 0; }
@@ -2075,68 +2066,58 @@ function renderEtape(e, state, idx, autoIdx, done, total, isPast, targetId) {
     }
 
     // Leg-level card for multi-segment etapes (bold mode only)
-    // Clean: origin → destination, escale info in mid zone, nothing else
+    // Stacks segment routes (same visual as direct cards) with connection bars between
     function bpCardLeg(etape, extraCls) {
       const isFl = etape.type === 'flight';
       const firstSeg = etape.segments[0];
-      const lastSeg = etape.segments[etape.segments.length - 1];
-      const dep = firstSeg.dep;
-      const arr = lastSeg.arr;
-      const stopCount = etape.segments.length - 1;
       let h = '';
-      // Header — unique carriers
-      const carriers = [];
-      const seenCarriers = new Set();
-      etape.segments.forEach(seg => {
-        const c = seg.carrier || etape.carrier;
-        if (!seenCarriers.has(c)) { seenCarriers.add(c); carriers.push(c); }
-      });
-      const carrierStr = carriers.join(' + ');
-      const fareData = firstSeg.fareName ? firstSeg : etape;
-      const fareCls = fareData.fareName ? '<span class="bp-carrier-sub"> · ' + fareData.fareName + '</span>' : '';
+      // Minimal header — just date + PNR (carrier moves to per-segment mid zone)
       const pnr = firstSeg.pnr || etape.pnr || '';
       const headRight = pnr ? `<div class="bpb-head-right"><span class="bpb-ref">Réf. ${pnr}</span></div>` : '';
-      h += `<div class="bpb-head"><div class="bpb-carrier"><span class="bpb-date">${etape.departure.date}</span><span class="bp-carrier-icon">${etape.icon}</span>${carrierStr}${fareCls}</div>${headRight}</div>`;
-      // Route: origin → mid → destination
-      h += '<div class="bpb-route">';
-      if (isFl && dep.code) {
-        h += `<div class="bpb-hero"><div class="bpb-code">${dep.code}</div><div class="bpb-time">${dep.time}</div><div class="bpb-name">${dep.name}${dep.terminal ? ' · T' + dep.terminal : ''}</div></div>`;
-      } else {
-        h += `<div class="bpb-hero"><div class="bpb-code">${dep.time}</div><div class="bpb-name">${dep.name}</div></div>`;
-      }
-      // Mid: duration + escale details (where, how long)
-      let actionPill = '';
+      h += `<div class="bpb-head"><div class="bpb-carrier"><span class="bpb-date">${etape.departure.date}</span></div>${headRight}</div>`;
+      // Stacked segment routes — carrier + flight num in mid zone per segment
+      etape.segments.forEach((seg, si) => {
+        const dep = seg.dep;
+        const arr = seg.arr;
+        const arrOff = arr.dayOffset ? `<span class="day-offset">+${arr.dayOffset}</span>` : '';
+        const carrier = seg.carrier || etape.carrier;
+        const segNum = seg.num || '';
+        // Mid: carrier label above, num + duration in badge
+        const midLabel = [segNum, seg.dur].filter(Boolean).join(' · ');
+        const carrierLine = `<div class="leg-mid-carrier">${carrier}</div>`;
+        // Route row — same visual as direct cards, with carrier+num in mid
+        h += '<div class="bpb-route">';
+        if (isFl && dep.code) {
+          h += `<div class="bpb-hero"><div class="bpb-code">${dep.code}</div><div class="bpb-time">${dep.time}</div><div class="bpb-name">${dep.name}${dep.terminal ? ' · T' + dep.terminal : ''}</div></div>`;
+        } else {
+          h += `<div class="bpb-hero"><div class="bpb-code">${dep.time}</div><div class="bpb-name">${dep.name}</div></div>`;
+        }
+        h += `<div class="bpb-mid">${carrierLine}<div class="bpb-mid-row"><div class="bpb-mid-line"></div><div class="bpb-mid-badge"><span class="mid-label">${midLabel}</span></div><div class="bpb-mid-line"></div></div></div>`;
+        if (isFl && arr.code) {
+          h += `<div class="bpb-hero arr"><div class="bpb-code">${arr.code}${arrOff}</div><div class="bpb-time">${arr.time}</div><div class="bpb-name">${arr.name}${arr.terminal ? ' · T' + arr.terminal : ''}</div></div>`;
+        } else {
+          h += `<div class="bpb-hero arr"><div class="bpb-code">${arr.time}${arrOff}</div><div class="bpb-name">${arr.name}</div></div>`;
+        }
+        h += '</div>';
+        // Seat/gate tags per segment
+        const segSeat = seg.seat || null;
+        h += infoTags(segSeat, seg, null, etape.type, true);
+        // Connection bar between segments
+        if (si < etape.segments.length - 1 && etape.connections && etape.connections[si]) {
+          const conn = etape.connections[si];
+          h += `<div class="leg-conn-bar"><span class="leg-conn-chip"><span class="material-symbols-rounded" style="font-size:12px">schedule</span> ${conn.dur} · ${conn.loc}</span></div>`;
+        }
+      });
+      // Action pill — centered at bottom of card, concerns the whole leg
       const legTicket = firstSeg.ticket || etape.ticket;
       if (legTicket) {
         if (legTicket.available) {
           const tIcon = legTicket.hasQR ? qrSvg : '<span class="material-symbols-rounded">confirmation_number</span>';
-          actionPill = `<div class="bpb-action-pill">${tIcon} Voir mon billet</div>`;
+          h += `<div class="leg-action-center"><div class="bpb-action-pill">${tIcon} Voir mon billet</div></div>`;
         } else {
-          actionPill = `<div class="bpb-action-pill deferred"><span class="material-symbols-rounded">event</span> Dispo le ${legTicket.availableDate || '—'}</div>`;
+          h += `<div class="leg-action-center"><div class="bpb-action-pill deferred"><span class="material-symbols-rounded">event</span> Dispo le ${legTicket.availableDate || '—'}</div></div>`;
         }
       }
-      // Build escale lines for mid zone: "via MUC · 1h20" per connection
-      let escaleLines = '';
-      if (etape.connections && etape.connections.length) {
-        const lines = etape.connections.map((conn, ci) => {
-          const seg = etape.segments[ci + 1];
-          const code = (seg && seg.dep.code) ? seg.dep.code : conn.loc;
-          return `via ${code} · ${conn.dur}`;
-        });
-        // Show up to 3, then trim
-        const show = lines.slice(0, 3);
-        if (lines.length > 3) show.push(`+${lines.length - 3}`);
-        escaleLines = show.map(l => `<div class="leg-escale-line">${l}</div>`).join('');
-      }
-      h += `<div class="bpb-mid"><div class="bpb-mid-row"><div class="bpb-mid-line"></div><div class="bpb-mid-badge">${midBadge(etape.type, etape.duration)}</div><div class="bpb-mid-line"></div></div>${escaleLines}${actionPill}</div>`;
-      // Arrival
-      const boldArrOffset = arr.dayOffset ? `<span class="day-offset">+${arr.dayOffset}</span>` : '';
-      if (isFl && arr.code) {
-        h += `<div class="bpb-hero arr"><div class="bpb-code">${arr.code}${boldArrOffset}</div><div class="bpb-time">${arr.time}</div><div class="bpb-name">${arr.name}${arr.terminal ? ' · T' + arr.terminal : ''}</div></div>`;
-      } else {
-        h += `<div class="bpb-hero arr"><div class="bpb-code">${arr.time}${boldArrOffset}</div><div class="bpb-name">${arr.name}</div></div>`;
-      }
-      h += '</div>';
       // Tappable
       const tIdx = sheetTargets.length;
       sheetTargets.push(etape);
