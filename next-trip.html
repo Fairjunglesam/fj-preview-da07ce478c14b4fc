@@ -256,10 +256,7 @@
       animation: bold-transit-v 2.5s ease-in-out infinite;
     }
 
-    /* Desktop: card not clickable, no bounce — only pill + nav buttons */
-    .bpb.tappable { cursor: default; }
-    .bpb.tappable:hover { transform: none; box-shadow: none; }
-    .bpb.tappable:active { transform: none; }
+    /* Desktop: only pill + nav buttons are clickable */
     .bpb.tappable .bpb-action-pill,
     .bpb .leg-action-center .bpb-action-pill { cursor: pointer; }
     .bpb .bpb-action-pill:hover { transform: translateY(-1px); box-shadow: 0 3px 12px rgba(0,0,0,0.15); }
@@ -749,10 +746,8 @@
   .sheet-overlay[data-color="dark"] .sheet-conn { background: rgba(255,141,84,0.06); }
   .sheet-overlay[data-color="dark"] .sheet-conn-text { color: var(--orange-300); }
   .sheet-overlay[data-color="dark"] .sheet-divider { background: rgba(255,255,255,0.06); }
-  /* Bold card tappable */
-  .bpb.tappable { cursor: pointer; transition: transform 0.2s var(--ease), box-shadow 0.2s var(--ease); }
-  .bpb.tappable:hover { transform: translateY(-2px); box-shadow: 0 6px 24px rgba(0,0,0,0.12); }
-  .bpb.tappable:active { transform: scale(0.985); transition-duration: 0.1s; }
+  /* Bold card tappable — hover/bounce only on mobile (desktop: only pill is clickable) */
+  .bpb.tappable { cursor: default; }
   /* Deferred button clickable */
   .bp-doc-btn.deferred { cursor: pointer; }
 
@@ -793,6 +788,9 @@
     .stepper.stepper-bold { padding: 0 4px; gap: 0; }
     .stepper.stepper-bold .stepper-step { flex: 1; min-width: 0; }
     .stepper.stepper-bold .stepper-step.active { flex: 1; }
+    /* Mobile: card tappable with bounce feedback */
+    .bpb.tappable { cursor: pointer; transition: transform 0.2s var(--ease), box-shadow 0.2s var(--ease); }
+    .bpb.tappable:active { transform: scale(0.985); transition-duration: 0.1s; }
     /* Hide prev/next nav on mobile (swipe replaces it) */
     .bold-nav { display: none; }
     /* Hide inline voucher pill on mobile (card is tappable instead) */
