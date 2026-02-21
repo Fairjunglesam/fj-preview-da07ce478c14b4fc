@@ -351,7 +351,7 @@
   .bpb { position: relative; border-radius: 16px; background: linear-gradient(145deg, #1E2330 0%, #262D3F 100%); margin-bottom: 6px; overflow: hidden; border: 1px solid rgba(255,255,255,0.06); }
   .bpb.bpb-navy { background: linear-gradient(145deg, #141B2D 0%, #1C2541 100%); }
   .bpb-head { display: flex; justify-content: space-between; align-items: flex-start; padding: 10px 14px 0; gap: 8px; }
-  .bpb-carrier { display: flex; align-items: center; gap: 5px; font-size: 12px; font-weight: 700; color: rgba(255,255,255,0.9); min-width: 0; flex: 1; }
+  .bpb-carrier { display: flex; align-items: center; gap: 5px; font-size: 12px; font-weight: 700; color: rgba(255,255,255,0.9); min-width: 0; flex: 1; overflow: hidden; }
   .bpb-carrier .bp-carrier-icon { font-size: 14px; }
   .bpb-carrier .bp-carrier-sub { color: rgba(255,255,255,0.7); font-size: 10px; font-weight: 500; }
   .bpb .date-icon { background: rgba(255,255,255,0.12); border-color: rgba(255,255,255,0.15); }
@@ -434,7 +434,8 @@
   .leg-action-center { text-align: center; padding: 6px 14px 10px; }
   .card-voucher-row { text-align: center; padding: 6px 14px; }
   /* Hotel dark card */
-  .htd-title { font-size: 15px; font-weight: 700; color: #fff; line-height: 1.3; }
+  .htd-title { font-size: 15px; font-weight: 700; color: #fff; line-height: 1.3; overflow: hidden; text-decoration: none; border: none; outline: none; }
+  .bpb.tappable { -webkit-tap-highlight-color: transparent; outline: none; }
   .htd-title .stars { color: var(--yellow-500); font-size: 12px; margin-left: 2px; }
   .htd-sub-row { padding: 2px 14px 4px; }
   .htd-sub { font-size: 11px; color: rgba(255,255,255,0.6); line-height: 1.4; }
@@ -862,11 +863,16 @@
   .proto-globals button { padding: 3px 8px; border: 1.5px solid var(--grey-100); border-radius: 6px; background: var(--white); font-size: 10px; font-weight: 600; cursor: pointer; transition: all 0.15s; color: var(--grey-500); font-family: var(--font); line-height: 1.2; }
   .proto-globals button:hover { background: var(--grey-50); border-color: var(--grey-200); color: var(--grey-700); }
   .proto-globals button.active { background: var(--black); color: var(--white); border-color: var(--black); }
-  .proto-panel { padding: 10px 20px 14px; display: flex; flex-wrap: wrap; gap: 0; align-items: flex-start; margin-bottom: 12px; }
+  .proto-panel { padding: 10px 20px 14px; display: flex; flex-wrap: wrap; gap: 0; align-items: flex-start; margin-bottom: 12px; overflow: hidden; transition: max-height 0.3s ease, padding 0.3s ease, opacity 0.3s ease; }
+  .proto-panel.collapsed { max-height: 0 !important; padding-top: 0; padding-bottom: 0; margin-bottom: 0; opacity: 0; pointer-events: none; }
+  .proto-collapse-btn { display: flex; align-items: center; gap: 4px; padding: 2px 10px; font-size: 9px; font-weight: 700; color: var(--grey-400); cursor: pointer; border: none; background: none; font-family: var(--font); text-transform: uppercase; letter-spacing: 0.3px; transition: color 0.15s; margin-left: 8px; }
+  .proto-collapse-btn:hover { color: var(--grey-600); }
+  .proto-collapse-btn .chevron { display: inline-block; transition: transform 0.3s ease; font-size: 10px; }
+  .proto-collapse-btn .chevron.up { transform: rotate(180deg); }
   .proto-row { display: flex; flex-wrap: wrap; gap: 6px 18px; align-items: center; width: 100%; padding: 4px 0; }
   .proto-section { display: inline-flex; align-items: center; gap: 5px; }
   .proto-section-label { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.3px; color: var(--grey-300); font-family: var(--font); white-space: nowrap; margin-right: 2px; }
-  .proto-section .sc-config-pill { padding: 4px 10px; border-radius: 6px; font-size: 11px; font-weight: 600; border: 1px solid var(--grey-100); background: var(--white); color: var(--grey-400); cursor: pointer; font-family: var(--font); transition: all 0.15s; }
+  .proto-section .sc-config-pill { padding: 4px 10px; border-radius: 6px; font-size: 11px; font-weight: 600; border: 1px solid var(--grey-100); background: var(--white); color: var(--grey-400); cursor: pointer; font-family: var(--font); transition: all 0.15s; white-space: nowrap; }
   .proto-section .sc-config-pill:hover { border-color: var(--grey-200); color: var(--grey-600); }
   .proto-section .sc-config-pill.active { background: var(--black); color: var(--white); border-color: var(--black); }
   .proto-section .sc-toggle { position: relative; width: 32px; height: 18px; border-radius: 9px; background: var(--grey-200); border: none; cursor: pointer; transition: background 0.2s; flex-shrink: 0; }
@@ -875,6 +881,26 @@
   .proto-section .sc-toggle.on::after { transform: translateX(14px); }
   .proto-section .sc-toggle-label { font-size: 11px; font-weight: 600; color: var(--grey-400); font-family: var(--font); }
   .proto-divider { width: 100%; height: 0; border-top: 1px dashed var(--grey-100); margin: 2px 0; }
+  @media (max-width: 640px) {
+    .proto-panel { padding: 8px 12px 10px; }
+    .proto-row { gap: 4px 10px; }
+    .proto-section { gap: 3px; }
+    .proto-section-label { font-size: 9px; margin-right: 1px; }
+    .proto-section .sc-config-pill { padding: 3px 8px; font-size: 10px; }
+    .proto-section .sc-toggle-label { font-size: 10px; }
+    .proto-globals { gap: 2px; }
+    .proto-globals button { padding: 2px 6px; font-size: 9px; }
+    .proto-globals .sep { margin: 0 2px; }
+    .proto-tab { padding: 8px 12px; font-size: 11px; }
+    /* Showcase full-width mobile */
+    #showcase-container { padding: 0; }
+    .sc-preview { max-width: 100%; width: 100%; }
+    .showcase-item { border-radius: 0; box-shadow: none; }
+    .showcase-label { display: none; }
+    .showcase-panel { border-radius: 0; }
+    #showcase-container .sheet-header { position: sticky; top: 0; z-index: 5; background: var(--white); }
+    #showcase-container[data-color="contrast"] .sheet-header { background: #1a2747; }
+  }
   /* Float drawer */
   .float-drawer { position: fixed; bottom: 20px; right: 20px; z-index: 1100; display: none; }
   .float-drawer.visible { display: flex; flex-direction: column; align-items: flex-end; gap: 6px; }
@@ -1250,6 +1276,7 @@
   <div class="proto-tabs">
     <button class="proto-tab active" data-tab="timeline" onclick="setTab('timeline')">Timeline</button>
     <button class="proto-tab" data-tab="ticket" onclick="setTab('ticket')">Ticket modal</button>
+    <button class="proto-collapse-btn" onclick="togglePanel()"><span class="chevron up">▾</span> Config</button>
     <div class="proto-globals">
       <button onclick="setColor('light')" id="btn-color-light">Light</button>
       <button onclick="setColor('contrast')" id="btn-color-contrast" class="active">Contrast</button>
@@ -2172,10 +2199,9 @@ function renderEtape(e, state, idx, autoIdx, done, total, isPast, targetId) {
     function bpCardBold(carrier, num, pnr, dateStr, dep, arr, midLabel, seat, ticket, locUrl, fareData, type, icon, extraCls, etapeData) {
       const isFl = type === 'flight';
       let h = '';
-      // Header: date + carrier + fare class | PNR
-      const fareCls = fareData && fareData.fareName ? '<span class="bp-carrier-sub"> · ' + fareData.fareName + '</span>' : '';
+      // Header: date + carrier | PNR (no fare name — only cabin class matters)
       const headRight = (num || pnr) ? `<div class="bpb-head-right">${num ? '<span class="bpb-num">' + num + '</span>' : ''}${pnr ? '<span class="bpb-ref">Réf. ' + pnr + '</span>' : ''}</div>` : '';
-      h += `<div class="bpb-head"><div class="bpb-carrier"><span class="bpb-date">${dateStr}</span><span class="bp-carrier-icon">${icon}</span>${carrier}${fareCls}</div>${headRight}</div>`;
+      h += `<div class="bpb-head"><div class="bpb-carrier"><span class="bpb-date">${dateStr}</span><span class="bp-carrier-icon">${icon}</span>${carrier}</div>${headRight}</div>`;
       // Route: big codes (flights) or big times (trains)
       h += '<div class="bpb-route">';
       if (isFl && dep.code) {
@@ -2320,9 +2346,8 @@ function renderEtape(e, state, idx, autoIdx, done, total, isPast, targetId) {
         e.segments.forEach((seg, si) => {
           const isLast = si === e.segments.length - 1;
           const segData = seg.fareName ? seg : e;
-          const segFare = segData.fareName || '';
           const segRef = seg.pnr || e.pnr || '';
-          const headerSub = [seg.num, segFare, segRef ? 'Réf. ' + segRef : ''].filter(Boolean).join(' · ');
+          const headerSub = [seg.num, segRef ? 'Réf. ' + segRef : ''].filter(Boolean).join(' · ');
           const headerLeft = `<span class="bp-carrier-icon">${e.icon}</span>${e.carrier}<span class="bp-carrier-sub">· ${headerSub}</span>`;
           scrollH += bpCard(headerLeft, e.departure.date, seg.dep, seg.arr, seg.dur, seg.seat, null, seg.ticket || e.ticket, e.locUrl, segData, e.type, e);
           if (!isLast && e.connections && e.connections[si]) {
@@ -2341,7 +2366,7 @@ function renderEtape(e, state, idx, autoIdx, done, total, isPast, targetId) {
       if (isEpure) {
         allH += bpCardBold(e.carrier, e.num, e.pnr, e.departure.date, e.departure, e.arrival, e.duration, e.seat, e.ticket, e.locUrl, e, e.type, e.icon, navyCls, e);
       } else {
-        const directSub = [detailsStr, e.fareName || '', e.pnr ? 'Réf. ' + e.pnr : ''].filter(Boolean).join(' · ');
+        const directSub = [detailsStr, e.pnr ? 'Réf. ' + e.pnr : ''].filter(Boolean).join(' · ');
         const headerLeft = `<span class="bp-carrier-icon">${e.icon}</span>${e.carrier}<span class="bp-carrier-sub">· ${directSub}</span>`;
         allH += bpCard(headerLeft, e.departure.date, e.departure, e.arrival, e.duration, e.seat, null, e.ticket, e.locUrl, e, e.type, e);
       }
@@ -2492,6 +2517,24 @@ function setLayout(l) {
 function setPlatform(p) {
   currentPlatform = p;
   updateShowcase();
+}
+
+// ===== Panel collapse =====
+let _panelCollapsed = false;
+function togglePanel() {
+  _panelCollapsed = !_panelCollapsed;
+  const panel = document.getElementById('proto-panel');
+  const chevron = document.querySelector('.proto-collapse-btn .chevron');
+  if (_panelCollapsed) {
+    panel.style.maxHeight = panel.scrollHeight + 'px';
+    requestAnimationFrame(() => { panel.classList.add('collapsed'); });
+    chevron.classList.remove('up');
+  } else {
+    panel.classList.remove('collapsed');
+    panel.style.maxHeight = panel.scrollHeight + 'px';
+    setTimeout(() => { panel.style.maxHeight = ''; }, 300);
+    chevron.classList.add('up');
+  }
 }
 
 // ===== Tabs =====
