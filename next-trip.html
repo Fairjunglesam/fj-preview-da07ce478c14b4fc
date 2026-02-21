@@ -416,11 +416,9 @@
   .leg-conn-chip { display: inline-flex; align-items: center; gap: 4px; padding: 3px 8px; background: rgba(255,141,84,0.12); border: 1px solid rgba(255,141,84,0.2); border-radius: 6px; font-size: 10px; font-weight: 700; color: rgba(255,180,100,0.9); }
   .trip-card:not(.contrast-mode):not(.dark-mode) .leg-conn-chip { background: rgba(255,141,84,0.08); border-color: rgba(255,141,84,0.15); color: #cc5500; }
   .leg-conn-chip .material-symbols-rounded { font-size: 12px; line-height: 1; }
-  /* Leg card — per-segment carrier label in mid zone */
-  .leg-mid-carrier { font-size: 12px; font-weight: 700; color: rgba(255,255,255,0.6); white-space: nowrap; text-align: center; margin-bottom: 2px; letter-spacing: 0.2px; }
-  .trip-card:not(.contrast-mode):not(.dark-mode) .leg-mid-carrier { color: var(--grey-600); }
-  .leg-mid-seat { font-size: 10px; font-weight: 600; color: rgba(255,255,255,0.45); text-align: center; margin-top: 1px; white-space: nowrap; }
-  .trip-card:not(.contrast-mode):not(.dark-mode) .leg-mid-seat { color: var(--grey-500); }
+  /* Leg card — seat/gate info in mid zone (accent to stand out) */
+  .leg-mid-seat { font-size: 11px; font-weight: 800; color: rgba(120,200,255,0.9); text-align: center; margin-top: 2px; white-space: nowrap; letter-spacing: 0.3px; }
+  .trip-card:not(.contrast-mode):not(.dark-mode) .leg-mid-seat { color: var(--blue-600); }
   /* Leg card — same layout as direct, just smaller */
   .bpb-leg .bpb-code { font-size: 22px; }
   .bpb-leg .bpb-time { font-size: 11px; }
@@ -827,7 +825,6 @@
     .bpb-mid { display: none; }
     .bpb-leg .bpb-mid { display: flex; min-width: 50px; }
     .bpb-leg .bpb-mid-badge .mid-label { font-size: 11px; }
-    .bpb-leg .leg-mid-carrier { font-size: 10px; }
     .bpb-leg .bpb-code { font-size: 18px; }
     .bpb-leg .bpb-route { padding: 3px 12px 3px; }
     .bpb-leg .bpb-time { font-size: 10px; }
@@ -2114,9 +2111,9 @@ function renderEtape(e, state, idx, autoIdx, done, total, isPast, targetId) {
           h += `<div class="leg-seg-date">${segDate}</div>`;
         }
         if (segDate) prevDate = segDate;
-        // Mid content: carrier, badge (icon + num + dur), seat/gate as text
-        const midLabel = [segNum, seg.dur].filter(Boolean).join(' · ');
-        const carrierLine = `<div class="leg-mid-carrier">${carrier}</div>`;
+        // Mid content: carrier name + flight num (no 2-letter code) + duration, all in one line
+        const numOnly = segNum.replace(/^[A-Z]{2,3}\s*/, '');
+        const midLabel = [carrier + (numOnly ? ' ' + numOnly : ''), seg.dur].filter(Boolean).join(' · ');
         // Seat/gate as compact text in mid zone
         let midSeatLine = '';
         const segSeat = seg.seat || null;
@@ -2140,7 +2137,7 @@ function renderEtape(e, state, idx, autoIdx, done, total, isPast, targetId) {
         } else {
           h += `<div class="bpb-hero"><div class="bpb-code">${dep.time}</div><div class="bpb-name">${dep.name}</div></div>`;
         }
-        h += `<div class="bpb-mid">${carrierLine}<div class="bpb-mid-row"><div class="bpb-mid-line"></div><div class="bpb-mid-badge">${midBadge(etape.type, midLabel)}</div><div class="bpb-mid-line"></div></div>${midSeatLine}</div>`;
+        h += `<div class="bpb-mid"><div class="bpb-mid-row"><div class="bpb-mid-line"></div><div class="bpb-mid-badge">${midBadge(etape.type, midLabel)}</div><div class="bpb-mid-line"></div></div>${midSeatLine}</div>`;
         if (isFl && arr.code) {
           h += `<div class="bpb-hero arr"><div class="bpb-code">${arr.code}${arrOff}</div><div class="bpb-time">${arr.time}</div><div class="bpb-name">${arr.name}${arr.terminal ? ' · T' + arr.terminal : ''}</div></div>`;
         } else {
