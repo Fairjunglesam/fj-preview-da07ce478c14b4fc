@@ -1227,23 +1227,26 @@
 
   /* Showcase grid */
   #showcase-container { padding: 20px; max-width: 1200px; margin: 0 auto; }
-  .showcase-toc { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 20px; padding-bottom: 14px; border-bottom: 1px solid var(--grey-100); }
-  .showcase-toc-link { font-size: 11px; font-weight: 700; padding: 4px 10px; border-radius: 6px; background: var(--grey-50); color: var(--grey-600); text-decoration: none; border: 1px solid var(--grey-100); }
-  .showcase-toc-link:hover { background: var(--blue-50); color: var(--blue-600); border-color: var(--blue-100); }
-  .showcase-section { margin-bottom: 28px; }
-  .showcase-section-title { font-size: 13px; font-weight: 800; text-transform: uppercase; letter-spacing: 1px; color: var(--grey-400); margin-bottom: 12px; padding-bottom: 6px; border-bottom: 2px solid var(--grey-100); font-family: var(--font); }
-  .showcase-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 16px; }
+  .sc-config { margin-bottom: 20px; padding-bottom: 16px; border-bottom: 1px solid var(--grey-100); }
+  .sc-config-row { display: flex; align-items: center; gap: 6px; margin-bottom: 8px; flex-wrap: wrap; }
+  .sc-config-row:last-child { margin-bottom: 0; }
+  .sc-config-label { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; color: var(--grey-400); min-width: 64px; font-family: var(--font); }
+  .sc-config-pill { padding: 5px 12px; border-radius: 8px; font-size: 11px; font-weight: 700; border: 1.5px solid var(--grey-100); background: var(--white); color: var(--grey-600); cursor: pointer; font-family: var(--font); transition: all 0.15s; }
+  .sc-config-pill:hover { background: var(--grey-50); border-color: var(--grey-200); color: var(--black); }
+  .sc-config-pill.active { background: var(--black); color: var(--white); border-color: var(--black); }
+  .sc-preview { max-width: 380px; width: 380px; }
   .showcase-item { border-radius: 14px; overflow: hidden; box-shadow: 0 1px 6px rgba(0,0,0,0.08); }
   .showcase-label { padding: 8px 14px; font-size: 11px; font-weight: 700; font-family: var(--font); letter-spacing: 0.3px; background: var(--grey-50); color: var(--grey-600); border-bottom: 1px solid var(--grey-100); }
   .showcase-panel { padding: 0; background: var(--white); }
   /* Showcase color overrides */
   #showcase-container[data-color="contrast"] .showcase-item { box-shadow: 0 1px 6px rgba(0,0,0,0.3); }
-  #showcase-container[data-color="contrast"] .showcase-toc { border-color: rgba(255,255,255,0.08); }
-  #showcase-container[data-color="contrast"] .showcase-toc-link { background: rgba(255,255,255,0.06); color: rgba(255,255,255,0.6); border-color: rgba(255,255,255,0.1); }
-  #showcase-container[data-color="contrast"] .showcase-toc-link:hover { background: rgba(0,169,252,0.12); color: var(--blue-300); border-color: rgba(0,169,252,0.2); }
+  #showcase-container[data-color="contrast"] .sc-config { border-color: rgba(255,255,255,0.08); }
+  #showcase-container[data-color="contrast"] .sc-config-label { color: rgba(255,255,255,0.35); }
+  #showcase-container[data-color="contrast"] .sc-config-pill { background: rgba(255,255,255,0.06); color: rgba(255,255,255,0.6); border-color: rgba(255,255,255,0.1); }
+  #showcase-container[data-color="contrast"] .sc-config-pill:hover { background: rgba(255,255,255,0.1); color: #fff; border-color: rgba(255,255,255,0.18); }
+  #showcase-container[data-color="contrast"] .sc-config-pill.active { background: #fff; color: #1a2747; border-color: #fff; }
   #showcase-container[data-color="contrast"] .showcase-label { background: #0f1a30; color: rgba(255,255,255,0.5); border-color: rgba(255,255,255,0.06); }
   #showcase-container[data-color="contrast"] .showcase-panel { background: #1a2747; color: rgba(255,255,255,0.85); }
-  #showcase-container[data-color="contrast"] .showcase-section-title { color: rgba(255,255,255,0.3); border-color: rgba(255,255,255,0.08); }
   #showcase-container[data-color="contrast"] .sheet-header { border-color: rgba(255,255,255,0.08); }
   #showcase-container[data-color="contrast"] .sheet-title { color: #fff; }
   #showcase-container[data-color="contrast"] .date-icon { background: rgba(255,255,255,0.10); border-color: rgba(255,255,255,0.15); }
@@ -1276,13 +1279,14 @@
   #showcase-container[data-color="contrast"] .sheet-footer a { color: rgba(255,255,255,0.45); }
   #showcase-container[data-color="contrast"] .sheet-actions .cta-pri { background: #fff; color: #1a2747; font-weight: 800; }
   #showcase-container[data-color="contrast"] .sheet-actions .cta-sec { border-color: rgba(255,255,255,0.18); color: #fff; background: rgba(255,255,255,0.08); }
-  #showcase-container[data-color="dark"] .showcase-toc { border-color: rgba(255,255,255,0.06); }
-  #showcase-container[data-color="dark"] .showcase-toc-link { background: rgba(255,255,255,0.05); color: rgba(255,255,255,0.5); border-color: rgba(255,255,255,0.08); }
-  #showcase-container[data-color="dark"] .showcase-toc-link:hover { background: rgba(0,169,252,0.1); color: var(--blue-300); border-color: rgba(0,169,252,0.18); }
+  #showcase-container[data-color="dark"] .sc-config { border-color: rgba(255,255,255,0.06); }
+  #showcase-container[data-color="dark"] .sc-config-label { color: rgba(255,255,255,0.3); }
+  #showcase-container[data-color="dark"] .sc-config-pill { background: rgba(255,255,255,0.05); color: rgba(255,255,255,0.5); border-color: rgba(255,255,255,0.08); }
+  #showcase-container[data-color="dark"] .sc-config-pill:hover { background: rgba(255,255,255,0.08); color: #fff; border-color: rgba(255,255,255,0.15); }
+  #showcase-container[data-color="dark"] .sc-config-pill.active { background: #fff; color: #252540; border-color: #fff; }
   #showcase-container[data-color="dark"] .showcase-item { box-shadow: 0 1px 6px rgba(0,0,0,0.4); }
   #showcase-container[data-color="dark"] .showcase-label { background: #1a1a35; color: rgba(255,255,255,0.4); border-color: rgba(255,255,255,0.05); }
   #showcase-container[data-color="dark"] .showcase-panel { background: #252540; color: rgba(255,255,255,0.85); }
-  #showcase-container[data-color="dark"] .showcase-section-title { color: rgba(255,255,255,0.25); border-color: rgba(255,255,255,0.06); }
   #showcase-container[data-color="dark"] .sheet-header { border-color: rgba(255,255,255,0.06); }
   #showcase-container[data-color="dark"] .sheet-title { color: #fff; }
   #showcase-container[data-color="dark"] .date-icon { background: rgba(255,255,255,0.10); border-color: rgba(255,255,255,0.12); }
@@ -2783,13 +2787,16 @@ function buildCarSheet(e) {
 // ===== Showcase =====
 function toggleShowcase() {
   const sc = document.getElementById('showcase-container');
+  const cards = document.getElementById('cards-container');
   const btn = document.getElementById('btn-showcase');
   if (sc.style.display === 'none' || !sc.style.display) {
     renderShowcase();
     sc.style.display = 'block';
+    cards.style.display = 'none';
     btn.textContent = 'Masquer showcase';
   } else {
     sc.style.display = 'none';
+    cards.style.display = '';
     btn.textContent = 'Showcase sheets';
   }
 }
@@ -2802,125 +2809,153 @@ function updateShowcase() {
 function renderShowcase() {
   const sc = document.getElementById('showcase-container');
   sc.setAttribute('data-color', currentColor);
+  if (!window._scState) window._scState = { type: 'train', ticket: 'qr-wallet', platform: 'ios' };
+  const st = window._scState;
 
-  // Scenario definitions — each with mock data for realistic rendering
+  const types = [
+    { key: 'train', label: 'Train' },
+    { key: 'flight', label: 'Avion' },
+    { key: 'hotel', label: 'H\u00f4tel' },
+    { key: 'car', label: 'Voiture' },
+  ];
+  const tickets = [
+    { key: 'qr-wallet', label: 'QR + Wallet' },
+    { key: 'qr', label: 'QR seul' },
+    { key: 'pdf', label: 'PDF' },
+    { key: 'differe', label: 'Diff\u00e9r\u00e9' },
+    { key: 'multi', label: 'Multi-billets' },
+  ];
+  const platforms = [
+    { key: 'ios', label: 'iOS (Apple Wallet)' },
+    { key: 'android', label: 'Android (Google Wallet)' },
+  ];
+
+  const isTrain = st.type === 'train';
+  const showPlatform = isTrain && st.ticket === 'qr-wallet';
+
+  // Configurator
+  let html = '<div class="sc-config">';
+  html += '<div class="sc-config-row"><span class="sc-config-label">Type</span>';
+  types.forEach(t => {
+    html += `<button class="sc-config-pill${st.type === t.key ? ' active' : ''}" onclick="scSet('type','${t.key}')">${t.label}</button>`;
+  });
+  html += '</div>';
+  if (isTrain) {
+    html += '<div class="sc-config-row"><span class="sc-config-label">Billet</span>';
+    tickets.forEach(t => {
+      html += `<button class="sc-config-pill${st.ticket === t.key ? ' active' : ''}" onclick="scSet('ticket','${t.key}')">${t.label}</button>`;
+    });
+    html += '</div>';
+  }
+  if (showPlatform) {
+    html += '<div class="sc-config-row"><span class="sc-config-label">Plateforme</span>';
+    platforms.forEach(p => {
+      html += `<button class="sc-config-pill${st.platform === p.key ? ' active' : ''}" onclick="scSet('platform','${p.key}')">${p.label}</button>`;
+    });
+    html += '</div>';
+  }
+  html += '</div>';
+
+  // Build mock data
   const base = { _travelerName: 'Stella Smith', locUrl: '#' };
   const trainDep = { name: 'Paris Montparnasse' };
   const trainArr = { name: 'Bordeaux Saint-Jean' };
   const flightDep = { name: 'Paris', code: 'CDG' };
   const flightArr = { name: 'Nice', code: 'NCE' };
-  const scenarios = {
-    'iOS': [
-      { label: 'Wallet (pkpass)', type: 'train', ticket: { available: true, hasQR: true, wallet: true }, platform: 'ios', carrier: 'SNCF', num: 'TGV 6234', pnr: 'HJKL42', dep: trainDep, arr: trainArr },
-      { label: 'QR code (pas de wallet)', type: 'train', ticket: { available: true, hasQR: true, wallet: false }, platform: 'ios', carrier: 'OUIGO', num: '7641', pnr: 'MNOP55', dep: trainDep, arr: trainArr },
-      { label: 'PDF seul (train)', type: 'train', ticket: { available: true, hasQR: false, wallet: false }, platform: 'ios', carrier: 'SNCF', num: 'TGV 8891', pnr: 'QRST78', dep: trainDep, arr: trainArr, voucherPdf: 'transport-voucher.pdf' },
-      { label: 'Vol \u2014 e-ticket', type: 'flight', ticket: { available: true, hasQR: false, wallet: false }, platform: 'ios', carrier: 'Air France', num: 'AF 1234', pnr: 'ABC123', dep: flightDep, arr: flightArr, voucherPdf: 'transport-voucher.pdf' },
-      { label: 'Billet diff\u00e9r\u00e9', type: 'train', ticket: { available: false, availableDate: '15 mars 2026' }, platform: 'ios', carrier: 'SNCF', num: 'TGV 9012', pnr: 'UVWX90', dep: trainDep, arr: trainArr },
-    ],
-    'Android': [
-      { label: 'Wallet (pkpass)', type: 'train', ticket: { available: true, hasQR: true, wallet: true }, platform: 'android', carrier: 'SNCF', num: 'TGV 6234', pnr: 'HJKL42', dep: trainDep, arr: trainArr },
-      { label: 'QR code (pas de wallet)', type: 'train', ticket: { available: true, hasQR: true, wallet: false }, platform: 'android', carrier: 'OUIGO', num: '7641', pnr: 'MNOP55', dep: trainDep, arr: trainArr },
-      { label: 'PDF seul (train)', type: 'train', ticket: { available: true, hasQR: false, wallet: false }, platform: 'android', carrier: 'SNCF', num: 'TGV 8891', pnr: 'QRST78', dep: trainDep, arr: trainArr, voucherPdf: 'transport-voucher.pdf' },
-      { label: 'Vol \u2014 e-ticket', type: 'flight', ticket: { available: true, hasQR: false, wallet: false }, platform: 'android', carrier: 'Air France', num: 'AF 1234', pnr: 'ABC123', dep: flightDep, arr: flightArr, voucherPdf: 'transport-voucher.pdf' },
-      { label: 'Billet diff\u00e9r\u00e9', type: 'train', ticket: { available: false, availableDate: '15 mars 2026' }, platform: 'android', carrier: 'SNCF', num: 'TGV 9012', pnr: 'UVWX90', dep: trainDep, arr: trainArr },
-    ],
-    'Desktop': [
-      { label: 'Billet dispo (QR)', type: 'train', ticket: { available: true, hasQR: true, wallet: true }, platform: 'desktop', carrier: 'SNCF', num: 'TGV 6234', pnr: 'HJKL42', dep: trainDep, arr: trainArr },
-      { label: 'PDF seul', type: 'train', ticket: { available: true, hasQR: false, wallet: false }, platform: 'desktop', carrier: 'SNCF', num: 'TGV 8891', pnr: 'QRST78', dep: trainDep, arr: trainArr, voucherPdf: 'transport-voucher.pdf' },
-      { label: 'Vol \u2014 e-ticket', type: 'flight', ticket: { available: true, hasQR: false, wallet: false }, platform: 'desktop', carrier: 'Air France', num: 'AF 1234', pnr: 'ABC123', dep: flightDep, arr: flightArr, voucherPdf: 'transport-voucher.pdf' },
-      { label: 'Billet diff\u00e9r\u00e9', type: 'train', ticket: { available: false, availableDate: '15 mars 2026' }, platform: 'desktop', carrier: 'SNCF', num: 'TGV 9012', pnr: 'UVWX90', dep: trainDep, arr: trainArr },
-    ],
-    'Multi-segment': [
-      { label: 'Correspondance train (iOS)', type: 'train', platform: 'ios', carrier: 'SNCF', pnr: 'XYZW89',
-        ticket: { available: true, hasQR: true, wallet: true },
-        dep: { name: 'Paris Montparnasse' }, arr: { name: 'Bordeaux Saint-Jean' },
+
+  let content = '', headerTitle = '', panelLabel = '';
+
+  if (st.type === 'hotel') {
+    const me = { ...base, type: 'hotel',
+      checkin: { date: 'Vendredi 9 F\u00e9vrier', time: '15:00' },
+      checkout: { date: 'Dimanche 11 F\u00e9vrier', time: '11:00' },
+      nights: 3, roomName: 'Chambre Deluxe Double', bookingRef: 'MRR-482910',
+      address: '15 Rue du Temple, 33000 Bordeaux',
+      freeTextConditions: 'R\u00e9cup\u00e9rez votre cl\u00e9 \u00e0 la r\u00e9ception. Check-in \u00e0 partir de 15h. R\u00e9ception ouverte 24h/24.',
+      voucherPdf: 'voucherhotel.pdf', docAvailable: true,
+      shortLabel: 'H\u00f4tel Renaissance Bordeaux', title: 'H\u00f4tel Renaissance Bordeaux',
+    };
+    headerTitle = dateIcon('Vendredi 9 F\u00e9vrier') + '<span>H\u00f4tel Renaissance Bordeaux</span>';
+    content = buildHotelSheet(me);
+    panelLabel = 'H\u00f4tel \u2014 PDF voucher';
+  } else if (st.type === 'car') {
+    const me = { ...base, type: 'car',
+      pickup: { time: '14:00', date: 'Mardi 17 F\u00e9vrier', location: 'Gare Saint-Jean, Bordeaux' },
+      dropoff: { time: '18:00', date: 'Mardi 17 F\u00e9vrier', location: 'Gare Saint-Jean, Bordeaux' },
+      carrier: 'Avis', title: 'Avis \u2013 Cat. B Compacte', bookingRef: 'AVIS-84729',
+      driverName: 'Stella Smith', voucherPdf: 'vouchercar.pdf', docAvailable: true,
+    };
+    headerTitle = dateIcon('Mardi 17 F\u00e9vrier') + '<span>Avis \u2014 Voiture</span>';
+    content = buildCarSheet(me);
+    panelLabel = 'Voiture \u2014 PDF voucher';
+  } else if (st.type === 'flight') {
+    // Avion — toujours PDF confirmation, un par leg, pas de QR/wallet
+    const me = { ...base, type: 'flight', carrier: 'Air France', num: 'AF 1234', pnr: 'ABC123',
+      ticket: { available: true, hasQR: false, wallet: false },
+      departure: flightDep, arrival: flightArr, voucherPdf: 'transport-voucher.pdf' };
+    headerTitle = dateIcon('Ven. 09 F\u00e9v') + '<span>CDG \u2192 NCE</span>';
+    content = buildTransportSheet(me, 'desktop');
+    panelLabel = 'Confirmation de r\u00e9servation \u00b7 Air France AF 1234';
+  } else {
+    // Train
+    const dep = trainDep, arr = trainArr;
+    const depL = dep.name, arrL = arr.name;
+    const platform = showPlatform ? st.platform : 'desktop';
+
+    if (st.ticket === 'multi') {
+      // Multi-billets carousel (train only)
+      const me = { ...base, type: 'train', departure: dep, arrival: arr,
+        carrier: 'SNCF', pnr: 'XYZW89',
+        ticket: { available: true, hasQR: true, wallet: false },
+        dep: trainDep, arr: trainArr,
         segments: [
           { dep: { time: '08:30', name: 'Paris Montparnasse' }, arr: { time: '10:32', name: 'Lyon Part-Dieu' }, dur: '2h02', num: '6211', carrier: 'inOUI', ticket: { available: true, hasQR: true, wallet: true } },
           { dep: { time: '11:15', name: 'Lyon Part-Dieu' }, arr: { time: '14:28', name: 'Bordeaux Saint-Jean' }, dur: '3h13', num: '7641', carrier: 'OUIGO', ticket: { available: true, hasQR: true, wallet: false } },
         ],
-        connections: [{ loc: 'Lyon Part-Dieu', dur: '43 min' }] },
-      { label: 'Escale vol (desktop)', type: 'flight', platform: 'desktop', carrier: 'Lufthansa', pnr: 'KLM456',
-        ticket: { available: true, hasQR: true, wallet: false },
-        dep: { name: 'Paris', code: 'CDG' }, arr: { name: 'Ath\u00e8nes', code: 'ATH' },
-        segments: [
-          { dep: { time: '06:45', name: 'Paris', code: 'CDG' }, arr: { time: '08:25', name: 'Munich', code: 'MUC' }, dur: '1h40', num: 'LH 2231', carrier: 'Lufthansa', ticket: { available: true, hasQR: true, wallet: true } },
-          { dep: { time: '09:45', name: 'Munich', code: 'MUC' }, arr: { time: '13:35', name: 'Ath\u00e8nes', code: 'ATH' }, dur: '2h50', num: 'AF 1752', carrier: 'Air France', ticket: { available: true, hasQR: true, wallet: true } },
-        ],
-        connections: [{ loc: 'Munich MUC', dur: '1h20' }] },
-      { label: 'M\u00eame supplier (iOS)', type: 'train', platform: 'ios', carrier: 'SNCF', pnr: 'ABCD12',
-        ticket: { available: true, hasQR: true, wallet: true },
-        dep: { name: 'Paris Montparnasse' }, arr: { name: 'Bordeaux Saint-Jean' },
-        segments: [
-          { dep: { time: '08:30', name: 'Paris Montparnasse' }, arr: { time: '10:32', name: 'Lyon Part-Dieu' }, dur: '2h02', num: 'TGV 6211', carrier: 'SNCF' },
-          { dep: { time: '11:15', name: 'Lyon Part-Dieu' }, arr: { time: '14:28', name: 'Bordeaux Saint-Jean' }, dur: '3h13', num: 'TGV 6825', carrier: 'SNCF' },
-        ],
-        connections: [{ loc: 'Lyon Part-Dieu', dur: '43 min' }] },
-    ],
-    'H\u00f4tel / Voiture': [
-      { label: 'H\u00f4tel (PDF)', etapeType: 'hotel', hotelName: 'H\u00f4tel Renaissance Bordeaux',
-        hotelData: { checkin: { date: 'Vendredi 9 F\u00e9vrier', time: '15:00' }, checkout: { date: 'Dimanche 11 F\u00e9vrier', time: '11:00' }, nights: 3, roomName: 'Chambre Deluxe Double', bookingRef: 'MRR-482910', address: '15 Rue du Temple, 33000 Bordeaux', freeTextConditions: 'R\u00e9cup\u00e9rez votre cl\u00e9 \u00e0 la r\u00e9ception. Check-in \u00e0 partir de 15h. R\u00e9ception ouverte 24h/24.', voucherPdf: 'voucherhotel221-2173826_1679135161643.pdf', docAvailable: true } },
-      { label: 'Voiture (PDF)', etapeType: 'car', carCarrier: 'Avis',
-        carData: { pickup: { time: '14:00', date: 'Mardi 17 F\u00e9vrier', location: 'Gare Saint-Jean, Bordeaux' }, dropoff: { time: '18:00', date: 'Mardi 17 F\u00e9vrier', location: 'Gare Saint-Jean, Bordeaux' }, carrier: 'Avis', title: 'Avis \u2013 Cat. B Compacte', bookingRef: 'AVIS-84729', driverName: 'Stella Smith', voucherPdf: 'voucherhotel221-2173826_1679135161643.pdf', docAvailable: true } },
-    ]
-  };
-
-  // ToC
-  const sectionKeys = Object.keys(scenarios);
-  let html = '<div class="showcase-toc">';
-  sectionKeys.forEach(k => {
-    const anchor = 'sc-' + k.toLowerCase().replace(/[^a-z0-9]+/g, '-');
-    html += `<a href="#${anchor}" class="showcase-toc-link">${k}</a>`;
-  });
-  html += '</div>';
-  for (const [section, items] of Object.entries(scenarios)) {
-    const anchor = 'sc-' + section.toLowerCase().replace(/[^a-z0-9]+/g, '-');
-    html += `<div class="showcase-section" id="${anchor}"><div class="showcase-section-title">${section}</div><div class="showcase-grid">`;
-    for (const s of items) {
-      const icon = s.type === 'flight' ? '\u2708\ufe0f' : (s.type === 'train' ? '\ud83d\ude84' : (s.etapeType === 'hotel' ? '\ud83c\udfe8' : '\ud83d\ude97'));
-      const mockEtape = {
-        ...base,
-        type: s.type || s.etapeType,
-        ticket: s.ticket || {},
-        carrier: s.carrier || s.carCarrier || '',
-        num: s.num || '',
-        pnr: s.pnr || '',
-        departure: s.dep || null,
-        arrival: s.arr || null,
-        icon: icon,
-        shortLabel: s.hotelName || '',
-        title: s.hotelName || '',
-        ...(s.voucherPdf ? { voucherPdf: s.voucherPdf } : {}),
-        ...(s.segments ? { segments: s.segments } : {}),
-        ...(s.connections ? { connections: s.connections } : {}),
-        ...(s.hotelData || {}),
-        ...(s.carData || {}),
+        connections: [{ loc: 'Lyon Part-Dieu', dur: '43 min' }],
       };
-      // Build header title with date icon (éphéméride)
-      const mockDate = s.dep ? 'Ven. 09 Fév' : (s.etapeType === 'hotel' ? 'Vendredi 9 Février' : 'Mardi 17 Février');
-      let headerTitle = dateIcon(mockDate);
-      if ((s.type === 'train' || s.type === 'flight') && s.dep && s.arr) {
-        const depL = s.dep.code || s.dep.name || '';
-        const arrL = s.arr.code || s.arr.name || '';
-        headerTitle += '<span>' + depL + ' \u2192 ' + arrL + '</span>';
-      } else if (s.etapeType === 'hotel') {
-        headerTitle += '<span>' + (s.hotelName || 'H\u00f4tel') + '</span>';
-      } else if (s.etapeType === 'car') {
-        headerTitle += '<span>' + (s.carCarrier || 'Location') + ' \u2014 Voiture</span>';
-      }
-      let content;
-      if (s.etapeType === 'hotel') {
-        content = buildHotelSheet(mockEtape);
-      } else if (s.etapeType === 'car') {
-        content = buildCarSheet(mockEtape);
+      headerTitle = dateIcon('Ven. 09 F\u00e9v') + '<span>' + depL + ' \u2192 ' + arrL + '</span>';
+      content = buildTransportSheet(me, 'desktop');
+      panelLabel = 'Multi-billets \u00b7 inOUI + OUIGO \u00b7 Carousel';
+    } else {
+      const carrier = st.ticket === 'qr' ? 'OUIGO' : 'SNCF';
+      const num = st.ticket === 'qr' ? '7641' : 'TGV 6234';
+      let ticket = {}, voucherPdf;
+      if (st.ticket === 'qr-wallet') {
+        ticket = { available: true, hasQR: true, wallet: true };
+        panelLabel = 'QR + ' + (platform === 'ios' ? 'Apple' : 'Google') + ' Wallet \u00b7 ' + carrier + ' ' + num;
+      } else if (st.ticket === 'qr') {
+        ticket = { available: true, hasQR: true, wallet: false };
+        panelLabel = 'QR seul \u00b7 ' + carrier + ' ' + num;
+      } else if (st.ticket === 'pdf') {
+        ticket = { available: true, hasQR: false, wallet: false };
+        voucherPdf = 'transport-voucher.pdf';
+        panelLabel = 'PDF \u00b7 ' + carrier + ' ' + num;
       } else {
-        content = buildTransportSheet(mockEtape, s.platform);
+        ticket = { available: false, availableDate: '15 mars 2026' };
+        panelLabel = 'Diff\u00e9r\u00e9 \u00b7 ' + carrier + ' ' + num;
       }
-      const headerH = `<div class="sheet-header"><div class="sheet-title">${headerTitle}</div><button class="sheet-close" disabled>&#10005;</button></div>`;
-      html += `<div class="showcase-item"><div class="showcase-label">${s.label}</div><div class="showcase-panel">${headerH}<div class="sheet-body">${content}</div></div></div>`;
+      const me = { ...base, type: 'train', carrier, num, pnr: 'HJKL42', ticket, departure: dep, arrival: arr, ...(voucherPdf ? { voucherPdf } : {}) };
+      headerTitle = dateIcon('Ven. 09 F\u00e9v') + '<span>' + depL + ' \u2192 ' + arrL + '</span>';
+      content = buildTransportSheet(me, platform);
     }
-    html += '</div></div>';
   }
+
+  // Render preview
+  const headerH = '<div class="sheet-header"><div class="sheet-title">' + headerTitle + '</div><button class="sheet-close" disabled>&#10005;</button></div>';
+  html += '<div class="sc-preview"><div class="showcase-item"><div class="showcase-label">' + panelLabel + '</div><div class="showcase-panel">' + headerH + '<div class="sheet-body">' + content + '</div></div></div></div>';
   sc.innerHTML = html;
+}
+
+function scSet(key, val) {
+  if (!window._scState) window._scState = { type: 'train', ticket: 'qr-wallet', platform: 'ios' };
+  window._scState[key] = val;
+  if (key === 'type' && val === 'train') {
+    if (!['qr-wallet','qr','pdf','differe','multi'].includes(window._scState.ticket)) {
+      window._scState.ticket = 'qr-wallet';
+    }
+  }
+  renderShowcase();
 }
 
 renderAll();
