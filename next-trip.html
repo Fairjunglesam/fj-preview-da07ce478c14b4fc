@@ -869,6 +869,8 @@
   .proto-sidebar { position: fixed; left: 0; top: 0; bottom: 0; width: 250px; background: #fff; border-right: 1px solid var(--grey-100); z-index: 110; overflow-y: auto; display: flex; flex-direction: column; transition: transform 0.3s ease; }
   .proto-sidebar-head { display: flex; align-items: center; justify-content: space-between; padding: 12px 16px 8px; border-bottom: 1px solid var(--grey-100); flex-shrink: 0; }
   .proto-sidebar-head span { font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px; color: var(--grey-400); font-family: var(--font); }
+  .proto-sidebar-close { display: none; width: 28px; height: 28px; border-radius: 8px; border: none; background: var(--grey-50); color: var(--grey-500); font-size: 14px; cursor: pointer; font-family: var(--font); transition: all 0.15s; align-items: center; justify-content: center; }
+  .proto-sidebar-close:hover { background: var(--grey-100); color: var(--grey-700); }
   .proto-backdrop { display: none; }
 
   /* Desktop: shift ALL main content right for sidebar */
@@ -902,18 +904,21 @@
   .sc-mobile-cta button:active { transform: scale(0.97); }
   .sc-mobile-cta .sc-mobile-hint { font-size: 11px; color: var(--grey-400); margin-top: 10px; }
 
+  /* Panel submit button (hidden on desktop, visible in mobile drawer) */
+  .proto-panel-submit { display: none; margin-top: 12px; padding-top: 12px; border-top: 1px solid var(--grey-100); text-align: center; grid-column: 1 / -1; }
+  .proto-panel-submit button { width: 100%; padding: 12px 20px; border-radius: 10px; background: var(--black); color: var(--white); font-size: 13px; font-weight: 700; border: none; cursor: pointer; font-family: var(--font); transition: all 0.15s; }
+  .proto-panel-submit button:active { transform: scale(0.97); opacity: 0.9; }
+
   /* ===== Mobile overrides ===== */
   @media (max-width: 640px) {
     /* Remove desktop sidebar offset */
     .proto-main { margin-left: 0 !important; }
     /* Sidebar becomes bottom sheet overlay */
-    .proto-sidebar { position: fixed; left: 0; right: 0; bottom: 0; top: auto; width: 100%; min-height: 45vh; max-height: 85vh; overflow-y: auto; border-right: none; border-radius: 16px 16px 0 0; box-shadow: 0 -4px 24px rgba(0,0,0,0.15); transform: translateY(100%); transition: transform 0.3s ease; z-index: 200; }
+    .proto-sidebar { position: fixed; inset: 0; width: 100%; height: 100%; max-height: none; overflow-y: auto; border-right: none; border-radius: 0; box-shadow: none; background: var(--white); transform: translateY(100%); transition: transform 0.3s ease; z-index: 200; display: flex; flex-direction: column; justify-content: center; }
     .proto-sidebar.open { transform: translateY(0); }
     body.sidebar-collapsed .proto-sidebar { transform: translateY(100%); }
-    .proto-sidebar-head { padding: 10px 14px 6px; }
-    /* Backdrop */
-    .proto-backdrop { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.3); z-index: 199; }
-    .proto-backdrop.open { display: block; }
+    .proto-sidebar-head { padding: 16px 20px 10px; }
+    .proto-sidebar-close { display: flex; }
     /* Panel compact */
     .proto-panel { padding: 8px 12px 16px; }
     .proto-line { grid-template-columns: 60px 1fr; min-height: 24px; gap: 0 5px; }
@@ -932,7 +937,8 @@
     .proto-sidebar-toggle .material-symbols-rounded { font-size: 14px !important; }
     /* Showcase: hide inline preview, show CTA button */
     .sc-preview { display: none; }
-    .sc-mobile-cta { display: block; }
+    .sc-mobile-cta { display: none !important; }
+    .proto-panel-submit { display: block; }
   }
   /* Float drawer */
   .float-drawer { position: fixed; bottom: 20px; right: 20px; z-index: 1100; display: none; }
@@ -1308,11 +1314,12 @@
 <!-- Sidebar (desktop: fixed left, mobile: bottom overlay) -->
 <div class="proto-sidebar" id="proto-sidebar">
   <div class="proto-sidebar-head">
-    <span>Config</span>
+    <span id="proto-sidebar-title">Paramètres timeline</span>
+    <button class="proto-sidebar-close" onclick="dismissConfig()">&#10005;</button>
   </div>
   <div class="proto-panel" id="proto-panel"></div>
 </div>
-<div class="proto-backdrop" id="proto-backdrop" onclick="togglePanel()"></div>
+<div class="proto-backdrop" id="proto-backdrop" onclick="dismissConfig()"></div>
 
 <div class="proto-main">
 
@@ -2580,6 +2587,20 @@ function togglePanel() {
   }
 }
 
+function dismissConfig() {
+  const isMobile = window.innerWidth <= 640;
+  if (isMobile && currentTab === 'ticket') {
+    // On mobile ticket tab, dismissing config = back to timeline
+    _sidebarOpen = false;
+    document.getElementById('proto-sidebar').classList.remove('open');
+    document.getElementById('proto-backdrop').classList.remove('open');
+    document.body.style.overflow = '';
+    setTab('timeline');
+  } else {
+    togglePanel();
+  }
+}
+
 // ===== Tabs =====
 function setTab(tab) {
   currentTab = tab;
@@ -2596,12 +2617,22 @@ function setTab(tab) {
     document.getElementById('cards-container').style.display = 'none';
     if (skel) skel.classList.add('hidden');
     renderShowcase();
+    // Mobile: auto-open config drawer on ticket tab
+    if (window.innerWidth <= 640 && !_sidebarOpen) {
+      _sidebarOpen = true;
+      document.getElementById('proto-sidebar').classList.add('open');
+      document.getElementById('proto-backdrop').classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
   }
 }
 
 function renderPanel() {
   const panel = document.getElementById('proto-panel');
+  const titleEl = document.getElementById('proto-sidebar-title');
   const line = (label, controls) => `<div class="proto-line"><span class="proto-line-label">${label}</span><div class="proto-line-controls">${controls}</div></div>`;
+
+  if (titleEl) titleEl.textContent = currentTab === 'timeline' ? 'Paramètres voyage' : 'Paramètres billet';
 
   if (currentTab === 'timeline') {
     const st = _tlState;
@@ -2672,6 +2703,8 @@ function renderPanel() {
       });
       h += line('Plateforme', platPills);
     }
+    // Mobile: submit button inside drawer
+    h += '<div class="proto-panel-submit"><button onclick="submitShowcaseFromDrawer()">Voir le billet</button></div>';
     panel.innerHTML = h;
   }
 }
@@ -2766,6 +2799,13 @@ function closeSheet() {
   // Hide float drawer
   const fd = document.getElementById('float-drawer');
   fd.classList.remove('visible', 'open');
+  // Mobile + ticket tab: reopen config drawer
+  if (window.innerWidth <= 640 && currentTab === 'ticket') {
+    _sidebarOpen = true;
+    document.getElementById('proto-sidebar').classList.add('open');
+    document.getElementById('proto-backdrop').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
 }
 
 function sheetEscHandler(e) { if (e.key === 'Escape') closeSheet(); }
@@ -3339,10 +3379,22 @@ function _scBuildMockEtape() {
 function openShowcaseSheet() {
   const etape = window._scMockEtape;
   if (!etape) return;
-  // Set platform from _scState
   const st = window._scState || {};
   if (st.platform) currentPlatform = st.platform;
   openSheet(etape);
+}
+
+function submitShowcaseFromDrawer() {
+  // Close the drawer first
+  if (_sidebarOpen && window.innerWidth <= 640) {
+    _sidebarOpen = false;
+    document.getElementById('proto-sidebar').classList.remove('open');
+    document.getElementById('proto-backdrop').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+  // Rebuild mock + open sheet
+  renderShowcase();
+  openShowcaseSheet();
 }
 
 function scSet(key, val) {
