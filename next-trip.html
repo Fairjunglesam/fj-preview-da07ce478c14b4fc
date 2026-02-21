@@ -1767,7 +1767,7 @@ function renderEtape(e, state, idx, autoIdx, done, total, isPast, targetId) {
       if (oj) h += `<div class="bpb-dur">⚠️ Open jaw</div>`;
       // Driver — warm amber tinted row
       if (e.driverName) {
-        h += `<div class="bpb-driver"><div class="bpb-driver-item">🪪 <strong>${e.driverName}</strong></div><div class="bpb-driver-item">📄 Permis + CB au nom du conducteur</div></div>`;
+        h += `<div class="bpb-driver"><div class="bpb-driver-item">🪪 Permis + CB au nom du conducteur : <strong>${e.driverName}</strong></div></div>`;
       }
       const carIdx = sheetTargets.length;
       sheetTargets.push(e);
@@ -1783,7 +1783,7 @@ function renderEtape(e, state, idx, autoIdx, done, total, isPast, targetId) {
       let schedH = `<div class="car-schedule"><div class="car-sched-block"><div class="car-sched-label">Prise en charge</div><div class="car-sched-time">${e.pickup.time}</div><div class="car-sched-date">${e.pickup.date}</div><div class="car-sched-loc">${e.pickup.location}</div></div><div class="car-sched-block${oj ? ' oj' : ''}"><div class="car-sched-label">Restitution${oj ? ' · Open jaw' : ''}</div><div class="car-sched-time">${e.dropoff.time}</div><div class="car-sched-date">${e.dropoff.date}</div><div class="car-sched-loc">${e.dropoff.location}</div></div>${carTagBtn}</div>`;
       let driverH = '';
       if (e.driverName) {
-        driverH = `<div class="car-driver"><div class="car-driver-badge">🪪</div><div class="car-driver-text"><div class="car-driver-label">Conducteur</div><div class="car-driver-name">${e.driverName}</div><div class="car-driver-docs">Permis de conduire + CB au nom du conducteur</div></div></div>`;
+        driverH = `<div class="car-driver"><div class="car-driver-badge">🪪</div><div class="car-driver-text"><div class="car-driver-docs">Permis + CB au nom du conducteur : <strong>${e.driverName}</strong></div></div></div>`;
       }
       bodyH = `<div class="ecard">${topH}${schedH}${driverH}</div>`;
     }
