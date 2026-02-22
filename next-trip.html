@@ -41,7 +41,7 @@
   .demo-controls select { padding: 3px 7px; border: var(--stroke-md) solid var(--grey-100); border-radius: 7px; font-size: 10px; background: var(--white); color: var(--grey-700); font-family: var(--font); }
 
   /* ===== Trip Card shell ===== */
-  #cards-container { max-width: 960px; margin: 0 auto; padding: 0 16px; }
+  #cards-container { max-width: 960px; margin: 0 auto; padding: 0 16px; position: relative; }
   .trip-card { max-width: 640px; background: none; border: none; border-radius: 0; overflow: visible; transition: all 0.3s var(--ease); box-shadow: none; }
   .trip-card:has(.stepper-bold) { max-width: 900px; }
   .card-inner { padding: 18px 22px 14px; }
@@ -61,7 +61,7 @@
   .state-imminent .headline, .state-in_transit .headline { color: var(--blue-800); }
   .state-trip_ending .headline { color: var(--green-700); }
   .co-travelers { font-size: 11px; color: var(--grey-500); margin-top: 1px; margin-left: 17px; }
-  .header-link { display: inline-flex; align-items: center; gap: 5px; font-size: 11px; font-weight: 600; color: var(--grey-500); text-decoration: none; padding: 5px 10px; border-radius: 7px; border: var(--stroke-md) solid var(--grey-100); transition: all 0.15s; white-space: nowrap; flex-shrink: 0; margin-left: 12px; font-family: var(--font); }
+  .header-link { display: inline-flex; align-items: center; gap: 5px; font-size: 11px; font-weight: 600; color: var(--grey-500); text-decoration: none; padding: 5px 10px; border-radius: 7px; border: var(--stroke-md) solid var(--grey-100); transition: all 0.15s; white-space: nowrap; flex-shrink: 0; font-family: var(--font); position: absolute; right: 0; top: 18px; }
   .header-link:hover { background: var(--grey-50); border-color: var(--grey-200); color: var(--black); }
 
   /* ===== Stepper ===== */
