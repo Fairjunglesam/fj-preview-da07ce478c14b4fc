@@ -289,10 +289,10 @@
   .etape-tag.future { background: var(--grey-75); color: var(--grey-600); }
 
   /* ===== Shared étape card container ===== */
-  .ecard { border: 1px solid rgba(140,165,230,0.18); border-radius: 12px; overflow: hidden; margin-bottom: 8px; background: linear-gradient(165deg, #eef2fc 0%, #e6ecf8 45%, #f0f4fe 100%); box-shadow: inset 0 1px 0 rgba(255,255,255,0.8), 0 2px 10px rgba(100,130,210,0.06); }
+  .ecard { border: 1px solid rgba(130,155,220,0.20); border-radius: 12px; overflow: hidden; margin-bottom: 8px; background: linear-gradient(165deg, #f4f7ff 0%, #e2e8f6 30%, #edf2ff 55%, #dfe6f5 75%, #f0f4fe 100%); box-shadow: inset 0 1px 0 rgba(255,255,255,0.9), 0 3px 14px rgba(90,120,200,0.08); }
 
   /* ===== Transport — Boarding Pass ===== */
-  .bp { position: relative; border: 1px solid rgba(140,165,230,0.18); border-radius: 14px; background: linear-gradient(165deg, #eef2fc 0%, #e6ecf8 45%, #f0f4fe 100%); margin-bottom: 6px; overflow: visible; box-shadow: inset 0 1px 0 rgba(255,255,255,0.8), 0 2px 10px rgba(100,130,210,0.06); }
+  .bp { position: relative; border: 1px solid rgba(130,155,220,0.20); border-radius: 14px; background: linear-gradient(165deg, #f4f7ff 0%, #e2e8f6 30%, #edf2ff 55%, #dfe6f5 75%, #f0f4fe 100%); margin-bottom: 6px; overflow: visible; box-shadow: inset 0 1px 0 rgba(255,255,255,0.9), 0 3px 14px rgba(90,120,200,0.08); }
   .bp-head { display: flex; justify-content: space-between; align-items: center; padding: 8px 14px 6px; }
   .bp-carrier { display: flex; align-items: center; gap: 5px; font-size: 12px; font-weight: 700; color: var(--black); }
   .bp-carrier-icon { font-size: 15px; }
@@ -667,9 +667,9 @@
   .sheet-map-btn { display: inline-flex; align-items: center; justify-content: center; width: 40px; height: 40px; border-radius: 10px; background: var(--grey-100); color: var(--grey-600); border: none; cursor: pointer; transition: all 0.15s; flex-shrink: 0; text-decoration: none; }
   .sheet-map-btn:hover { background: var(--grey-200); color: var(--grey-800); transform: translateY(-1px); }
   .sheet-map-btn .material-symbols-rounded { font-size: 20px; line-height: 1; }
-  .wallet-badge { display: flex; align-items: center; justify-content: center; width: 100%; height: 44px; border-radius: 10px; cursor: pointer; border: none; text-decoration: none; transition: opacity 0.15s; box-sizing: border-box; overflow: hidden; background: transparent; }
+  .wallet-badge { display: flex; align-items: center; justify-content: center; width: 100%; height: 48px; border-radius: 10px; cursor: pointer; border: none; text-decoration: none; transition: opacity 0.15s; box-sizing: border-box; overflow: hidden; background: transparent; }
   .wallet-badge:hover { opacity: 0.85; }
-  .wallet-badge img { height: 44px; width: 100%; object-fit: contain; }
+  .wallet-badge img { height: 100%; width: 100%; object-fit: contain; }
   /* Contrast mode sheet */
   .sheet-overlay[data-color="contrast"] .sheet-panel { background: #1a2747; border: 1px solid rgba(255,255,255,0.08); box-shadow: 0 8px 40px rgba(0,0,0,0.4); }
   .sheet-overlay[data-color="contrast"] .sheet-handle { background: rgba(255,255,255,0.2); }
@@ -716,7 +716,8 @@
   .sheet-overlay[data-color="contrast"] .sheet-conn { background: rgba(255,141,84,0.08); }
   .sheet-overlay[data-color="contrast"] .sheet-conn-text { color: var(--orange-300); }
   .sheet-overlay[data-color="contrast"] .sheet-divider { background: rgba(255,255,255,0.06); }
-  /* Wallet badges are official images — no color override needed */
+  /* Contrast sheet: invert wallet badges to white for dark background */
+  .sheet-overlay[data-color="contrast"] .wallet-badge img { filter: invert(1) hue-rotate(180deg); }
   /* Bold card tappable — hover/bounce only on mobile (desktop: only pill is clickable) */
   .bpb.tappable { cursor: default; }
   /* Deferred button clickable */
@@ -980,7 +981,7 @@
   .scenario-label { font-size: 11px; font-weight: 700; color: var(--grey-400); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 8px; padding-left: 4px; }
 
   /* ===== Light+Bold — Override bpb dark colors to light ===== */
-  .trip-card:not(.contrast-mode):not(.dark-mode) .bpb { background: linear-gradient(135deg, #eef2fc 0%, #e6ecf8 18%, #f0f4fe 36%, #e3e9f6 52%, #ecf1fb 68%, #e7edf9 84%, #f1f4fd 100%); border: 1px solid rgba(140,165,230,0.18); box-shadow: inset 0 1px 0 rgba(255,255,255,0.95), inset 0 -1px 2px rgba(100,130,210,0.04), 0 4px 16px rgba(100,130,210,0.08), 0 1px 3px rgba(0,0,0,0.03); }
+  .trip-card:not(.contrast-mode):not(.dark-mode) .bpb { background: linear-gradient(145deg, #f4f7ff 0%, #e2e8f6 12%, #f0f4ff 22%, #d8e0f2 35%, #edf2ff 48%, #dfe6f5 58%, #f2f6ff 70%, #e0e7f4 82%, #f0f4fe 100%); border: 1px solid rgba(130,155,220,0.22); box-shadow: inset 0 1px 0 rgba(255,255,255,1), inset 0 -2px 4px rgba(100,130,210,0.06), 0 4px 20px rgba(90,120,200,0.10), 0 1px 3px rgba(0,0,0,0.04); }
   .trip-card:not(.contrast-mode) .bpb-carrier { color: var(--black); }
   .trip-card:not(.contrast-mode) .bpb-carrier .bp-carrier-sub { color: var(--grey-500); }
   .trip-card:not(.contrast-mode) .bpb-date { color: var(--grey-600); }
@@ -2909,9 +2910,9 @@ function renderFloatDrawer() {
   body.innerHTML = h;
 }
 
-// Official wallet badges (img tags — official SVGs from Wikimedia/Apple/Google)
-const appleWalletBadge = `<a href="#" class="wallet-badge wallet-badge-apple" onclick="event.preventDefault()"><img src="https://upload.wikimedia.org/wikipedia/commons/3/30/Add_to_Apple_Wallet_badge.svg" alt="Add to Apple Wallet" style="height:44px;width:100%;object-fit:contain"></a>`;
-const googleWalletBadge = `<a href="#" class="wallet-badge wallet-badge-google" onclick="event.preventDefault()"><img src="https://upload.wikimedia.org/wikipedia/commons/f/f7/Add_to_Google_Wallet_badge.svg" alt="Add to Google Wallet" style="height:44px;width:100%;object-fit:contain"></a>`;
+// Official wallet badges (local SVG files)
+const appleWalletBadge = `<a href="#" class="wallet-badge wallet-badge-apple" onclick="event.preventDefault()"><img src="badges/FR_Add_to_Apple_Wallet_RGB_102921.svg" alt="Ajouter à Apple Wallet"></a>`;
+const googleWalletBadge = `<a href="#" class="wallet-badge wallet-badge-google" onclick="event.preventDefault()"><img src="badges/frFR_add_to_google_wallet_add-wallet-badge.svg" alt="Ajouter à Google Wallet"></a>`;
 
 const pdfDocSvg = '<svg viewBox="0 0 24 28" fill="none"><path d="M2 4a2 2 0 0 1 2-2h10l8 8v14a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V4z" fill="white" fill-opacity="0.9"/><path d="M14 2l8 8h-6a2 2 0 0 1-2-2V2z" fill="white" fill-opacity="0.6"/><text x="12" y="21" text-anchor="middle" font-size="7" font-weight="800" fill="#e53935" font-family="system-ui">PDF</text></svg>';
 
