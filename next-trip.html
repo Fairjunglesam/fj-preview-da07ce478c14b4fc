@@ -1041,11 +1041,7 @@
   .trip-card:not(.contrast-mode) .htd-log-item { color: var(--grey-600); }
   .trip-card:not(.contrast-mode) .htd-log-item strong { color: var(--black); }
 
-  /* ===== Contrast-mode — outer card state overrides (stronger signals for high-contrast) ===== */
-  .trip-card.contrast-mode.state-imminent { border-color: rgba(0,169,252,0.28); background: linear-gradient(160deg, rgba(0,169,252,0.10) 0%, rgba(255,255,255,0.55) 35%); box-shadow: 0 2px 20px rgba(0,169,252,0.14), 0 0 0 1px rgba(0,169,252,0.10); }
-  .trip-card.contrast-mode.state-in_transit { border-color: rgba(0,169,252,0.35); background: linear-gradient(160deg, rgba(0,169,252,0.14) 0%, rgba(255,255,255,0.55) 45%); box-shadow: 0 2px 20px rgba(0,169,252,0.18), 0 0 0 1px rgba(0,169,252,0.12); }
-  .trip-card.contrast-mode.state-between_segments { border-color: rgba(34,215,161,0.18); }
-  .trip-card.contrast-mode.state-trip_ending { border-color: rgba(34,215,161,0.28); background: linear-gradient(160deg, rgba(34,215,161,0.10) 0%, rgba(255,255,255,0.55) 35%); box-shadow: 0 2px 16px rgba(34,215,161,0.10); }
+  /* ===== Contrast-mode — state headline colors ===== */
   .trip-card.contrast-mode.state-imminent .headline,
   .trip-card.contrast-mode.state-in_transit .headline { color: var(--blue-700); }
   .trip-card.contrast-mode.state-trip_ending .headline { color: var(--green-700); }
