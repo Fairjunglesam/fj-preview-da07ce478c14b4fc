@@ -2189,7 +2189,7 @@ function renderEtape(e, state, idx, autoIdx, done, total, isPast, targetId) {
       if (stop.code) {
         let h = `<div class="bp-loc">${stop.code}</div>`;
         if (stop.terminal) h += `<div class="bp-sub">Terminal ${stop.terminal}</div>`;
-        if (stop.name) h += `<div class="bp-sub">${stop.name}</div>`;
+        else if (stop.name) h += `<div class="bp-sub">${stop.name}</div>`;
         return h;
       }
       return `<div class="bp-loc">${stop.name}</div>`;
@@ -2246,7 +2246,7 @@ function renderEtape(e, state, idx, autoIdx, done, total, isPast, targetId) {
       // Route: big codes (flights) or big times (trains)
       h += '<div class="bpb-route">';
       if (isFl && dep.code) {
-        h += `<div class="bpb-hero"><div class="bpb-code">${dep.code}</div><div class="bpb-time">${dep.time}</div><div class="bpb-name">${dep.name}${dep.terminal ? ' · T' + dep.terminal : ''}</div></div>`;
+        h += `<div class="bpb-hero"><div class="bpb-code">${dep.code}</div><div class="bpb-time">${dep.time}</div><div class="bpb-name">${dep.terminal ? 'Terminal ' + dep.terminal : dep.name}</div></div>`;
       } else {
         h += `<div class="bpb-hero"><div class="bpb-code">${dep.time}</div><div class="bpb-name">${dep.name}</div></div>`;
       }
@@ -2267,7 +2267,7 @@ function renderEtape(e, state, idx, autoIdx, done, total, isPast, targetId) {
       h += `<div class="bpb-mid"><div class="bpb-mid-row"><div class="bpb-mid-line"></div><div class="bpb-mid-badge">${midBadge(type, midPillLabel)}</div><div class="bpb-mid-line"></div></div>${actionPill}</div>`;
       const boldArrOffset = arr.dayOffset ? `<span class="day-offset">+${arr.dayOffset}</span>` : '';
       if (isFl && arr.code) {
-        h += `<div class="bpb-hero arr"><div class="bpb-code">${arr.code}${boldArrOffset}</div><div class="bpb-time">${arr.time}${arr.date && arr.dayOffset ? ' · ' + arr.date : ''}</div><div class="bpb-name">${arr.name}${arr.terminal ? ' · T' + arr.terminal : ''}</div></div>`;
+        h += `<div class="bpb-hero arr"><div class="bpb-code">${arr.code}${boldArrOffset}</div><div class="bpb-time">${arr.time}${arr.date && arr.dayOffset ? ' · ' + arr.date : ''}</div><div class="bpb-name">${arr.terminal ? 'Terminal ' + arr.terminal : arr.name}</div></div>`;
       } else {
         h += `<div class="bpb-hero arr"><div class="bpb-code">${arr.time}${boldArrOffset}</div>${arr.date && arr.dayOffset ? '<div class="bpb-time">' + arr.date + '</div>' : ''}<div class="bpb-name">${arr.name}</div></div>`;
       }
@@ -2322,7 +2322,7 @@ function renderEtape(e, state, idx, autoIdx, done, total, isPast, targetId) {
         // Dep name with gate/voie (relative to departure station)
         let depName = dep.name;
         if (isFl) {
-          if (dep.terminal) depName += ' · T' + dep.terminal;
+          if (dep.terminal) depName = 'Terminal ' + dep.terminal;
           if (seg.gate) depName += ' · Porte ' + seg.gate;
         } else {
           if (seg.platform) depName += ' · Voie ' + seg.platform;
@@ -2337,7 +2337,7 @@ function renderEtape(e, state, idx, autoIdx, done, total, isPast, targetId) {
         }
         h += `<div class="bpb-mid"><div class="bpb-mid-row"><div class="bpb-mid-line"></div><div class="bpb-mid-badge">${midBadge(etape.type, midLabel)}</div><div class="bpb-mid-line"></div></div>${midSeatLine}</div>`;
         if (isFl && arr.code) {
-          h += `<div class="bpb-hero arr"><div class="bpb-code">${arr.code}${arrOff}</div><div class="bpb-time">${arr.time}</div><div class="bpb-name">${arr.name}${arr.terminal ? ' · T' + arr.terminal : ''}</div></div>`;
+          h += `<div class="bpb-hero arr"><div class="bpb-code">${arr.code}${arrOff}</div><div class="bpb-time">${arr.time}</div><div class="bpb-name">${arr.terminal ? 'Terminal ' + arr.terminal : arr.name}</div></div>`;
         } else {
           h += `<div class="bpb-hero arr"><div class="bpb-code">${arr.time}${arrOff}</div><div class="bpb-name">${arr.name}</div></div>`;
         }
