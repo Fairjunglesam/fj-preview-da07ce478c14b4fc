@@ -417,16 +417,12 @@
   /* Leg card — gate/voie badge (highlighted, last-minute info) */
   .leg-gate-badge { display: inline-block; margin-top: 3px; padding: 2px 8px; border-radius: 5px; font-size: 11px; font-weight: 800; letter-spacing: 0.3px; color: rgba(255,180,80,0.95); background: rgba(255,141,84,0.12); border: 1px solid rgba(255,141,84,0.2); }
   .trip-card:not(.contrast-mode):not(.dark-mode) .leg-gate-badge { color: var(--orange-600); background: rgba(255,141,84,0.08); border-color: rgba(255,141,84,0.15); }
-  /* Hotel conditions infobulle (dismissable) */
-  .hotel-conditions { display: flex; align-items: flex-start; gap: 8px; margin-top: 6px; padding: 8px 12px; border-radius: 10px; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.08); font-size: 11px; line-height: 1.4; color: rgba(255,255,255,0.7); }
-  .hotel-conditions-icon { flex-shrink: 0; font-size: 14px; color: rgba(255,255,255,0.5); margin-top: 1px; }
+  /* Hotel conditions infobulle (dismissable) — same light style in all modes */
+  .hotel-conditions { display: flex; align-items: flex-start; gap: 8px; margin-top: 6px; padding: 8px 12px; border-radius: 10px; background: #f5f6f8; border: 1px solid #e5e7eb; font-size: 11px; line-height: 1.4; color: #555; }
+  .hotel-conditions-icon { flex-shrink: 0; font-size: 14px; color: #999; margin-top: 1px; }
   .hotel-conditions-text { flex: 1; }
-  .hotel-conditions-close { flex-shrink: 0; background: none; border: none; cursor: pointer; padding: 0; color: rgba(255,255,255,0.35); font-size: 16px; line-height: 1; margin-top: -1px; }
-  .hotel-conditions-close:hover { color: rgba(255,255,255,0.6); }
-  .trip-card:not(.contrast-mode):not(.dark-mode) .hotel-conditions { background: var(--grey-50); border-color: var(--grey-100); color: var(--grey-600); }
-  .trip-card:not(.contrast-mode):not(.dark-mode) .hotel-conditions-icon { color: var(--grey-400); }
-  .trip-card:not(.contrast-mode):not(.dark-mode) .hotel-conditions-close { color: var(--grey-300); }
-  .trip-card:not(.contrast-mode):not(.dark-mode) .hotel-conditions-close:hover { color: var(--grey-500); }
+  .hotel-conditions-close { flex-shrink: 0; background: none; border: none; cursor: pointer; padding: 0; color: #bbb; font-size: 16px; line-height: 1; margin-top: -1px; }
+  .hotel-conditions-close:hover { color: #888; }
   /* Leg card — same layout as direct, just smaller */
   .bpb-leg .bpb-code { font-size: 28px; }
   .bpb-leg .bpb-time { font-size: 12px; }
@@ -2013,6 +2009,14 @@ function buildStepperHTML(trip, state, activeIdx, autoIdx, done, isDark, isBold,
   return `<div class="${stepperCls}">${h}</div>`;
 }
 
+// ===== Dismiss hotel conditions =====
+window._dismissedConditions = window._dismissedConditions || {};
+function dismissCondition(ref) {
+  window._dismissedConditions[ref] = true;
+  const el = document.getElementById('htcond-' + ref);
+  if (el) el.remove();
+}
+
 function renderAll() {
   sheetTargets = [];
   const state = currentState;
@@ -2149,14 +2153,6 @@ function renderEtape(e, state, idx, autoIdx, done, total, isPast, targetId) {
   // Material Symbols icon mapping for mid badge (shared by transport + car bold)
   const ICON_MAP = { train: 'train', flight: 'flight', car: 'directions_car', hotel: 'hotel' };
   function midBadge(type, label) { return `<span class="material-symbols-rounded">${ICON_MAP[type] || 'trip'}</span>${label ? '<span class="mid-label">' + label + '</span>' : ''}`; }
-
-  // ===== Dismiss hotel conditions =====
-window._dismissedConditions = window._dismissedConditions || {};
-function dismissCondition(ref) {
-  window._dismissedConditions[ref] = true;
-  const el = document.getElementById('htcond-' + ref);
-  if (el) el.remove();
-}
 
 // ===== TRANSPORT — BOARDING PASS =====
   if (e.type === 'train' || e.type === 'flight') {
