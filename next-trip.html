@@ -414,6 +414,19 @@
   /* Leg card — seat/gate info in mid zone (accent to stand out) */
   .leg-mid-seat { font-size: 12px; font-weight: 800; color: rgba(120,200,255,0.95); text-align: center; margin-top: 3px; white-space: nowrap; letter-spacing: 0.3px; }
   .trip-card:not(.contrast-mode):not(.dark-mode) .leg-mid-seat { color: var(--blue-600); }
+  /* Leg card — gate/voie badge (highlighted, last-minute info) */
+  .leg-gate-badge { display: inline-block; margin-top: 3px; padding: 2px 8px; border-radius: 5px; font-size: 11px; font-weight: 800; letter-spacing: 0.3px; color: rgba(255,180,80,0.95); background: rgba(255,141,84,0.12); border: 1px solid rgba(255,141,84,0.2); }
+  .trip-card:not(.contrast-mode):not(.dark-mode) .leg-gate-badge { color: var(--orange-600); background: rgba(255,141,84,0.08); border-color: rgba(255,141,84,0.15); }
+  /* Hotel conditions infobulle (dismissable) */
+  .hotel-conditions { display: flex; align-items: flex-start; gap: 8px; margin-top: 6px; padding: 8px 12px; border-radius: 10px; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.08); font-size: 11px; line-height: 1.4; color: rgba(255,255,255,0.7); }
+  .hotel-conditions-icon { flex-shrink: 0; font-size: 14px; color: rgba(255,255,255,0.5); margin-top: 1px; }
+  .hotel-conditions-text { flex: 1; }
+  .hotel-conditions-close { flex-shrink: 0; background: none; border: none; cursor: pointer; padding: 0; color: rgba(255,255,255,0.35); font-size: 16px; line-height: 1; margin-top: -1px; }
+  .hotel-conditions-close:hover { color: rgba(255,255,255,0.6); }
+  .trip-card:not(.contrast-mode):not(.dark-mode) .hotel-conditions { background: var(--grey-50); border-color: var(--grey-100); color: var(--grey-600); }
+  .trip-card:not(.contrast-mode):not(.dark-mode) .hotel-conditions-icon { color: var(--grey-400); }
+  .trip-card:not(.contrast-mode):not(.dark-mode) .hotel-conditions-close { color: var(--grey-300); }
+  .trip-card:not(.contrast-mode):not(.dark-mode) .hotel-conditions-close:hover { color: var(--grey-500); }
   /* Leg card — same layout as direct, just smaller */
   .bpb-leg .bpb-code { font-size: 28px; }
   .bpb-leg .bpb-time { font-size: 12px; }
@@ -1699,10 +1712,10 @@ const TRIPS = {
         duration: '22h15',
         carrier: 'Lufthansa', details: ['Economy', '3 escales'],
         segments: [
-          { dep: { time: '10:15', name: 'Paris', code: 'CDG', terminal: 'T1' }, arr: { time: '11:25', name: 'Francfort', code: 'FRA', terminal: 'T1' }, dur: '1h10', num: 'LH 1035', pnr: 'BKK901', seat: { place: '34A' }, carrier: 'Lufthansa', ticket: { available: true, hasQR: false, wallet: false }, voucherPdf: 'voucher-flight.pdf', fareName: 'Economy Light', fareExch: false, fareRefund: false, amenities: ['meal'] },
-          { dep: { time: '13:00', name: 'Francfort', code: 'FRA', terminal: 'T1' }, arr: { time: '18:40', name: 'Istanbul', code: 'IST' }, dur: '2h40', num: 'TK 1592', pnr: 'BKK901', seat: { place: '18C' }, carrier: 'Turkish Airlines', ticket: { available: true, hasQR: false, wallet: false }, voucherPdf: 'voucher-flight.pdf', fareName: 'Economy', fareExch: false, fareRefund: false, amenities: ['meal', 'entertainment'] },
-          { dep: { time: '20:45', name: 'Istanbul', code: 'IST' }, arr: { time: '03:00', name: 'Doha', code: 'DOH', dayOffset: 1 }, dur: '3h15', num: 'QR 246', pnr: 'BKK901', seat: { place: '25K' }, carrier: 'Qatar Airways', ticket: { available: true, hasQR: false, wallet: false }, voucherPdf: 'voucher-flight.pdf', fareName: 'Economy', fareExch: false, fareRefund: false, amenities: ['meal', 'entertainment'] },
-          { dep: { time: '05:10', name: 'Doha', code: 'DOH', date: 'Mar. 10 Fév' }, arr: { time: '14:30', name: 'Bangkok', code: 'BKK' }, dur: '6h20', num: 'QR 836', pnr: 'BKK901', seat: { place: '31F' }, carrier: 'Qatar Airways', ticket: { available: true, hasQR: false, wallet: false }, voucherPdf: 'voucher-flight.pdf', fareName: 'Economy', fareExch: false, fareRefund: false, amenities: ['meal', 'entertainment'] },
+          { dep: { time: '10:15', name: 'Paris', code: 'CDG', terminal: 'T1' }, arr: { time: '11:25', name: 'Francfort', code: 'FRA', terminal: 'T1' }, dur: '1h10', num: 'LH 1035', pnr: 'BKK901', gate: 'A32', seat: { place: '34A' }, carrier: 'Lufthansa', ticket: { available: true, hasQR: false, wallet: false }, voucherPdf: 'voucher-flight.pdf', fareName: 'Economy Light', fareExch: false, fareRefund: false, amenities: ['meal'] },
+          { dep: { time: '13:00', name: 'Francfort', code: 'FRA', terminal: 'T1' }, arr: { time: '18:40', name: 'Istanbul', code: 'IST' }, dur: '2h40', num: 'TK 1592', pnr: 'BKK901', gate: 'B15', seat: { place: '18C' }, carrier: 'Turkish Airlines', ticket: { available: true, hasQR: false, wallet: false }, voucherPdf: 'voucher-flight.pdf', fareName: 'Economy', fareExch: false, fareRefund: false, amenities: ['meal', 'entertainment'] },
+          { dep: { time: '20:45', name: 'Istanbul', code: 'IST' }, arr: { time: '03:00', name: 'Doha', code: 'DOH', dayOffset: 1 }, dur: '3h15', num: 'QR 246', pnr: 'BKK901', gate: 'E44', seat: { place: '25K' }, carrier: 'Qatar Airways', ticket: { available: true, hasQR: false, wallet: false }, voucherPdf: 'voucher-flight.pdf', fareName: 'Economy', fareExch: false, fareRefund: false, amenities: ['meal', 'entertainment'] },
+          { dep: { time: '05:10', name: 'Doha', code: 'DOH', date: 'Mar. 10 Fév' }, arr: { time: '14:30', name: 'Bangkok', code: 'BKK' }, dur: '6h20', num: 'QR 836', pnr: 'BKK901', gate: 'C8', seat: { place: '31F' }, carrier: 'Qatar Airways', ticket: { available: true, hasQR: false, wallet: false }, voucherPdf: 'voucher-flight.pdf', fareName: 'Economy', fareExch: false, fareRefund: false, amenities: ['meal', 'entertainment'] },
         ],
         connections: [
           { loc: 'Francfort FRA', dur: '1h35' },
@@ -1857,6 +1870,7 @@ const _tlState = {
   hotel: true,        // toggle
   car: false,         // toggle
   legs: 'direct',     // 'direct' | '1-stop' | 'multi'
+  gateInfo: true,      // show gate/voie badges
 };
 
 const HEADLINES = {
@@ -2136,7 +2150,15 @@ function renderEtape(e, state, idx, autoIdx, done, total, isPast, targetId) {
   const ICON_MAP = { train: 'train', flight: 'flight', car: 'directions_car', hotel: 'hotel' };
   function midBadge(type, label) { return `<span class="material-symbols-rounded">${ICON_MAP[type] || 'trip'}</span>${label ? '<span class="mid-label">' + label + '</span>' : ''}`; }
 
-  // ===== TRANSPORT — BOARDING PASS =====
+  // ===== Dismiss hotel conditions =====
+window._dismissedConditions = window._dismissedConditions || {};
+function dismissCondition(ref) {
+  window._dismissedConditions[ref] = true;
+  const el = document.getElementById('htcond-' + ref);
+  if (el) el.remove();
+}
+
+// ===== TRANSPORT — BOARDING PASS =====
   if (e.type === 'train' || e.type === 'flight') {
     const detailsStr = e.details.filter(d => d !== 'Direct').join(' · ');
 
@@ -2154,12 +2176,12 @@ function renderEtape(e, state, idx, autoIdx, done, total, isPast, targetId) {
       }
 
       if (type === 'flight') {
-        // Porte → Siège (slim: same)
-        if (data && data.gate) g1.push(`<div class="bp-tag warm"><div><div class="bp-tag-label">Porte</div><div class="bp-tag-value">${data.gate}</div></div></div>`);
+        // Porte → Siège (inline with seat tag, conditional on gateInfo)
+        if (_tlState.gateInfo && data && data.gate) g1.push(`<div class="bp-tag warm"><div><div class="bp-tag-label">Porte</div><div class="bp-tag-value">${data.gate}</div></div></div>`);
         const st = seatTag(); if (st) g1.push(st);
       } else {
-        // Voie → Voiture/Place (slim: same)
-        if (data && data.platform) g1.push(`<div class="bp-tag warm"><div><div class="bp-tag-label">Voie</div><div class="bp-tag-value">${data.platform}</div></div></div>`);
+        // Voie → Voiture/Place (inline with seat tag, conditional on gateInfo)
+        if (_tlState.gateInfo && data && data.platform) g1.push(`<div class="bp-tag warm"><div><div class="bp-tag-label">Voie</div><div class="bp-tag-value">${data.platform}</div></div></div>`);
         const st = seatTag(); if (st) g1.push(st);
       }
 
@@ -2319,21 +2341,22 @@ function renderEtape(e, state, idx, autoIdx, done, total, isPast, targetId) {
           if (segSeat && segSeat.wagon) midSeatLine = `<div class="leg-mid-seat">Voit. ${segSeat.wagon} Place ${segSeat.place}</div>`;
           else if (segSeat && segSeat.place) midSeatLine = `<div class="leg-mid-seat">Place ${segSeat.place}</div>`;
         }
-        // Dep name with gate/voie (relative to departure station)
+        // Dep name (terminal or city)
         let depName = dep.name;
-        if (isFl) {
-          if (dep.terminal) depName = 'Terminal ' + dep.terminal;
-          if (seg.gate) depName += ' · Porte ' + seg.gate;
-        } else {
-          if (seg.platform) depName += ' · Voie ' + seg.platform;
+        if (isFl && dep.terminal) depName = 'Terminal ' + dep.terminal;
+        // Gate/voie as highlighted badge (conditional on gateInfo toggle)
+        let depBadge = '';
+        if (_tlState.gateInfo) {
+          if (isFl && seg.gate) depBadge = `<div class="leg-gate-badge">Porte ${seg.gate}</div>`;
+          else if (!isFl && seg.platform) depBadge = `<div class="leg-gate-badge">Voie ${seg.platform}</div>`;
         }
         // Route row
         const routeCls = si === 0 ? ' leg-route-first' : '';
         h += `<div class="bpb-route${routeCls}">`;
         if (isFl && dep.code) {
-          h += `<div class="bpb-hero"><div class="bpb-code">${dep.code}</div><div class="bpb-time">${dep.time}</div><div class="bpb-name">${depName}</div></div>`;
+          h += `<div class="bpb-hero"><div class="bpb-code">${dep.code}</div><div class="bpb-time">${dep.time}</div><div class="bpb-name">${depName}</div>${depBadge}</div>`;
         } else {
-          h += `<div class="bpb-hero"><div class="bpb-code">${dep.time}</div><div class="bpb-name">${depName}</div></div>`;
+          h += `<div class="bpb-hero"><div class="bpb-code">${dep.time}</div><div class="bpb-name">${depName}</div>${depBadge}</div>`;
         }
         h += `<div class="bpb-mid"><div class="bpb-mid-row"><div class="bpb-mid-line"></div><div class="bpb-mid-badge">${midBadge(etape.type, midLabel)}</div><div class="bpb-mid-line"></div></div>${midSeatLine}</div>`;
         if (isFl && arr.code) {
@@ -2443,6 +2466,10 @@ function renderEtape(e, state, idx, autoIdx, done, total, isPast, targetId) {
       h += `<div class="htd-block arr"><div class="htd-block-event">Check-out</div><div class="htd-block-dow">${cout.dow} ${cout.rest}</div><div class="htd-block-time">avant ${e.checkout.time}</div></div>`;
       h += '</div>';
       bodyH = `<div class="bpb tappable${navyCls}" onclick="if(window.innerWidth<641)openSheet(sheetTargets[${htIdx}])">${h}</div>`;
+      // Conditions infobulle (dismissable)
+      if (e.freeTextConditions && !window._dismissedConditions?.[e.bookingRef]) {
+        bodyH += `<div class="hotel-conditions" id="htcond-${e.bookingRef}"><span class="material-symbols-rounded hotel-conditions-icon">info</span><div class="hotel-conditions-text">${e.freeTextConditions}</div><button class="hotel-conditions-close" onclick="event.stopPropagation();dismissCondition('${e.bookingRef}')" title="Masquer"><span class="material-symbols-rounded" style="font-size:16px">close</span></button></div>`;
+      }
     } else {
       // ── Classic hotel card ──
       let galleryH = '';
@@ -2473,6 +2500,10 @@ function renderEtape(e, state, idx, autoIdx, done, total, isPast, targetId) {
         : '';
       let schedH = `<div class="car-schedule"><div class="car-sched-block"><div class="car-sched-label">Check-in</div><div class="car-sched-time">${e.checkin.time}</div><div class="car-sched-date">${e.checkin.date}</div></div><div class="car-sched-block"><div class="car-sched-label">Check-out · ${e.nights} nuit${e.nights > 1 ? 's' : ''}</div><div class="car-sched-time">${e.checkout.time}</div><div class="car-sched-date">${e.checkout.date}</div></div>${htTagBtn}</div>`;
       bodyH = `<div class="ecard">${galleryH}${infoH}${schedH}</div>`;
+      // Conditions infobulle (dismissable)
+      if (e.freeTextConditions && !window._dismissedConditions?.[e.bookingRef]) {
+        bodyH += `<div class="hotel-conditions" id="htcond-${e.bookingRef}"><span class="material-symbols-rounded hotel-conditions-icon">info</span><div class="hotel-conditions-text">${e.freeTextConditions}</div><button class="hotel-conditions-close" onclick="event.stopPropagation();dismissCondition('${e.bookingRef}')" title="Masquer"><span class="material-symbols-rounded" style="font-size:16px">close</span></button></div>`;
+      }
     }
   }
 
@@ -2648,6 +2679,11 @@ function renderPanel() {
       etatPills += `<button class="sc-config-pill${currentState === s ? ' active' : ''}" onclick="setState('${s}')">${label}</button>`;
     });
     h += line('État', etatPills);
+
+    if (st.transport) {
+      h += '<div class="proto-divider"></div>';
+      h += line('Porte / Voie', tog('gateInfo','Info porte/voie'));
+    }
 
     panel.innerHTML = h;
   } else {
