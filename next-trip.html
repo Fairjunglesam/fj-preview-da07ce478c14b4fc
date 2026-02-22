@@ -653,8 +653,8 @@
   /* Hotel/car sheet details */
   .sheet-detail-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 14px; }
   .sheet-detail-label { font-size: 9px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.4px; color: var(--grey-400); }
-  .sheet-detail-value { font-size: 13px; font-weight: 700; color: var(--black); margin-top: 1px; }
-  .sheet-detail-sub { font-size: 11px; color: var(--grey-500); font-weight: 500; }
+  .sheet-detail-value { font-size: 14px; font-weight: 700; color: var(--black); margin-top: 2px; }
+  .sheet-detail-sub { font-size: 13px; color: var(--grey-700); font-weight: 500; margin-top: 1px; }
   .sheet-detail-full { grid-column: 1 / -1; }
   .sheet-conditions { font-size: 11px; color: var(--grey-600); line-height: 1.5; padding: 10px 12px; background: var(--grey-50); border-radius: 8px; margin-bottom: 14px; }
   .sheet-conditions strong { font-weight: 700; color: var(--grey-700); }
@@ -691,9 +691,9 @@
   .sheet-overlay[data-color="contrast"] .sheet-dl-name { color: #fff; }
   .sheet-overlay[data-color="contrast"] .sheet-dl-meta { color: rgba(255,255,255,0.7); }
   .sheet-overlay[data-color="contrast"] .sheet-dl-btn { background: rgba(255,255,255,0.12); color: #fff; }
-  .sheet-overlay[data-color="contrast"] .sheet-detail-label { color: rgba(255,255,255,0.7); }
+  .sheet-overlay[data-color="contrast"] .sheet-detail-label { color: rgba(255,255,255,0.55); }
   .sheet-overlay[data-color="contrast"] .sheet-detail-value { color: #fff; }
-  .sheet-overlay[data-color="contrast"] .sheet-detail-sub { color: rgba(255,255,255,0.7); }
+  .sheet-overlay[data-color="contrast"] .sheet-detail-sub { color: rgba(255,255,255,0.85); }
   .sheet-overlay[data-color="contrast"] .sheet-conditions { background: rgba(255,255,255,0.06); color: rgba(255,255,255,0.75); }
   .sheet-overlay[data-color="contrast"] .sheet-conditions strong { color: rgba(255,255,255,0.85); }
   .sheet-overlay[data-color="contrast"] .sheet-map-btn { background: rgba(255,255,255,0.1); color: rgba(255,255,255,0.7); }
@@ -1282,9 +1282,9 @@
   #showcase-container[data-color="contrast"] .sheet-dl-name { color: #fff; }
   #showcase-container[data-color="contrast"] .sheet-dl-meta { color: rgba(255,255,255,0.7); }
   #showcase-container[data-color="contrast"] .sheet-dl-btn { background: rgba(255,255,255,0.12); color: #fff; }
-  #showcase-container[data-color="contrast"] .sheet-detail-label { color: rgba(255,255,255,0.7); }
+  #showcase-container[data-color="contrast"] .sheet-detail-label { color: rgba(255,255,255,0.55); }
   #showcase-container[data-color="contrast"] .sheet-detail-value { color: #fff; }
-  #showcase-container[data-color="contrast"] .sheet-detail-sub { color: rgba(255,255,255,0.7); }
+  #showcase-container[data-color="contrast"] .sheet-detail-sub { color: rgba(255,255,255,0.85); }
   #showcase-container[data-color="contrast"] .sheet-conditions { background: rgba(255,255,255,0.06); color: rgba(255,255,255,0.75); }
   #showcase-container[data-color="contrast"] .sheet-map-btn { background: rgba(255,255,255,0.1); color: rgba(255,255,255,0.7); }
   #showcase-container[data-color="contrast"] .sheet-ticket-label { color: #fff; }
@@ -3093,7 +3093,7 @@ function buildHotelSheet(e) {
     h += `<div><div class="sheet-detail-label">Check-in</div><div class="sheet-detail-value">${e.checkin.time}</div><div class="sheet-detail-sub">${e.checkin.date}</div></div>`;
   }
   if (e.checkout) {
-    h += `<div><div class="sheet-detail-label">Check-out · ${e.nights || ''} nuit${(e.nights || 0) > 1 ? 's' : ''}</div><div class="sheet-detail-value">${e.checkout.time}</div><div class="sheet-detail-sub">${e.checkout.date}</div></div>`;
+    h += `<div><div class="sheet-detail-label">Check-out</div><div class="sheet-detail-value">${e.checkout.time}</div><div class="sheet-detail-sub">${e.checkout.date}</div></div>`;
   }
   if (e.roomName) {
     h += `<div><div class="sheet-detail-label">Chambre</div><div class="sheet-detail-value">${e.roomName}</div></div>`;
@@ -3102,7 +3102,7 @@ function buildHotelSheet(e) {
     h += `<div><div class="sheet-detail-label">Référence</div><div class="sheet-detail-value">${e.bookingRef}</div></div>`;
   }
   if (e.address) {
-    h += `<div class="sheet-detail-full"><div class="sheet-detail-label">Adresse</div><div class="sheet-detail-sub">${e.address}</div></div>`;
+    h += `<div class="sheet-detail-full"><div class="sheet-detail-label">Adresse</div><div class="sheet-detail-value">${e.address}</div></div>`;
   }
   h += '</div>';
   // Free-text conditions
