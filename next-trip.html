@@ -352,7 +352,7 @@
   /* ===== DARK + BOLD shared base (both use .bpb) ===== */
   .bpb { position: relative; border-radius: 16px; background: linear-gradient(145deg, #1E2330 0%, #262D3F 100%); margin-bottom: 6px; overflow: hidden; border: 1px solid rgba(255,255,255,0.06); }
   .bpb.bpb-navy { background: linear-gradient(145deg, #141B2D 0%, #1C2541 100%); }
-  .bpb-head { display: flex; justify-content: space-between; align-items: flex-start; padding: 10px 14px 0; gap: 8px; }
+  .bpb-head { display: flex; justify-content: space-between; align-items: flex-start; padding: 12px 14px 0; gap: 8px; }
   .bpb-carrier { display: flex; align-items: center; gap: 5px; font-size: 12px; font-weight: 700; color: rgba(255,255,255,0.9); min-width: 0; flex: 1; overflow: hidden; }
   .bpb-carrier .bp-carrier-icon { font-size: 14px; }
   .bpb-carrier .bp-carrier-sub { color: rgba(255,255,255,0.7); font-size: 10px; font-weight: 500; }
@@ -436,11 +436,11 @@
   .leg-action-center { text-align: center; padding: 6px 14px 10px; }
   .card-voucher-row { text-align: center; padding: 6px 14px; }
   /* Hotel dark card */
-  .htd-title { font-size: 13px; font-weight: 700; color: #fff; line-height: 1.3; overflow: hidden; text-decoration: none; border: none; outline: none; }
+  .bpb-carrier:has(.htd-title) { flex-direction: column; align-items: flex-start; gap: 2px; }
+  .htd-title { font-size: 13px; font-weight: 700; color: #fff; line-height: 1.2; overflow: hidden; text-decoration: none; border: none; outline: none; }
   .bpb.tappable { -webkit-tap-highlight-color: transparent; outline: none; }
   .htd-title .stars { color: var(--yellow-500); font-size: 12px; margin-left: 2px; }
-  .htd-sub-row { padding: 2px 14px 4px; }
-  .htd-sub { font-size: 11px; color: rgba(255,255,255,0.6); line-height: 1.4; }
+  .htd-sub { font-size: 11px; color: rgba(255,255,255,0.75); line-height: 1.3; }
   .htd-dates { display: flex; align-items: flex-start; padding: 8px 14px; border-top: 1px solid rgba(255,255,255,0.06); }
   .htd-date { flex: 1; }
   .htd-date.arr { text-align: right; }
@@ -1027,7 +1027,7 @@
   .trip-card:not(.contrast-mode):not(.dark-mode) .bp-luggage.luggage-dark { color: var(--grey-500); }
   /* Light+Bold: hotel card */
   .trip-card:not(.contrast-mode) .htd-title { color: var(--black); }
-  .trip-card:not(.contrast-mode) .htd-sub { color: var(--grey-500); }
+  .trip-card:not(.contrast-mode) .htd-sub { color: var(--grey-600); }
   .trip-card:not(.contrast-mode) .htd-date-label { color: var(--grey-500); }
   .trip-card:not(.contrast-mode) .htd-date-time { color: var(--black); }
   .trip-card:not(.contrast-mode) .htd-date-day { color: var(--grey-600); }
@@ -2205,7 +2205,7 @@ function renderEtape(e, state, idx, autoIdx, done, total, isPast, targetId) {
       const tIdx = sheetTargets.length;
       if (etapeData) sheetTargets.push(etapeData);
       let h = '<div class="bp-doc">';
-      h += `<a href="${locUrl || '#'}" class="bp-doc-loc" onclick="event.preventDefault()">📍 Itinéraire</a>`;
+      h += `<a href="${locUrl || '#'}" class="bp-doc-loc" onclick="event.preventDefault()"><span class="material-symbols-rounded" style="font-size:14px">location_on</span> Itinéraire</a>`;
       if (ticket) {
         const sheetCall = etapeData ? `event.preventDefault();openSheet(sheetTargets[${tIdx}])` : 'event.preventDefault()';
         if (ticket.available) {
@@ -2429,8 +2429,7 @@ function renderEtape(e, state, idx, autoIdx, done, total, isPast, targetId) {
       let h = '';
       // Header: name + ref top-right
       const phoneStr = '';
-      h += `<div class="bpb-head"><div class="bpb-carrier"><div class="htd-title">${e.title}${stars ? ' <span class="stars">' + stars + '</span>' : ''}</div></div>${e.bookingRef ? '<div class="bpb-head-right"><span class="bpb-ref">Réf. ' + e.bookingRef + '</span></div>' : ''}</div>`;
-      h += `<div class="htd-sub-row"><div class="htd-sub">📍 ${e.address}${phoneStr}</div></div>`;
+      h += `<div class="bpb-head"><div class="bpb-carrier"><div class="htd-title">${e.title}${stars ? ' <span class="stars">' + stars + '</span>' : ''}</div><div class="htd-sub">${e.address}${phoneStr}</div></div>${e.bookingRef ? '<div class="bpb-head-right"><span class="bpb-ref">Réf. ' + e.bookingRef + '</span></div>' : ''}</div>`;
       // Dates: vertical layout — time big, day-of-week prominent, date medium
       const nightsLabel = e.nights + ' nuit' + (e.nights > 1 ? 's' : '');
       const cin = parseFullDate(e.checkin.date);
@@ -2450,7 +2449,7 @@ function renderEtape(e, state, idx, autoIdx, done, total, isPast, targetId) {
       if (e.photos && e.photos.length) {
         galleryH = '<div class="ht-gallery">' + e.photos.map(p => `<img src="${p}" alt="" loading="lazy">`).join('') + '</div>';
       }
-      let infoH = `<div class="ht-body"><div class="ht-name">${e.title}${stars ? ' <span class="stars">' + stars + '</span>' : ''}</div><div class="ht-sub">📍 ${e.address}${e.roomName ? ' · 🛏 ' + e.roomName : ''}</div>`;
+      let infoH = `<div class="ht-body"><div class="ht-name">${e.title}${stars ? ' <span class="stars">' + stars + '</span>' : ''}</div><div class="ht-sub">${e.address}${e.roomName ? ' · ' + e.roomName : ''}</div>`;
       const badges = [];
       if (e.inclusions) {
         e.inclusions.forEach(inc => {
